@@ -75,7 +75,7 @@ It’s time to stop talking and start building! Our **4-bit input interface** wi
 - 4 standard building blocks<sup>*</sup>
 - 4 Levers
 - 4 Signs
-- A few pieces of Redstone Dust
+- 8 Pieces of Redstone Dust
 
 <sup>*You can use any solid block, but for the input interface, I recommend a redstone lamp. It doubles as a visual indicator of the current state of each bit.</sup>
 
