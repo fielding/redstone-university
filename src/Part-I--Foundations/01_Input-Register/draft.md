@@ -90,10 +90,9 @@ This input bus will serve as the starting point for our future circuits. In late
 
 1. I recommend creating a new world and under the advanced options, set the world type to "Flat". They even have a flat preset called "Redstone Ready" that is perfect for our needs.
 2. Place **four Redstone Lamps** or **four solid blocks** in a horizontal line with one space between to prevent their redstone dust from merging.
-3. On the front face of each block, place one **Lever**. A lever is the perfect physical bit! When it's flipped down, it's `0`. When it's flipped up, it's `1`.
+3. On the front face of each block, place one **Lever**. A lever is the perfect physical bit. For this course, when the lever is OFF, we will treat it as `0`, and when it is ON, we will treat it as `1`.
 4. Now, let's label our work so we don't get confused. Place a **Sign** on the very top of the block. From **right to left**, label them `1`, `2`, `4`, and `8`. We go right-to-left because, just like in the number `12`, the least valuable digit (the `2`) is on the right. See the schematic, screenshot, or diagram for clarity if needed.
-5. Finally, let's wire it up. Go around to the back of your four blocks to the opposite side that you placed the lever. Place a piece or two of **Redstone Dust** on the ground directly behind each one. When you flip a lever, its block becomes powered, which sends a signal to the dust. These four parallel lines of dust are now your official **
-4-bit input bus**. A "bus" is just the fancy engineering term for a bundle of wires that carry a complete piece of information.
+5. Finally, let's wire it up. Go around to the back of your four blocks to the opposite side that you placed the lever. Place a piece or two of **Redstone Dust** on the ground directly behind each one. When you flip a lever, its block becomes powered, which sends a signal to the dust. These four parallel lines of dust are now your official **4-bit input bus**. A "bus" is just the fancy engineering term for a bundle of wires that carry a complete piece of information.
 6. Double-check that your build looks similar to the one in the figure above.
 
 
@@ -155,7 +154,7 @@ While not the ideal version of a game, this is a great way to build speed. Pick 
 <details>
 <summary><strong>Show Solution</strong></summary>
 
-1. The largest number a `5`-bit input interface could input is **`31`**. (In binary: `11111`, which is $16 + 8 + 4 + 2 + 1 = 31$.)
+1. The largest number a 5-bit input interface could input is **`31`**. (In binary: `11111`, which is $16 + 8 + 4 + 2 + 1 = 31$.)
 2. The decimal value of the binary number `1100` is **`12`**. ($8 + 4 + 0 + 0 = 12$.)
 3. The number `10` in binary is **`1010`**. ($8 + 0 + 2 + 0 = 10$.)
 

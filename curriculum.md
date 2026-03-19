@@ -84,22 +84,27 @@
 
 ---
 
-## Part III: The Automated Computer – Memory and Control (3 Modules)
-*(The goal of this Part is to achieve true automation. We will add memory and a control unit, transforming our powerful calculator into a genuine computer that can execute a program containing logic and loops.)*
+## Part III: The Automated Computer – Memory and Control (4 Modules)
+*(The goal of this Part is to achieve true automation. We will add memory, timing, and control logic, transforming our powerful calculator into a genuine computer that can execute a stored program containing logic and loops.)*
 
 ### Module 10: The Processor's Scratchpad – Building a Register
--   **Narrative Beat:** Our ALU is a powerful but forgetful brain. We need to give it a "sticky note" to hold one number temporarily.
--   **Learning Goals:** Understand how data is stored electronically using Gated D-Latches and construct a 4-bit Memory Register.
--   **Minecraft Artifact:** A functional 4-bit register that can store a single number.
+-   **Narrative Beat:** Our ALU is a powerful but forgetful brain. We need to give it a "scratchpad" and a tiny flag latch so values and status bits can survive after the inputs change.
+-   **Learning Goals:** Understand gated D-latch theory, implement repeater-locking memory in Minecraft, and construct a 4-bit register plus a 2-bit flag latch.
+-   **Minecraft Artifact:** A functional 4-bit register and 2-bit flag latch.
 
 ### Module 11: Addressable Storage – Building RAM
 -   **Narrative Beat:** A single scratchpad isn't enough for a real program. We will now scale up our register into a "notebook" with 16 numbered pages, building true Random Access Memory (RAM).
--   **Learning Goals:** Understand memory addressing, use a decoder to select a specific register, and assemble a complete 16x4-bit RAM module.
+-   **Learning Goals:** Understand memory addressing, convert our active-low decoder into active-high row selects, and assemble a complete 16x4-bit RAM module with a gated-OR read bus.
 -   **Minecraft Artifact:** A functional, addressable 16x4-bit RAM module.
 
-### Module 12: The Control Unit & Programmable Logic
--   **Narrative Beat:** The moment of truth. We will build the computer's conductor—the Control Unit—and connect everything. We will then give it the power to read our status flags and **jump to different parts of a program**, enabling true `` `if/else` `` logic and loops.
--   **Learning Goals:** Understand the fetch-decode-execute cycle. Build a clock, program counter, and control unit. Create a simple instruction set with a **conditional jump** instruction.
+### Module 12a: The Infrastructure – Clock, Counter, and Control Paths
+-   **Narrative Beat:** Before the machine can follow instructions, it needs timing and discipline. We will build the clock, Program Counter, phase sequencer, front panel, and the selector networks that route data through the computer.
+-   **Learning Goals:** Build a controllable clock, a loadable Program Counter, a three-phase sequencer, and the five selector networks required by the architecture.
+-   **Minecraft Artifact:** The machine's timing and routing backbone, ready to fetch instructions.
+
+### Module 12b: The Language of the Machine – Instructions and the First Program
+-   **Narrative Beat:** The moment of truth. We will define the machine's instruction set, build the control decoder, and then watch the computer run its first real program, including a conditional jump based on a latched flag.
+-   **Learning Goals:** Understand the fetch-decode-execute cycle in practice, validate each instruction, and run a countdown loop from RAM.
 -   **Minecraft Artifact:** The final, complete, working 4-bit computer that can run a program with loops from RAM.
 -   **The Ultimate Payoff:** Writing and watching a program that performs a countdown loop, demonstrating that the computer is making decisions based on the status flags built in Part II.
 

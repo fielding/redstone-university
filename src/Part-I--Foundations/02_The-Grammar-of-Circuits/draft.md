@@ -2,7 +2,7 @@
 
 ### Module 2 Summary
 
--   **Narrative Beat:** We have a language (binary), but no words. In this module, we'll learn the three fundamental "verbs" of logic—**NOT**, **OR**, and **AND**—that will allow our machine to form its first logical thoughts.
+-   **Narrative Beat:** We have a language (binary), but no words. In this module, we'll learn the three fundamental "verbs" of logic, **NOT**, **OR**, and **AND**, that will allow our machine to form its first logical thoughts.
 -   **Learning Goals:**
     -   Understand the role of Minecraft's primitive logic gates (NOT and OR).
     -   Master the concept of a truth table as the ultimate "source of truth" for a gate's function.
@@ -346,6 +346,6 @@ Design and build a Minecraft circuit that implements the logic $A \text{ AND } (
 
 ### Module 2 Conclusion
 
-Excellent work. You've successfully taken your first steps into the world of digital logic. You started with the abstract idea of Boolean Algebra and ended by building physical, working circuits that obey its laws. You now understand the three foundational gates—NOT, OR, and AND—and have experienced the core engineering principle of building complex components from simpler ones.
+Excellent work. You've successfully taken your first steps into the world of digital logic. You started with the abstract idea of Boolean Algebra and ended by building physical, working circuits that obey its laws. You now understand the three foundational gates, NOT, OR, and AND, and have experienced the core engineering principle of building complex components from simpler ones.
 
 You have built the essential "verbs" of our computer's language. In the next module, **The Art of Logic**, we will expand our vocabulary with more specialized gates and learn the powerful techniques of simplification that allow engineers to design circuits that are not only correct, but also elegant and efficient.
