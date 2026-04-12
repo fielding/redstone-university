@@ -1,0 +1,20 @@
+{
+  "name": "web",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "node scripts/sync-content.mjs && astro dev",
+    "start": "astro dev",
+    "build": "node scripts/sync-content.mjs && astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.5",
+    "astro": "^5.15.9",
+    "typescript": "^5.9.3"
+  },
+  "devDependencies": {
+    "sharp": "^0.34.5"
+  }
+}

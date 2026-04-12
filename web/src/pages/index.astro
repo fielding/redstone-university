@@ -1,0 +1,329 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Logo from '../components/Logo.astro';
+---
+
+<Layout title="Redstone University">
+	<main>
+		<section class="hero-container">
+			<div class="hero-content">
+				<div class="logo-container">
+					<Logo className="hero-logo" />
+				</div>
+
+				<h1 class="hero-title">
+					Build a Computer <br />
+					<span class="text-gradient">From Scratch</span>
+				</h1>
+
+				<p class="hero-subtitle">
+					An interactive course on computer architecture, <br />
+					built entirely inside Minecraft.
+				</p>
+
+				<div class="cta-group">
+					<a href="/course/introduction" class="btn btn-primary">
+						Start the Course
+					</a>
+					<a href="https://github.com/fielding/redstone-university" class="btn btn-secondary">
+						View on GitHub
+					</a>
+				</div>
+
+				<div class="scroll-hint">
+					<span>↓</span>
+				</div>
+			</div>
+		</section>
+
+		<section class="stats-strip">
+			<div class="stat">
+				<span class="stat-number">4</span>
+				<span class="stat-label">Parts</span>
+			</div>
+			<div class="stat-divider"></div>
+			<div class="stat">
+				<span class="stat-number">13</span>
+				<span class="stat-label">Modules</span>
+			</div>
+			<div class="stat-divider"></div>
+			<div class="stat">
+				<span class="stat-number">1</span>
+				<span class="stat-label">Working CPU</span>
+			</div>
+			<div class="stat-divider"></div>
+			<div class="stat">
+				<span class="stat-number">0</span>
+				<span class="stat-label">Prerequisites</span>
+			</div>
+		</section>
+
+		<section class="curriculum">
+			<h2 class="curriculum-heading">The Curriculum</h2>
+			<div class="parts-grid">
+				<a href="/course/part-i--foundations/introduction" class="part-card">
+					<div class="part-number">Part I</div>
+					<h3 class="part-title">The Foundations</h3>
+					<p class="part-desc">Master Redstone basics, Boolean logic, and build a complete input/output system — a 4-bit interface with a working 7-segment display.</p>
+					<span class="part-link">5 modules + 2 interludes →</span>
+				</a>
+
+				<a href="/course/part-ii-thinking-machine/introduction" class="part-card">
+					<div class="part-number">Part II</div>
+					<h3 class="part-title">The Thinking Machine</h3>
+					<p class="part-desc">Build the brain. Design an adder, add subtraction, status flags, and a multiplexer — then assemble them into a full Arithmetic Logic Unit.</p>
+					<span class="part-link">5 modules →</span>
+				</a>
+
+				<a href="/course/part-iii--processor-core/introduction" class="part-card">
+					<div class="part-number">Part III</div>
+					<h3 class="part-title">The Automated Computer</h3>
+					<p class="part-desc">Give the machine memory, a clock, and a program counter. Define an instruction set and run the first real program on hardware you built.</p>
+					<span class="part-link">4 modules →</span>
+				</a>
+
+				<a href="/course/part-iv--post-graduate/introduction" class="part-card part-card--postgrad">
+					<div class="part-number">Part IV</div>
+					<h3 class="part-title">Post-Graduate Studies</h3>
+					<p class="part-desc">For those who want more. Implement the Double Dabble algorithm to display true decimal output — the hardest challenge in the course.</p>
+					<span class="part-link">Advanced track →</span>
+				</a>
+			</div>
+		</section>
+	</main>
+</Layout>
+
+<style>
+	/* ── Hero ── */
+	.hero-container {
+		min-height: 100vh;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+		padding: 2rem;
+		background: radial-gradient(circle at 50% 50%, rgba(20, 0, 0, 0.5), transparent 70%);
+	}
+
+	.hero-content {
+		max-width: 800px;
+		animation: fadeIn 1s ease-out;
+	}
+
+	.logo-container {
+		margin-bottom: 2rem;
+	}
+
+	.hero-logo {
+		width: 200px;
+		height: auto;
+		filter: drop-shadow(0 0 30px rgba(255, 0, 0, 0.2));
+	}
+
+	.hero-title {
+		font-size: 4.5rem;
+		line-height: 1.1;
+		margin-bottom: 1.5rem;
+	}
+
+	.text-gradient {
+		background: linear-gradient(45deg, #ff3333, #ff9999);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		filter: drop-shadow(0 0 30px rgba(255, 0, 0, 0.2));
+	}
+
+	.hero-subtitle {
+		font-size: 1.5rem;
+		color: var(--color-text-muted);
+		margin-bottom: 3rem;
+	}
+
+	.cta-group {
+		display: flex;
+		gap: 1.5rem;
+		justify-content: center;
+	}
+
+	.btn {
+		padding: 1rem 2.5rem;
+		border-radius: 50px;
+		font-weight: 600;
+		font-size: 1.1rem;
+		transition: all 0.3s ease;
+	}
+
+	.btn-primary {
+		background: var(--color-redstone);
+		color: white;
+		box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
+	}
+
+	.btn-primary:hover {
+		background: var(--color-redstone-glow);
+		transform: translateY(-2px);
+		box-shadow: 0 0 30px rgba(255, 0, 0, 0.6);
+	}
+
+	.btn-secondary {
+		background: rgba(255, 255, 255, 0.05);
+		color: var(--color-text-main);
+		border: 1px solid rgba(255, 255, 255, 0.1);
+	}
+
+	.btn-secondary:hover {
+		background: rgba(255, 255, 255, 0.1);
+		transform: translateY(-2px);
+	}
+
+	.scroll-hint {
+		margin-top: 4rem;
+		color: var(--color-text-muted);
+		font-size: 1.2rem;
+		opacity: 0.5;
+		animation: bounce 2s ease-in-out infinite;
+	}
+
+	/* ── Stats strip ── */
+	.stats-strip {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0;
+		padding: 2.5rem 2rem;
+		border-top: 1px solid rgba(255, 255, 255, 0.05);
+		border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+		background: rgba(255, 255, 255, 0.02);
+	}
+
+	.stat {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding: 0 3rem;
+	}
+
+	.stat-number {
+		font-size: 2.5rem;
+		font-weight: 700;
+		color: var(--color-redstone-glow);
+		line-height: 1;
+	}
+
+	.stat-label {
+		font-size: 0.85rem;
+		color: var(--color-text-muted);
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		margin-top: 0.4rem;
+	}
+
+	.stat-divider {
+		width: 1px;
+		height: 2.5rem;
+		background: rgba(255, 255, 255, 0.08);
+	}
+
+	/* ── Curriculum ── */
+	.curriculum {
+		max-width: 1100px;
+		margin: 0 auto;
+		padding: 6rem 2rem;
+	}
+
+	.curriculum-heading {
+		text-align: center;
+		font-size: 2rem;
+		margin-bottom: 3rem;
+		color: var(--color-text-muted);
+		font-weight: 600;
+		letter-spacing: 0.05em;
+		text-transform: uppercase;
+		font-size: 0.9rem;
+	}
+
+	.parts-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1.5rem;
+	}
+
+	.part-card {
+		background: var(--glass-bg);
+		border: 1px solid var(--glass-border);
+		border-radius: 12px;
+		padding: 2rem;
+		text-decoration: none;
+		color: inherit;
+		transition: all 0.25s ease;
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+	}
+
+	.part-card:hover {
+		border-color: rgba(255, 50, 50, 0.3);
+		background: rgba(255, 30, 30, 0.05);
+		transform: translateY(-3px);
+		box-shadow: 0 8px 32px rgba(255, 0, 0, 0.1);
+		color: inherit;
+		text-shadow: none;
+	}
+
+	.part-card--postgrad {
+		border-style: dashed;
+		opacity: 0.8;
+	}
+
+	.part-card--postgrad:hover {
+		opacity: 1;
+	}
+
+	.part-number {
+		font-size: 0.75rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.15em;
+		color: var(--color-redstone-glow);
+	}
+
+	.part-title {
+		font-size: 1.3rem;
+		font-weight: 700;
+		color: var(--color-text-accent);
+		margin: 0;
+	}
+
+	.part-desc {
+		font-size: 0.95rem;
+		color: var(--color-text-muted);
+		line-height: 1.6;
+		margin: 0;
+		flex: 1;
+	}
+
+	.part-link {
+		font-size: 0.85rem;
+		color: var(--color-redstone-glow);
+		margin-top: 0.5rem;
+	}
+
+	/* ── Animations ── */
+	@keyframes fadeIn {
+		from { opacity: 0; transform: translateY(20px); }
+		to { opacity: 1; transform: translateY(0); }
+	}
+
+	@keyframes bounce {
+		0%, 100% { transform: translateY(0); }
+		50% { transform: translateY(6px); }
+	}
+
+	/* ── Responsive ── */
+	@media (max-width: 700px) {
+		.hero-title { font-size: 2.8rem; }
+		.parts-grid { grid-template-columns: 1fr; }
+		.stat { padding: 0 1.5rem; }
+		.cta-group { flex-direction: column; align-items: center; }
+	}
+</style>

@@ -1,0 +1,16 @@
+---
+interface Props {
+  width?: string;
+  height?: string;
+  className?: string;
+}
+
+const { width = "auto", height = "auto", className = "" } = Astro.props;
+---
+
+<img 
+  src="/assets/project_assets/logo-dark-nobg.png"
+  alt="Redstone University Logo"
+  class={className}
+  style={`width: ${width}; height: ${height}; max-width: 100%; object-fit: contain; opacity: 0; animation: fadeIn 0.3s ease-out forwards;`}
+/>

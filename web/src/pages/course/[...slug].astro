@@ -1,0 +1,163 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Sidebar from '../../components/Sidebar.astro';
+import Logo from '../../components/Logo.astro';
+
+export async function getStaticPaths() {
+  const courseEntries = await getCollection('course');
+  return courseEntries.map(entry => ({
+    params: { slug: entry.slug }, props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+---
+
+<Layout title={entry.data.title || 'Redstone University'}>
+  <div class="course-container">
+    <aside class="sidebar glass-panel">
+      <div class="sidebar-header">
+        <a href="/" class="logo-link">
+            <Logo width="40px" />
+            <span class="logo-text">Redstone U</span>
+        </a>
+      </div>
+      <Sidebar />
+    </aside>
+    <main class="content glass-panel">
+      <article class="prose">
+        <Content />
+      </article>
+    </main>
+  </div>
+</Layout>
+
+<style>
+  .course-container {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 4rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+    min-height: 100vh;
+  }
+
+  .sidebar {
+    position: sticky;
+    top: 2rem;
+    height: calc(100vh - 4rem);
+    display: flex;
+    flex-direction: column;
+    border-radius: 12px;
+    overflow: hidden;
+    /* Remove border for cleaner look */
+    border: none; 
+    background: transparent;
+  }
+
+  .sidebar-header {
+    padding: 1rem 0;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--glass-border);
+  }
+
+  .logo-link {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    color: var(--color-text-accent);
+    font-weight: 600;
+    font-size: 1rem;
+  }
+
+  .logo-text {
+    opacity: 0.9;
+  }
+
+  .content {
+    /* Remove panel look for main content to feel like a book */
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    
+    /* Center the reading column */
+    display: flex;
+    justify-content: center;
+  }
+
+  .prose {
+    width: 100%;
+    max-width: 68ch; /* Optimal reading width */
+    margin: 0 auto;
+    padding-bottom: 4rem;
+  }
+
+  /* Typography for Markdown Content */
+  .prose :global(h1) {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 0.5rem;
+  }
+
+  .prose :global(h2) {
+    font-size: 1.8rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: var(--color-text-accent);
+  }
+
+  .prose :global(p) {
+    margin-bottom: 1.2rem;
+    font-size: 1.1rem;
+    color: var(--color-text-main);
+  }
+
+  .prose :global(ul), .prose :global(ol) {
+    margin-bottom: 1.2rem;
+    padding-left: 1.5rem;
+  }
+
+  .prose :global(li) {
+    margin-bottom: 0.5rem;
+  }
+
+  .prose :global(a) {
+    color: var(--color-redstone-glow);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  .prose :global(blockquote) {
+    border-left: 4px solid var(--color-redstone);
+    padding-left: 1rem;
+    margin: 1.5rem 0;
+    font-style: italic;
+    color: var(--color-text-muted);
+    background: rgba(255, 0, 0, 0.05);
+    padding: 1rem;
+    border-radius: 0 8px 8px 0;
+  }
+
+  .prose :global(img) {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin: 2rem auto;
+    display: block;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  }
+  
+  .prose :global(pre) {
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin: 1.5rem 0;
+    border: 1px solid var(--color-border);
+    background: #0d0d0d !important;
+  }
+</style>

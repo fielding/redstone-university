@@ -1,0 +1,71 @@
+---
+import type { CourseNode } from '../utils/navigation';
+
+interface Props {
+  node: CourseNode;
+  depth?: number;
+}
+
+const { node, depth = 0 } = Astro.props;
+const hasChildren = node.children.length > 0;
+---
+
+<li class="nav-item" style={`--depth: ${depth}`}>
+  {node.slug ? (
+    <a href={`/course/${node.slug}`} class="nav-link">
+      {node.title}
+    </a>
+  ) : (
+    <span class="nav-section-title">{node.title}</span>
+  )}
+
+  {hasChildren && (
+    <ul class="nav-children">
+      {node.children.map((child) => (
+        <Astro.self node={child} depth={depth + 1} />
+      ))}
+    </ul>
+  )}
+</li>
+
+<style>
+  .nav-item {
+    list-style: none;
+    margin-bottom: 0.25rem;
+  }
+
+  .nav-link, .nav-section-title {
+    display: block;
+    padding: 0.5rem 1rem;
+    padding-left: calc(1rem + (var(--depth) * 1rem));
+    color: var(--color-text-muted);
+    border-radius: 6px;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    text-decoration: none;
+  }
+
+  .nav-section-title {
+    font-weight: 600;
+    color: var(--color-text-accent);
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+  }
+
+  .nav-link:hover {
+    color: var(--color-text-main);
+  }
+
+  .nav-link[aria-current="page"] {
+    color: var(--color-redstone-glow);
+    font-weight: 500;
+  }
+
+  .nav-children {
+    padding: 0;
+    margin: 0;
+  }
+</style>
