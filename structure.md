@@ -49,7 +49,7 @@ The course is organized into five nested levels:
 
 Every module is a self-contained chapter. It begins with a high-level overview to orient the student and ends with a checkpoint to synthesize all the lessons within it.
 
-*   **`### Module X: [Module Title]`**
+*   **`### Module X: [Module Title]`** *(or `### Module Xa: [Module Title]` when a large module is intentionally split into two linked submodules, such as `12a` and `12b`)*
 *   **Module Summary Block:** A quick, scannable block that sets clear expectations.
     *   **Narrative Beat:** The story of this module in one or two compelling sentences.
     *   **Learning Goals:** A bulleted list of what the student will be able to *do* after completing the module.

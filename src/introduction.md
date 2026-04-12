@@ -56,10 +56,11 @@ You’ll find:
     -   **Module 8:** The Multiplexer – The Digital Switch
     -   **Module 9:** The ALU – The Grand Assembly
 
--   **Part III: The Automated Computer – Memory and Control.** In this final core part, we will achieve true automation. We'll build registers and addressable RAM to give our processor a memory, and then construct a Control Unit that can fetch and execute instructions from a program containing loops and logic.
+-   **Part III: The Automated Computer – Memory and Control.** In this final core part, we will achieve true automation. We'll build registers and addressable RAM to give our processor a memory, then add the clocking, routing, and control logic that let it fetch, decode, and execute instructions from a stored program.
     -   **Module 10:** The Processor's Scratchpad – Building a Register
     -   **Module 11:** Addressable Storage – Building RAM
-    -   **Module 12:** The Control Unit & Programmable Logic
+    -   **Module 12a:** The Infrastructure – Clock, Counter, and Control Paths
+    -   **Module 12b:** The Language of the Machine – Instructions and the First Program
 
 -   **Part IV: Post-Graduate Studies (Bonus Content).** For those who want to go even further, we'll explore advanced topics, like building the complex hardware required to display multi-digit decimal numbers, just like a real-world calculator.
     -   **Module 13:** The "Real World" Display – The Double Dabble Algorithm

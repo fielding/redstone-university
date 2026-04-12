@@ -8,7 +8,7 @@ In this final Part, we will tackle an advanced engineering problem that we sides
 
 ### Our Mission for Part IV
 
-This special section contains a single, challenging module that will test everything you've learned.
+This special section begins with a single, challenging module that will test everything you've learned, and then closes with a short graduation reflection on the journey you just completed.
 
 -   **In Module 13 (The "Real World" Display),** we will finally solve the problem we encountered back in **Module 5**: how to display a number like `` `13` `` using two separate decimal digits. We chose the elegant programmer's solution of Hexadecimal, but now we will build the complex engineer's solution used in real-world calculators and digital clocks: the Double Dabble algorithm.
 

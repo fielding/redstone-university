@@ -1,35 +1,40 @@
 import os
 import re
 from glob import glob
+from typing import List, Tuple
 
 SRC_DIR = "src"
 APPENDIX_FILE = "course/Z-Appendices/Appendix-A_Solutions.md"
 
 
-def extract_solutions_from_file(md_content, file_path):
+def parse_label_part(part: str) -> Tuple[int, str]:
     """
-    Extracts all solutions from a single markdown file's content.
-    Returns a list of tuples: (problem_id, problem_title, solution_content, module_num, lesson_num)
+    Parse parts like '12', '12a', '6', '6b' into a sortable tuple.
+    Unknown formats are pushed to the end but kept stable.
+    """
+    match = re.fullmatch(r"(\d+)([A-Za-z]*)", part)
+    if not match:
+        return (10**9, part.lower())
+    return (int(match.group(1)), match.group(2).lower())
+
+
+def problem_sort_key(problem_id: str) -> List[Tuple[int, str]]:
+    return [parse_label_part(part) for part in problem_id.split(".")]
+
+
+def extract_solutions_from_file(md_content: str, file_path: str):
+    """
+    Extract solutions from a single markdown file.
+    Supports problem IDs like:
+    - 10.3.1
+    - 12a.6.1
+    - 12b.5.2
     """
     solutions = []
     pattern = re.compile(
-        r"^####\s+Practice Problem\s+([\d\.]+):\s*(.*?)\s*\n(<details>.*?</details>)", re.MULTILINE | re.DOTALL
+        r"^####\s+Practice Problem\s+([\dA-Za-z\.]+):\s*(.*?)\s*\n(<details>.*?</details>)",
+        re.MULTILINE | re.DOTALL,
     )
-
-    path_parts = file_path.split(os.sep)
-    module_num = "0"
-    lesson_num = "0"
-    if len(path_parts) > 2:
-        module_dir = next(
-            (
-                part
-                for part in reversed(path_parts)
-                if part.startswith(("0", "1", "2", "3", "4", "5", "6", "7", "8", "9"))
-            ),
-            None,
-        )
-        if module_dir:
-            module_num = module_dir.split("_")[0]
 
     for match in pattern.finditer(md_content):
         problem_id, problem_title, details_block = match.groups()
@@ -37,11 +42,6 @@ def extract_solutions_from_file(md_content, file_path):
 
         inner_content_match = re.search(r"<summary>.*?</summary>(.*)", details_block, re.DOTALL)
         inner_content = inner_content_match.group(1).strip() if inner_content_match else ""
-
-        id_parts = problem_id.split(".")
-        if len(id_parts) == 3:
-            module_num = id_parts[0]
-            lesson_num = id_parts[1]
 
         solutions.append((problem_id, problem_title, inner_content))
         print(f"  - Extracted solution for Problem {problem_id} from {file_path}")
@@ -67,7 +67,7 @@ def main():
         print("⚠️ No solutions found. Appendix will be empty.")
         return
 
-    all_solutions.sort(key=lambda x: [int(part) for part in x[0].split(".")])
+    all_solutions.sort(key=lambda x: problem_sort_key(x[0]))
 
     appendix_content = [
         "## Appendix A: Solutions\n\n"

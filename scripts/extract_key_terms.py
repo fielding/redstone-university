@@ -1,6 +1,7 @@
 import os
 import re
 from glob import glob
+from typing import Dict, List, Tuple
 
 SRC_DIR = "src"
 APPENDIX_FILE = "course/Z-Appendices/Appendix-B_Glossary.md"
@@ -12,9 +13,17 @@ RAW_BASE_URL = f"https://raw.githubusercontent.com/{GITHUB_USER}/{GITHUB_REPO}/{
 ASSETS_IMG_DIR = "assets/images"
 
 
-def rewrite_image_paths(md_content):
-    import re
+def parse_module_label(label: str) -> Tuple[int, str]:
+    """
+    Parse labels like '12', '12a', '12b' into sortable tuples.
+    """
+    match = re.fullmatch(r"(\d+)([A-Za-z]*)", label)
+    if not match:
+        return (10**9, label.lower())
+    return (int(match.group(1)), match.group(2).lower())
 
+
+def rewrite_image_paths(md_content):
     def replacer(match):
         alt_text, rel_path = match.groups()
         if rel_path.startswith("./images/") or rel_path.startswith("images/"):
@@ -26,13 +35,15 @@ def rewrite_image_paths(md_content):
     return re.sub(r"!\[([^\]]*)\]\(([^)]+)\)", replacer, md_content)
 
 
-def extract_module_titles(md_content, file_path):
+def extract_module_titles(md_content: str, file_path: str) -> Dict[str, str]:
     """
-    Extracts module numbers and titles from '## Module X: Title' headings.
-    Returns a dictionary of {module_num: title}.
+    Extract module labels and titles from headings like:
+    - ## Module 12: Title
+    - ## Module 12a: Title
+    - ## Module 12b: Title
     """
-    module_pattern = re.compile(r"^##\s+Module (\d+):\s*(.+)$", re.MULTILINE)
-    module_titles = {}
+    module_pattern = re.compile(r"^##\s+Module\s+(\d+[A-Za-z]?):\s*(.+)$", re.MULTILINE)
+    module_titles: Dict[str, str] = {}
     for match in module_pattern.finditer(md_content):
         module_num = match.group(1)
         title = match.group(2).strip()
@@ -43,9 +54,8 @@ def extract_module_titles(md_content, file_path):
 
 def extract_key_terms_from_md(md_content, file_path, module_num=None):
     """
-    Extracts key terms and definitions from '#### Key Terms' sections.
-    Returns a list of (term, definition, module_num) tuples with concise logging.
-    Uses provided module_num if available.
+    Extract key terms and definitions from '#### Key Terms' sections.
+    Returns a list of (term, definition, module_num) tuples.
     """
     pattern = re.compile(
         r"^####\s*Key Terms\s*\n((?:-\s*\*\*[^*]+\*\*:[^\n]*(?:\n+(?!\s*-)[^\n]*)*\n*)+)",
@@ -86,18 +96,14 @@ def extract_key_terms_from_md(md_content, file_path, module_num=None):
 
 
 def collect_markdown_files(directory):
-    """
-    Collect all markdown files (*.md) in the src directory.
-    """
-    files = glob(os.path.join(directory, "**/*.md"), recursive=True)
-    return sorted(files)
+    return sorted(glob(os.path.join(directory, "**/*.md"), recursive=True))
 
 
 def main():
     os.makedirs(os.path.dirname(APPENDIX_FILE), exist_ok=True)
 
-    all_terms = []
-    module_titles = {}
+    all_terms: List[Tuple[str, str, str]] = []
+    module_titles: Dict[str, str] = {}
 
     print(f"🔍 Scanning markdown files in '{SRC_DIR}'...")
     files = collect_markdown_files(SRC_DIR)
@@ -144,14 +150,13 @@ def main():
         appendix_content.append(f"**{term}**\n: {definition} [{module}]\n")
 
     appendix_content.append("\n---\n")
-    for module in sorted(module_titles.keys(), key=int):
+    for module in sorted(module_titles.keys(), key=parse_module_label):
         title = module_titles.get(module, f"Module {module}")
         appendix_content.append(f"[{module}]: Module {module}: {title}\n")
 
     appendix_markdown = "\n".join(appendix_content)
     appendix_markdown = rewrite_image_paths(appendix_markdown)
 
-    appendix_content.append('\n\n<hr class="pagebreak"/>\n\n')
     with open(APPENDIX_FILE, "w", encoding="utf-8") as f:
         f.write(appendix_markdown)
 

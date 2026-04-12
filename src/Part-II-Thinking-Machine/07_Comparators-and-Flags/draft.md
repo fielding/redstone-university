@@ -1,172 +1,316 @@
-## Module 7: Comparators and Status Flags – The Dawn of Decision-Making
+## Module 7: Comparators and status flags – The dawn of decision-making
 
 ### Module 7 Summary
 
--   **Narrative Beat:** Our machine can calculate, but it can't make decisions. To program it to think, it needs to be able to ask questions: "Is this result zero?" We'll build the fundamental circuits that allow for comparison and create "flags" to store the answers, giving our machine a primitive form of awareness.
+-   **Narrative Beat:** Our machine can already calculate, but calculation alone is not enough for programming. In this module, we will teach it how to *notice* something about its own results. That awareness is the foundation of branching, loops, and every `if` statement you have ever written.
 -   **Learning Goals:**
-    -   Understand the difference between a simple calculator and a computer that can make decisions.
+    -   Understand why decision-making requires hardware that can evaluate conditions.
     -   Build a 4-bit equality comparator using XNOR and AND gates.
-    -   Learn how status flags (like the Zero Flag and Negative Flag) are the hardware foundation for `if` statements in programming.
-    -   Build the logic circuits for the Zero Flag and the Negative Flag.
+    -   Learn what **status flags** are and why CPUs use them instead of building dedicated hardware for every question.
+    -   Build the logic for the **Zero** and **Negative** flags.
 -   **Lesson Overview:**
-    -   Lesson 7.1: From Calculation to Computation
-    -   Lesson 7.2: The Equality Comparator
-    -   Lesson 7.3: The Art of Awareness – An Introduction to Status Flags
-    -   Lesson 7.4: Building the Flag Logic
--   **Minecraft Artifact:** A single component featuring a 4-bit equality comparator and a 2-bit flag register that indicates "Zero" and "Negative" conditions.
+    -   Lesson 7.1: From calculation to computation
+    -   Lesson 7.2: The equality comparator
+    -   Lesson 7.3: The art of awareness – An introduction to status flags
+    -   Lesson 7.4: Building the flag logic
+-   **Minecraft Artifact:** A 4-bit equality comparator and a 2-bit status flag circuit.
 
 ---
 
 ### Module 7 Introduction
 
-Excellent work on building the core arithmetic circuits of our machine. It can now add and subtract, but it's still just a very sophisticated calculator. It can tell you that `$5 - 5 = 0$`, but it has no idea what that *means*. It cannot react to that result.
+So far, our computer behaves like a very obedient calculator.
 
-This module marks the most important leap in our entire course. We are going to bridge the gap between simple **calculation** and true **computation**.
+You choose the inputs.
+You choose the operation.
+It gives you a result.
 
-The difference is **decision-making**.
+That is useful, but it is not yet enough to support real programs.
 
-In this module, we will give our machine the gift of awareness. We will build the hardware that allows it to ask questions about the numbers it processes. First, we'll construct a dedicated circuit to compare two numbers directly. Then, we will build the circuits for **status flags**, the real secret to how computers work. These flags are the physical foundation for every `if` statement and `while` loop in all of programming.
+A program becomes powerful when it can ask questions such as:
 
-By the end of this module, you won't just have a few more circuits. You will have built the hardware that allows a machine to think.
+-   Is this value zero?
+-   Did the subtraction produce a negative answer?
+-   Are these two numbers the same?
 
----
+Those questions are not abstract software magic. They must be answered somewhere in hardware.
 
-### Lesson 7.1: From Calculation to Computation
+This module is where the machine begins to develop a primitive kind of self-awareness. We will first build a direct comparator so the logic is easy to see. Then we will learn the more scalable CPU approach: let the ALU do a calculation and produce a few tiny bits of metadata called **flags**.
 
-> **Key Takeaway:** A computer's power comes not just from performing calculations, but from its ability to make decisions based on the results of those calculations.
-
-So far, our machine operates on a linear path: you provide input, you tell it what to do (like "add"), and you get an output. It follows our instructions blindly.
-
-But a useful program needs to be able to change its behavior based on what's happening.
-- "If the player's health is `0`, then display the 'Game Over' screen."
-- "While the enemy count is greater than `0`, keep the battle music playing."
-
-These are **conditional statements**. They are the heart of all programming and all complex behavior. To make these statements possible, a machine needs the physical ability to answer questions. It needs hardware that can perform **comparisons**. This module is dedicated to building that hardware.
+Those flags are the bridge between arithmetic and decision-making.
 
 ---
 
-### Lesson 7.2: The Equality Comparator
+### Lesson 7.1: From calculation to computation
 
-> **Key Takeaway:** We can determine if two binary numbers are equal by checking if every pair of corresponding bits is the same, a task perfectly suited for XNOR gates.
+> **Key Takeaway:** A computer becomes far more powerful when it can change its behavior based on the outcome of a previous operation.
 
-The simplest question a computer needs to ask is, "Are these two things the same?" Before we learn the ultra-efficient way a real CPU does this, we'll build a dedicated "brute-force" circuit to understand the core logic.
+Imagine a game program.
 
-#### The Theory
+-   If the player’s health reaches `0`, show the “Game Over” screen.
+-   While there are still enemies on screen, keep the music playing.
+-   If two passwords match, unlock the account.
 
-How do we know if two 4-bit numbers, $A$ and $B$, are equal?
-- $A = 1011$
-- $B = 1011$
+All of these behaviors depend on a condition.
 
-We know they are equal because the bit in the `$8$`s place is the same for both, **AND** the bit in the `$4$`s place is the same, **AND** the bit in the `$2$`s place is the same, **AND** the bit in the `$1$`s place is the same.
+At the hardware level, that means the machine must be able to answer yes/no questions about data. This is the physical basis of **control flow**.
 
-We already have the perfect tool for this job: the **XNOR gate**, our "equality detector" from Module 3. It outputs a `1` only when its two inputs are identical. The blueprint for our comparator is simple:
-1.  Use four XNOR gates, one for each pair of bits ($A_0$ and $B_0$, $A_1$ and $B_1$, etc.).
-2.  Feed the outputs of all four XNOR gates into a single 4-input AND gate.
+Up to this point, our machine has been linear. Signals go in, logic happens, signals come out. But in a real computer, the result of one operation influences what happens next. That is what turns mere calculation into **computation**.
 
-The final output of that AND gate will only be `1` if *all four* XNOR gates report that their bits were a match.
+To get there, we need two related tools:
+
+1.  a way to compare values directly
+2.  a compact way to summarize the result of an ALU operation
+
+We will build both.
 
 ---
 
-#### Lab & Experiment: Building the 4-Bit Equality Comparator
+### Lesson 7.2: The equality comparator
+
+> **Key Takeaway:** Two multi-bit values are equal if and only if every corresponding pair of bits is equal.
+
+The simplest question a computer can ask is:
+
+> Are these two values the same?
+
+For 4-bit numbers, that means:
+
+-   `$A_3$` must equal `$B_3$`
+-   `$A_2$` must equal `$B_2$`
+-   `$A_1$` must equal `$B_1$`
+-   `$A_0$` must equal `$B_0$`
+
+We already have the perfect gate for checking whether two bits match: **XNOR**.
+
+-   if the two inputs are the same, XNOR outputs `1`
+-   if they are different, XNOR outputs `0`
+
+So the plan is:
+
+1.  Compare each pair of bits with an XNOR gate.
+2.  Feed all four XNOR outputs into an AND gate.
+3.  If all four bit-pairs matched, the final output will be `1`.
+
+#### The theory
+
+The equality output is:
+
+$Equal = (A_3 \odot B_3) \land (A_2 \odot B_2) \land (A_1 \odot B_1) \land (A_0 \odot B_0)$
+
+where `\odot` represents XNOR.
+
+That expression says exactly what we want: **all four pairs must match**.
+
+---
+
+#### Lab & Experiment: Building the 4-bit equality comparator
 
 ![4-Bit Equality Comparator CircuitVerse Diagram](./images/comparator-circuitverse.png)
-*Figure: The logic for a 4-bit equality comparator. Each pair of bits ($A_i$, $B_i$) is checked by an XNOR gate, and a 4-input AND gate confirms that all pairs are identical.*
+*Figure: A 4-bit equality comparator. Each bit-pair is checked with XNOR, and the four match signals are combined through an AND gate.*
 
-1.  **Build the circuit:** Construct the circuit as shown in the diagram. You will need two 4-bit input buses ($A$ and $B$) and a single output lamp, labeled "$A = B$".
-2.  **Test for Equality:** Set both input $A$ and input $B$ to the same value, for example, `` `1010` ``. The "$A = B$" lamp should turn ON.
-3.  **Test for Inequality:** Change just a single bit on either input. For example, change input $B$ to `` `1011` ``. The "$A = B$" lamp should immediately turn OFF.
+1.  Create two 4-bit input buses, `$A$` and `$B$`.
+2.  Build four XNOR gates:
+    -   compare `$A_0$` with `$B_0$`
+    -   compare `$A_1$` with `$B_1$`
+    -   compare `$A_2$` with `$B_2$`
+    -   compare `$A_3$` with `$B_3$`
+3.  Feed the four XNOR outputs into a 4-input AND gate.
+4.  Connect the final output to a lamp labeled **A = B**.
+
+#### The experiment
+
+Run these tests:
+
+-   `$A = 1010$`, `$B = 1010$` → lamp ON
+-   `$A = 1010$`, `$B = 1011$` → lamp OFF
+-   `$A = 0000$`, `$B = 0000$` → lamp ON
+-   `$A = 1111$`, `$B = 0111$` → lamp OFF
 
 ![4-Bit Equality Comparator Minecraft Build](./images/comparator-minecraft.png)
-*Figure: The 4-bit equality comparator built in Minecraft. The two 4-bit inputs are at the back, and the single output lamp at the front is lit, indicating the inputs are currently equal.*
+*Figure: A 4-bit equality comparator in Minecraft. The output lamp is lit only when every bit on bus A matches the corresponding bit on bus B.*
 
-You have now built a working comparator circuit! While useful, this dedicated hardware isn't how a real CPU usually handles comparison. In the next lesson, we'll learn the more elegant and powerful method.
+This circuit is a good direct answer to the question of equality.
 
----
-
-### Lesson 7.3: The Art of Awareness – An Introduction to Status Flags
-
-> **Key Takeaway:** A CPU doesn't just output a numerical answer; it also outputs a set of "status flags" that describe the properties of that answer, enabling efficient decision-making.
-
-The comparator we just built is great, but it's inefficient. A real CPU uses a more clever approach. The ALU performs a single mathematical operation (like subtraction), and then it sets a few single-bit flags to create a "report" on the result. This small group of flags is stored in the **Status Register**.
-
-This is the universal translator between arithmetic and logic. By performing a subtraction and simply checking the flags that result, the computer can know if the original numbers were equal, or if one was greater than the other. This is how every `if` statement you have ever written is physically implemented.
-
-We are going to build the logic for the two most important flags:
-
-1.  **The Zero Flag (Z):** The Z flag is set to `1` if the result of the last operation was `0000`. This is how computers check for equality. The software instruction `` `if (x == y)` `` is actually executed by the hardware as `$x - y$` and then checking if the **Zero Flag is `1`**.
-
-2.  **The Negative Flag (N):** The N flag is set to `1` if the most significant bit of the result is `1`. This is how computers check for negative numbers, relying on the Two's Complement system we learned in Module 6. The software instruction `` `if (x < 0)` `` is a direct check of the **Negative Flag**.
-
-By building these flags, we are building the physical foundation of all conditional logic.
+But CPUs usually prefer a more flexible strategy: do one arithmetic operation, then inspect a few flags that describe the result.
 
 ---
 
-### Lesson 7.4: Building the Flag Logic
+### Lesson 7.3: The art of awareness – An introduction to status flags
 
-> **Key Takeaway:** The logic required to detect the Zero and Negative flags is surprisingly simple, yet it unlocks the most powerful capabilities of our computer.
+> **Key Takeaway:** Status flags are tiny one-bit summaries of what just happened in the ALU. They let a computer make decisions without needing a separate large circuit for every kind of test.
 
-#### The Theory
+A real processor does not usually build a dedicated equality comparator for every comparison instruction. Instead, it often performs a subtraction and then asks questions about the result.
 
--   **The Zero Flag (Z):** A 4-bit number $Y$ is `` `0000` `` only if all its bits are `0`. This logic, $\text{NOT}(Y_3 \lor Y_2 \lor Y_1 \lor Y_0)$, is the exact function of a **4-input NOR gate**.
--   **The Negative Flag (N):** A 4-bit number is negative if its sign bit (the MSB) is `1`. The logic is a direct copy: $N = Y_3$. The "circuit" is just a wire.
+For example:
+
+-   To test whether `$A = B$`, compute `$A - B$`
+-   If the result is `0000`, then the values were equal
+
+That is elegant because the ALU is already there. We simply need a compact report describing what the ALU produced. That report lives in a small collection of one-bit signals called **status flags**.
+
+In this course, we will build the two most important starter flags:
+
+1.  **Zero Flag (`Z`)**
+    -   `Z = 1` if the result bus is `0000`
+    -   This is the hardware foundation of equality tests
+2.  **Negative Flag (`N`)**
+    -   `N = 1` if the most significant bit of the result is `1`
+    -   In Two's Complement interpretation, that means the result is negative
+
+A useful caution:
+
+Our simplified machine uses only `Z` and `N`. Real CPUs often include additional flags such as Carry and Overflow so they can make richer signed and unsigned comparisons safely. For this course, `Z` and `N` are enough to unlock a huge leap in capability.
 
 ---
 
-#### Lab & Experiment: Building the Flag Register
+### Lesson 7.4: Building the flag logic
+
+> **Key Takeaway:** The hardware for useful flags can be surprisingly small. A 4-input NOR detects zero, and a single wire can expose the sign bit.
+
+#### The theory
+
+Let the ALU result bus be `$Y_3 Y_2 Y_1 Y_0$`.
+
+**The Zero Flag**
+
+
+The Zero Flag should be `1` only when all bits are `0`.
+
+That means:
+
+$Z = \neg(Y_3 \lor Y_2 \lor Y_1 \lor Y_0)$
+
+That is exactly the behavior of a **4-input NOR gate**.
+
+**The Negative Flag**
+
+
+In 4-bit Two's Complement, a value is negative when its most-significant bit is `1`.
+
+So:
+
+$N = Y_3$
+
+That is not even really a “circuit.” It is just a wire tapping the sign bit.
+
+---
+
+#### Lab & Experiment: Building the status flag circuit
 
 ![Flag Logic CircuitVerse Diagram](./images/flag-logic-circuitverse.png)
-*Figure: The logic for our 2-bit flag register. A 4-input NOR gate detects the zero condition, while a simple wire taps the MSB for the negative condition.*
+*Figure: The status flag logic. A 4-input NOR produces the Zero Flag, while the most-significant bit is copied directly to create the Negative Flag.*
 
-1.  **Build the Zero Flag Circuit:**
-    1.  Create a 4-bit input bus (this will eventually come from our ALU's output).
-    2.  Build a 4-input NOR gate connected to this bus.
-    3.  Connect the output to a lamp labeled "Zero Flag (Z)".
-    4.  Test it: The lamp should only be ON when all four input levers are set to `` `0` ``.
-2.  **Build the Negative Flag Circuit:**
-    1.  Using the same 4-bit input bus, run a single wire from the most significant bit ($Y_3$, the `$8$`s place).
-    2.  Connect this wire directly to a lamp labeled "Negative Flag (N)".
-    3.  Test it: The lamp should be ON if and only if the `$8$`s place lever is ON.
+1.  Create a 4-bit input bus that will eventually come from the ALU result.
+2.  Build a 4-input NOR gate and connect it to all four lines.
+3.  Connect its output to a lamp labeled **Zero (Z)**.
+4.  Run a direct wire from the most-significant bit (`$Y_3$`) to a lamp labeled **Negative (N)**.
+5.  Label both outputs clearly. These two bits together are your machine’s first status report.
 
-![Flag Register Minecraft Build](./images/flag-register-minecraft.png)
-*Figure: The flag logic circuits in Minecraft. The Z flag lamp is lit because the input is `0000`. The N flag lamp is off.*
+#### The experiment
+
+Test these cases:
+
+| Result bus | Expected Z | Expected N |
+| :---: | :---: | :---: |
+| `0000` | `1` | `0` |
+| `0101` | `0` | `0` |
+| `1000` | `0` | `1` |
+| `1011` | `0` | `1` |
+
+A useful interpretation check:
+
+-   `1011` displays as `B` in hex
+-   but as a signed 4-bit Two's Complement value, it means `-5`
+-   so the Negative flag should absolutely be ON
+
+For now, this is a **live status circuit** rather than a stored register. It reflects whatever value is currently on the result bus. Later, the control logic can choose to **latch** these bits into a tiny flag register at the moment an ALU instruction completes, preserving them for branch decisions.
 
 ---
 
 ### Module 7 Conclusion
 
-Excellent work. You have now built the fundamental decision-making circuits for our computer. The machine can now not only calculate, but it can also generate metadata *about* those calculations in the form of status flags. This is the crucial gift of awareness that separates a simple calculator from a thinking machine.
+This is one of the most important conceptual modules in the whole course.
 
-You now have all the logical and comparison components ready. In the next modules, we will build the final piece of the puzzle, the multiplexer, before we forge everything into our complete Arithmetic Logic Unit.
+You did not just add a few more lights to the machine. You built the hardware basis of decision-making. The computer can now say more than “here is the answer.” It can also say “the answer was zero” or “the answer was negative.”
+
+That tiny bit of metadata is what lets software branch, loop, and react.
+
+In the next module, we will build one more crucial control component: the **multiplexer**, the digital switch that lets the machine choose which of several data paths it wants to use. After that, we will finally assemble the complete ALU.
 
 ---
 
 ### Module 7 Checkpoint
 
 #### Practice Problem 7.5.1: Knowledge Check
-1. Why are status flags generally more efficient than dedicated comparator circuits in a real CPU?
-2. What calculation would a CPU perform to check if `$A > B$`? What flag would it look at?
-3. What is the logic gate used to create the Zero Flag circuit?
+
+1.  Why are status flags usually more economical than building a separate large comparator for every possible condition?
+2.  What gate is used to build the Zero Flag circuit?
+3.  If the result bus is `1001`, what should the `Z` and `N` flags be?
 
 <details>
 <summary><strong>Show Solution</strong></summary>
-1. Status flags allow the CPU to get many pieces of information (zero, negative, carry, overflow) from a single arithmetic operation (like subtraction), rather than needing separate, bulky hardware for every possible comparison.
-2. It would calculate `$B - A$`. If the **Negative Flag** is `1`, it means the result was negative, which means that $A$ must have been greater than $B$.
-3. A **NOR** gate.
+
+1.  Because one ALU operation can produce a result **and** a small collection of useful condition bits at the same time. That lets the CPU reuse existing arithmetic hardware instead of building a bulky dedicated circuit for every question.
+2.  A **4-input NOR** gate.
+3.  `Z = 0` and `N = 1`.
+
 </details>
 
-#### Practice Problem 7.5.2: Design Challenge
-Design a circuit that detects if a 4-bit number is the specific value `` `1111` `` (`15` decimal). What single logic gate can accomplish this?
+#### Practice Problem 7.5.2: Design challenge
+
+Without using the dedicated equality comparator from Lesson 7.2, how could a CPU test whether `$A = B$` using only an ALU and flags?
 
 <details>
 <summary><strong>Show Solution</strong></summary>
-To check if all four bits ($Y_3, Y_2, Y_1, Y_0$) are `1`, you would need a single **4-input AND gate**. Its output will only be `1` if all of its inputs are `1`.
+
+The CPU can compute `$A - B$` in the ALU and then inspect the **Zero Flag**.
+
+-   If the result is `0000`, then `$A = B$`
+-   If the result is anything else, then `$A \neq B$`
+
 </details>
+
+#### Practice Problem 7.5.3: Debug challenge
+
+Your Zero Flag lamp turns ON correctly for `0000`, but it also turns ON for `1000`.
+
+What is the most likely kind of wiring error?
+
+<details>
+<summary><strong>Show Solution</strong></summary>
+
+The most likely problem is that the Zero Flag circuit is **not seeing all four bits**. One of the input lines, likely the most-significant bit, is probably missing from the NOR gate input network. If `Y_3` is disconnected, then `1000` would be misread as if it were `0000`.
+
+</details>
+
+#### Real-world connection: The processor status register
+
+Real CPUs maintain a small set of condition bits after arithmetic operations. These flags live in a dedicated status or condition-code register and are used by branch instructions such as “jump if zero” or “jump if negative.” You are now building the exact conceptual machinery behind that behavior. When a processor takes a branch, it is often because one tiny bit was set or cleared by the previous ALU operation.
+
+#### Software connection: `if` statements become compare-and-branch
+
+High-level code like this:
+
+```python
+if x == y:
+    do_something()
+```
+
+does not survive all the way down to hardware as a mystical “if.” It typically becomes something like:
+
+1.  compare `x` and `y` (often by subtraction)
+2.  set flags
+3.  branch if the appropriate flag is true
+
+That is exactly why status flags matter. They are one of the key places where software structure touches physical hardware behavior.
 
 #### Key Terms
-
--   **Comparator**: A digital circuit that compares two binary numbers and outputs a signal indicating the result of that comparison (e.g., equal, greater than, etc.).
--   **Flag**: A single bit stored in a status register that holds information about the result of the most recent ALU operation.
--   **Most Significant Bit (MSB)**: The bit in a binary number with the largest place value, which is used as the sign bit in Two's Complement representation.
--   **Status Register**: A collection of flag bits within a CPU that stores the status of the processor and information about the outcome of the last operation.
--   **Zero Flag (Z)**: A status flag that is set to `1` if the result of an operation is zero, and `0` otherwise. It is the primary mechanism for testing equality.
--   **Negative Flag (N)**: A status flag that is set to `1` if the result of an operation is negative (i.e., its MSB is `1`), and `0` otherwise.
+-   **Comparator**: A circuit that answers a relationship question about two values, such as whether they are equal.
+-   **Condition code**: Another common name for a status flag bit used by control flow instructions.
+-   **Equality comparator**: A comparator whose output is `1` only when two inputs are identical.
+-   **Flag**: A single-bit signal that summarizes some property of an ALU result.
+-   **Most significant bit (MSB)**: The leftmost bit of a binary value, which carries the largest place value.
+-   **Negative Flag (`N`)**: A flag that copies the most-significant bit of the result in a Two's Complement interpretation.
+-   **Status register**: The conceptual collection of flag bits describing the outcome of the latest operation.
+-   **Zero Flag (`Z`)**: A flag that is `1` exactly when the result bus is all zeros.

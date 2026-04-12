@@ -1,3 +1,6 @@
 .DS_Store
 course/Redstone-University-for-pdf.pdf
 course/Redstone-University-with-key-terms.md
+.handoff
+.handoff/
+pi-session-*.html

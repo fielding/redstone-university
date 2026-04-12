@@ -1,160 +1,362 @@
-## Module 6: Advanced Arithmetic – Overflow and Subtraction
+## Module 6: Advanced arithmetic – Overflow and subtraction
 
 ### Module 6 Summary
 
--   **Narrative Beat:** Our adder is powerful, but we'll now push it to its breaking point, discovering the fundamental bug of "overflow." We'll learn to harness the Carry Bit to detect it, and then, using a brilliant mathematical trick called Two's Complement, we will teach our existing adder how to subtract.
+-   **Narrative Beat:** Our adder works, but now we are going to discover its limits. We will push a 4-bit machine past what 4 bits can hold, learn how to detect that event, and then use the elegant trick of Two's Complement to teach the very same hardware how to subtract.
 -   **Learning Goals:**
-    -   Discover and understand the concept of arithmetic overflow.
-    -   Engineer a solution using the adder's carry-out bit.
-    -   Understand how negative numbers are represented in binary using Two's Complement.
-    -   Build a unified circuit that can perform both addition and subtraction.
+    -   Understand what it means for a fixed-width result to **overflow**.
+    -   Use the adder’s final carry line as a visible arithmetic warning signal.
+    -   Learn how negative numbers are represented in binary with **Two's Complement**.
+    -   Convert our existing adder into a combined adder/subtractor with only a small amount of extra logic.
 -   **Lesson Overview:**
-    -   Lesson 6.1: The Theory – When Numbers Get Too Big
-    -   Lesson 6.2: The Lab – Discovering and Handling Overflow
-    -   Lesson 6.3: The Theory – The Magic of Two's Complement
-    -   Lesson 6.4: The Lab – Building the Adder/Subtractor Unit
--   **Minecraft Artifact:** A unified adder/subtractor unit with an overflow indicator light.
+    -   Lesson 6.1: The theory – When numbers get too big
+    -   Lesson 6.2: The lab – Discovering and handling overflow
+    -   Lesson 6.3: The theory – The magic of Two's Complement
+    -   Lesson 6.4: The lab – Building the adder/subtractor unit
+-   **Minecraft Artifact:** A 4-bit adder/subtractor with a carry/overflow indicator lamp.
 
 ---
 
 ### Module 6 Introduction
 
-You've built a fantastic adder and upgraded our computer to speak hexadecimal. It feels like our machine is unstoppable. But every machine, no matter how powerful, has its limits. In this module, we're going to find ours.
+One of the great lessons of computer engineering is that every machine lives inside constraints.
 
-First, we will push our 4-bit adder past its breaking point and discover **arithmetic overflow**, a bug that occurs when the answer to a calculation is too big for the computer to hold. You will learn to harness the powerful **Carry Bit** to detect this problem.
+Our machine is not a limitless calculator. It is a **4-bit** calculator. That means every answer must fit inside a 4-bit container unless we explicitly build extra hardware to handle more.
 
-Then, we'll ask a new question: how do computers subtract? The answer is a beautiful mathematical trick that is central to all modern computing. We will learn about **Two's Complement**, the system for representing negative numbers, and use it to teach our existing adder how to subtract, doubling its capabilities without doubling its size.
+In this module, we are going to make those limits visible.
 
----
+First, we will deliberately break our adder by asking it to produce a result that does not fit in 4 bits. The good news is that the machine already knows this happened. The clue has been sitting there on the final `CarryOut` wire all along.
 
-### Lesson 6.1: The Theory – When Numbers Get Too Big
+Then we will tackle an even more beautiful idea: subtraction without building a brand-new subtractor. Using **Two's Complement**, we can transform subtraction into addition and reuse almost everything we already built.
 
-> **Key Takeaway:** Arithmetic overflow is a natural consequence of trying to fit a large number into a small, fixed-size container. The carry-out bit is the signal that this has happened.
-
-The components we have built all operate on a **4-bit word size**. This means the largest number they can represent is `` `1111` ``, which we know is `15` in decimal, or `$F$` in hex. This raises a critical question: What happens if we ask our 4-bit adder to calculate an answer that is *larger* than 15?
-
-For example, what is `$C + 5$` (`12 + 5`)? The answer is `17`. But `17` in binary is `` `10001` ``, a 5-bit number!
-
-This situation is called **Arithmetic Overflow**. It's not a flaw in the logic; it's a fundamental limitation of working with a fixed number of bits. When an operation's result exceeds this limit, the 4-bit answer you get is wrong. The `Carry-Out` wire from our adder is the key. It's not an error light; it's the 5th bit of the answer! Our adder is already correctly calculating this 5th bit; we just haven't been using it yet.
+This is one of those modules where the abstraction level jumps. After it clicks, a lot of low-level computing starts to feel much less mysterious.
 
 ---
 
-### Lesson 6.2: The Lab – Discovering and Handling Overflow
+### Lesson 6.1: The theory – When numbers get too big
 
-> **Key Takeaway:** By connecting the carry-out bit from our adder to an indicator lamp, we can create a physical "overflow flag" that warns us when a calculation is invalid.
+> **Key Takeaway:** Overflow happens when the true result of a calculation needs more bits than the machine has available to store it.
 
-#### Lab Part A: Discovering the Overflow Bug
+Our computer’s arithmetic lane is 4 bits wide. That gives us these unsigned values:
 
-1.  **The Setup:** Your computer should still be configured from the end of Module 5, with the adder's 4-bit `Sum` output connected to your hex display.
-2.  **The Crucial Addition:** Connect the final `Carry-Out` wire from the 4th bit of your adder to a single, separate **Redstone Lamp**. This is our overflow indicator.
-3.  **The Test:** Set Input A to `` `1100` `` ($C$) and Input B to `` `0101` `` (5).
-4.  **The "Aha!" Moment:** Observe the output.
-    -   The 4-bit `Sum` bus is outputting `` `0001` ``.
-    -   The Hex Display receives this and shows a **`1`**.
-    -   The `Carry-Out` lamp is **ON**.
+-   smallest: `0000` = `0`
+-   largest: `1111` = `15`
 
-The display says the answer is `1`, but we expected `17`. The result is wrong! But we have a clue: the display is showing the `1` from the ones place, and the Carry-Out lamp is representing the `1` in the sixteens place. Our adder gave us a 5-bit answer, and we only built a display for four of those bits!
+So what happens if we ask for:
+
+-   `12 + 5`
+-   hexadecimal: `C + 5`
+-   binary: `1100 + 0101`
+
+The true result is `17`, which in binary is `10001`.
+
+That is a **5-bit** answer.
+
+Our adder actually computes this correctly. The problem is that our main result bus can only display the lower 4 bits: `0001`. The missing fifth bit appears on the final carry line.
+
+#### A note on terminology
+
+In beginner-friendly courses, the final carry is often described as an **overflow warning**, and that is a useful intuition here.
+
+More precisely:
+
+-   for **unsigned arithmetic**, that final carry means the result spilled beyond four bits
+-   for **signed Two's Complement arithmetic**, overflow has a slightly subtler meaning
+
+For now, we will use a simple and practical rule:
+
+> If the arithmetic result does not fit cleanly in four bits, the final carry line is important information and you should not ignore it.
+
+That is enough to make the machine more honest.
+
+---
+
+### Lesson 6.2: The lab – Discovering and handling overflow
+
+> **Key Takeaway:** The final carry wire from the adder is not useless extra output. It is the machine telling you that the real answer extended beyond the visible 4-bit result bus.
+
+#### Lab Part A: Discover the bug
+
+1.  Keep your system wired as it was at the end of Module 5.
+2.  Take the final `CarryOut` wire from the most-significant full adder stage.
+3.  Connect it to a separate Redstone Lamp labeled **Carry / Overflow**.
+4.  Run this test:
+    -   Input A: `1100` (`C`, or 12)
+    -   Input B: `0101` (`5`)
+
+Expected observation:
+
+-   The 4-bit result bus shows `0001`
+-   The hex display shows `1`
+-   The Carry / Overflow lamp is **ON**
 
 ![Overflow Bug Minecraft Build](./images/overflow-bug-minecraft.png)
-*Figure: The overflow bug in action. Input A (`C`) and Input B (`5`) are added. The 4-bit sum on the main display incorrectly shows `1`, but the crucial Carry-Out lamp is lit, indicating the overflow.*
+*Figure: The arithmetic result does not fit in four bits. The main display only shows the low four bits, while the carry lamp reveals that a fifth bit existed.*
 
-#### Lab Part B: Engineering the Overflow Flag
+This is the “aha” moment. The machine did not fail. **We misread it.**
 
-The solution for now is simple: that Carry-Out lamp is our official **Overflow Flag**. In the future, our computer's Control Unit will be able to look at this signal. For now, we, the human engineers, will use it as a warning light. If that lamp is on, we know the number on the main display is not the complete answer.
+It gave us a 5-bit answer:
+
+-   carry lamp = leading `1`
+-   display = trailing `0001`
+
+Together, that is `10001`.
+
+#### Lab Part B: Use the carry lamp intentionally
+
+Try these three tests:
+
+1.  `1111 + 0001`
+    -   visible result: `0000`
+    -   carry lamp: ON
+2.  `0111 + 0001`
+    -   visible result: `1000`
+    -   carry lamp: OFF
+3.  `0010 + 0011`
+    -   visible result: `0101`
+    -   carry lamp: OFF
+
+These examples train you to separate two questions:
+
+1.  What are the low four bits of the result?
+2.  Did the calculation spill out of the 4-bit container?
+
+For now, our fix is simply to expose that signal clearly. Later, the control unit will be able to *react* to status information like this.
 
 ---
 
-### Lesson 6.3: The Theory – The Magic of Two's Complement
+### Lesson 6.3: The theory – The magic of Two's Complement
 
-> **Key Takeaway:** By using a system called Two's Complement, we can represent negative numbers in binary, allowing us to perform subtraction by using regular addition.
+> **Key Takeaway:** Two's Complement lets us represent negative numbers using ordinary binary patterns, which means subtraction can be performed as addition.
 
-The key to efficient subtraction is to rephrase the problem. The expression `$8 - 3$` is the same as `$8 + (-3)$`. If we can find the binary for `-3`, we can just use our adder! The system all modern computers use is called **Two's Complement**.
+The trick is to rewrite subtraction:
 
-**The Two-Step Rule to find `-X`:**
-1.  **Step 1 (Invert):** Invert all the bits of `$X$`. Flip every `` `0` `` to a `` `1` `` and every `` `1` `` to a `` `0` ``. (This is called the "One's Complement").
-2.  **Step 2 (Add One):** Add `1` to the result of Step 1.
+-   `$A - B$`
+-   becomes `$A + (-B)$`
 
-**Example: Let's find `-3` in 4-bit binary.**
--   Start with positive 3: **`` `0011` ``**
--   **Step 1 (Invert):** `` `0011` `` becomes `` `1100` ``.
--   **Step 2 (Add 1):** `` `1100` `` + `` `0001` `` = `` `1101` ``.
--   So, in 4-bit Two's Complement, **`` `1101` `` represents -3.**
+So the real question is this:
 
-Notice that the leftmost bit (the Most Significant Bit) is now `1`. This is the **sign bit**. If it's `0`, the number is positive. If it's `1`, it's negative.
+> How do we encode `-B` as a 4-bit binary number?
 
-Let's prove it works by calculating `$8 + (-3)$`:
--   `$8$` is `` `1000` ``.
--   `$-3$` is `` `1101` ``.
--   Adding them gives `` `10101` ``. In Two's Complement, we **discard the final carry bit**, leaving us with `` `0101` ``, which is `5`. It works perfectly!
+The answer is **Two's Complement**.
+
+#### The two-step rule for finding `-X`
+
+1.  **Invert** every bit of `$X$`
+2.  **Add `1`**
+
+That is it.
+
+#### Example: Find `-3`
+
+Start with positive `3`:
+
+-   `0011`
+
+Invert every bit:
+
+-   `1100`
+
+Add `1`:
+
+-   `1101`
+
+So in 4-bit Two's Complement, `1101` represents `-3`.
+
+#### Why this is so useful
+
+Now we can do this:
+
+```text
+  1000   (8)
++ 1101   (-3)
+------
+ 10101
+```
+
+Discard the extra carry bit on the left and we keep:
+
+-   `0101` = `5`
+
+That means:
+
+-   `8 + (-3) = 5`
+-   so the same adder can perform subtraction
+
+#### The signed range of a 4-bit number
+
+When we interpret 4 bits as a Two's Complement value, the range is:
+
+-   smallest: `1000` = `-8`
+-   largest: `0111` = `+7`
+
+A few useful landmarks:
+
+| Bit pattern | Unsigned meaning | Two's Complement meaning |
+| :---: | :---: | :---: |
+| `0000` | `0` | `0` |
+| `0001` | `1` | `1` |
+| `0111` | `7` | `7` |
+| `1000` | `8` | `-8` |
+| `1111` | `15` | `-1` |
+
+This is an important mindset shift: **the wires do not change; only our interpretation changes.**
+
+That is why the same 4-bit pattern can appear as `B` on a hex display and also mean `-5` in signed arithmetic.
 
 ---
 
-### Lesson 6.4: The Lab – Building the Adder/Subtractor Unit
+### Lesson 6.4: The lab – Building the adder/subtractor unit
 
-> **Key Takeaway:** By adding a bank of XOR gates to one of the inputs, we can create a "controllable inverter" that allows our adder to perform subtraction.
+> **Key Takeaway:** XOR gates give us a controllable inverter, and the adder’s existing initial carry input gives us the “+1” required by Two's Complement. That is why an adder can become a subtractor so cheaply.
 
-Our goal is to create a unified circuit that calculates `$A + B$` or `$A - B$` based on a single control signal. From the theory, we know that `$A - B$` is the same as `$A + (\neg B) + 1$`.
+We want a single control signal, `Subtract`, that makes the circuit behave like this:
 
-#### Lab Part A: The Controllable Inverter
-We need a circuit that can either pass $B$ through unchanged, or invert it. The **XOR gate** is the perfect tool for this!
--   $B \oplus 0 = B$ (Pass-through)
--   $B \oplus 1 = \neg B$ (Invert)
+-   if `Subtract = 0`, compute `$A + B$`
+-   if `Subtract = 1`, compute `$A + (\neg B) + 1$`, which is `$A - B$`
 
-1.  **The Build:** Take your 4-bit input bus for $B$. Before it enters the adder, insert a bank of four XOR gates.
-2.  **The Control:** Connect one input of each XOR gate to the corresponding bit from $B$. Connect the *other* input of all four XOR gates together to a single new lever labeled **`Subtract`**.
+#### Lab Part A: Build the controllable inverter
 
-#### Lab Part B: The "+1" Circuit
-This is the easy part. How do we add `1`? Our ripple-carry adder already has a `Carry-In` input on its very first bit!
+The XOR gate does exactly what we need:
 
-1.  **The Build:** Connect the same **`Subtract`** lever's signal directly to the `Carry-In` of the first Full Adder module (the `1`s place).
+-   `$B \oplus 0 = B$`
+-   `$B \oplus 1 = \neg B$`
+
+Build steps:
+
+1.  Take the 4-bit input bus for `$B$`.
+2.  Before it reaches the adder, insert **four XOR gates**, one for each bit.
+3.  Feed the corresponding bit of `$B$` into one side of each XOR gate.
+4.  Tie the other side of all four XOR gates together and connect them to a new control lever labeled **Subtract**.
+
+When the lever is OFF, the XOR bank passes `$B$` through unchanged.
+When the lever is ON, the XOR bank flips every bit of `$B$`.
+
+#### Lab Part B: Add the final `+1`
+
+Two's Complement needs one more step after inversion: add `1`.
+
+Conveniently, our ripple-carry adder already has a perfect place for that.
+
+1.  Take the same **Subtract** signal.
+2.  Route it to the `CarryIn` of the **least-significant** full adder stage.
+
+Now the control lever does two jobs at once:
+
+-   it tells the XOR bank to invert `$B$`
+-   it injects the required `+1`
 
 ![Adder-Subtractor CircuitVerse Diagram](./images/adder-subtractor-circuitverse.png)
-*Figure: The logic for the unified adder/subtractor. A control signal (`Subtract`) simultaneously tells the XOR gates to invert input B and tells the adder to add 1 via the initial Carry-In.*
+*Figure: The single `Subtract` control simultaneously inverts the B input through XOR gates and adds the required `1` by driving the initial carry-in.*
 
-#### Final Test
+#### The experiment
 
-1.  **Addition:** Set the `Subtract` lever to **OFF (`0`)**. Test an addition like $7+2$. The display should show `9`.
-2.  **Subtraction:** Flip the `Subtract` lever to **ON (`1`)**. The XOR gates now invert input $B$, and the adder receives a Carry-In of `1`. The circuit is now calculating $A + (\neg B) + 1$. Test $7-2$. The display should show `5`.
+Run all of these tests:
+
+1.  **Addition mode** (`Subtract = 0`)
+    -   `0111 + 0010 = 1001` (`9`)
+2.  **Subtraction mode** (`Subtract = 1`)
+    -   `0111 - 0010 = 0101` (`5`)
+3.  **Subtraction producing a negative result**
+    -   `0010 - 0111 = 1011`
+
+That last result is worth pausing on.
+
+-   In hex, `1011` displays as `B`
+-   In 4-bit Two's Complement, `1011` means `-5`
+
+Same wires. Same bits. Different interpretation.
+
+That exact idea will matter a lot in the next module, when we teach the machine to recognize whether a result is zero or negative.
+
+---
+
+### Module 6 Conclusion
+
+You have just crossed a major conceptual bridge.
+
+You learned that arithmetic hardware is always bounded by word size, and that a machine must somehow signal when a result spills beyond those bounds. You also learned one of the most elegant tricks in all of digital design: subtraction does not require a completely separate kind of circuit. It can emerge from addition with just a little cleverness.
+
+That is a recurring theme in computer architecture. The most powerful designs are often not the ones with the most parts, but the ones that reuse the same parts in smart ways.
+
+In the next module, we are going to give our machine a new kind of power. It will no longer just produce numbers. It will produce information *about* those numbers, letting it tell us whether a result was zero or negative. That is the first step from calculation toward decision-making.
 
 ---
 
 ### Module 6 Checkpoint
 
 #### Practice Problem 6.5.1: Knowledge Check
-1. What is an "overflow error" in the context of our 4-bit adder?
-2. In 4-bit Two's Complement, what is the binary representation for `-1`?
-3. Which logic gate was the key to creating our controllable inverter?
+
+1.  What does the final carry line tell us in our 4-bit arithmetic system?
+2.  What is the 4-bit Two's Complement representation of `-1`?
+3.  Why is XOR the key gate in the adder/subtractor design?
 
 <details>
 <summary><strong>Show Solution</strong></summary>
-1. An overflow error occurs when the result of a calculation is a number greater than `15` and requires more than 4 bits to represent.
-2. `1111`. (Start with `0001`, invert to `1110`, add 1 to get `1111`).
-3. The **XOR** gate.
+
+1.  It tells us that the arithmetic result extended beyond the visible 4-bit result bus. In practical terms, it warns that the calculation spilled out of the 4-bit container.
+2.  `1111`
+3.  Because XOR can act as a **controllable inverter**: with control `0` it passes the bit unchanged, and with control `1` it flips the bit.
+
 </details>
 
-#### Practice Problem 6.5.2: The Word Problem
-You perform the calculation `$D - 5$` (hex) which is $13 - 5$ (decimal).
-1. What is the 4-bit Two's Complement representation of `-5`?
-2. What is the 5-bit binary result when you add `1101` (13) and your answer from part 1?
-3. What is the final 4-bit answer after discarding the carry?
+#### Practice Problem 6.5.2: The word problem
+
+Compute `D - 5` using 4-bit Two's Complement arithmetic.
+
+1.  Write `D` in binary.
+2.  Find the Two's Complement representation of `-5`.
+3.  Add the two values.
+4.  What 4-bit result remains after discarding the final carry?
 
 <details>
 <summary><strong>Show Solution</strong></summary>
-1. `-5` is `1011`. (Start with `0101`, invert to `1010`, add 1).
-2. `1101` + `1011` = `11000`.
-3. The final answer is `1000`, which is `8` in decimal.
+
+1.  `D` is `1101`
+2.  `5` is `0101`; invert to `1010`; add `1` to get `1011`, so `-5` is `1011`
+3.  `1101 + 1011 = 1 1000`
+4.  Discard the final carry and keep `1000`, which is `8` in unsigned interpretation and `-8` in 4-bit signed interpretation. In the context of `13 - 5`, we read it here as the low 4 bits of the unsigned result `8`.
+
 </details>
+
+#### Practice Problem 6.5.3: Debug challenge
+
+Your addition mode works perfectly, but in subtraction mode every answer is off by exactly `1`. For example, `7 - 2` produces `4` instead of `5`.
+
+What is the most likely missing connection?
+
+<details>
+<summary><strong>Show Solution</strong></summary>
+
+The most likely fault is that the **Subtract control is not connected to the initial CarryIn** of the least-significant adder stage.
+
+Inversion alone produces One's Complement. To get **Two's Complement**, the circuit must also add `1`.
+
+</details>
+
+#### Real-world connection: Integer wraparound
+
+Real processors also work with fixed-width integers. An 8-bit register cannot hold every possible number; neither can a 32-bit one. When a result spills past the available width, the hardware keeps the low bits and exposes status information through flags. In many programming languages and machine architectures, this is why integer overflow, wraparound, and signed-vs-unsigned interpretation matter.
+
+#### Software connection: Negation as `~x + 1`
+
+At the software level, Two's Complement shows up in the classic identity for negation:
+
+```python
+def twos_complement_negate_4bit(x: int) -> int:
+    return ((~x) + 1) & 0b1111
+```
+
+That code is just the software spelling of the hardware you built:
+
+-   `~x` is the inversion step
+-   `+ 1` is the injected carry-in step
+-   `& 0b1111` keeps only the low 4 bits
 
 #### Key Terms
-- **Arithmetic Overflow**: An error condition that occurs when the result of a calculation is too large to be represented by the available number of bits.
-- **Carry Bit**: A bit that stores the overflow from a single column of addition, which is then "carried" over to the next column.
-- **Sign Bit**: The most significant bit (MSB) in a signed number representation, which indicates whether the number is positive or negative.
-- **Two's Complement**: A mathematical operation and binary representation system used by computers to handle negative numbers, allowing for subtraction using addition.
-
----
-
-### Module 6 Conclusion
-
-Excellent work. You have now conquered the fundamental challenges of computer arithmetic. You've diagnosed overflow, a core limitation of fixed-size computing, and harnessed the Carry Bit to detect it. Even more impressively, you've implemented the beautiful mathematical trick of Two's Complement, doubling our machine's capability by teaching it to subtract.
-
-Our Arithmetic Unit is nearly complete. In the next module, we will give it the power of awareness by building circuits that can compare numbers and set status flags, the final step before we can assemble the entire processor core.
+-   **Carry bit**: The extra bit produced when a column of binary addition exceeds the capacity of that column.
+-   **Fixed-width arithmetic**: Arithmetic performed in a container with a limited number of bits.
+-   **Overflow**: The condition where the true result of a calculation needs more bits than are available in the destination width.
+-   **Sign bit**: In a signed binary representation, the most significant bit that indicates the sign of the value.
+-   **Two's Complement**: The standard binary representation for signed integers in which negation is performed by inverting the bits and adding `1`.
+-   **Word size**: The natural width, in bits, of the values a machine processes at once.
