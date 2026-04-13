@@ -51,7 +51,7 @@ jobs:
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add course/ assets/
+          git add -f course/ assets/
           git status
           if ! git diff --staged --quiet; then
             git commit -m "docs: Rebuild course materials and PDF"
