@@ -3,39 +3,40 @@ import '../styles/global.css';
 
 interface Props {
 	title: string;
+	math?: boolean;
 }
 
-const { title } = Astro.props;
+const { title, math = false } = Astro.props;
+const fontUrl = 'https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Hanken+Grotesk:ital,wght@0,300..700;1,300..700&family=Literata:ital,opsz,wght@0,7..72,300..700;1,7..72,300..700&family=Young+Serif&display=swap';
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="description" content="Redstone University - Learn Computer Architecture in Minecraft" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="description" content="Redstone University — Learn Computer Architecture in Minecraft" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title} | Redstone University</title>
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+
+		<!-- Fonts: preconnect + preload CSS then load -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link rel="preload" as="style" href={fontUrl} />
+		<link rel="stylesheet" href={fontUrl} />
+
+		<!-- KaTeX — only on pages with math content -->
+		{math && (
+			<link
+				rel="stylesheet"
+				href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css"
+				integrity="sha384-nB0miv6/jRmo5EGIE/ycnhicV2PkaJy2eLXauADVsrtkmGKILwIHN4cnFIBQgAIG"
+				crossorigin="anonymous"
+			/>
+		)}
 	</head>
 	<body>
-        <div class="background-glow"></div>
 		<slot />
 	</body>
 </html>
-
-<style>
-    .background-glow {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background: radial-gradient(circle at 50% 0%, rgba(255, 0, 0, 0.15), transparent 60%);
-        pointer-events: none;
-        z-index: -1;
-    }
-</style>

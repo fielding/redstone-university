@@ -4,25 +4,31 @@ import type { CourseNode } from '../utils/navigation';
 interface Props {
   node: CourseNode;
   depth?: number;
+  currentSlug?: string;
 }
 
-const { node, depth = 0 } = Astro.props;
+const { node, depth = 0, currentSlug } = Astro.props;
 const hasChildren = node.children.length > 0;
+const isCurrent = node.slug === currentSlug;
 ---
 
 <li class="nav-item" style={`--depth: ${depth}`}>
   {node.slug ? (
-    <a href={`/course/${node.slug}`} class="nav-link">
+    <a
+      href={`/course/${node.slug}`}
+      class:list={['nav-link', { 'is-active': isCurrent }]}
+      aria-current={isCurrent ? 'page' : undefined}
+    >
       {node.title}
     </a>
   ) : (
-    <span class="nav-section-title">{node.title}</span>
+    <span class="nav-section">{node.title}</span>
   )}
 
   {hasChildren && (
     <ul class="nav-children">
       {node.children.map((child) => (
-        <Astro.self node={child} depth={depth + 1} />
+        <Astro.self node={child} depth={depth + 1} currentSlug={currentSlug} />
       ))}
     </ul>
   )}
@@ -31,37 +37,43 @@ const hasChildren = node.children.length > 0;
 <style>
   .nav-item {
     list-style: none;
-    margin-bottom: 0.25rem;
   }
 
-  .nav-link, .nav-section-title {
+  .nav-link {
     display: block;
-    padding: 0.5rem 1rem;
-    padding-left: calc(1rem + (var(--depth) * 1rem));
-    color: var(--color-text-muted);
-    border-radius: 6px;
-    font-size: 0.95rem;
-    transition: all 0.2s ease;
+    padding: 6px 0;
+    padding-left: calc(var(--depth, 0) * var(--space-md));
+    color: var(--color-text-faint);
+    font-size: 0.88rem;
+    line-height: 1.5;
     text-decoration: none;
-  }
-
-  .nav-section-title {
-    font-weight: 600;
-    color: var(--color-text-accent);
-    margin-top: 1rem;
-    margin-bottom: 0.5rem;
-    text-transform: uppercase;
-    font-size: 0.75rem;
-    letter-spacing: 0.05em;
+    transition: color 150ms var(--ease-out);
   }
 
   .nav-link:hover {
-    color: var(--color-text-main);
+    color: var(--color-text);
   }
 
-  .nav-link[aria-current="page"] {
-    color: var(--color-redstone-glow);
+  .nav-link.is-active {
+    color: var(--color-primary-light);
     font-weight: 500;
+  }
+
+  .nav-section {
+    display: block;
+    padding-top: var(--space-lg);
+    padding-bottom: var(--space-xs);
+    padding-left: calc(var(--depth, 0) * var(--space-md));
+    font-family: var(--font-body);
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-text-secondary);
+  }
+
+  .nav-item:first-child > .nav-section {
+    padding-top: 0;
   }
 
   .nav-children {

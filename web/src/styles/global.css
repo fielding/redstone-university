@@ -1,4 +1,4 @@
-/* Modern CSS Reset */
+/* ── Reset ── */
 *,
 *::before,
 *::after {
@@ -8,83 +8,117 @@
 }
 
 :root {
-  /* Redstone Palette */
-  --color-redstone: #ff0000;
-  --color-redstone-dim: #aa0000;
-  --color-redstone-glow: #ff3333;
-  --color-bg: #0a0a0a;
-  --color-bg-secondary: #111111;
+  /* ── Color System (OKLCH) ── */
 
-  /* Glassmorphism - Softer & Sleeker */
-  --glass-bg: rgba(20, 20, 20, 0.6);
-  --glass-border: rgba(255, 255, 255, 0.05);
-  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
-  --glass-blur: 20px;
+  /* Primary — Crimson, derived from the logo shield */
+  --color-primary: oklch(48% 0.18 25);
+  --color-primary-light: oklch(58% 0.20 25);
+  --color-primary-dim: oklch(32% 0.12 25);
 
-  /* Text */
-  --color-text-main: #e0e0e0;
-  --color-text-muted: #888;
-  --color-text-accent: #fff;
+  /* Warm accent — from the torch flame */
+  --color-accent: oklch(78% 0.14 70);
 
-  /* Typography - Ebook Style */
-  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
-  --font-size-base: 18px;
-  --line-height-base: 1.8;
+  /* Surfaces — near-neutral with just a whisper of warmth (hue 25) */
+  --color-bg: oklch(11% 0.003 25);
+  --color-surface: oklch(15% 0.004 25);
+  --color-surface-raised: oklch(19% 0.005 25);
+
+  /* Text — essentially neutral */
+  --color-text: oklch(88% 0.003 25);
+  --color-text-secondary: oklch(62% 0.005 25);
+  --color-text-faint: oklch(42% 0.004 25);
+
+  /* Borders — neutral */
+  --color-border: oklch(23% 0.004 25);
+  --color-border-subtle: oklch(17% 0.003 25);
+
+  /* Focus ring */
+  --color-focus: oklch(58% 0.18 25);
+
+  /* ── Typography ── */
+  --font-display: 'Young Serif', Georgia, serif;
+  --font-body: 'Literata', Georgia, serif;
+  --font-reading: 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'Fira Code', monospace;
+
+  /* ── Spacing (4pt base) ── */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+  --space-4xl: 96px;
+
+  /* ── Motion ── */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --duration-slow: 500ms;
 }
 
 html {
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   background: var(--color-bg);
-  color: var(--color-text-main);
-  font-size: var(--font-size-base);
-  line-height: var(--line-height-base);
+  color: var(--color-text);
+  font-size: 18px;
+  line-height: 1.75;
   scroll-behavior: smooth;
+  font-kerning: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  margin: 0;
-  padding: 0;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  /* Subtle, deep background */
-  background:
-    radial-gradient(circle at 50% -20%, rgba(200, 0, 0, 0.08), transparent 60%),
-    var(--color-bg);
 }
 
+/* ── Focus styles ── */
+:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ── Links ── */
 a {
-  color: var(--color-redstone-glow);
+  color: var(--color-primary-light);
   text-decoration: none;
-  transition: color 0.2s ease;
+  transition: color var(--duration-fast) var(--ease-out);
 }
 
 a:hover {
-  color: #ff6666;
-  text-shadow: 0 0 8px rgba(255, 0, 0, 0.4);
+  color: var(--color-accent);
 }
 
-/* Utility Classes */
-.glass-panel {
-  background: var(--glass-bg);
-  backdrop-filter: blur(var(--glass-blur));
-  -webkit-backdrop-filter: blur(var(--glass-blur));
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--glass-shadow);
+/* ── Headings ── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  color: var(--color-text);
+  font-weight: 400;
+  line-height: 1.15;
 }
 
-.text-gradient {
-  background: linear-gradient(to right, var(--color-redstone-glow), #fff);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+/* ── Code ── */
+code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
 }
 
-/* Scrollbar */
+/* ── Selection ── */
+::selection {
+  background: oklch(48% 0.15 25 / 0.3);
+  color: oklch(92% 0.003 25);
+}
+
+/* ── Scrollbar ── */
 ::-webkit-scrollbar {
   width: 6px;
-  height: 8px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -92,56 +126,24 @@ a:hover {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #333;
+  background: var(--color-border);
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: var(--color-text-faint);
 }
 
-/* Animations */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
   }
 
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  html {
+    scroll-behavior: auto;
   }
-}
-
-.animate-fade-in {
-  animation: fadeIn 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-}
-
-/* Typography */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  color: var(--color-text-accent);
-  font-weight: 700;
-  line-height: 1.2;
-  margin-bottom: 1rem;
-}
-
-h1 {
-  font-size: 3rem;
-  letter-spacing: -0.02em;
-  background: linear-gradient(to right, #fff, #aaa);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-code {
-  font-family: var(--font-mono);
-  background: rgba(255, 255, 255, 0.1);
-  padding: 0.2em 0.4em;
-  border-radius: 4px;
-  font-size: 0.9em;
 }

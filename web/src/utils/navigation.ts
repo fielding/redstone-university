@@ -77,9 +77,17 @@ export function buildCourseHierarchy(entries: CollectionEntry<'course'>[]): Cour
 }
 
 function getOrder(segment: string): number {
-    // Extract number from "01_Name" or "Part-I"
-    const match = segment.match(/^(\d+)_/);
-    if (match) return parseInt(match[1], 10);
+    // Extract number + optional letter suffix from "01_Name" or "03b_Interlude-..."
+    // So 3.0 < 3.1 (03a) < 3.2 (03b) < 4.0 etc.
+    const match = segment.match(/^(\d+)([a-z]?)_/);
+    if (match) {
+        const num = parseInt(match[1], 10);
+        const letter = match[2];
+        const letterOffset = letter
+            ? (letter.charCodeAt(0) - 'a'.charCodeAt(0) + 1) * 0.1
+            : 0;
+        return num + letterOffset;
+    }
 
     if (segment.startsWith('Part-I-')) return 1;
     if (segment.startsWith('Part-II-')) return 2;
@@ -91,6 +99,10 @@ function getOrder(segment: string): number {
 }
 
 function formatTitle(segment: string): string {
-    // Remove "01_" prefix and replace dashes with spaces
-    return segment.replace(/^\d+_/, '').replace(/-/g, ' ');
+    // Remove leading "01_" or "03b_" prefix, drop trailing "-final" / "-draft",
+    // convert any remaining dashes or underscores to spaces.
+    return segment
+        .replace(/^\d+[a-z]?_/, '')
+        .replace(/[-_](final|draft)$/i, '')
+        .replace(/[-_]/g, ' ');
 }

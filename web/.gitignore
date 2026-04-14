@@ -25,3 +25,7 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# AI tooling context (local only)
+CLAUDE.md
+.impeccable.md

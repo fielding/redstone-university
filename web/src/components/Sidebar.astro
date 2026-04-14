@@ -3,33 +3,37 @@ import { getCollection } from 'astro:content';
 import { buildCourseHierarchy } from '../utils/navigation';
 import SidebarItem from './SidebarItem.astro';
 
+interface Props {
+  currentSlug?: string;
+}
+
+const { currentSlug } = Astro.props;
 const courseEntries = await getCollection('course');
 const navigationTree = buildCourseHierarchy(courseEntries);
 ---
 
-<nav class="sidebar-nav">
-  <ul class="root-list">
+<nav class="sidebar-nav" aria-label="Course navigation">
+  <ul class="nav-root">
     {navigationTree.map((node) => (
-      <SidebarItem node={node} />
+      <SidebarItem node={node} currentSlug={currentSlug} />
     ))}
   </ul>
 </nav>
 
 <style>
   .sidebar-nav {
-    height: 100%;
+    flex: 1;
     overflow-y: auto;
-    padding-right: 0.5rem;
+    padding: var(--space-xs) 0;
   }
 
-  .root-list {
+  .nav-root {
     padding: 0;
     margin: 0;
   }
 
-  /* Custom Scrollbar */
   .sidebar-nav::-webkit-scrollbar {
-    width: 6px;
+    width: 4px;
   }
 
   .sidebar-nav::-webkit-scrollbar-track {
@@ -37,11 +41,7 @@ const navigationTree = buildCourseHierarchy(courseEntries);
   }
 
   .sidebar-nav::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 3px;
-  }
-
-  .sidebar-nav::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.2);
+    background: var(--color-border);
+    border-radius: 2px;
   }
 </style>

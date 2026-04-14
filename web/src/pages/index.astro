@@ -1,329 +1,519 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Logo from '../components/Logo.astro';
 ---
 
 <Layout title="Redstone University">
 	<main>
-		<section class="hero-container">
-			<div class="hero-content">
-				<div class="logo-container">
-					<Logo className="hero-logo" />
-				</div>
-
-				<h1 class="hero-title">
-					Build a Computer <br />
-					<span class="text-gradient">From Scratch</span>
-				</h1>
-
+		<section class="hero">
+			<div class="hero-inner">
+				<img
+					src="/assets/project_assets/logo-dark-nobg.png"
+					alt="Redstone University crest"
+					class="hero-logo"
+					width="460"
+					height="460"
+				/>
+				<h1 class="hero-title">Build a Computer<br />From Scratch</h1>
+				<p class="hero-tagline">
+					<span>4 parts</span>
+					<span class="tagline-sep" aria-hidden="true">·</span>
+					<span>13 modules</span>
+					<span class="tagline-sep" aria-hidden="true">·</span>
+					<span>0 prerequisites</span>
+					<span class="tagline-sep" aria-hidden="true">·</span>
+					<span>1 working CPU</span>
+				</p>
 				<p class="hero-subtitle">
-					An interactive course on computer architecture, <br />
+					An interactive course on computer architecture,<br />
 					built entirely inside Minecraft.
 				</p>
-
-				<div class="cta-group">
-					<a href="/course/introduction" class="btn btn-primary">
-						Start the Course
+				<nav class="hero-actions">
+					<a href="/course/introduction" class="cta-primary">
+						Begin the course <span class="cta-arrow" aria-hidden="true">→</span>
 					</a>
-					<a href="https://github.com/fielding/redstone-university" class="btn btn-secondary">
-						View on GitHub
+					<a href="https://github.com/fielding/redstone-university" class="cta-ghost">
+						Source on GitHub
 					</a>
-				</div>
-
-				<div class="scroll-hint">
-					<span>↓</span>
-				</div>
-			</div>
-		</section>
-
-		<section class="stats-strip">
-			<div class="stat">
-				<span class="stat-number">4</span>
-				<span class="stat-label">Parts</span>
-			</div>
-			<div class="stat-divider"></div>
-			<div class="stat">
-				<span class="stat-number">13</span>
-				<span class="stat-label">Modules</span>
-			</div>
-			<div class="stat-divider"></div>
-			<div class="stat">
-				<span class="stat-number">1</span>
-				<span class="stat-label">Working CPU</span>
-			</div>
-			<div class="stat-divider"></div>
-			<div class="stat">
-				<span class="stat-number">0</span>
-				<span class="stat-label">Prerequisites</span>
+				</nav>
 			</div>
 		</section>
 
 		<section class="curriculum">
-			<h2 class="curriculum-heading">The Curriculum</h2>
-			<div class="parts-grid">
-				<a href="/course/part-i--foundations/introduction" class="part-card">
-					<div class="part-number">Part I</div>
-					<h3 class="part-title">The Foundations</h3>
-					<p class="part-desc">Master Redstone basics, Boolean logic, and build a complete input/output system — a 4-bit interface with a working 7-segment display.</p>
-					<span class="part-link">5 modules + 2 interludes →</span>
-				</a>
-
-				<a href="/course/part-ii-thinking-machine/introduction" class="part-card">
-					<div class="part-number">Part II</div>
-					<h3 class="part-title">The Thinking Machine</h3>
-					<p class="part-desc">Build the brain. Design an adder, add subtraction, status flags, and a multiplexer — then assemble them into a full Arithmetic Logic Unit.</p>
-					<span class="part-link">5 modules →</span>
-				</a>
-
-				<a href="/course/part-iii--processor-core/introduction" class="part-card">
-					<div class="part-number">Part III</div>
-					<h3 class="part-title">The Automated Computer</h3>
-					<p class="part-desc">Give the machine memory, a clock, and a program counter. Define an instruction set and run the first real program on hardware you built.</p>
-					<span class="part-link">4 modules →</span>
-				</a>
-
-				<a href="/course/part-iv--post-graduate/introduction" class="part-card part-card--postgrad">
-					<div class="part-number">Part IV</div>
-					<h3 class="part-title">Post-Graduate Studies</h3>
-					<p class="part-desc">For those who want more. Implement the Double Dabble algorithm to display true decimal output — the hardest challenge in the course.</p>
-					<span class="part-link">Advanced track →</span>
-				</a>
-			</div>
+			<h2 class="section-label scroll-reveal">The Curriculum</h2>
+			<ol class="parts-list">
+				<li>
+					<a href="/course/part-i--foundations/introduction" class="part scroll-reveal">
+						<span class="part-numeral">I</span>
+						<div class="part-body">
+							<h3 class="part-title">The Foundations</h3>
+							<p class="part-desc">
+								Master Redstone basics, Boolean logic, and build a complete
+								input/output system — a 4-bit interface with a working
+								7-segment display.
+							</p>
+							<span class="part-meta">5 modules + 2 interludes</span>
+						</div>
+					</a>
+				</li>
+				<li>
+					<a href="/course/part-ii-thinking-machine/introduction" class="part scroll-reveal">
+						<span class="part-numeral">II</span>
+						<div class="part-body">
+							<h3 class="part-title">The Thinking Machine</h3>
+							<p class="part-desc">
+								Build the brain. Design an adder, add subtraction, status
+								flags, and a multiplexer — then assemble them into a full
+								Arithmetic Logic Unit.
+							</p>
+							<span class="part-meta">5 modules</span>
+						</div>
+					</a>
+				</li>
+				<li>
+					<a href="/course/part-iii--processor-core/introduction" class="part scroll-reveal">
+						<span class="part-numeral">III</span>
+						<div class="part-body">
+							<h3 class="part-title">The Processor Core</h3>
+							<p class="part-desc">
+								Give the machine memory, a clock, and a program counter.
+								Define an instruction set and run the first real program on
+								hardware you built.
+							</p>
+							<span class="part-meta">4 modules</span>
+						</div>
+					</a>
+				</li>
+				<li>
+					<a href="/course/part-iv--post-graduate/introduction" class="part part--advanced scroll-reveal">
+						<span class="part-numeral">IV</span>
+						<div class="part-body">
+							<h3 class="part-title">Post-Graduate Studies</h3>
+							<p class="part-desc">
+								For those who want more. Implement the Double Dabble algorithm
+								to display true decimal output — the hardest challenge in the
+								course.
+							</p>
+							<span class="part-meta">Advanced track</span>
+						</div>
+					</a>
+				</li>
+			</ol>
 		</section>
+
+		<footer class="closing scroll-reveal">
+			<p class="closing-text">No prerequisites. No cost. <em>Just curiosity.</em></p>
+			<a href="/course/introduction" class="cta-primary">
+				Begin the course <span class="cta-arrow" aria-hidden="true">→</span>
+			</a>
+		</footer>
 	</main>
 </Layout>
 
 <style>
 	/* ── Hero ── */
-	.hero-container {
+	.hero {
 		min-height: 100vh;
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		padding: var(--space-2xl) var(--space-lg);
+		position: relative;
+		overflow: hidden;
+	}
+
+	/* Layered atmospheric glow — breathes like a living torch */
+	.hero::before {
+		content: '';
+		position: absolute;
+		inset: -10%;
+		background:
+			radial-gradient(ellipse 50% 45% at 50% 42%, oklch(18% 0.06 25 / 0.7), transparent),
+			radial-gradient(ellipse 90% 70% at 50% 38%, oklch(12% 0.03 25 / 0.5), transparent);
+		pointer-events: none;
+		animation: breathe 10s ease-in-out infinite;
+	}
+
+	/* Secondary glow layer — shifts out of phase for organic feel */
+	.hero::after {
+		content: '';
+		position: absolute;
+		inset: -5%;
+		background: radial-gradient(ellipse 40% 35% at 50% 36%, oklch(20% 0.08 30 / 0.3), transparent);
+		pointer-events: none;
+		animation: breathe 7s ease-in-out 3s infinite;
+	}
+
+	.hero-inner {
+		max-width: 760px;
 		text-align: center;
-		padding: 2rem;
-		background: radial-gradient(circle at 50% 50%, rgba(20, 0, 0, 0.5), transparent 70%);
-	}
-
-	.hero-content {
-		max-width: 800px;
-		animation: fadeIn 1s ease-out;
-	}
-
-	.logo-container {
-		margin-bottom: 2rem;
+		position: relative;
+		z-index: 1;
 	}
 
 	.hero-logo {
-		width: 200px;
+		width: clamp(280px, 20vw + 180px, 520px);
 		height: auto;
-		filter: drop-shadow(0 0 30px rgba(255, 0, 0, 0.2));
+		margin-bottom: var(--space-xl);
+		filter: drop-shadow(0 0 80px oklch(32% 0.16 25 / 0.6))
+		        drop-shadow(0 0 160px oklch(28% 0.10 25 / 0.4));
+		animation: reveal-up 1s var(--ease-out) both;
+		transition: filter 800ms var(--ease-out-quart);
+	}
+
+	/* Torch brightens when you approach — the flame responds */
+	.hero-logo:hover {
+		filter: drop-shadow(0 0 80px oklch(38% 0.20 25 / 0.7))
+		        drop-shadow(0 0 180px oklch(35% 0.14 30 / 0.5));
 	}
 
 	.hero-title {
-		font-size: 4.5rem;
-		line-height: 1.1;
-		margin-bottom: 1.5rem;
+		font-size: clamp(3rem, 5vw + 1rem, 5.5rem);
+		line-height: 1.05;
+		letter-spacing: -0.02em;
+		margin-bottom: var(--space-lg);
+		color: oklch(93% 0.003 25);
+		animation: reveal-up 900ms var(--ease-out) 150ms both;
 	}
 
-	.text-gradient {
-		background: linear-gradient(45deg, #ff3333, #ff9999);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		filter: drop-shadow(0 0 30px rgba(255, 0, 0, 0.2));
+	.hero-tagline {
+		font-family: var(--font-mono);
+		font-size: clamp(0.78rem, 0.6vw + 0.5rem, 0.9rem);
+		font-weight: 400;
+		letter-spacing: 0.04em;
+		color: var(--color-primary-light);
+		margin-bottom: var(--space-lg);
+		animation: reveal-up 800ms var(--ease-out) 300ms both;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: var(--space-sm) var(--space-md);
+	}
+
+	.hero-tagline span {
+		white-space: nowrap;
+	}
+
+	.tagline-sep {
+		color: var(--color-primary-dim);
 	}
 
 	.hero-subtitle {
-		font-size: 1.5rem;
-		color: var(--color-text-muted);
-		margin-bottom: 3rem;
+		font-size: clamp(1.05rem, 0.5vw + 0.9rem, 1.25rem);
+		font-style: italic;
+		color: var(--color-text-secondary);
+		line-height: 1.7;
+		margin-bottom: var(--space-2xl);
+		animation: reveal-up 800ms var(--ease-out) 450ms both;
 	}
 
-	.cta-group {
-		display: flex;
-		gap: 1.5rem;
-		justify-content: center;
-	}
-
-	.btn {
-		padding: 1rem 2.5rem;
-		border-radius: 50px;
-		font-weight: 600;
-		font-size: 1.1rem;
-		transition: all 0.3s ease;
-	}
-
-	.btn-primary {
-		background: var(--color-redstone);
-		color: white;
-		box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
-	}
-
-	.btn-primary:hover {
-		background: var(--color-redstone-glow);
-		transform: translateY(-2px);
-		box-shadow: 0 0 30px rgba(255, 0, 0, 0.6);
-	}
-
-	.btn-secondary {
-		background: rgba(255, 255, 255, 0.05);
-		color: var(--color-text-main);
-		border: 1px solid rgba(255, 255, 255, 0.1);
-	}
-
-	.btn-secondary:hover {
-		background: rgba(255, 255, 255, 0.1);
-		transform: translateY(-2px);
-	}
-
-	.scroll-hint {
-		margin-top: 4rem;
-		color: var(--color-text-muted);
-		font-size: 1.2rem;
-		opacity: 0.5;
-		animation: bounce 2s ease-in-out infinite;
-	}
-
-	/* ── Stats strip ── */
-	.stats-strip {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		gap: 0;
-		padding: 2.5rem 2rem;
-		border-top: 1px solid rgba(255, 255, 255, 0.05);
-		border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-		background: rgba(255, 255, 255, 0.02);
-	}
-
-	.stat {
+	.hero-actions {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		padding: 0 3rem;
+		gap: var(--space-md);
+		animation: reveal-up 800ms var(--ease-out) 600ms both;
 	}
 
-	.stat-number {
-		font-size: 2.5rem;
-		font-weight: 700;
-		color: var(--color-redstone-glow);
-		line-height: 1;
+	/* ── CTAs ── */
+	.cta-primary {
+		font-size: 1rem;
+		font-weight: 600;
+		letter-spacing: 0.03em;
+		color: var(--color-primary-light);
+		padding: var(--space-sm) var(--space-xs);
+		border-bottom: 1px solid var(--color-primary-dim);
+		transition:
+			color var(--duration-fast) var(--ease-out),
+			border-color var(--duration-fast) var(--ease-out);
 	}
 
-	.stat-label {
+	.cta-primary:hover {
+		color: var(--color-accent);
+		border-color: var(--color-accent);
+	}
+
+	/* Arrow slides right on hover — invites you forward */
+	.cta-arrow {
+		display: inline-block;
+		transition: transform 300ms var(--ease-out-quart);
+	}
+
+	.cta-primary:hover .cta-arrow {
+		transform: translateX(4px);
+	}
+
+	.cta-ghost {
 		font-size: 0.85rem;
-		color: var(--color-text-muted);
-		text-transform: uppercase;
-		letter-spacing: 0.1em;
-		margin-top: 0.4rem;
+		color: var(--color-text-faint);
+		transition: color var(--duration-fast) var(--ease-out);
 	}
 
-	.stat-divider {
-		width: 1px;
-		height: 2.5rem;
-		background: rgba(255, 255, 255, 0.08);
+	.cta-ghost:hover {
+		color: var(--color-text-secondary);
 	}
 
 	/* ── Curriculum ── */
 	.curriculum {
-		max-width: 1100px;
+		max-width: 820px;
 		margin: 0 auto;
-		padding: 6rem 2rem;
+		padding: var(--space-4xl) var(--space-lg) var(--space-3xl);
 	}
 
-	.curriculum-heading {
-		text-align: center;
-		font-size: 2rem;
-		margin-bottom: 3rem;
-		color: var(--color-text-muted);
-		font-weight: 600;
-		letter-spacing: 0.05em;
-		text-transform: uppercase;
-		font-size: 0.9rem;
-	}
-
-	.parts-grid {
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		gap: 1.5rem;
-	}
-
-	.part-card {
-		background: var(--glass-bg);
-		border: 1px solid var(--glass-border);
-		border-radius: 12px;
-		padding: 2rem;
-		text-decoration: none;
-		color: inherit;
-		transition: all 0.25s ease;
-		display: flex;
-		flex-direction: column;
-		gap: 0.75rem;
-	}
-
-	.part-card:hover {
-		border-color: rgba(255, 50, 50, 0.3);
-		background: rgba(255, 30, 30, 0.05);
-		transform: translateY(-3px);
-		box-shadow: 0 8px 32px rgba(255, 0, 0, 0.1);
-		color: inherit;
-		text-shadow: none;
-	}
-
-	.part-card--postgrad {
-		border-style: dashed;
-		opacity: 0.8;
-	}
-
-	.part-card--postgrad:hover {
-		opacity: 1;
-	}
-
-	.part-number {
+	.section-label {
+		font-family: var(--font-body);
 		font-size: 0.75rem;
-		font-weight: 700;
+		font-weight: 500;
 		text-transform: uppercase;
 		letter-spacing: 0.15em;
-		color: var(--color-redstone-glow);
+		color: var(--color-text-faint);
+		margin-bottom: var(--space-3xl);
+	}
+
+	.parts-list {
+		list-style: none;
+		display: flex;
+		flex-direction: column;
+		gap: 0;
+	}
+
+	.part {
+		display: grid;
+		grid-template-columns: 5.5rem 1fr;
+		gap: var(--space-xl);
+		align-items: baseline;
+		text-decoration: none;
+		color: inherit;
+		padding: var(--space-2xl) var(--space-md);
+		margin: 0 calc(-1 * var(--space-md));
+		border-top: 1px solid var(--color-border-subtle);
+		border-radius: 4px;
+		transition: background var(--duration-normal) var(--ease-out-quart);
+	}
+
+	.part:hover {
+		color: inherit;
+		background: oklch(14% 0.005 25 / 0.6);
+	}
+
+	.part:hover .part-numeral {
+		color: var(--color-accent);
+		text-shadow:
+			0 0 20px oklch(70% 0.14 70 / 0.4),
+			0 0 60px oklch(60% 0.10 50 / 0.2);
+	}
+
+	.part:hover .part-body {
+		transform: translateX(4px);
+	}
+
+	.part:hover .part-title {
+		color: oklch(93% 0.003 25);
+	}
+
+	.part-numeral {
+		font-family: var(--font-display);
+		font-size: clamp(3rem, 4vw, 4.5rem);
+		line-height: 1;
+		color: var(--color-primary-dim);
+		transition:
+			color 600ms var(--ease-out-quart),
+			text-shadow 600ms var(--ease-out-quart);
+	}
+
+	/* Numerals ignite to full crimson when scrolled into view */
+	.part.in-view .part-numeral {
+		color: var(--color-primary);
+	}
+
+	.part-body {
+		transition: transform var(--duration-normal) var(--ease-out-quart);
 	}
 
 	.part-title {
-		font-size: 1.3rem;
-		font-weight: 700;
-		color: var(--color-text-accent);
-		margin: 0;
+		font-size: clamp(1.4rem, 1.5vw + 0.8rem, 1.85rem);
+		margin-bottom: var(--space-sm);
+		color: var(--color-text);
+		line-height: 1.2;
+		transition: color var(--duration-normal) var(--ease-out-quart);
 	}
 
 	.part-desc {
 		font-size: 0.95rem;
-		color: var(--color-text-muted);
-		line-height: 1.6;
-		margin: 0;
-		flex: 1;
+		color: var(--color-text-secondary);
+		line-height: 1.75;
+		max-width: 52ch;
+		margin-bottom: var(--space-sm);
 	}
 
-	.part-link {
-		font-size: 0.85rem;
-		color: var(--color-redstone-glow);
-		margin-top: 0.5rem;
+	.part-meta {
+		font-family: var(--font-mono);
+		font-size: 0.75rem;
+		color: var(--color-text-faint);
+		letter-spacing: 0.02em;
+	}
+
+	.part--advanced {
+		opacity: 0.6;
+		transition:
+			opacity var(--duration-normal) var(--ease-out-quart),
+			background var(--duration-normal) var(--ease-out-quart);
+	}
+
+	.part--advanced:hover {
+		opacity: 1;
+	}
+
+	/* ── Closing ── */
+	.closing {
+		text-align: center;
+		padding: var(--space-4xl) var(--space-lg) var(--space-3xl);
+		border-top: 1px solid var(--color-border-subtle);
+	}
+
+	.closing-text {
+		font-family: var(--font-display);
+		font-size: clamp(1.4rem, 2vw + 0.5rem, 2rem);
+		color: var(--color-text-secondary);
+		margin-bottom: var(--space-xl);
+	}
+
+	/* "Just curiosity" — the emotional peak, warmed up */
+	.closing-text em {
+		font-style: normal;
+		color: var(--color-accent);
+	}
+
+	/* ── Scroll Reveal ── */
+	.scroll-reveal {
+		opacity: 0;
+		transform: translateY(28px);
+	}
+
+	.scroll-reveal.in-view {
+		animation: scroll-enter 800ms var(--ease-out) both;
+	}
+
+	/* Staggered reveals — delay set via --reveal-delay custom property */
+	.scroll-reveal.in-view {
+		animation-delay: var(--reveal-delay, 0ms);
 	}
 
 	/* ── Animations ── */
-	@keyframes fadeIn {
-		from { opacity: 0; transform: translateY(20px); }
-		to { opacity: 1; transform: translateY(0); }
+	@keyframes reveal-up {
+		from {
+			opacity: 0;
+			transform: translateY(24px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
 	}
 
-	@keyframes bounce {
-		0%, 100% { transform: translateY(0); }
-		50% { transform: translateY(6px); }
+	@keyframes scroll-enter {
+		from {
+			opacity: 0;
+			transform: translateY(28px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	@keyframes breathe {
+		0%, 100% {
+			opacity: 1;
+			transform: scale(1);
+		}
+		50% {
+			opacity: 0.7;
+			transform: scale(1.03);
+		}
+	}
+
+	/* ── Reduced motion ── */
+	@media (prefers-reduced-motion: reduce) {
+		.hero::before,
+		.hero::after {
+			animation: none;
+		}
+
+		.scroll-reveal {
+			opacity: 1;
+			transform: none;
+		}
+
+		.scroll-reveal.in-view {
+			animation: none;
+		}
 	}
 
 	/* ── Responsive ── */
-	@media (max-width: 700px) {
-		.hero-title { font-size: 2.8rem; }
-		.parts-grid { grid-template-columns: 1fr; }
-		.stat { padding: 0 1.5rem; }
-		.cta-group { flex-direction: column; align-items: center; }
+	@media (max-width: 768px) {
+		.hero {
+			min-height: auto;
+			padding: var(--space-3xl) var(--space-md) var(--space-2xl);
+		}
+
+		.hero-subtitle br {
+			display: none;
+		}
+
+		.part {
+			grid-template-columns: 3.5rem 1fr;
+			gap: var(--space-md);
+			padding: var(--space-xl) var(--space-sm);
+			margin: 0 calc(-1 * var(--space-sm));
+		}
+
+		.curriculum {
+			padding: var(--space-3xl) var(--space-md) var(--space-2xl);
+		}
+
+		.closing {
+			padding: var(--space-3xl) var(--space-md);
+		}
 	}
 </style>
+
+<script is:inline>
+	document.addEventListener('DOMContentLoaded', () => {
+		// For the curious ones who open devtools
+		console.log(
+			'%c⚡ Redstone University',
+			'font-size: 1.5rem; font-weight: bold; color: #c03020;'
+		);
+		console.log(
+			'%cCurious enough to look under the hood? You\'ll fit right in.\nhttps://github.com/fielding/redstone-university',
+			'color: #a08060; font-style: italic;'
+		);
+
+		let revealIndex = 0;
+
+		const observer = new IntersectionObserver(
+			(entries) => {
+				// Sort by position so top elements reveal first
+				const visible = entries.filter(e => e.isIntersecting)
+					.sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+
+				visible.forEach((entry) => {
+					entry.target.style.setProperty('--reveal-delay', revealIndex * 100 + 'ms');
+					entry.target.classList.add('in-view');
+					observer.unobserve(entry.target);
+					revealIndex++;
+				});
+
+				// Reset stagger index after a batch (new scroll position = new batch)
+				if (visible.length) {
+					setTimeout(() => { revealIndex = 0; }, 50);
+				}
+			},
+			{ threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+		);
+
+		document.querySelectorAll('.scroll-reveal').forEach((el) => {
+			observer.observe(el);
+		});
+	});
+</script>
