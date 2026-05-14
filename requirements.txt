@@ -1,0 +1,3 @@
+# Redstone University's Python build scripts use only the Python standard library.
+# This file is intentionally empty so `python -m pip install -r requirements.txt`
+# is a no-op for contributors who expect a Python requirements file.
