@@ -89,7 +89,7 @@ Now that we have our display, how do we control it? Our computer thinks in 4-bit
 
 Instead, let’s think like engineers and break the problem into two much simpler, more manageable stages:
 
-1.  **Decoder**: This first stage will act as an "identifier". Its only job is to look at the 4-bit binary input and determine *which* number (`` `0` ``-`` `9` ``) it represents. It will then activate a single, unique output line corresponding to that number.
+1.  **Decoder**: This first stage will act as an "identifier". Its only job is to look at the 4-bit binary input and determine *which* number (`` `0` ``-`` `9` ``) it represents. It will then activate a single, unique output line corresponding to that number. Because it recognizes decimal digits stored as 4-bit binary patterns, this kind of circuit is called a **BCD (Binary-Coded Decimal) decoder** — remember that name; it will matter in Part II.
 2.  **Encoder**: This second stage will act as the "mapper". It receives the simple signal from the decoder (e.g., "the number is `` `3` ``!") and "maps" the signal to the correct combination of the 7 segments.
 
 This modular, two-stage approach is the heart of good engineering. It's easier to build, easier to test, and far easier to fix if something goes wrong.

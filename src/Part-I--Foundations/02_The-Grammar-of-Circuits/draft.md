@@ -39,7 +39,7 @@ This system, now called **Boolean Algebra**, was initially a mathematical curios
 -   A powered Redstone line has the physical value **True** (`1`).
 -   An unpowered Redstone line has the physical value **False** (`0`).
 
-Boolean algebra gives us a set of rules and operators to manipulate these variables. When we build those operators physically, we call them **logic gates**, and they are the bedrock (pun intended) of all computation.
+Boolean algebra gives us a set of rules and operators to manipulate these variables. When we build those operators physically, we call them **logic gates**, and they are the bedrock of all computation.
 
 ---
 
