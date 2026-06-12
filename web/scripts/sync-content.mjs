@@ -63,6 +63,7 @@ console.log('✅ Content synced successfully!');
 // Fix missing images
 console.log('🔧 Fixing missing images...');
 const placeholderPath = path.join(DEST_ASSETS, 'project_assets/logo-dark-nobg.png');
+const missingImages = [];
 
 function fixMissingImages(dir) {
     const entries = fs.readdirSync(dir, { withFileTypes: true });
@@ -85,7 +86,7 @@ function fixMissingImages(dir) {
                 const absoluteImagePath = path.resolve(path.dirname(fullPath), imagePath);
 
                 if (!fs.existsSync(absoluteImagePath)) {
-                    console.warn(`⚠️ Missing image: ${imagePath} in ${entry.name}. Using placeholder.`);
+                    missingImages.push({ file: path.relative(DEST_CONTENT, fullPath), image: imagePath });
                     const imageDir = path.dirname(absoluteImagePath);
                     if (!fs.existsSync(imageDir)) fs.mkdirSync(imageDir, { recursive: true });
                     fs.copyFileSync(placeholderPath, absoluteImagePath);
@@ -101,5 +102,17 @@ if (fs.existsSync(placeholderPath)) {
     fixMissingImages(DEST_CONTENT);
 } else {
     console.warn('⚠️ Placeholder image not found, skipping missing image fix.');
+}
+
+if (missingImages.length > 0) {
+    console.warn(`\n⚠️ ${missingImages.length} missing image(s) replaced with placeholders:`);
+    for (const { file, image } of missingImages) {
+        console.warn(`   - ${file}: ${image}`);
+    }
+    if (process.env.STRICT_IMAGES === '1') {
+        console.error('\n❌ Failing build (STRICT_IMAGES=1): resolve the missing images above.');
+        process.exit(1);
+    }
+    console.warn('   (set STRICT_IMAGES=1 to fail the build instead)');
 }
 

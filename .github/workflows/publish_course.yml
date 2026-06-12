@@ -20,6 +20,11 @@ jobs:
         with:
           python-version: "3.x"
 
+      - name: Install image tooling
+        run: |
+          pip install pillow
+          sudo apt-get update && sudo apt-get install -y pngquant
+
       - name: Build the web course files
         run: python scripts/publish.py
 

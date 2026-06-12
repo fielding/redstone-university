@@ -21,6 +21,8 @@ Core responsibilities:
 import os
 import re
 import shutil
+import subprocess
+import sys
 
 SRC_DIR = "src"
 COURSE_DIR = "course"
@@ -34,6 +36,53 @@ RAW_BASE_URL = f"https://media.githubusercontent.com/media/{GITHUB_USER}/{GITHUB
 
 # A list of gate names used for special image handling in tables.
 GATE_SYMBOLS = ["NOT", "AND", "OR", "NAND", "NOR", "XOR", "XNOR"]
+
+# Raw Minecraft screenshots come in at 2-3k px, but nothing downstream
+# (course pages, PDF) ever displays them wider than this.
+MAX_IMAGE_DIMENSION = 1600
+
+# Every unresolved image reference, reported in a summary at the end of the
+# build. With --strict (or STRICT_IMAGES=1) the build fails if any exist.
+MISSING_IMAGES = []
+
+
+def optimize_and_copy_image(src_image_path, dest_image_path):
+    """
+    Copies an image into assets, downscaling and compressing PNGs along the
+    way. Source images in 'src' are never modified. Falls back to a plain
+    copy if Pillow is unavailable.
+    """
+    if not src_image_path.lower().endswith(".png"):
+        shutil.copy2(src_image_path, dest_image_path)
+        return
+
+    try:
+        from PIL import Image
+    except ImportError:
+        print("    - ⚠️ Pillow not installed; copying image without optimization.")
+        shutil.copy2(src_image_path, dest_image_path)
+        return
+
+    with Image.open(src_image_path) as img:
+        if max(img.size) > MAX_IMAGE_DIMENSION:
+            img.thumbnail((MAX_IMAGE_DIMENSION, MAX_IMAGE_DIMENSION), Image.LANCZOS)
+        img.save(dest_image_path, format="PNG", optimize=True)
+
+    if shutil.which("pngquant"):
+        subprocess.run(
+            [
+                "pngquant",
+                "--force",
+                "--skip-if-larger",
+                "--quality",
+                "70-95",
+                "--strip",
+                "--output",
+                dest_image_path,
+                dest_image_path,
+            ],
+            check=False,
+        )
 
 
 def setup_directories():
@@ -54,7 +103,10 @@ def copy_static_assets():
     project_assets_src = os.path.join(SRC_DIR, "project_assets")
     if os.path.exists(project_assets_src):
         for asset in os.listdir(project_assets_src):
-            shutil.copy2(os.path.join(project_assets_src, asset), ASSETS_IMG_DIR)
+            optimize_and_copy_image(
+                os.path.join(project_assets_src, asset),
+                os.path.join(ASSETS_IMG_DIR, asset),
+            )
         print("🎨 Copied static project assets.")
 
 
@@ -101,6 +153,7 @@ def copy_image_and_get_absolute_url(original_path, markdown_src_path):
 
     if not os.path.exists(src_image_path):
         print(f"    - ⚠️ WARNING: Image not found: {src_image_path}")
+        MISSING_IMAGES.append((markdown_src_path, original_path))
         return original_path
 
     module_dir = os.path.basename(os.path.dirname(markdown_src_path))
@@ -108,7 +161,7 @@ def copy_image_and_get_absolute_url(original_path, markdown_src_path):
     new_image_name = f"{module_prefix}_{os.path.basename(src_image_path)}"
     dest_image_path = os.path.join(ASSETS_IMG_DIR, new_image_name)
 
-    shutil.copy2(src_image_path, dest_image_path)
+    optimize_and_copy_image(src_image_path, dest_image_path)
 
     absolute_url = RAW_BASE_URL + dest_image_path.replace(os.path.sep, "/")
     return absolute_url
@@ -171,6 +224,15 @@ def main():
         if src_path and dest_path:
             os.makedirs(os.path.dirname(dest_path), exist_ok=True)
             process_markdown_file(src_path, dest_path)
+
+    if MISSING_IMAGES:
+        print(f"\n⚠️  {len(MISSING_IMAGES)} missing image reference(s):")
+        for markdown_file, image_path in MISSING_IMAGES:
+            print(f"   - {markdown_file}: {image_path}")
+        strict = "--strict" in sys.argv or os.environ.get("STRICT_IMAGES") == "1"
+        if strict:
+            print("\n❌ Failing build (strict mode): resolve the missing images above.")
+            sys.exit(1)
 
     print("\n✅ Build complete! The 'course' directory has the correct flat structure.")
 
