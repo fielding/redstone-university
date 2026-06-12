@@ -3,3 +3,8 @@ course/
 .handoff
 .handoff/
 pi-session-*.html
+
+# render pipeline derived artifacts (regenerated from the world by scripts/shots.py)
+renders/usd/
+renders/out/
+scripts/__pycache__/
