@@ -1127,7 +1127,27 @@ def slice_above_layer(scene, fit_coords, max_layer):
     print(f"max-layer {max_layer}: removed {removed} faces above z={thr:.1f}")
 
 
-def setup_outlines(scene, mode):
+def outline_exclude_collection():
+    """
+    Collection of glowing/colored objects (components + dust wires) to keep
+    OUT of the Freestyle outline pass — a light outline haloing a lit lamp
+    looks wrong; let components read by their own color/texture instead.
+    """
+    coll = bpy.data.collections.get("RU_NoOutline")
+    if coll is None:
+        coll = bpy.data.collections.new("RU_NoOutline")
+        bpy.context.scene.collection.children.link(coll)
+    for ob in bpy.data.objects:
+        if ob.type != 'MESH':
+            continue
+        n = ob.name.lower()
+        if ob.name == "RU_Wires" or any(k in n for k in COMPONENT_KW):
+            if ob.name not in coll.objects:
+                coll.objects.link(ob)
+    return coll
+
+
+def setup_outlines(scene, mode, exclude=None):
     """Freestyle silhouette lines — separates overlapping levels in iso."""
     scene.render.use_freestyle = bool(mode)
     if not mode:
@@ -1144,6 +1164,10 @@ def setup_outlines(scene, mode):
     ls.select_border = True
     ls.select_crease = (mode != "sil")
     ls.select_edge_mark = True   # per-block seams from mark_block_edges()
+    if exclude is not None:
+        ls.select_by_collection = True
+        ls.collection = exclude
+        ls.collection_negation = 'EXCLUSIVE'   # outline everything NOT in it
     ls.linestyle.color = (0.08, 0.07, 0.07)
     ls.linestyle.thickness = width
 
@@ -1269,8 +1293,12 @@ def main():
                 set_transform(scene, opts["transform"])
         else:
             set_transform(scene, 'standard')   # exact palette colors, emission self-lit
+        # dark schematic: bloom so the circuit (dust, lamps) glows on dark
+        if opts["technical"] == "schematic_dark":
+            glare = True
         setup_glare(scene, glare)
-        setup_outlines(scene, opts["outline"])
+        tech_excl = outline_exclude_collection() if (tech is not None and opts["technical"].startswith("schematic")) else None
+        setup_outlines(scene, opts["outline"], tech_excl)
         if tech is not None:
             for ls in bpy.context.view_layer.freestyle_settings.linesets:
                 ls.linestyle.color = tech["line"]
