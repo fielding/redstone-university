@@ -41,8 +41,9 @@ Options (after the `--`):
                        lighting at all) | cel (banded cartoon shading, EEVEE)
     --technical MODE   off (default) | blueprint (navy ground, glowing line
                        art, cyan wires) | cad (white ground, black linework,
-                       red wires — engineering-drawing look). Forces full
-                       per-block outlines.
+                       red wires) | schematic (white line-art structure, but
+                       dust stays power-colored and components keep real color
+                       — only the circuit carries color). Forces full outlines.
     --swap A=B[,C=D]   retexture block A with block B's texture at render time
                        (e.g. --swap white_wool=white_concrete); names are the
                        vanilla block texture names
@@ -562,15 +563,60 @@ TECHNICAL = {
                   "line": (0.78, 0.90, 1.0), "wire": (0.45, 0.95, 1.0), "lw": 1.4},
     "cad":       {"bg": (0.97, 0.97, 0.95), "fill": (0.84, 0.86, 0.89),
                   "line": (0.05, 0.05, 0.07), "wire": (0.85, 0.06, 0.05), "lw": 1.2},
+    # schematic: structure ghosted to white line-art, circuit kept in color
+    "schematic": {"bg": (1.0, 1.0, 1.0), "fill": (0.94, 0.94, 0.95),
+                  "line": (0.06, 0.06, 0.08), "wire": None, "lw": 1.2},
 }
+
+# redstone components kept in real color against ghosted white structure
+COMPONENT_KW = ("torch", "lever", "repeater", "comparator", "lamp", "button",
+                "redstone_block", "observer", "target", "tripwire", "piston",
+                "dispenser", "dropper", "note_block", "rail")
+
+
+def _flat_fill(nodes, links, em, rgb):
+    """Emission fill faintly shaded by face-normal Z (tops brighter than sides)."""
+    geo = nodes.new('ShaderNodeNewGeometry')
+    sep = nodes.new('ShaderNodeSeparateXYZ')
+    mr = nodes.new('ShaderNodeMapRange')
+    mr.inputs["From Min"].default_value = -1.0
+    mr.inputs["From Max"].default_value = 1.0
+    mr.inputs["To Min"].default_value = 0.80
+    mr.inputs["To Max"].default_value = 1.05
+    links.new(geo.outputs["Normal"], sep.inputs["Vector"])
+    links.new(sep.outputs["Z"], mr.inputs["Value"])
+    mul = nodes.new('ShaderNodeVectorMath')
+    mul.operation = 'SCALE'
+    mul.inputs[0].default_value = rgb[:3]
+    links.new(mr.outputs["Result"], mul.inputs["Scale"])
+    links.new(mul.outputs["Vector"], em.inputs["Color"])
+    em.inputs["Strength"].default_value = 1.0
+
+
+def _emit_texture(nodes, links, em, output):
+    """Emit a component's own texture flatly (real colors, no lighting needed),
+    preserving cutout alpha (torches, levers) via a transparent mix."""
+    tex = next((n for n in nodes if n.type == 'TEX_IMAGE'), None)
+    if tex is None:
+        return False
+    links.new(tex.outputs["Color"], em.inputs["Color"])
+    em.inputs["Strength"].default_value = 1.15
+    transparent = nodes.new('ShaderNodeBsdfTransparent')
+    mix = nodes.new('ShaderNodeMixShader')
+    links.new(tex.outputs["Alpha"], mix.inputs["Fac"])
+    links.new(transparent.outputs["BSDF"], mix.inputs[1])
+    links.new(em.outputs["Emission"], mix.inputs[2])
+    links.new(mix.outputs["Shader"], output.inputs["Surface"])
+    return True
 
 
 def apply_technical(mode):
     """
-    Reskin the whole scene as a technical drawing: flat normal-shaded fills
-    in one palette, a solid background, and (via the view loop) full per-block
-    outlines in the palette's line color. Returns the palette so the caller
-    can set the matching outline color/width and force outlines on.
+    Reskin the scene as a technical drawing with full per-block outlines.
+    blueprint/cad: everything flat-filled in one palette.
+    schematic: structure blocks ghosted to white line-art while redstone
+    components keep their real color and the dust wires stay power-colored —
+    only the circuit carries color.
     """
     cfg = TECHNICAL[mode]
     world = bpy.data.worlds.new("TechWorld")
@@ -583,32 +629,32 @@ def apply_technical(mode):
     for mat in bpy.data.materials:
         if not mat.node_tree:
             continue
+        name = mat.name.lower()
         nodes, links = mat.node_tree.nodes, mat.node_tree.links
         output = next((n for n in nodes if n.type == 'OUTPUT_MATERIAL'), None)
         if output is None:
             continue
-        em = nodes.new('ShaderNodeEmission')
+
         if mat.name == "RU_Wire":
+            if mode == "schematic":
+                continue  # keep the colored power-gradient wires
+            em = nodes.new('ShaderNodeEmission')
             em.inputs["Color"].default_value = (*cfg["wire"], 1.0)
             em.inputs["Strength"].default_value = 1.5
-        else:
-            # flat fill, faintly shaded by face normal Z so tops read brighter
-            # than sides without any real lighting
-            geo = nodes.new('ShaderNodeNewGeometry')
-            sep = nodes.new('ShaderNodeSeparateXYZ')
-            mr = nodes.new('ShaderNodeMapRange')
-            mr.inputs["From Min"].default_value = -1.0
-            mr.inputs["From Max"].default_value = 1.0
-            mr.inputs["To Min"].default_value = 0.72
-            mr.inputs["To Max"].default_value = 1.12
-            links.new(geo.outputs["Normal"], sep.inputs["Vector"])
-            links.new(sep.outputs["Z"], mr.inputs["Value"])
-            mul = nodes.new('ShaderNodeVectorMath')
-            mul.operation = 'SCALE'
-            mul.inputs[0].default_value = (*cfg["fill"], )[:3]
-            links.new(mr.outputs["Result"], mul.inputs["Scale"])
-            links.new(mul.outputs["Vector"], em.inputs["Color"])
-            em.inputs["Strength"].default_value = 1.0
+            links.new(em.outputs["Emission"], output.inputs["Surface"])
+            continue
+
+        if mode == "schematic" and any(k in name for k in COMPONENT_KW):
+            em = nodes.new('ShaderNodeEmission')
+            if _emit_texture(nodes, links, em, output):
+                continue
+            # no texture: fall through to a colored fill so it still stands out
+            _flat_fill(nodes, links, em, (0.6, 0.6, 0.62))
+            links.new(em.outputs["Emission"], output.inputs["Surface"])
+            continue
+
+        em = nodes.new('ShaderNodeEmission')
+        _flat_fill(nodes, links, em, cfg["fill"])
         links.new(em.outputs["Emission"], output.inputs["Surface"])
     return cfg
 
