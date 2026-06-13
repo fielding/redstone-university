@@ -28,6 +28,9 @@ Options (after the `--`):
     --max-layer N      build-instruction mode: render only the lowest N block
                        layers of the build (camera stays framed on the full
                        build, so successive N values stack like LEGO steps)
+    --explode G        exploded axonometric: float each block layer apart by G
+                       blocks of vertical space (e.g. 1.5) so you can see what
+                       sits on top of what; wires move with their layer
     --outline MODE     off | full (all edges, 1.4px) | thin (all edges, 0.8px)
                        | sil (silhouettes+borders only, 1.2px). 'on' = full.
                        (default off)
@@ -87,6 +90,7 @@ def parse_args():
         "outline": "sil",
         "projection": "ortho",
         "max_layer": None,
+        "explode": None,
         "grid": True,
         "toon": "off",
         "dust": "vector",
@@ -140,6 +144,9 @@ def parse_args():
         elif a == "--max-layer":
             i += 1
             opts["max_layer"] = int(args[i])
+        elif a == "--explode":
+            i += 1
+            opts["explode"] = float(args[i])
         elif a == "--outline":
             i += 1
             v = args[i].lower()
@@ -693,7 +700,7 @@ def scene_bounds(scene, trim, cluster_gap):
     """
     meshes = []
     for ob in scene.objects:
-        if ob.type != 'MESH':
+        if ob.type != 'MESH' or ob.hide_render:
             continue
         corners, z0, z1 = object_bounds(ob)
         meshes.append({"ob": ob, "corners": corners, "z0": z0, "z1": z1})
@@ -851,6 +858,58 @@ def mark_block_edges():
     print(f"block-seam edges marked: {marked}")
 
 
+def explode_layers(scene, base_z, gap_blocks):
+    """
+    Exploded axonometric: shift each block layer up by gap_blocks*16 per layer
+    above the base, so the build separates into floating tiers you can read
+    between. Geometry is grouped into connected islands (each block, or the
+    generated wire ribbons) so whole blocks move as units; each island is
+    placed by the layer of its centre. Operates in world space via each
+    object's matrix so it survives MiEx's import rotation.
+    """
+    import bmesh
+    gap = gap_blocks * 16.0
+    for ob in list(scene.objects):
+        if ob.type != 'MESH' or ob.hide_render:
+            continue
+        mw = ob.matrix_world
+        mwi = mw.inverted()
+        bm = bmesh.new()
+        bm.from_mesh(ob.data)
+        bm.faces.ensure_lookup_table()
+        seen = [False] * len(bm.faces)
+        for f0 in bm.faces:
+            if seen[f0.index]:
+                continue
+            stack, island = [f0], []
+            seen[f0.index] = True
+            while stack:
+                f = stack.pop()
+                island.append(f)
+                for e in f.edges:
+                    for nf in e.link_faces:
+                        if not seen[nf.index]:
+                            seen[nf.index] = True
+                            stack.append(nf)
+            zc = sum((mw @ f.calc_center_median()).z for f in island) / len(island)
+            # -4 bias so thin surface items (dust ribbons sitting on a block's
+            # top face, at a layer boundary) group with the block beneath them
+            # rather than floating up to the next tier
+            import math as _m
+            layer = max(0, _m.floor((zc - base_z - 4.0) / 16.0))
+            if layer == 0:
+                continue
+            dz = layer * gap
+            verts = {v for f in island for v in f.verts}
+            for v in verts:
+                w = mw @ v.co
+                w.z += dz
+                v.co = mwi @ w
+        bm.to_mesh(ob.data)
+        bm.free()
+    print(f"exploded: {gap_blocks} block gap per layer")
+
+
 def slice_above_layer(scene, fit_coords, max_layer):
     """
     Delete all geometry above the build's lowest `max_layer` block layers
@@ -959,6 +1018,9 @@ def main():
     center, size, fit_coords = scene_bounds(scene, opts["trim"], opts["cluster_gap"])
     if opts["max_layer"] is not None:
         slice_above_layer(scene, fit_coords, opts["max_layer"])
+    if opts["explode"] is not None:
+        explode_layers(scene, min(fit_coords[2::3]), opts["explode"])
+        center, size, fit_coords = scene_bounds(scene, False, opts["cluster_gap"])
     setup_render(scene, opts["res"], opts["samples"])
     if opts["toon"] == "cel":
         # Shader-to-RGB is EEVEE-only
