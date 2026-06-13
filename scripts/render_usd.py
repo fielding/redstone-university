@@ -579,6 +579,9 @@ TECHNICAL = {
     # light/dark themes match: same per-layer colors, rendered as soft pastels
     # on light or deeper earthy tones on dark. Muted to stay candlelit and
     # not fight the red dust.
+    # per-layer distinct hues (neutral, amber, sage, dusty-blue, rose,
+    # terracotta, ochre). The isometric depth read is handled by AO contact
+    # shadows, so the colors are free to just mark layers distinctly.
     "schematic": {"bg": (1.0, 1.0, 1.0), "fill": (0.94, 0.94, 0.95),
                   "line": (0.06, 0.06, 0.08), "wire": None, "lw": 1.2,
                   "band_palette": [(0.96, 0.96, 0.97), (0.99, 0.91, 0.73),
@@ -608,6 +611,9 @@ TECHNICAL = {
                                           (0.45, 0.30, 0.32), (0.50, 0.40, 0.22),
                                           (0.40, 0.30, 0.42)]},
 }
+
+# ambient-occlusion contact shadows on schematic fills (depth cue for iso)
+_AO_ENABLED = True
 
 # redstone components kept in real color against ghosted white structure
 COMPONENT_KW = ("torch", "lever", "repeater", "comparator", "lamp", "button",
@@ -672,13 +678,31 @@ def _flat_fill(nodes, links, em, rgb, htint=None):
         links.new(blend.outputs["Result"], tint.inputs["A"])
         # reuse the normal shade as a scalar->gray multiply
         links.new(mr.outputs["Result"], tint.inputs["B"])  # scalar broadcast
-        links.new(tint.outputs["Result"], em.inputs["Color"])
+        color_out = tint.outputs["Result"]
     else:
-        mul = nodes.new('ShaderNodeVectorMath')
-        mul.operation = 'SCALE'
-        mul.inputs[0].default_value = rgb[:3]
-        links.new(mr.outputs["Result"], mul.inputs["Scale"])
-        links.new(mul.outputs["Vector"], em.inputs["Color"])
+        mul = nodes.new('ShaderNodeMix'); mul.data_type = 'RGBA'
+        mul.blend_type = 'MULTIPLY'; mul.inputs["Factor"].default_value = 1.0
+        mul.inputs["A"].default_value = (*rgb[:3], 1.0)
+        links.new(mr.outputs["Result"], mul.inputs["B"])
+        color_out = mul.outputs["Result"]
+
+    # Ambient occlusion: contact shadows in crevices give the depth cue that
+    # flat isometric throws away — disambiguates what's stacked on what.
+    if _AO_ENABLED:
+        ao = nodes.new('ShaderNodeAmbientOcclusion')
+        ao.samples = 8
+        ao.inputs["Distance"].default_value = 11.0
+        aomap = nodes.new('ShaderNodeMapRange')
+        aomap.inputs["To Min"].default_value = 0.45   # fully occluded -> 45%
+        aomap.inputs["To Max"].default_value = 1.0
+        links.new(ao.outputs["AO"], aomap.inputs["Value"])
+        aomul = nodes.new('ShaderNodeMix'); aomul.data_type = 'RGBA'
+        aomul.blend_type = 'MULTIPLY'; aomul.inputs["Factor"].default_value = 1.0
+        links.new(color_out, aomul.inputs["A"])
+        links.new(aomap.outputs["Result"], aomul.inputs["B"])
+        color_out = aomul.outputs["Result"]
+
+    links.new(color_out, em.inputs["Color"])
     em.inputs["Strength"].default_value = 1.0
 
 
