@@ -578,16 +578,32 @@ TECHNICAL = {
     # not fight the red dust.
     "schematic": {"bg": (1.0, 1.0, 1.0), "fill": (0.94, 0.94, 0.95),
                   "line": (0.06, 0.06, 0.08), "wire": None, "lw": 1.2,
-                  "band_palette": [(0.93, 0.93, 0.94), (0.98, 0.85, 0.55),
-                                   (0.66, 0.83, 0.64), (0.60, 0.79, 0.92),
-                                   (0.81, 0.69, 0.88), (0.95, 0.74, 0.58),
-                                   (0.87, 0.85, 0.56)]},
+                  "band_palette": [(0.96, 0.96, 0.97), (0.99, 0.91, 0.73),
+                                   (0.82, 0.89, 0.78), (0.80, 0.86, 0.90),
+                                   (0.94, 0.84, 0.83), (0.98, 0.86, 0.77),
+                                   (0.93, 0.91, 0.76)]},
     "schematic_dark": {"bg": (0.095, 0.082, 0.072), "fill": (0.26, 0.23, 0.19),
                        "line": (0.88, 0.83, 0.74), "wire": None, "lw": 1.2,
                        "band_palette": [(0.30, 0.27, 0.22), (0.60, 0.45, 0.21),
                                         (0.34, 0.50, 0.34), (0.30, 0.46, 0.58),
                                         (0.46, 0.37, 0.53), (0.60, 0.39, 0.28),
                                         (0.53, 0.50, 0.28)]},
+    # "aged vellum": warm parchment ground, sepia ink lines, warm aged layer
+    # tints — illuminated-manuscript LIGHT theme (ancient-university + legible)
+    "schematic_vellum": {"bg": (0.93, 0.88, 0.78), "fill": (0.90, 0.85, 0.74),
+                         "line": (0.27, 0.19, 0.12), "wire": None, "lw": 1.2,
+                         "band_palette": [(0.91, 0.86, 0.76), (0.93, 0.80, 0.48),
+                                          (0.73, 0.82, 0.65), (0.69, 0.79, 0.87),
+                                          (0.89, 0.73, 0.72), (0.91, 0.73, 0.54),
+                                          (0.82, 0.80, 0.57)]},
+    # "illuminated manuscript": gilded ink lines on warm vellum-black, aged
+    # jewel-tone layers (oxblood/bottle-green/brass/teal/aubergine)
+    "schematic_gilded": {"bg": (0.085, 0.070, 0.058), "fill": (0.28, 0.24, 0.19),
+                         "line": (0.83, 0.67, 0.38), "wire": None, "lw": 1.3,
+                         "band_palette": [(0.32, 0.27, 0.21), (0.55, 0.44, 0.20),
+                                          (0.27, 0.42, 0.34), (0.26, 0.40, 0.50),
+                                          (0.45, 0.30, 0.32), (0.50, 0.40, 0.22),
+                                          (0.40, 0.30, 0.42)]},
 }
 
 # redstone components kept in real color against ghosted white structure
