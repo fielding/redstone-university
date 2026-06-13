@@ -48,7 +48,13 @@
       -164,
       320,
       -459
-    ]
+    ],
+    "views": [
+      "iso",
+      "top"
+    ],
+    "projection": "tele",
+    "azimuth": 150
   },
   "04_2-to-4-decoder-3": {
     "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
@@ -81,7 +87,13 @@
       -296,
       320,
       -459
-    ]
+    ],
+    "views": [
+      "iso",
+      "top"
+    ],
+    "projection": "tele",
+    "azimuth": 150
   },
   "04_10-to-7-encoder-L9": {
     "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
@@ -92,6 +104,12 @@
       -240,
       320,
       -479
-    ]
+    ],
+    "views": [
+      "iso",
+      "top"
+    ],
+    "projection": "tele",
+    "azimuth": 150
   }
 }

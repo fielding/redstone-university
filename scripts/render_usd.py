@@ -89,6 +89,7 @@ def parse_args():
         "margin": 1.3,
         "outline": "sil",
         "projection": "ortho",
+        "top_azimuth": None,
         "max_layer": None,
         "explode": None,
         "grid": True,
@@ -141,6 +142,9 @@ def parse_args():
         elif a == "--projection":
             i += 1
             opts["projection"] = args[i].lower()
+        elif a == "--top-azimuth":
+            i += 1
+            opts["top_azimuth"] = float(args[i])
         elif a == "--max-layer":
             i += 1
             opts["max_layer"] = int(args[i])
@@ -1004,7 +1008,7 @@ def make_camera(scene, name, elevation_deg, azimuth_deg, ortho, center, size, fi
 VIEWS = {
     # name: (elevation above horizon, default azimuth, orthographic, lighting, glare)
     "iso": (35.264, 45.0, True, 'flat', False),
-    "top": (89.9, 45.0, True, 'flat', False),   # aerial plan: wires read as a schematic
+    "top": (90.0, 0.0, True, 'flat', False),    # aerial plan: wires read as a schematic
     "beauty": (28.0, 30.0, False, 'sun', True),
 }
 
@@ -1036,10 +1040,21 @@ def main():
             print(f"Unknown view '{view}' (choices: {', '.join(VIEWS)})")
             continue
         elevation, azimuth, ortho, lighting, glare = VIEWS[view]
-        if opts["azimuth"] is not None:
-            azimuth = opts["azimuth"]
-        if opts["elevation"] is not None:
-            elevation = opts["elevation"]
+        if view == "top":
+            # plan view keeps the build squared to the frame — it does NOT
+            # inherit the iso azimuth; override with --top-azimuth if needed.
+            # Default: orient the build's long axis horizontally.
+            if opts["top_azimuth"] is not None:
+                azimuth = opts["top_azimuth"]
+            else:
+                xs, ys = fit_coords[0::3], fit_coords[1::3]
+                if (max(ys) - min(ys)) > (max(xs) - min(xs)):
+                    azimuth = 90.0
+        else:
+            if opts["azimuth"] is not None:
+                azimuth = opts["azimuth"]
+            if opts["elevation"] is not None:
+                elevation = opts["elevation"]
         if opts["lighting"] is not None:
             lighting = opts["lighting"]
         if opts["glare"] is not None:
