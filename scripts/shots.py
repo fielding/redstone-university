@@ -136,7 +136,7 @@ def render(name, shot, usd_path, out_dir, azimuth, views):
         args += ["--azimuth", str(azimuth)]
     if shot.get("swap"):
         args += ["--swap", shot["swap"]]
-    for opt in ("margin", "elevation", "outline", "dust", "toon"):
+    for opt in ("margin", "elevation", "outline", "dust", "toon", "projection"):
         if opt in shot:
             args += [f"--{opt}", str(shot[opt])]
     print(f"[{name}] rendering {', '.join(views)} -> {out_dir}")
