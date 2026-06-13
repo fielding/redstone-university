@@ -44,10 +44,17 @@ DEFAULT_PACKS = ["UsdPreviewSurface", "BlenderCycles", "base_resource_pack"]
 
 
 def load_shots():
+    """
+    Returns (shots, defaults). Every shot inherits the optional settings in
+    the special "_defaults" entry (views, azimuth, swap, margin, ...) unless
+    it overrides them itself.
+    """
     if not os.path.exists(SHOTS_FILE):
         sys.exit(f"No shots file at {SHOTS_FILE} — create it first (see scripts/shots.py docstring).")
     with open(SHOTS_FILE) as f:
-        return json.load(f)
+        data = json.load(f)
+    defaults = data.pop("_defaults", {})
+    return {name: {**defaults, **shot} for name, shot in data.items()}, defaults
 
 
 def check_no_gui():
@@ -138,9 +145,56 @@ def render(name, shot, usd_path, out_dir, azimuth, views):
         sys.exit(f"[{name}] render produced no output")
 
 
+def adopt(name):
+    """
+    Create/update a shots.json entry from the most recent MiEx export
+    (GUI or CLI) by parsing the export settings MiEx wrote to its log.
+    Workflow: frame the shot in the MiEx GUI, export once anywhere, then
+    `shots.py --adopt my-shot`.
+    """
+    log_path = os.path.join(MIEX_DIR, "log.txt")
+    block, last = [], None
+    with open(log_path) as f:
+        for line in f:
+            if line.startswith("Exporting world to"):
+                block = []
+            block.append(line)
+            if line.startswith("Exported:"):
+                last = block[:]
+    if not last:
+        sys.exit("No export found in MiEx log — export once (GUI is fine) first.")
+
+    def grab(key):
+        for line in last:
+            s = line.strip()
+            if s.startswith(key + ":"):
+                return s.split(":", 1)[1].strip()
+        return None
+
+    world = grab("world")
+    bounds = [int(grab(k)) for k in ("minX", "minY", "minZ", "maxX", "maxY", "maxZ")]
+    shots = {}
+    if os.path.exists(SHOTS_FILE):
+        with open(SHOTS_FILE) as f:
+            shots = json.load(f)
+    entry = shots.get(name, {})
+    entry.update({"world": world, "bounds": bounds})
+    shots[name] = entry
+    os.makedirs(os.path.dirname(SHOTS_FILE), exist_ok=True)
+    with open(SHOTS_FILE, "w") as f:
+        json.dump(shots, f, indent=2)
+        f.write("\n")
+    print(f"adopted '{name}': bounds={bounds}")
+    print(f"  world: {world}")
+    print("  inherits _defaults (azimuth, swap, views, ...) — override per-shot in renders/shots.json")
+    print("  tip: tighten minY/maxY in renders/shots.json if the Y range is the full world")
+
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("names", nargs="*")
+    p.add_argument("--adopt", metavar="NAME",
+                   help="create a shots.json entry from the most recent MiEx export")
     p.add_argument("--all", action="store_true")
     p.add_argument("--export-only", action="store_true")
     p.add_argument("--render-only", action="store_true")
@@ -150,7 +204,11 @@ def main():
     p.add_argument("--out")
     a = p.parse_args()
 
-    shots = load_shots()
+    if a.adopt:
+        adopt(a.adopt)
+        return
+
+    shots, _ = load_shots()
     names = list(shots.keys()) if a.all else a.names
     if not names:
         sys.exit("Name a shot or use --all. Available: " + ", ".join(shots.keys()))

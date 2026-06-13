@@ -1,13 +1,41 @@
 {
+  "_defaults": {
+    "views": [
+      "iso",
+      "beauty"
+    ],
+    "azimuth": 135,
+    "swap": "white_wool=white_concrete"
+  },
   "7segment": {
     "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
-    "bounds": [71, -64, -471, 77, 320, -471],
-    "views": ["iso", "beauty"]
+    "bounds": [
+      71,
+      -64,
+      -471,
+      77,
+      320,
+      -471
+    ],
+    "views": [
+      "iso",
+      "beauty"
+    ]
   },
   "circuit": {
     "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
-    "bounds": [25, 50, -490, 31, 70, -476],
-    "views": ["iso", "beauty"],
+    "bounds": [
+      25,
+      50,
+      -490,
+      31,
+      70,
+      -476
+    ],
+    "views": [
+      "iso",
+      "beauty"
+    ],
     "azimuth": 135,
     "swap": "white_wool=white_concrete"
   }
