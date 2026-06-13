@@ -375,13 +375,26 @@ def build_vector_wires(scene, dust_objects):
 
     for a, b in edges:
         pa, pb = V(center(a)), V(center(b))
-        d = (pb - pa).normalized()
-        side = d.cross(V((0, 0, 1)))
-        if side.length < 1e-6:
-            continue
-        side = side.normalized() * (W / 2)
         ca, cb = wire_color(blocks[a][0]), wire_color(blocks[b][0])
-        add_quad([pa - side, pa + side, pb + side, pb - side], [ca, ca, cb, cb])
+        if a[2] == b[2]:
+            d = (pb - pa).normalized()
+            side = d.cross(V((0, 0, 1))).normalized() * (W / 2)
+            add_quad([pa - side, pa + side, pb + side, pb - side], [ca, ca, cb, cb])
+            continue
+        # climbing dust renders like the game: flat to the step, a vertical
+        # piece up the block face, flat again on top — not a diagonal ramp
+        lo, hi = (a, b) if a[2] < b[2] else (b, a)
+        cl, ch = (ca, cb) if a[2] < b[2] else (cb, ca)
+        plo, phi = V(center(lo)), V(center(hi))
+        d = V((phi.x - plo.x, phi.y - plo.y, 0)).normalized()
+        side = d.cross(V((0, 0, 1))).normalized() * (W / 2)
+        face = V((plo.x, plo.y, 0)) + d * (BLOCK / 2 - LIFT)  # just off the wall
+        e_lo = V((face.x, face.y, plo.z))
+        e_hi = V((face.x, face.y, phi.z))
+        cm = tuple((cl[i] + ch[i]) / 2 for i in range(4))
+        add_quad([plo - side, plo + side, e_lo + side, e_lo - side], [cl, cl, cm, cm])
+        add_quad([e_lo - side, e_lo + side, e_hi + side, e_hi - side], [cm, cm, cm, cm])
+        add_quad([e_hi - side, e_hi + side, phi + side, phi - side], [cm, cm, ch, ch])
 
     # node patches: cover elbow/junction joints (and isolated dots)
     neighbors = {}
@@ -644,6 +657,8 @@ def import_and_prepare(usd_path, dust_style="schematic", swaps=None, grid=False)
         if dust_objects:
             build_vector_wires(bpy.context.scene, dust_objects)
 
+    mark_block_edges()
+
 
 def object_bounds(ob):
     corners = [ob.matrix_world @ Vector(c) for c in ob.bound_box]
@@ -791,6 +806,37 @@ def setup_glare(scene, enabled):
     scene.compositing_node_group = ng
 
 
+def mark_block_edges():
+    """
+    Freestyle-mark every mesh edge that lies on a block-grid plane so block
+    seams outline individually (needs runOptimiser=false exports — merged
+    geometry has no seam edges to mark). Grid: x/y boundaries at 16b+8,
+    z boundaries at 16b.
+    """
+    marked = 0
+    for ob in bpy.data.objects:
+        if ob.type != 'MESH' or ob.name == "RU_Wires":
+            continue
+        me = ob.data
+        mw = ob.matrix_world
+        coords = [mw @ v.co for v in me.vertices]
+        attr = me.attributes.get("freestyle_edge")
+        if attr is None:
+            attr = me.attributes.new("freestyle_edge", 'BOOLEAN', 'EDGE')
+        for i, e in enumerate(me.edges):
+            c1, c2 = coords[e.vertices[0]], coords[e.vertices[1]]
+            for ax, phase in ((0, 8.0), (1, 8.0), (2, 0.0)):
+                u1, u2 = c1[ax], c2[ax]
+                if abs(u1 - u2) > 0.01:
+                    continue
+                r = (u1 + phase) % 16.0
+                if r < 0.05 or r > 15.95:
+                    attr.data[i].value = True
+                    marked += 1
+                    break
+    print(f"block-seam edges marked: {marked}")
+
+
 def setup_outlines(scene, mode):
     """Freestyle silhouette lines — separates overlapping levels in iso."""
     scene.render.use_freestyle = bool(mode)
@@ -807,6 +853,7 @@ def setup_outlines(scene, mode):
     ls.select_silhouette = True
     ls.select_border = True
     ls.select_crease = (mode != "sil")
+    ls.select_edge_mark = True   # per-block seams from mark_block_edges()
     ls.linestyle.color = (0.08, 0.07, 0.07)
     ls.linestyle.thickness = width
 

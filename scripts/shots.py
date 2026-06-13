@@ -93,6 +93,10 @@ def export_usd(name, shot, packs):
         {"command": "applyExportSettings", "settings": {
             "exportRegions": region,
             "chunkSize": shot.get("chunkSize", 16),
+            # merged geometry reads as one body in renders; keep blocks
+            # individual so images work as build instructions ("optimise":
+            # true per-shot for very large builds if export size hurts)
+            "runOptimiser": shot.get("optimise", False),
         }},
         {"command": "export", "path": usd_path},
         {"command": "quit"},
