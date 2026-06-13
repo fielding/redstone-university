@@ -576,12 +576,15 @@ TECHNICAL = {
                             (0.76, 0.84, 0.95), (0.67, 0.78, 0.93),
                             (0.60, 0.72, 0.90), (0.53, 0.66, 0.88),
                             (0.47, 0.60, 0.85)]},
-    "schematic_dark": {"bg": (0.085, 0.09, 0.11), "fill": (0.20, 0.21, 0.25),
-                       "line": (0.82, 0.85, 0.90), "wire": None, "lw": 1.2,
-                       "bands": [(0.20, 0.22, 0.26), (0.26, 0.31, 0.39),
-                                 (0.32, 0.40, 0.51), (0.39, 0.49, 0.63),
-                                 (0.46, 0.58, 0.75), (0.53, 0.67, 0.86),
-                                 (0.60, 0.75, 0.96)]},
+    # warm "candlelit" dark to match the site: espresso ground, parchment
+    # ink lines, height bands climbing warm stone -> tan -> parchment so the
+    # red dust and amber lamps read as the on-brand accents
+    "schematic_dark": {"bg": (0.095, 0.082, 0.072), "fill": (0.26, 0.23, 0.19),
+                       "line": (0.88, 0.83, 0.74), "wire": None, "lw": 1.2,
+                       "bands": [(0.20, 0.18, 0.16), (0.29, 0.25, 0.21),
+                                 (0.39, 0.34, 0.27), (0.50, 0.43, 0.34),
+                                 (0.62, 0.53, 0.42), (0.74, 0.64, 0.51),
+                                 (0.85, 0.76, 0.62)]},
 }
 
 # redstone components kept in real color against ghosted white structure
@@ -674,6 +677,14 @@ def _emit_texture(nodes, links, em, output):
     return True
 
 
+def _srgb_lin(c):
+    """sRGB(display) -> scene-linear, so authored palette colors render as the
+    intended display tone under the Standard view transform (otherwise dark
+    values get lifted by the output gamma)."""
+    return tuple(v / 12.92 if v <= 0.04045 else ((v + 0.055) / 1.055) ** 2.4
+                 for v in c[:3])
+
+
 def apply_technical(mode, height_tint=0.0):
     """
     Reskin the scene as a technical drawing with full per-block outlines.
@@ -693,13 +704,14 @@ def apply_technical(mode, height_tint=0.0):
         if zs:
             base_z, top_z = min(zs), max(zs)
             nlayers = max(2, round((top_z - base_z) / 16.0))
-            htint = (base_z, nlayers, height_tint, cfg["bands"])
+            bands_lin = [_srgb_lin(b) for b in cfg["bands"]]
+            htint = (base_z, nlayers, height_tint, bands_lin)
             print(f"height tint: {nlayers} layers over {top_z - base_z:.0f} units")
     world = bpy.data.worlds.new("TechWorld")
     bpy.context.scene.world = world
     world.use_nodes = True
     bg = world.node_tree.nodes["Background"]
-    bg.inputs[0].default_value = (*cfg["bg"], 1.0)
+    bg.inputs[0].default_value = (*_srgb_lin(cfg["bg"]), 1.0)
     bg.inputs[1].default_value = 1.0
 
     for mat in bpy.data.materials:
@@ -716,7 +728,7 @@ def apply_technical(mode, height_tint=0.0):
             if schem:
                 continue  # keep the colored power-gradient wires
             em = nodes.new('ShaderNodeEmission')
-            em.inputs["Color"].default_value = (*cfg["wire"], 1.0)
+            em.inputs["Color"].default_value = (*_srgb_lin(cfg["wire"]), 1.0)
             em.inputs["Strength"].default_value = 1.5
             links.new(em.outputs["Emission"], output.inputs["Surface"])
             continue
@@ -731,7 +743,7 @@ def apply_technical(mode, height_tint=0.0):
             continue
 
         em = nodes.new('ShaderNodeEmission')
-        _flat_fill(nodes, links, em, cfg["fill"], htint)
+        _flat_fill(nodes, links, em, _srgb_lin(cfg["fill"]), htint)
         links.new(em.outputs["Emission"], output.inputs["Surface"])
     return cfg
 
@@ -1301,7 +1313,7 @@ def main():
         setup_outlines(scene, opts["outline"], tech_excl)
         if tech is not None:
             for ls in bpy.context.view_layer.freestyle_settings.linesets:
-                ls.linestyle.color = tech["line"]
+                ls.linestyle.color = _srgb_lin(tech["line"])
                 ls.linestyle.thickness = tech["lw"]
         tele = (view == "iso" and opts["projection"] == "tele")
         margin = opts["margin"]
