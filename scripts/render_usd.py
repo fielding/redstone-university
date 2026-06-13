@@ -105,6 +105,7 @@ def parse_args():
         "toon": "off",
         "technical": "off",
         "height_tint": 0.5,
+        "transparent": False,
         "dust": "vector",
         "swap": {},
         "hide": [],
@@ -177,6 +178,8 @@ def parse_args():
         elif a == "--technical":
             i += 1
             opts["technical"] = args[i].lower()
+        elif a == "--transparent":
+            opts["transparent"] = True
         elif a == "--height-tint":
             i += 1
             opts["height_tint"] = float(args[i])
@@ -1291,7 +1294,8 @@ def main():
         center, size, fit_coords = scene_bounds(scene, False, opts["cluster_gap"])
     setup_render(scene, opts["res"], opts["samples"])
     if tech is not None:
-        scene.render.film_transparent = False   # show the technical background
+        # show the technical background unless a transparent cutout is wanted
+        scene.render.film_transparent = opts["transparent"]
     if opts["toon"] == "cel":
         # Shader-to-RGB is EEVEE-only
         try:
