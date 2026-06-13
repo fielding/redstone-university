@@ -8,32 +8,41 @@
 }
 
 :root {
-  /* ── Color System (OKLCH) ── */
+  /* ── Color System (OKLCH) ──
+     LIGHT is the default theme — warm "aged vellum / illuminated manuscript"
+     to match the schematic figures. The previous DARK theme is preserved
+     verbatim under [data-theme="dark"] below (disabled, but one attribute
+     away from re-enabling or wiring a toggle). */
 
-  /* Primary — Crimson, derived from the logo shield */
-  --color-primary: oklch(48% 0.18 25);
-  --color-primary-light: oklch(58% 0.20 25);
-  --color-primary-dim: oklch(32% 0.12 25);
+  /* Primary — Crimson, derived from the logo shield (darkened for light bg) */
+  --color-primary: oklch(47% 0.19 25);
+  --color-primary-light: oklch(44% 0.20 25);   /* links: readable on paper */
+  --color-primary-dim: oklch(55% 0.13 25);     /* muted crimson, still visible */
 
-  /* Warm accent — from the torch flame */
-  --color-accent: oklch(78% 0.14 70);
+  /* Warm accent — torch flame, deepened to bronze for contrast on paper */
+  --color-accent: oklch(58% 0.13 65);
 
-  /* Surfaces — near-neutral with just a whisper of warmth (hue 25) */
-  --color-bg: oklch(11% 0.003 25);
-  --color-surface: oklch(15% 0.004 25);
-  --color-surface-raised: oklch(19% 0.005 25);
+  /* Surfaces — warm aged paper */
+  --color-bg: oklch(96% 0.010 85);
+  --color-surface: oklch(98% 0.006 85);
+  --color-surface-raised: oklch(99.5% 0.004 85);
 
-  /* Text — essentially neutral */
-  --color-text: oklch(88% 0.003 25);
-  --color-text-secondary: oklch(62% 0.005 25);
-  --color-text-faint: oklch(42% 0.004 25);
+  /* Panels & code (semantic surfaces used by the reading page) */
+  --color-panel: oklch(93.5% 0.012 82);
+  --color-code-bg: oklch(95% 0.014 85);
+  --color-code-text: oklch(45% 0.12 50);
 
-  /* Borders — neutral */
-  --color-border: oklch(23% 0.004 25);
-  --color-border-subtle: oklch(17% 0.003 25);
+  /* Text — warm sepia ink */
+  --color-text: oklch(27% 0.022 45);
+  --color-text-secondary: oklch(44% 0.020 45);
+  --color-text-faint: oklch(60% 0.016 55);
+
+  /* Borders — warm light */
+  --color-border: oklch(85% 0.012 75);
+  --color-border-subtle: oklch(91% 0.008 80);
 
   /* Focus ring */
-  --color-focus: oklch(58% 0.18 25);
+  --color-focus: oklch(52% 0.18 25);
 
   /* ── Typography ── */
   --font-display: 'Young Serif', Georgia, serif;
@@ -57,6 +66,29 @@
   --duration-fast: 150ms;
   --duration-normal: 250ms;
   --duration-slow: 500ms;
+}
+
+/* ── DARK theme (preserved, disabled) ──
+   The original dark palette. Not active by default; enable by setting
+   <html data-theme="dark"> (or wire a toggle). Kept so we can return to or
+   develop dark mode without reconstructing it. */
+[data-theme="dark"] {
+  --color-primary: oklch(48% 0.18 25);
+  --color-primary-light: oklch(58% 0.20 25);
+  --color-primary-dim: oklch(32% 0.12 25);
+  --color-accent: oklch(78% 0.14 70);
+  --color-bg: oklch(11% 0.003 25);
+  --color-surface: oklch(15% 0.004 25);
+  --color-surface-raised: oklch(19% 0.005 25);
+  --color-text: oklch(88% 0.003 25);
+  --color-text-secondary: oklch(62% 0.005 25);
+  --color-text-faint: oklch(42% 0.004 25);
+  --color-border: oklch(23% 0.004 25);
+  --color-border-subtle: oklch(17% 0.003 25);
+  --color-focus: oklch(58% 0.18 25);
+  --color-panel: oklch(14% 0.004 25);
+  --color-code-bg: oklch(8% 0.003 25);
+  --color-code-text: oklch(82% 0.08 55);
 }
 
 html {
@@ -111,6 +143,11 @@ code {
 
 /* ── Selection ── */
 ::selection {
+  background: oklch(47% 0.19 25 / 0.18);
+  color: oklch(27% 0.022 45);
+}
+
+[data-theme="dark"] ::selection {
   background: oklch(48% 0.15 25 / 0.3);
   color: oklch(92% 0.003 25);
 }

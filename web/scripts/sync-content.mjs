@@ -73,9 +73,8 @@ function fixMissingImages(dir) {
             fixMissingImages(fullPath);
         } else if (entry.name.endsWith('.md')) {
             let content = fs.readFileSync(fullPath, 'utf-8');
-
-            // Fix logo path to use dark version
-            content = content.replace(/project_assets\/logo\.png/g, 'project_assets/logo-dark-nobg.png');
+            // light theme: keep logo.png as-authored (was previously rewritten
+            // to the dark logo). No logo rewrite needed.
 
             const imageRegex = /!\[.*?\]\((.*?)\)/g;
             let match;

@@ -7,7 +7,7 @@ import Layout from '../layouts/Layout.astro';
 		<section class="hero">
 			<div class="hero-inner">
 				<img
-					src="/assets/project_assets/logo-dark-nobg.png"
+					src="/assets/project_assets/logo.png"
 					alt="Redstone University crest"
 					class="hero-logo"
 					width="460"
@@ -128,8 +128,8 @@ import Layout from '../layouts/Layout.astro';
 		position: absolute;
 		inset: -10%;
 		background:
-			radial-gradient(ellipse 50% 45% at 50% 42%, oklch(18% 0.06 25 / 0.7), transparent),
-			radial-gradient(ellipse 90% 70% at 50% 38%, oklch(12% 0.03 25 / 0.5), transparent);
+			radial-gradient(ellipse 50% 45% at 50% 42%, oklch(82% 0.10 70 / 0.45), transparent),
+			radial-gradient(ellipse 90% 70% at 50% 38%, oklch(90% 0.05 80 / 0.35), transparent);
 		pointer-events: none;
 		animation: breathe 10s ease-in-out infinite;
 	}
@@ -139,7 +139,7 @@ import Layout from '../layouts/Layout.astro';
 		content: '';
 		position: absolute;
 		inset: -5%;
-		background: radial-gradient(ellipse 40% 35% at 50% 36%, oklch(20% 0.08 30 / 0.3), transparent);
+		background: radial-gradient(ellipse 40% 35% at 50% 36%, oklch(78% 0.13 55 / 0.28), transparent);
 		pointer-events: none;
 		animation: breathe 7s ease-in-out 3s infinite;
 	}
@@ -155,16 +155,16 @@ import Layout from '../layouts/Layout.astro';
 		width: clamp(280px, 20vw + 180px, 520px);
 		height: auto;
 		margin-bottom: var(--space-xl);
-		filter: drop-shadow(0 0 80px oklch(32% 0.16 25 / 0.6))
-		        drop-shadow(0 0 160px oklch(28% 0.10 25 / 0.4));
+		filter: drop-shadow(0 0 70px oklch(80% 0.13 70 / 0.50))
+		        drop-shadow(0 0 150px oklch(82% 0.09 60 / 0.32));
 		animation: reveal-up 1s var(--ease-out) both;
 		transition: filter 800ms var(--ease-out-quart);
 	}
 
 	/* Torch brightens when you approach — the flame responds */
 	.hero-logo:hover {
-		filter: drop-shadow(0 0 80px oklch(38% 0.20 25 / 0.7))
-		        drop-shadow(0 0 180px oklch(35% 0.14 30 / 0.5));
+		filter: drop-shadow(0 0 80px oklch(82% 0.16 65 / 0.62))
+		        drop-shadow(0 0 180px oklch(80% 0.12 55 / 0.42));
 	}
 
 	.hero-title {
@@ -172,7 +172,7 @@ import Layout from '../layouts/Layout.astro';
 		line-height: 1.05;
 		letter-spacing: -0.02em;
 		margin-bottom: var(--space-lg);
-		color: oklch(93% 0.003 25);
+		color: var(--color-text);
 		animation: reveal-up 900ms var(--ease-out) 150ms both;
 	}
 
@@ -293,7 +293,7 @@ import Layout from '../layouts/Layout.astro';
 
 	.part:hover {
 		color: inherit;
-		background: oklch(14% 0.005 25 / 0.6);
+		background: var(--color-panel);
 	}
 
 	.part:hover .part-numeral {
@@ -308,7 +308,7 @@ import Layout from '../layouts/Layout.astro';
 	}
 
 	.part:hover .part-title {
-		color: oklch(93% 0.003 25);
+		color: var(--color-text);
 	}
 
 	.part-numeral {

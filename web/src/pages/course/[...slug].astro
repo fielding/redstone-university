@@ -25,7 +25,7 @@ const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
       <div class="sidebar-header">
         <a href="/" class="logo-link" aria-label="Redstone University — home">
           <img
-            src="/assets/project_assets/logo-dark-nobg.png"
+            src="/assets/project_assets/logo.png"
             alt=""
             class="sidebar-logo"
             width="192"
@@ -127,12 +127,12 @@ const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
     width: 192px;
     height: auto;
     margin: 0 auto;
-    filter: drop-shadow(0 0 24px oklch(32% 0.12 25 / 0.5));
+    filter: drop-shadow(0 0 20px oklch(58% 0.13 65 / 0.30));
     transition: filter 500ms var(--ease-out-quart);
   }
 
   .logo-link:hover .sidebar-logo {
-    filter: drop-shadow(0 0 32px oklch(38% 0.18 25 / 0.7));
+    filter: drop-shadow(0 0 28px oklch(58% 0.16 65 / 0.45));
   }
 
   /* ── Main Content ── */
@@ -217,7 +217,7 @@ const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
     max-width: 66ch;
     font-family: var(--font-reading);
     font-weight: 400;
-    color: oklch(86% 0.003 25);
+    color: var(--color-text);
     font-size: 1.0625rem; /* 17px base — sans reads smaller than serif */
     line-height: 1.7;
     letter-spacing: 0.005em;
@@ -233,7 +233,7 @@ const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
     font-size: 2.5rem;
     line-height: 1.1;
     letter-spacing: -0.015em;
-    color: oklch(92% 0.003 25);
+    color: var(--color-text);
     margin-bottom: var(--space-2xl);
     padding-bottom: var(--space-lg);
     border-bottom: 1px solid var(--color-border);
@@ -244,7 +244,7 @@ const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
     font-size: 1.875rem;
     line-height: 1.2;
     letter-spacing: -0.01em;
-    color: oklch(92% 0.003 25);
+    color: var(--color-text);
     margin-top: var(--space-4xl);
     margin-bottom: var(--space-lg);
     padding-top: var(--space-xl);
@@ -262,7 +262,7 @@ const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
     font-family: var(--font-display);
     font-size: 1.375rem;
     line-height: 1.25;
-    color: oklch(90% 0.003 25);
+    color: var(--color-text);
     margin-top: var(--space-3xl);
     margin-bottom: var(--space-md);
   }
@@ -286,7 +286,7 @@ const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
 
   /* ── Strong & emphasis ── */
   .prose :global(strong) {
-    color: oklch(96% 0.003 25);
+    color: var(--color-text);
     font-weight: 600;
   }
 
@@ -301,7 +301,7 @@ const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
     text-decoration: underline;
     text-underline-offset: 3px;
     text-decoration-thickness: 1px;
-    text-decoration-color: oklch(48% 0.12 25 / 0.5);
+    text-decoration-color: var(--color-primary-dim);
     transition:
       color 150ms var(--ease-out),
       text-decoration-color 150ms var(--ease-out);
@@ -339,7 +339,7 @@ const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
     position: relative;
     margin: var(--space-2xl) 0;
     padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-2xl);
-    background: oklch(14% 0.004 25);
+    background: var(--color-panel);
     border-radius: 0 6px 6px 0;
     border: 1px solid var(--color-border-subtle);
     border-left: none;
@@ -353,7 +353,7 @@ const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
     top: 0;
     bottom: 0;
     width: 2px;
-    background: oklch(45% 0.12 25);
+    background: var(--color-primary);
     border-radius: 2px 0 0 2px;
   }
 
@@ -369,7 +369,7 @@ const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
   }
 
   .prose :global(blockquote strong) {
-    color: oklch(88% 0.004 25);
+    color: var(--color-text);
     font-style: normal;
     font-weight: 700;
   }
@@ -396,7 +396,7 @@ const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
   .prose :global(code) {
     font-family: var(--font-mono);
     font-size: 0.84em;
-    color: oklch(82% 0.08 55);
+    color: var(--color-code-text);
     font-weight: 500;
     overflow-wrap: break-word;
     word-break: break-word;
@@ -407,7 +407,7 @@ const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
     font-family: var(--font-mono);
     font-size: 0.85rem;
     line-height: 1.7;
-    background: oklch(8% 0.003 25) !important;
+    background: var(--color-code-bg) !important;
     padding: var(--space-xl);
     border-radius: 6px;
     border: 1px solid var(--color-border);
@@ -439,7 +439,7 @@ const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
   }
 
   .prose :global(thead) {
-    background: oklch(14% 0.004 25);
+    background: var(--color-panel);
   }
 
   .prose :global(th) {
@@ -465,28 +465,28 @@ const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
   }
 
   .prose :global(tbody tr:hover) {
-    background: oklch(13% 0.004 25);
+    background: var(--color-panel);
   }
 
   /* ── KaTeX math ── */
   .prose :global(.katex-display) {
     margin: var(--space-2xl) 0;
     padding: var(--space-lg) var(--space-xl);
-    background: oklch(13% 0.004 25);
+    background: var(--color-panel);
     border-radius: 6px;
     overflow-x: auto;
   }
 
   .prose :global(.katex) {
     font-size: 1.1em;
-    color: oklch(88% 0.004 25);
+    color: var(--color-text);
   }
 
   /* Inline math — slightly warmer than body text */
   .prose :global(.katex-inline .katex),
   .prose :global(span.katex) {
     font-size: 1.05em;
-    color: oklch(85% 0.02 25);
+    color: var(--color-text-secondary);
   }
 
   /* ── Heading anchor links ── */
