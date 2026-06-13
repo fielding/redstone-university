@@ -104,6 +104,7 @@ def parse_args():
         "grid": True,
         "toon": "off",
         "technical": "off",
+        "height_tint": 0.5,
         "dust": "vector",
         "swap": {},
         "hide": [],
@@ -176,6 +177,9 @@ def parse_args():
         elif a == "--technical":
             i += 1
             opts["technical"] = args[i].lower()
+        elif a == "--height-tint":
+            i += 1
+            opts["height_tint"] = float(args[i])
         elif a == "--dust":
             i += 1
             opts["dust"] = args[i].lower()
@@ -574,22 +578,73 @@ COMPONENT_KW = ("torch", "lever", "repeater", "comparator", "lamp", "button",
                 "dispenser", "dropper", "note_block", "rail")
 
 
-def _flat_fill(nodes, links, em, rgb):
-    """Emission fill faintly shaded by face-normal Z (tops brighter than sides)."""
+def _flat_fill(nodes, links, em, rgb, htint=None):
+    """
+    Emission fill faintly shaded by face-normal Z (tops brighter than sides).
+    If htint=(base_z, nlayers, strength) is given, the fill color is also
+    tinted by the block's layer (warm-white at the ground -> cool blue up top)
+    so vertical position reads at a glance — quantized per 16-unit layer.
+    """
     geo = nodes.new('ShaderNodeNewGeometry')
     sep = nodes.new('ShaderNodeSeparateXYZ')
+    links.new(geo.outputs["Normal"], sep.inputs["Vector"])
     mr = nodes.new('ShaderNodeMapRange')
     mr.inputs["From Min"].default_value = -1.0
     mr.inputs["From Max"].default_value = 1.0
     mr.inputs["To Min"].default_value = 0.80
     mr.inputs["To Max"].default_value = 1.05
-    links.new(geo.outputs["Normal"], sep.inputs["Vector"])
     links.new(sep.outputs["Z"], mr.inputs["Value"])
-    mul = nodes.new('ShaderNodeVectorMath')
-    mul.operation = 'SCALE'
-    mul.inputs[0].default_value = rgb[:3]
-    links.new(mr.outputs["Result"], mul.inputs["Scale"])
-    links.new(mul.outputs["Vector"], em.inputs["Color"])
+
+    if htint is not None:
+        base_z, nlayers, strength = htint
+        psep = nodes.new('ShaderNodeSeparateXYZ')
+        links.new(geo.outputs["Position"], psep.inputs["Vector"])
+        # layer index = floor((Z - base - 0.5)/16); top faces resolve to their
+        # own block, hidden bottom faces to the one below (invisible)
+        sub = nodes.new('ShaderNodeMath'); sub.operation = 'SUBTRACT'
+        links.new(psep.outputs["Z"], sub.inputs[0]); sub.inputs[1].default_value = base_z + 0.5
+        div = nodes.new('ShaderNodeMath'); div.operation = 'DIVIDE'
+        links.new(sub.outputs["Value"], div.inputs[0]); div.inputs[1].default_value = 16.0
+        flr = nodes.new('ShaderNodeMath'); flr.operation = 'FLOOR'
+        links.new(div.outputs["Value"], flr.inputs[0])
+        nrm = nodes.new('ShaderNodeMath'); nrm.operation = 'DIVIDE'
+        links.new(flr.outputs["Value"], nrm.inputs[0]); nrm.inputs[1].default_value = max(1.0, nlayers - 1.0)
+        # distinct per-layer bands (constant interpolation) so each relative
+        # layer reads as its own color, not a near-identical gradient step
+        ramp = nodes.new('ShaderNodeValToRGB')
+        ramp.color_ramp.interpolation = 'CONSTANT'
+        band = [(0.97, 0.97, 0.98), (0.99, 0.78, 0.40), (0.46, 0.85, 0.50),
+                (0.40, 0.74, 1.00), (0.72, 0.55, 1.00), (1.00, 0.60, 0.68),
+                (0.70, 0.78, 0.45)]
+        els = ramp.color_ramp.elements
+        n = max(2, min(len(band), int(nlayers)))
+        # CONSTANT ramp: a stop at position p colors the range [p, next). To
+        # land band i on layer i (nrm = i/(n-1)), place stops just below i/(n-1).
+        els[0].position = 0.0
+        els[0].color = (*band[0], 1.0)
+        els[1].position = 0.5 / (n - 1)
+        els[1].color = (*band[1], 1.0)
+        for i in range(2, n):
+            e = els.new((i - 0.5) / (n - 1))
+            e.color = (*band[i], 1.0)
+        links.new(nrm.outputs["Value"], ramp.inputs["Fac"])
+        # blend the tint toward the base fill by (1-strength) so it stays subtle
+        blend = nodes.new('ShaderNodeMix'); blend.data_type = 'RGBA'
+        blend.inputs["Factor"].default_value = strength
+        blend.inputs["A"].default_value = (*rgb[:3], 1.0)
+        links.new(ramp.outputs["Color"], blend.inputs["B"])
+        tint = nodes.new('ShaderNodeMix'); tint.data_type = 'RGBA'
+        tint.blend_type = 'MULTIPLY'; tint.inputs["Factor"].default_value = 1.0
+        links.new(blend.outputs["Result"], tint.inputs["A"])
+        # reuse the normal shade as a scalar->gray multiply
+        links.new(mr.outputs["Result"], tint.inputs["B"])  # scalar broadcast
+        links.new(tint.outputs["Result"], em.inputs["Color"])
+    else:
+        mul = nodes.new('ShaderNodeVectorMath')
+        mul.operation = 'SCALE'
+        mul.inputs[0].default_value = rgb[:3]
+        links.new(mr.outputs["Result"], mul.inputs["Scale"])
+        links.new(mul.outputs["Vector"], em.inputs["Color"])
     em.inputs["Strength"].default_value = 1.0
 
 
@@ -610,15 +665,27 @@ def _emit_texture(nodes, links, em, output):
     return True
 
 
-def apply_technical(mode):
+def apply_technical(mode, height_tint=0.0):
     """
     Reskin the scene as a technical drawing with full per-block outlines.
     blueprint/cad: everything flat-filled in one palette.
     schematic: structure blocks ghosted to white line-art while redstone
     components keep their real color and the dust wires stay power-colored —
     only the circuit carries color.
+    height_tint>0 tints structure fills by block layer (warm white at the
+    ground -> cool blue up top) so vertical position reads at a glance.
     """
     cfg = TECHNICAL[mode]
+    htint = None
+    if height_tint > 0.0:
+        zs = [(ob.matrix_world @ Vector(c)).z
+              for ob in bpy.data.objects if ob.type == 'MESH' and not ob.hide_render
+              for c in ob.bound_box]
+        if zs:
+            base_z, top_z = min(zs), max(zs)
+            nlayers = max(2, round((top_z - base_z) / 16.0))
+            htint = (base_z, nlayers, height_tint)
+            print(f"height tint: {nlayers} layers over {top_z - base_z:.0f} units")
     world = bpy.data.worlds.new("TechWorld")
     bpy.context.scene.world = world
     world.use_nodes = True
@@ -654,7 +721,7 @@ def apply_technical(mode):
             continue
 
         em = nodes.new('ShaderNodeEmission')
-        _flat_fill(nodes, links, em, cfg["fill"])
+        _flat_fill(nodes, links, em, cfg["fill"], htint)
         links.new(em.outputs["Emission"], output.inputs["Surface"])
     return cfg
 
@@ -1135,13 +1202,16 @@ def main():
         print(f"hid {n} object(s) matching {opts['hide']}")
     if opts["toon"] != "off":
         apply_toon(opts["toon"])
+    scene = bpy.context.scene
+    # trim stray geometry (bedrock/ground) FIRST so the technical height-tint
+    # measures the build, not the world floor far below
+    center, size, fit_coords = scene_bounds(scene, opts["trim"], opts["cluster_gap"])
     tech = None
     if opts["technical"] != "off":
-        tech = apply_technical(opts["technical"])
+        ht = opts["height_tint"] if opts["technical"] == "schematic" else 0.0
+        tech = apply_technical(opts["technical"], ht)
         opts["outline"] = "full"   # per-block linework is the whole point
         opts["grid"] = False       # outlines carry the seams; grid muddies fills
-    scene = bpy.context.scene
-    center, size, fit_coords = scene_bounds(scene, opts["trim"], opts["cluster_gap"])
     if opts["max_layer"] is not None:
         slice_above_layer(scene, fit_coords, opts["max_layer"])
     if opts["explode"] is not None:
