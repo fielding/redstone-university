@@ -22,6 +22,12 @@ Options (after the `--`):
     --elevation DEG    override camera elevation above the horizon
     --margin F         zoom-out factor around the auto-fit framing (default
                        1.0 = tight fit; 1.3 gives comfortable breathing room)
+    --projection P     ortho (default) | tele: long-lens perspective that
+                       keeps the isometric feel but restores depth cues —
+                       use for dense/deep builds that interlock in pure ortho
+    --max-layer N      build-instruction mode: render only the lowest N block
+                       layers of the build (camera stays framed on the full
+                       build, so successive N values stack like LEGO steps)
     --outline MODE     off | full (all edges, 1.4px) | thin (all edges, 0.8px)
                        | sil (silhouettes+borders only, 1.2px). 'on' = full.
                        (default off)
@@ -79,6 +85,8 @@ def parse_args():
         "elevation": None,
         "margin": 1.3,
         "outline": "sil",
+        "projection": "ortho",
+        "max_layer": None,
         "grid": True,
         "toon": "off",
         "dust": "vector",
@@ -126,6 +134,12 @@ def parse_args():
         elif a == "--margin":
             i += 1
             opts["margin"] = float(args[i])
+        elif a == "--projection":
+            i += 1
+            opts["projection"] = args[i].lower()
+        elif a == "--max-layer":
+            i += 1
+            opts["max_layer"] = int(args[i])
         elif a == "--outline":
             i += 1
             v = args[i].lower()
@@ -837,6 +851,32 @@ def mark_block_edges():
     print(f"block-seam edges marked: {marked}")
 
 
+def slice_above_layer(scene, fit_coords, max_layer):
+    """
+    Delete all geometry above the build's lowest `max_layer` block layers
+    (16 units per layer). Applies to block meshes AND the generated wires, so
+    dust on removed layers disappears too. Call after the camera is fitted —
+    framing stays constant across successive layer renders.
+    """
+    import bmesh
+    base_z = min(fit_coords[2::3])
+    thr = base_z + max_layer * 16.0 + 1.0
+    removed = 0
+    for ob in list(scene.objects):
+        if ob.type != 'MESH' or ob.hide_render:
+            continue
+        bm = bmesh.new()
+        bm.from_mesh(ob.data)
+        mw = ob.matrix_world
+        doomed = [f for f in bm.faces if (mw @ f.calc_center_median()).z > thr]
+        if doomed:
+            removed += len(doomed)
+            bmesh.ops.delete(bm, geom=doomed, context='FACES')
+            bm.to_mesh(ob.data)
+        bm.free()
+    print(f"max-layer {max_layer}: removed {removed} faces above z={thr:.1f}")
+
+
 def setup_outlines(scene, mode):
     """Freestyle silhouette lines — separates overlapping levels in iso."""
     scene.render.use_freestyle = bool(mode)
@@ -878,12 +918,16 @@ def setup_render(scene, res, samples):
         print("GPU setup failed, using CPU:", e)
 
 
-def make_camera(scene, name, elevation_deg, azimuth_deg, ortho, center, size, fit_coords, margin=1.0):
+def make_camera(scene, name, elevation_deg, azimuth_deg, ortho, center, size, fit_coords, margin=1.0, tele=False):
     cam_data = bpy.data.cameras.new(name)
     cam = bpy.data.objects.new(name, cam_data)
     scene.collection.objects.link(cam)
     cam.rotation_euler = (math.radians(90 - elevation_deg), 0, math.radians(azimuth_deg))
-    if ortho:
+    if tele:
+        # long lens: near-isometric look with just enough perspective for depth
+        ortho = False
+        cam_data.lens = 110.0
+    elif ortho:
         cam_data.type = 'ORTHO'
     deps = bpy.context.evaluated_depsgraph_get()
     loc, fit_scale = cam.camera_fit_coords(deps, fit_coords)
@@ -901,6 +945,7 @@ def make_camera(scene, name, elevation_deg, azimuth_deg, ortho, center, size, fi
 VIEWS = {
     # name: (elevation above horizon, default azimuth, orthographic, lighting, glare)
     "iso": (35.264, 45.0, True, 'flat', False),
+    "top": (89.9, 45.0, True, 'flat', False),   # aerial plan: wires read as a schematic
     "beauty": (28.0, 30.0, False, 'sun', True),
 }
 
@@ -912,6 +957,8 @@ def main():
         apply_toon(opts["toon"])
     scene = bpy.context.scene
     center, size, fit_coords = scene_bounds(scene, opts["trim"], opts["cluster_gap"])
+    if opts["max_layer"] is not None:
+        slice_above_layer(scene, fit_coords, opts["max_layer"])
     setup_render(scene, opts["res"], opts["samples"])
     if opts["toon"] == "cel":
         # Shader-to-RGB is EEVEE-only
@@ -940,9 +987,10 @@ def main():
             set_transform(scene, opts["transform"])
         setup_glare(scene, glare)
         setup_outlines(scene, opts["outline"])
-        cam = make_camera(scene, f"Cam_{view}", elevation, azimuth, ortho, center, size, fit_coords, opts["margin"])
+        tele = (view == "iso" and opts["projection"] == "tele")
+        cam = make_camera(scene, f"Cam_{view}", elevation, azimuth, ortho, center, size, fit_coords, opts["margin"], tele)
         scene.camera = cam
-        if opts["outline"] and ortho:
+        if opts["outline"] and ortho and not tele:
             # constant pixel width reads heavy on large builds: scale the line
             # width with zoom so outlines weigh the same relative to a block
             ref = 370.0  # ortho_scale where 1.2px looks right (the XOR shot)
