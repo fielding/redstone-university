@@ -39,6 +39,10 @@ Options (after the `--`):
                        (default: on)
     --toon MODE        off (default) | unlit (pure flat albedo colors, no
                        lighting at all) | cel (banded cartoon shading, EEVEE)
+    --technical MODE   off (default) | blueprint (navy ground, glowing line
+                       art, cyan wires) | cad (white ground, black linework,
+                       red wires — engineering-drawing look). Forces full
+                       per-block outlines.
     --swap A=B[,C=D]   retexture block A with block B's texture at render time
                        (e.g. --swap white_wool=white_concrete); names are the
                        vanilla block texture names
@@ -98,6 +102,7 @@ def parse_args():
         "explode": None,
         "grid": True,
         "toon": "off",
+        "technical": "off",
         "dust": "vector",
         "swap": {},
         "hide": [],
@@ -167,6 +172,9 @@ def parse_args():
         elif a == "--toon":
             i += 1
             opts["toon"] = args[i].lower()
+        elif a == "--technical":
+            i += 1
+            opts["technical"] = args[i].lower()
         elif a == "--dust":
             i += 1
             opts["dust"] = args[i].lower()
@@ -547,6 +555,62 @@ def apply_toon(mode):
             links.new(mix_shader.outputs["Shader"], output.inputs["Surface"])
         else:
             links.new(final, output.inputs["Surface"])
+
+
+TECHNICAL = {
+    "blueprint": {"bg": (0.030, 0.075, 0.26), "fill": (0.11, 0.22, 0.60),
+                  "line": (0.78, 0.90, 1.0), "wire": (0.45, 0.95, 1.0), "lw": 1.4},
+    "cad":       {"bg": (0.97, 0.97, 0.95), "fill": (0.84, 0.86, 0.89),
+                  "line": (0.05, 0.05, 0.07), "wire": (0.85, 0.06, 0.05), "lw": 1.2},
+}
+
+
+def apply_technical(mode):
+    """
+    Reskin the whole scene as a technical drawing: flat normal-shaded fills
+    in one palette, a solid background, and (via the view loop) full per-block
+    outlines in the palette's line color. Returns the palette so the caller
+    can set the matching outline color/width and force outlines on.
+    """
+    cfg = TECHNICAL[mode]
+    world = bpy.data.worlds.new("TechWorld")
+    bpy.context.scene.world = world
+    world.use_nodes = True
+    bg = world.node_tree.nodes["Background"]
+    bg.inputs[0].default_value = (*cfg["bg"], 1.0)
+    bg.inputs[1].default_value = 1.0
+
+    for mat in bpy.data.materials:
+        if not mat.node_tree:
+            continue
+        nodes, links = mat.node_tree.nodes, mat.node_tree.links
+        output = next((n for n in nodes if n.type == 'OUTPUT_MATERIAL'), None)
+        if output is None:
+            continue
+        em = nodes.new('ShaderNodeEmission')
+        if mat.name == "RU_Wire":
+            em.inputs["Color"].default_value = (*cfg["wire"], 1.0)
+            em.inputs["Strength"].default_value = 1.5
+        else:
+            # flat fill, faintly shaded by face normal Z so tops read brighter
+            # than sides without any real lighting
+            geo = nodes.new('ShaderNodeNewGeometry')
+            sep = nodes.new('ShaderNodeSeparateXYZ')
+            mr = nodes.new('ShaderNodeMapRange')
+            mr.inputs["From Min"].default_value = -1.0
+            mr.inputs["From Max"].default_value = 1.0
+            mr.inputs["To Min"].default_value = 0.72
+            mr.inputs["To Max"].default_value = 1.12
+            links.new(geo.outputs["Normal"], sep.inputs["Vector"])
+            links.new(sep.outputs["Z"], mr.inputs["Value"])
+            mul = nodes.new('ShaderNodeVectorMath')
+            mul.operation = 'SCALE'
+            mul.inputs[0].default_value = (*cfg["fill"], )[:3]
+            links.new(mr.outputs["Result"], mul.inputs["Scale"])
+            links.new(mul.outputs["Vector"], em.inputs["Color"])
+            em.inputs["Strength"].default_value = 1.0
+        links.new(em.outputs["Emission"], output.inputs["Surface"])
+    return cfg
 
 
 def hide_material(mat):
@@ -1025,6 +1089,11 @@ def main():
         print(f"hid {n} object(s) matching {opts['hide']}")
     if opts["toon"] != "off":
         apply_toon(opts["toon"])
+    tech = None
+    if opts["technical"] != "off":
+        tech = apply_technical(opts["technical"])
+        opts["outline"] = "full"   # per-block linework is the whole point
+        opts["grid"] = False       # outlines carry the seams; grid muddies fills
     scene = bpy.context.scene
     center, size, fit_coords = scene_bounds(scene, opts["trim"], opts["cluster_gap"])
     if opts["max_layer"] is not None:
@@ -1033,6 +1102,8 @@ def main():
         explode_layers(scene, min(fit_coords[2::3]), opts["explode"])
         center, size, fit_coords = scene_bounds(scene, False, opts["cluster_gap"])
     setup_render(scene, opts["res"], opts["samples"])
+    if tech is not None:
+        scene.render.film_transparent = False   # show the technical background
     if opts["toon"] == "cel":
         # Shader-to-RGB is EEVEE-only
         try:
@@ -1066,11 +1137,18 @@ def main():
             lighting = opts["lighting"]
         if opts["glare"] is not None:
             glare = opts["glare"]
-        setup_lighting(scene, lighting, azimuth)
-        if opts["transform"] is not None:
-            set_transform(scene, opts["transform"])
+        if tech is None:
+            setup_lighting(scene, lighting, azimuth)
+            if opts["transform"] is not None:
+                set_transform(scene, opts["transform"])
+        else:
+            set_transform(scene, 'standard')   # exact palette colors, emission self-lit
         setup_glare(scene, glare)
         setup_outlines(scene, opts["outline"])
+        if tech is not None:
+            for ls in bpy.context.view_layer.freestyle_settings.linesets:
+                ls.linestyle.color = tech["line"]
+                ls.linestyle.thickness = tech["lw"]
         tele = (view == "iso" and opts["projection"] == "tele")
         margin = opts["margin"]
         if view == "top" and opts["top_margin"] is not None:
