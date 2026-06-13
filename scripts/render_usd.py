@@ -571,15 +571,23 @@ TECHNICAL = {
     # build's actual layer count, so the full lightness range always spans
     # darkest-to-lightest no matter how many layers there are. A single cool
     # hue (light) / warm stone (dark) keeps them from competing with the red.
+    # Each layer has a fixed HUE identity (ground neutral, then amber, sage,
+    # dusty blue, mauve, terracotta, ochre) so layers are distinct and the
+    # light/dark themes match: same per-layer colors, rendered as soft pastels
+    # on light or deeper earthy tones on dark. Muted to stay candlelit and
+    # not fight the red dust.
     "schematic": {"bg": (1.0, 1.0, 1.0), "fill": (0.94, 0.94, 0.95),
                   "line": (0.06, 0.06, 0.08), "wire": None, "lw": 1.2,
-                  "band_lo": (0.99, 0.99, 1.00), "band_hi": (0.38, 0.53, 0.84)},
-    # warm "candlelit" dark to match the site: espresso ground, parchment
-    # ink lines, bands climbing warm stone -> parchment; red dust + amber
-    # lamps read as the on-brand accents
+                  "band_palette": [(0.93, 0.93, 0.94), (0.98, 0.85, 0.55),
+                                   (0.66, 0.83, 0.64), (0.60, 0.79, 0.92),
+                                   (0.81, 0.69, 0.88), (0.95, 0.74, 0.58),
+                                   (0.87, 0.85, 0.56)]},
     "schematic_dark": {"bg": (0.095, 0.082, 0.072), "fill": (0.26, 0.23, 0.19),
                        "line": (0.88, 0.83, 0.74), "wire": None, "lw": 1.2,
-                       "band_lo": (0.09, 0.078, 0.065), "band_hi": (0.98, 0.89, 0.73)},
+                       "band_palette": [(0.30, 0.27, 0.22), (0.60, 0.45, 0.21),
+                                        (0.34, 0.50, 0.34), (0.30, 0.46, 0.58),
+                                        (0.46, 0.37, 0.53), (0.60, 0.39, 0.28),
+                                        (0.53, 0.50, 0.28)]},
 }
 
 # redstone components kept in real color against ghosted white structure
@@ -699,10 +707,14 @@ def apply_technical(mode, height_tint=0.0):
         if zs:
             base_z, top_z = min(zs), max(zs)
             nlayers = max(2, round((top_z - base_z) / 16.0))
-            lo, hi = cfg["band_lo"], cfg["band_hi"]
-            bands_lin = [_srgb_lin(tuple(lo[c] + (hi[c] - lo[c]) * (i / (nlayers - 1))
-                                         for c in range(3)))
-                         for i in range(nlayers)]
+            if "band_palette" in cfg:
+                pal = cfg["band_palette"]
+                bands_lin = [_srgb_lin(pal[i % len(pal)]) for i in range(nlayers)]
+            else:
+                lo, hi = cfg["band_lo"], cfg["band_hi"]
+                bands_lin = [_srgb_lin(tuple(lo[c] + (hi[c] - lo[c]) * (i / (nlayers - 1))
+                                             for c in range(3)))
+                             for i in range(nlayers)]
             htint = (base_z, nlayers, height_tint, bands_lin)
             print(f"height tint: {nlayers} layers over {top_z - base_z:.0f} units")
     world = bpy.data.worlds.new("TechWorld")
