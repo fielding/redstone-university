@@ -38,5 +38,60 @@
     ],
     "azimuth": 135,
     "swap": "white_wool=white_concrete"
+  },
+  "04_4-to-10-decoder-compact-complete": {
+    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "bounds": [
+      -173,
+      -64,
+      -489,
+      -164,
+      320,
+      -459
+    ]
+  },
+  "04_2-to-4-decoder-3": {
+    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "bounds": [
+      -20,
+      -64,
+      -471,
+      -6,
+      320,
+      -451
+    ]
+  },
+  "02_AND-gate-composite": {
+    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "bounds": [
+      50,
+      -64,
+      -490,
+      52,
+      320,
+      -483
+    ]
+  },
+  "04_complete_digital-display": {
+    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "bounds": [
+      -321,
+      -64,
+      -489,
+      -296,
+      320,
+      -459
+    ]
+  },
+  "04_10-to-7-encoder-L9": {
+    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "bounds": [
+      -257,
+      -64,
+      -480,
+      -240,
+      320,
+      -479
+    ]
   }
 }
