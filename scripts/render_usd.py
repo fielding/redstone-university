@@ -567,9 +567,21 @@ TECHNICAL = {
                   "line": (0.78, 0.90, 1.0), "wire": (0.45, 0.95, 1.0), "lw": 1.4},
     "cad":       {"bg": (0.97, 0.97, 0.95), "fill": (0.84, 0.86, 0.89),
                   "line": (0.05, 0.05, 0.07), "wire": (0.85, 0.06, 0.05), "lw": 1.2},
-    # schematic: structure ghosted to white line-art, circuit kept in color
+    # schematic: structure ghosted to line-art, circuit kept in color. Height
+    # bands are a single cool hue (low saturation) so they read as depth
+    # without competing with the warm red of the redstone.
     "schematic": {"bg": (1.0, 1.0, 1.0), "fill": (0.94, 0.94, 0.95),
-                  "line": (0.06, 0.06, 0.08), "wire": None, "lw": 1.2},
+                  "line": (0.06, 0.06, 0.08), "wire": None, "lw": 1.2,
+                  "bands": [(0.96, 0.96, 0.97), (0.86, 0.90, 0.96),
+                            (0.76, 0.84, 0.95), (0.67, 0.78, 0.93),
+                            (0.60, 0.72, 0.90), (0.53, 0.66, 0.88),
+                            (0.47, 0.60, 0.85)]},
+    "schematic_dark": {"bg": (0.085, 0.09, 0.11), "fill": (0.20, 0.21, 0.25),
+                       "line": (0.82, 0.85, 0.90), "wire": None, "lw": 1.2,
+                       "bands": [(0.20, 0.22, 0.26), (0.26, 0.31, 0.39),
+                                 (0.32, 0.40, 0.51), (0.39, 0.49, 0.63),
+                                 (0.46, 0.58, 0.75), (0.53, 0.67, 0.86),
+                                 (0.60, 0.75, 0.96)]},
 }
 
 # redstone components kept in real color against ghosted white structure
@@ -596,7 +608,7 @@ def _flat_fill(nodes, links, em, rgb, htint=None):
     links.new(sep.outputs["Z"], mr.inputs["Value"])
 
     if htint is not None:
-        base_z, nlayers, strength = htint
+        base_z, nlayers, strength, band = htint
         psep = nodes.new('ShaderNodeSeparateXYZ')
         links.new(geo.outputs["Position"], psep.inputs["Vector"])
         # layer index = floor((Z - base - 0.5)/16); top faces resolve to their
@@ -613,9 +625,6 @@ def _flat_fill(nodes, links, em, rgb, htint=None):
         # layer reads as its own color, not a near-identical gradient step
         ramp = nodes.new('ShaderNodeValToRGB')
         ramp.color_ramp.interpolation = 'CONSTANT'
-        band = [(0.97, 0.97, 0.98), (0.99, 0.78, 0.40), (0.46, 0.85, 0.50),
-                (0.40, 0.74, 1.00), (0.72, 0.55, 1.00), (1.00, 0.60, 0.68),
-                (0.70, 0.78, 0.45)]
         els = ramp.color_ramp.elements
         n = max(2, min(len(band), int(nlayers)))
         # CONSTANT ramp: a stop at position p colors the range [p, next). To
@@ -684,7 +693,7 @@ def apply_technical(mode, height_tint=0.0):
         if zs:
             base_z, top_z = min(zs), max(zs)
             nlayers = max(2, round((top_z - base_z) / 16.0))
-            htint = (base_z, nlayers, height_tint)
+            htint = (base_z, nlayers, height_tint, cfg["bands"])
             print(f"height tint: {nlayers} layers over {top_z - base_z:.0f} units")
     world = bpy.data.worlds.new("TechWorld")
     bpy.context.scene.world = world
@@ -702,8 +711,9 @@ def apply_technical(mode, height_tint=0.0):
         if output is None:
             continue
 
+        schem = mode.startswith("schematic")
         if mat.name == "RU_Wire":
-            if mode == "schematic":
+            if schem:
                 continue  # keep the colored power-gradient wires
             em = nodes.new('ShaderNodeEmission')
             em.inputs["Color"].default_value = (*cfg["wire"], 1.0)
@@ -711,7 +721,7 @@ def apply_technical(mode, height_tint=0.0):
             links.new(em.outputs["Emission"], output.inputs["Surface"])
             continue
 
-        if mode == "schematic" and any(k in name for k in COMPONENT_KW):
+        if schem and any(k in name for k in COMPONENT_KW):
             em = nodes.new('ShaderNodeEmission')
             if _emit_texture(nodes, links, em, output):
                 continue
@@ -1208,7 +1218,7 @@ def main():
     center, size, fit_coords = scene_bounds(scene, opts["trim"], opts["cluster_gap"])
     tech = None
     if opts["technical"] != "off":
-        ht = opts["height_tint"] if opts["technical"] == "schematic" else 0.0
+        ht = opts["height_tint"] if opts["technical"].startswith("schematic") else 0.0
         tech = apply_technical(opts["technical"], ht)
         opts["outline"] = "full"   # per-block linework is the whole point
         opts["grid"] = False       # outlines carry the seams; grid muddies fills
