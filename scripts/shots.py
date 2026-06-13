@@ -136,9 +136,13 @@ def render(name, shot, usd_path, out_dir, azimuth, views):
         args += ["--azimuth", str(azimuth)]
     if shot.get("swap"):
         args += ["--swap", shot["swap"]]
-    for opt in ("margin", "elevation", "outline", "dust", "toon", "projection"):
-        if opt in shot:
-            args += [f"--{opt}", str(shot[opt])]
+    if shot.get("transparent"):
+        args += ["--transparent"]
+    for opt in ("margin", "elevation", "outline", "dust", "toon",
+                "projection", "technical", "height-tint", "top-azimuth"):
+        key = opt.replace("-", "_")
+        if key in shot:
+            args += [f"--{opt}", str(shot[key])]
     print(f"[{name}] rendering {', '.join(views)} -> {out_dir}")
     result = subprocess.run(args, capture_output=True, text=True, timeout=1800)
     wrote = [l for l in result.stdout.splitlines() if l.startswith("wrote ")]

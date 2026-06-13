@@ -5,7 +5,10 @@
       "beauty"
     ],
     "azimuth": 135,
-    "swap": "white_wool=white_concrete"
+    "swap": "white_wool=white_concrete",
+    "technical": "schematic",
+    "transparent": true,
+    "height_tint": 0.9
   },
   "7segment": {
     "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
