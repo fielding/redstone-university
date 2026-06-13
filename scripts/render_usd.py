@@ -42,6 +42,10 @@ Options (after the `--`):
     --swap A=B[,C=D]   retexture block A with block B's texture at render time
                        (e.g. --swap white_wool=white_concrete); names are the
                        vanilla block texture names
+    --hide A[,B]       hide blocks whose name contains A/B from the render
+                       (e.g. --hide lime_concrete for a floating, padless look)
+    --top-margin F     extra zoom-out for the aerial 'top' view only
+                       (default: inherits --margin)
     --dust STYLE       how to draw redstone dust (default: vector)
                        vector    - REPLACE dust geometry with generated wire
                                    ribbons: connection graph computed from
@@ -96,6 +100,8 @@ def parse_args():
         "toon": "off",
         "dust": "vector",
         "swap": {},
+        "hide": [],
+        "top_margin": None,
     }
     i = 0
     while i < len(args):
@@ -170,6 +176,12 @@ def parse_args():
                 old, _, new = pair.partition("=")
                 if old and new:
                     opts["swap"][old.strip()] = new.strip()
+        elif a == "--hide":
+            i += 1
+            opts["hide"] = [s.strip() for s in args[i].split(",") if s.strip()]
+        elif a == "--top-margin":
+            i += 1
+            opts["top_margin"] = float(args[i])
         elif not a.startswith("--") and opts["usd"] is None:
             opts["usd"] = os.path.abspath(os.path.expanduser(a))
         else:
@@ -864,54 +876,42 @@ def mark_block_edges():
 
 def explode_layers(scene, base_z, gap_blocks):
     """
-    Exploded axonometric: shift each block layer up by gap_blocks*16 per layer
-    above the base, so the build separates into floating tiers you can read
-    between. Geometry is grouped into connected islands (each block, or the
-    generated wire ribbons) so whole blocks move as units; each island is
-    placed by the layer of its centre. Operates in world space via each
-    object's matrix so it survives MiEx's import rotation.
+    Exploded axonometric, grouped by block layer: every column is sliced at
+    each 16-unit height and each face is assigned to the block layer it
+    belongs to (using its normal so top/bottom faces resolve to the right
+    layer), then the whole layer is fanned up by layer*gap. Unlike grouping
+    by connected island, a multi-block tower splits across tiers instead of
+    moving as one lump. Operates in world space (survives MiEx's rotation).
     """
-    import bmesh
+    import bmesh, math as _m
     gap = gap_blocks * 16.0
     for ob in list(scene.objects):
         if ob.type != 'MESH' or ob.hide_render:
             continue
         mw = ob.matrix_world
         mwi = mw.inverted()
+        nm = mw.to_3x3()
         bm = bmesh.new()
         bm.from_mesh(ob.data)
+        # disconnect every face so layers can move independently (no shared
+        # verts to tear between tiers)
+        bmesh.ops.split_edges(bm, edges=bm.edges[:])
         bm.faces.ensure_lookup_table()
-        seen = [False] * len(bm.faces)
-        for f0 in bm.faces:
-            if seen[f0.index]:
-                continue
-            stack, island = [f0], []
-            seen[f0.index] = True
-            while stack:
-                f = stack.pop()
-                island.append(f)
-                for e in f.edges:
-                    for nf in e.link_faces:
-                        if not seen[nf.index]:
-                            seen[nf.index] = True
-                            stack.append(nf)
-            zc = sum((mw @ f.calc_center_median()).z for f in island) / len(island)
-            # -4 bias so thin surface items (dust ribbons sitting on a block's
-            # top face, at a layer boundary) group with the block beneath them
-            # rather than floating up to the next tier
-            import math as _m
-            layer = max(0, _m.floor((zc - base_z - 4.0) / 16.0))
+        for f in bm.faces:
+            c = mw @ f.calc_center_median()
+            n = (nm @ f.normal).normalized()
+            key_z = c.z + (-0.5 if n.z > 0.5 else 0.5 if n.z < -0.5 else 0.0)
+            layer = max(0, _m.floor((key_z - base_z) / 16.0))
             if layer == 0:
                 continue
             dz = layer * gap
-            verts = {v for f in island for v in f.verts}
-            for v in verts:
+            for v in f.verts:
                 w = mw @ v.co
                 w.z += dz
                 v.co = mwi @ w
         bm.to_mesh(ob.data)
         bm.free()
-    print(f"exploded: {gap_blocks} block gap per layer")
+    print(f"exploded by layer: {gap_blocks} block gap per tier")
 
 
 def slice_above_layer(scene, fit_coords, max_layer):
@@ -1016,6 +1016,13 @@ VIEWS = {
 def main():
     opts = parse_args()
     import_and_prepare(opts["usd"], opts["dust"], opts["swap"], opts["grid"])
+    if opts["hide"]:
+        n = 0
+        for ob in bpy.data.objects:
+            if ob.type == 'MESH' and any(h in ob.name.lower() for h in opts["hide"]):
+                ob.hide_render = True
+                n += 1
+        print(f"hid {n} object(s) matching {opts['hide']}")
     if opts["toon"] != "off":
         apply_toon(opts["toon"])
     scene = bpy.context.scene
@@ -1065,7 +1072,10 @@ def main():
         setup_glare(scene, glare)
         setup_outlines(scene, opts["outline"])
         tele = (view == "iso" and opts["projection"] == "tele")
-        cam = make_camera(scene, f"Cam_{view}", elevation, azimuth, ortho, center, size, fit_coords, opts["margin"], tele)
+        margin = opts["margin"]
+        if view == "top" and opts["top_margin"] is not None:
+            margin = opts["top_margin"]
+        cam = make_camera(scene, f"Cam_{view}", elevation, azimuth, ortho, center, size, fit_coords, margin, tele)
         scene.camera = cam
         if opts["outline"] and ortho and not tele:
             # constant pixel width reads heavy on large builds: scale the line
