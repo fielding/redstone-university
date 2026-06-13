@@ -567,24 +567,19 @@ TECHNICAL = {
                   "line": (0.78, 0.90, 1.0), "wire": (0.45, 0.95, 1.0), "lw": 1.4},
     "cad":       {"bg": (0.97, 0.97, 0.95), "fill": (0.84, 0.86, 0.89),
                   "line": (0.05, 0.05, 0.07), "wire": (0.85, 0.06, 0.05), "lw": 1.2},
-    # schematic: structure ghosted to line-art, circuit kept in color. Height
-    # bands are a single cool hue (low saturation) so they read as depth
-    # without competing with the warm red of the redstone.
+    # height bands interpolate band_lo (ground) -> band_hi (top) across the
+    # build's actual layer count, so the full lightness range always spans
+    # darkest-to-lightest no matter how many layers there are. A single cool
+    # hue (light) / warm stone (dark) keeps them from competing with the red.
     "schematic": {"bg": (1.0, 1.0, 1.0), "fill": (0.94, 0.94, 0.95),
                   "line": (0.06, 0.06, 0.08), "wire": None, "lw": 1.2,
-                  "bands": [(0.96, 0.96, 0.97), (0.86, 0.90, 0.96),
-                            (0.76, 0.84, 0.95), (0.67, 0.78, 0.93),
-                            (0.60, 0.72, 0.90), (0.53, 0.66, 0.88),
-                            (0.47, 0.60, 0.85)]},
+                  "band_lo": (0.99, 0.99, 1.00), "band_hi": (0.38, 0.53, 0.84)},
     # warm "candlelit" dark to match the site: espresso ground, parchment
-    # ink lines, height bands climbing warm stone -> tan -> parchment so the
-    # red dust and amber lamps read as the on-brand accents
+    # ink lines, bands climbing warm stone -> parchment; red dust + amber
+    # lamps read as the on-brand accents
     "schematic_dark": {"bg": (0.095, 0.082, 0.072), "fill": (0.26, 0.23, 0.19),
                        "line": (0.88, 0.83, 0.74), "wire": None, "lw": 1.2,
-                       "bands": [(0.20, 0.18, 0.16), (0.29, 0.25, 0.21),
-                                 (0.39, 0.34, 0.27), (0.50, 0.43, 0.34),
-                                 (0.62, 0.53, 0.42), (0.74, 0.64, 0.51),
-                                 (0.85, 0.76, 0.62)]},
+                       "band_lo": (0.09, 0.078, 0.065), "band_hi": (0.98, 0.89, 0.73)},
 }
 
 # redstone components kept in real color against ghosted white structure
@@ -704,7 +699,10 @@ def apply_technical(mode, height_tint=0.0):
         if zs:
             base_z, top_z = min(zs), max(zs)
             nlayers = max(2, round((top_z - base_z) / 16.0))
-            bands_lin = [_srgb_lin(b) for b in cfg["bands"]]
+            lo, hi = cfg["band_lo"], cfg["band_hi"]
+            bands_lin = [_srgb_lin(tuple(lo[c] + (hi[c] - lo[c]) * (i / (nlayers - 1))
+                                         for c in range(3)))
+                         for i in range(nlayers)]
             htint = (base_z, nlayers, height_tint, bands_lin)
             print(f"height tint: {nlayers} layers over {top_z - base_z:.0f} units")
     world = bpy.data.worlds.new("TechWorld")
