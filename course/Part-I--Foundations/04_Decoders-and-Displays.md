@@ -86,7 +86,7 @@ Now that we have our display, how do we control it? Our computer thinks in 4-bit
 
 Instead, let’s think like engineers and break the problem into two much simpler, more manageable stages:
 
-1.  **Decoder**: This first stage will act as an "identifier". Its only job is to look at the 4-bit binary input and determine *which* number (`` `0` ``-`` `9` ``) it represents. It will then activate a single, unique output line corresponding to that number.
+1.  **Decoder**: This first stage will act as an "identifier". Its only job is to look at the 4-bit binary input and determine *which* number (`` `0` ``-`` `9` ``) it represents. It will then activate a single, unique output line corresponding to that number. Because it recognizes decimal digits stored as 4-bit binary patterns, this kind of circuit is called a **BCD (Binary-Coded Decimal) decoder** — remember that name; it will matter in Part II.
 2.  **Encoder**: This second stage will act as the "mapper". It receives the simple signal from the decoder (e.g., "the number is `` `3` ``!") and "maps" the signal to the correct combination of the 7 segments.
 
 This modular, two-stage approach is the heart of good engineering. It's easier to build, easier to test, and far easier to fix if something goes wrong.
@@ -137,7 +137,8 @@ By scaling down the problem, we can focus on the core logic without getting over
 3.  Place a Redstone Lamp at the output of the AND gate. This is your $L0$ output.
 4.  **Test it!** Set your input levers to `` `00` `` ($B1$=OFF, $B0$=OFF). The $L0$ lamp should turn ON. Now, flip either lever. The lamp should turn OFF. This proves your first gate is wired correctly.
 
-<div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/04_2-to-4-decoder-2_minecraft.png" alt="2-to-4 Decoder Step 2" width="512px"/><br/><em>Figure: Single AND gate connected to the $\neg B1$ and $\neg B0$ lines of the bus. The input is set to `` `11` ``, so the $L0$ lamp is OFF. It would be on if the input were `` `00` ``.</em></div><br/>
+![2-to-4 Decoder Step 2, isometric](https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/04_2-to-4-decoder-2_minecraft.png)
+<div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/04_2-to-4-decoder-2-aerial_minecraft.png" alt="2-to-4 Decoder Step 2, aerial" width="512px"/><br/><em>Figure: Single AND gate connected to the $\neg B1$ and $\neg B0$ lines of the bus. The input is set to `` `11` ``, so the $L0$ lamp is OFF. It would be on if the input were `` `00` ``.</em></div><br/>
 
 **Step 3: Build the Remaining Gates**
 

@@ -367,7 +367,7 @@ NOR gates are fundamental in electronics. Because they are a universal gate, ent
 
 ##### Real-World Connection
 
-NAND gates are arguably the most important gate in modern electronics. Because they are a universal gate, they form the basis for most integrated circuits, including the flash memory used in SSDs and USB drives (which is often called "NAND flash memory").```
+NAND gates are arguably the most important gate in modern electronics. Because they are a universal gate, they form the basis for most integrated circuits, including the flash memory used in SSDs and USB drives (which is often called "NAND flash memory").
 
 ---
 

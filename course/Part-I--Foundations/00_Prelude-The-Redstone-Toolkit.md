@@ -37,7 +37,7 @@ These are the pieces you’ll see over and over. They are the alphabet we will u
 > #### Note on Texture Packs:
 > For clarity, I use a texture pack that enhances Redstone visibility (e.g., showing dust lines clearly). I highly recommend you find a similar one for your version of the game (such as "Vanilla Tweaks" or others). It makes debugging much easier.
 
-| Component | Game Icon | Role in this Course | Description |
+| Component | Render | Role in this Course | Description |
 | :--- | :--- | :--- | :--- |
 | **Redstone Dust** | ![Redstone Dust Icon](https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/00_icon_redstone-dust.png) | **Wire:** The foundation of all circuits. | Carries a power signal up to `15` blocks before fading. Can be placed on most solid, opaque blocks. |
 | **Redstone Torch** | ![Redstone Torch Icon](https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/00_icon_redstone-torch.png) | **Power Source & Inverter (NOT Gate):** Our most versatile tool. | Acts as a constant power source. When powered by another source, it turns OFF, inverting the signal. This is our primitive **NOT gate**. |
@@ -45,7 +45,6 @@ These are the pieces you’ll see over and over. They are the alphabet we will u
 | **Redstone Lamp** | ![Redstone Lamp Icon](https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/00_icon_redstone-lamp.png) | **Output Indicator:** Lets us see the result of a calculation. | A block that lights up when powered. We use it to visualize the state of our circuits. |
 | **Redstone Repeater** | ![Redstone Repeater Icon](https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/00_icon_redstone-repeater.png) | **Signal Booster & Diode:** Essential for complex builds. | Extends a Redstone signal back to full strength (`15`) and acts as a one-way **diode** to prevent signals from flowing backward. |
 | **Solid Block** | ![Solid Block Icon](https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/00_icon_solid-block.png) | **Conductor & Insulator:** The physical structure of our machine. | A non-transparent block like Stone or Wool. It can be powered by Redstone components and transmit that power to adjacent components. |
-| **Sign** | ![Sign Icon](https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/00_icon_sign.png) | **Documentation:** A simple but vital tool for clarity. | Labeling your inputs, outputs, and different sections of a large build is crucial for understanding and debugging your own work. |
 | **Redstone Comparator** | ![Redstone Comparator Icon](https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/00_icon_redstone-comparator.png) | **Advanced Tool (Future Exploration)** | This is a powerful Redstone component with special comparison and subtraction modes. We will not need it for the core builds right away, but it is useful to know it exists. |
 
 ---

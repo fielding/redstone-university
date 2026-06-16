@@ -39,7 +39,7 @@ This system, now called **Boolean Algebra**, was initially a mathematical curios
 -   A powered Redstone line has the physical value **True** (`1`).
 -   An unpowered Redstone line has the physical value **False** (`0`).
 
-Boolean algebra gives us a set of rules and operators to manipulate these variables. When we build those operators physically, we call them **logic gates**, and they are the bedrock (pun intended) of all computation.
+Boolean algebra gives us a set of rules and operators to manipulate these variables. When we build those operators physically, we call them **logic gates**, and they are the bedrock of all computation.
 
 ---
 
@@ -211,12 +211,14 @@ To connect the abstract concept of a gate to our physical build, we will use a c
     -   **Programming Operator:** `A && B`
 -   **The Rule:** The output is True only if $A$ is True AND $B$ is True.
 -   **Truth Table: AND Gate**
+
 | $A$ | $B$ | $A \text{ AND } B$ |
 |:---:|:---:|:---------:|
 | `0` | `0` | `0` |
 | `0` | `1` | `0` |
 | `1` | `0` | `0` |
 | `1` | `1` | `1` |
+
 -   **The Boolean Expression:** Our build implements the expression $\text{NOT}(\text{NOT } A \text{ OR } \text{NOT } B)$ : $\neg(\neg A \lor \neg B)$.
 ---
 
