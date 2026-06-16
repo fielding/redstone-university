@@ -110,6 +110,7 @@ def parse_args():
         "swap": {},
         "hide": [],
         "top_margin": None,
+        "ground": "keep",
     }
     i = 0
     while i < len(args):
@@ -159,6 +160,9 @@ def parse_args():
         elif a == "--top-azimuth":
             i += 1
             opts["top_azimuth"] = float(args[i])
+        elif a == "--ground":
+            i += 1
+            opts["ground"] = args[i].lower()   # keep | remove | crop
         elif a == "--max-layer":
             i += 1
             opts["max_layer"] = int(args[i])
@@ -1192,6 +1196,51 @@ def slice_above_layer(scene, fit_coords, max_layer):
     print(f"max-layer {max_layer}: removed {removed} faces above z={thr:.1f}")
 
 
+def strip_ground(scene, mode, base_z):
+    """Handle the flat base layer the circuit sits on (the platform that often
+    overhangs the circuit footprint).
+      remove: delete the lowest block layer entirely (circuit sits on its own base)
+      crop:   keep the lowest layer only under the circuit's footprint (the XY
+              cells occupied by geometry in the layers above it)
+    `base_z` must be the build's real base (call AFTER stray bedrock is trimmed).
+    Re-frame after calling so the frame tightens to what remains."""
+    if mode not in ("remove", "remove2", "crop"):
+        return
+    import bmesh
+    BLOCK = 16.0
+    layers = 2 if mode == "remove2" else 1    # remove2 also drops the base block
+    band_top = base_z + layers * BLOCK + 1.0  # everything in the lowest layer(s)
+    footprint = set()
+    if mode == "crop":
+        for ob in scene.objects:
+            if ob.type != 'MESH' or ob.hide_render:
+                continue
+            mw = ob.matrix_world
+            for poly in ob.data.polygons:
+                c = mw @ poly.center
+                if c.z > band_top:
+                    footprint.add((round(c.x / BLOCK), round(c.y / BLOCK)))
+    removed = 0
+    for ob in list(scene.objects):
+        if ob.type != 'MESH' or ob.hide_render:
+            continue
+        bm = bmesh.new(); bm.from_mesh(ob.data); mw = ob.matrix_world
+        doomed = []
+        for f in bm.faces:
+            c = mw @ f.calc_center_median()
+            if c.z <= band_top:
+                if mode in ("remove", "remove2"):
+                    doomed.append(f)
+                elif (round(c.x / BLOCK), round(c.y / BLOCK)) not in footprint:
+                    doomed.append(f)
+        if doomed:
+            removed += len(doomed)
+            bmesh.ops.delete(bm, geom=doomed, context='FACES')
+            bm.to_mesh(ob.data)
+        bm.free()
+    print(f"ground {mode}: removed {removed} faces (base z={base_z:.1f})")
+
+
 def outline_exclude_collection():
     """
     Collection of glowing/colored objects (components + dust wires) to keep
@@ -1305,6 +1354,10 @@ def main():
     # trim stray geometry (bedrock/ground) FIRST so the technical height-tint
     # measures the build, not the world floor far below
     center, size, fit_coords = scene_bounds(scene, opts["trim"], opts["cluster_gap"])
+    # remove/crop the flat base platform, then re-frame to what remains
+    if opts["ground"] in ("remove", "remove2", "crop"):
+        strip_ground(scene, opts["ground"], min(fit_coords[2::3]))
+        center, size, fit_coords = scene_bounds(scene, opts["trim"], opts["cluster_gap"])
     tech = None
     if opts["technical"] != "off":
         ht = opts["height_tint"] if opts["technical"].startswith("schematic") else 0.0
@@ -1380,6 +1433,14 @@ def main():
             # width with zoom so outlines weigh the same relative to a block
             ref = 370.0  # ortho_scale where 1.2px looks right (the XOR shot)
             w = max(0.5, min(1.6, 1.2 * ref / cam.data.ortho_scale))
+            scene.render.line_thickness = w
+            for ls in bpy.context.view_layer.freestyle_settings.linesets:
+                ls.linestyle.thickness = w
+        elif opts["outline"] and tele:
+            # perspective has no single ortho_scale to key off; the build is
+            # framed to fill, so a fixed weight matching the ortho cap keeps
+            # the schematic outline crisp at near-iso depth
+            w = 1.5
             scene.render.line_thickness = w
             for ls in bpy.context.view_layer.freestyle_settings.linesets:
                 ls.linestyle.thickness = w

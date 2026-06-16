@@ -1,0 +1,113 @@
+{
+  "_defaults": {
+    "out": "renders/cv-out",
+    "gate_colors": true,
+    "scale": 2
+  },
+  "xor-gate": {
+    "circuit": "XOR Gate",
+    "name": "xor-gate",
+    "inputs": [1, 0]
+  },
+  "4bit-input-interface": {
+    "circuit": "4bit Input Interface",
+    "name": "4bit-input-interface",
+    "only": ["Input"]
+  },
+  "xnor-gate": {
+    "circuit": "XNOR Gate",
+    "name": "xnor-gate",
+    "inputs": [1, 1]
+  },
+  "not-gate": {
+    "circuit": "NOT Gate",
+    "name": "not-gate"
+  },
+  "or-gate": {
+    "circuit": "OR Gate",
+    "name": "or-gate"
+  },
+  "and-gate": {
+    "circuit": "AND Gate",
+    "name": "and-gate",
+    "inputs": [1, 1]
+  },
+  "nor-gate": {
+    "circuit": "NOR Gate",
+    "name": "nor-gate",
+    "inputs": [0, 0]
+  },
+  "nand-gate": {
+    "circuit": "NAND Gate",
+    "name": "nand-gate",
+    "inputs": [1, 1]
+  },
+  "redstone-university": {
+    "circuit": "Redstone University",
+    "name": "redstone-university"
+  },
+  "a-and-b-or-a-and-notb": {
+    "circuit": "(A AND B) OR (A AND !B)",
+    "name": "a-and-b-or-a-and-notb",
+    "inputs": [1, 0]
+  },
+  "simplification": {
+    "name": "simplification",
+    "compose": ["(A AND B) OR (A AND !B)", "Simplified (A AND B) OR (A AND !B)"],
+    "inputs": [1, 0],
+    "sep": "equiv"
+  },
+  "7-segment-display": {
+    "circuit": "7-segment display",
+    "name": "7-segment-display"
+  },
+  "2-to-4-decoder": {
+    "circuit": "2-to-4 decoder",
+    "name": "2-to-4-decoder"
+  },
+  "simplified-a-and-b-or-a-and-notb": {
+    "circuit": "Simplified (A AND B) OR (A AND !B)",
+    "name": "simplified-a-and-b-or-a-and-notb",
+    "inputs": [1, 0]
+  },
+  "4-to-10-decoder": {
+    "circuit": "4-to-10 decoder",
+    "name": "4-to-10-decoder"
+  },
+  "7-segment-0-9-decoder-driver-diode-matrix-rom": {
+    "circuit": "7-Segment 0-9 Decoder/Driver (diode-matrix ROM)",
+    "name": "7-segment-0-9-decoder-driver-diode-matrix-rom"
+  },
+  "4-bit-binary-to-display-abstract": {
+    "circuit": "4-bit binary to display (abstract)",
+    "name": "4-bit-binary-to-display-abstract"
+  },
+  "4-bit-binary-to-display-composite": {
+    "circuit": "4-bit binary to display (composite)",
+    "name": "4-bit-binary-to-display-composite"
+  },
+  "4-bit-adder": {
+    "circuit": "4-bit adder",
+    "name": "4-bit-adder"
+  },
+  "4-bit-rca": {
+    "circuit": "4-bit RCA",
+    "name": "4-bit-rca"
+  },
+  "4-bit-bcd": {
+    "circuit": "4-bit BCD",
+    "name": "4-bit-bcd"
+  },
+  "4-to-16-decoder": {
+    "circuit": "4-to-16 Decoder",
+    "name": "4-to-16-decoder"
+  },
+  "7-segment-hex-decoder-driver": {
+    "circuit": "7-segment Hex Decoder/Driver",
+    "name": "7-segment-hex-decoder-driver"
+  },
+  "4-bit-binary-to-hexadecimal-display-abstract": {
+    "circuit": "4-bit binary to hexadecimal display (abstract)",
+    "name": "4-bit-binary-to-hexadecimal-display-abstract"
+  }
+}

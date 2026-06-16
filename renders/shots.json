@@ -2,13 +2,124 @@
   "_defaults": {
     "views": [
       "iso",
-      "beauty"
+      "top"
     ],
     "azimuth": 135,
     "swap": "white_wool=white_concrete",
     "technical": "schematic",
     "transparent": true,
-    "height_tint": 0.9
+    "height_tint": 0.9,
+    "projection": "tele",
+    "ground": "remove"
+  },
+  "00_icon-solid-block": {
+    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "bounds": [
+      62,
+      -64,
+      -459,
+      64,
+      320,
+      -458
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "remove"
+  },
+  "00_icon-redstone-repeater": {
+    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "bounds": [
+      70,
+      -64,
+      -459,
+      72,
+      320,
+      -458
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "keep",
+    "hide": "white_wool,white_concrete,cobblestone,smooth_stone,lime_concrete"
+  },
+  "00_icon-redstone-comparator": {
+    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "bounds": [
+      74,
+      -64,
+      -459,
+      76,
+      320,
+      -458
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "keep",
+    "hide": "white_wool,white_concrete,cobblestone,smooth_stone,lime_concrete"
+  },
+  "00_icon-redstone-lamp": {
+    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "bounds": [
+      78,
+      -64,
+      -459,
+      80,
+      320,
+      -458
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "keep",
+    "hide": "white_wool,white_concrete,cobblestone,smooth_stone,lime_concrete,redstone_torch,redstone_block,redstone_wire"
+  },
+  "00_icon-lever": {
+    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "bounds": [
+      82,
+      -64,
+      -459,
+      84,
+      320,
+      -458
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "remove"
+  },
+  "00_icon-redstone-torch": {
+    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "bounds": [
+      86,
+      -64,
+      -459,
+      88,
+      320,
+      -458
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "keep",
+    "hide": "white_wool,white_concrete,cobblestone,smooth_stone,lime_concrete"
+  },
+  "00_icon-redstone-dust": {
+    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "bounds": [
+      90,
+      -64,
+      -459,
+      92,
+      320,
+      -458
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "remove"
   },
   "00_basic-circuit": {
     "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
@@ -253,23 +364,6 @@
     "projection": "tele",
     "azimuth": 150
   },
-  "04_complete_digital-display": {
-    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
-    "bounds": [
-      -321,
-      -64,
-      -489,
-      -296,
-      320,
-      -459
-    ],
-    "views": [
-      "iso",
-      "top"
-    ],
-    "projection": "tele",
-    "azimuth": 150
-  },
   "7segment": {
     "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
     "bounds": [
@@ -301,5 +395,147 @@
     ],
     "azimuth": 135,
     "swap": "white_wool=white_concrete"
+  },
+  "7-segment-a": {
+    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "bounds": [
+      86,
+      -64,
+      -471,
+      90,
+      320,
+      -471
+    ],
+    "views": [
+      "iso"
+    ]
+  },
+  "7-segment-b": {
+    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "bounds": [
+      71,
+      -64,
+      -471,
+      77,
+      320,
+      -471
+    ],
+    "views": [
+      "iso"
+    ]
+  },
+  "7-segment-c": {
+    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "bounds": [
+      55,
+      -64,
+      -474,
+      61,
+      320,
+      -471
+    ],
+    "views": [
+      "iso"
+    ]
+  },
+  "7-segment-d": {
+    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "bounds": [
+      46,
+      -64,
+      -474,
+      46,
+      320,
+      -471
+    ],
+    "views": [
+      "iso"
+    ]
+  },
+  "04_10-to-7-encoder-1": {
+    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "bounds": [
+      -197,
+      -64,
+      -480,
+      -185,
+      320,
+      -460
+    ]
+  },
+  "04_10-to-7-encoder-2": {
+    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "bounds": [
+      -229,
+      -64,
+      -480,
+      -212,
+      320,
+      -460
+    ]
+  },
+  "04_10-to-7-encoder-complete": {
+    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "bounds": [
+      -287,
+      -64,
+      -480,
+      -269,
+      320,
+      -460
+    ]
+  },
+  "04_4-to-10-decoder-L3": {
+    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "bounds": [
+      -153,
+      -64,
+      -459,
+      -144,
+      320,
+      -457
+    ]
+  },
+  "04_4-to-10-decoder-L3-test": {
+    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "bounds": [
+      -153,
+      -64,
+      -475,
+      -144,
+      320,
+      -472
+    ]
+  },
+  "03_NOR-gate": {
+    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "bounds": [
+      15,
+      -64,
+      -490,
+      17,
+      320,
+      -482
+    ],
+    "views": [
+      "iso"
+    ]
+  },
+  "04_complete-digital-display": {
+    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "bounds": [
+      -321,
+      -64,
+      -489,
+      -296,
+      320,
+      -459
+    ],
+    "views": [
+      "iso",
+      "top"
+    ],
+    "projection": "tele",
+    "azimuth": 150
   }
 }
