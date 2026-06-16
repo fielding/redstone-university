@@ -143,7 +143,8 @@ By scaling down the problem, we can focus on the core logic without getting over
 3.  Place a Redstone Lamp at the output of the AND gate. This is your $L0$ output.
 4.  **Test it!** Set your input levers to `` `00` `` ($B1$=OFF, $B0$=OFF). The $L0$ lamp should turn ON. Now, flip either lever. The lamp should turn OFF. This proves your first gate is wired correctly.
 
-![2-to-4 Decoder Step 2](./images/2-to-4-decoder-2_minecraft.png)
+![2-to-4 Decoder Step 2, isometric](./images/2-to-4-decoder-2_minecraft.png)
+![2-to-4 Decoder Step 2, aerial](./images/2-to-4-decoder-2-aerial_minecraft.png)
 *Figure: Single AND gate connected to the $\neg B1$ and $\neg B0$ lines of the bus. The input is set to `` `11` ``, so the $L0$ lamp is OFF. It would be on if the input were `` `00` ``.*
 
 **Step 3: Build the Remaining Gates**

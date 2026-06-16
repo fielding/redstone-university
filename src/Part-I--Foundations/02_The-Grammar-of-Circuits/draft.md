@@ -217,12 +217,14 @@ To connect the abstract concept of a gate to our physical build, we will use a c
     -   **Programming Operator:** `A && B`
 -   **The Rule:** The output is True only if $A$ is True AND $B$ is True.
 -   **Truth Table: AND Gate**
+
 | $A$ | $B$ | $A \text{ AND } B$ |
 |:---:|:---:|:---------:|
 | `0` | `0` | `0` |
 | `0` | `1` | `0` |
 | `1` | `0` | `0` |
 | `1` | `1` | `1` |
+
 -   **The Boolean Expression:** Our build implements the expression $\text{NOT}(\text{NOT } A \text{ OR } \text{NOT } B)$ : $\neg(\neg A \lor \neg B)$.
 ---
 
