@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="392" height="572" viewBox="0 0 196 286">
+<g transform="translate(-1132,-452)">
+<rect x="1214" y="534" width="52" height="102" fill="none" stroke="#d2cdc5" stroke-width="2.2" stroke-dasharray="8 6"/>
+<line x1="1210" y1="670" x2="1210" y2="660" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="1270" y1="670" x2="1270" y2="660" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="1230" y1="620" x2="1230" y2="660" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="1250" y1="620" x2="1250" y2="660" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="1240" y1="590" x2="1240" y2="570" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="1210" y1="660" x2="1230" y2="660" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="1250" y1="660" x2="1270" y2="660" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="1240" y1="520" x2="1240" y2="540" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
+<circle cx="1210" cy="670" r="3.1500000000000004" fill="#f0392a"/>
+<circle cx="1270" cy="670" r="3.1500000000000004" fill="#f0392a"/>
+<circle cx="1240" cy="520" r="3.1500000000000004" fill="#5a1816"/>
+<rect x="1200" y="670" width="20" height="20" rx="4" fill="#f0392a" stroke="#f0392a" stroke-width="3.2"/><text x="1210" y="685" font-family="Fira Code, ui-monospace, monospace" font-size="14" font-weight="600" text-anchor="middle" fill="#f5f1ea">1</text>
+<rect x="1260" y="670" width="20" height="20" rx="4" fill="#f0392a" stroke="#f0392a" stroke-width="3.2"/><text x="1270" y="685" font-family="Fira Code, ui-monospace, monospace" font-size="14" font-weight="600" text-anchor="middle" fill="#f5f1ea">1</text>
+<rect x="1230" y="500" width="20" height="20" rx="4" fill="#ffffff" stroke="#30231e" stroke-width="3.2"/><text x="1240" y="515" font-family="Fira Code, ui-monospace, monospace" font-size="14" font-weight="600" text-anchor="middle" fill="#30231e">0</text>
+<line x1="1240" y1="540" x2="1240.0" y2="550.0" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="1240" y1="570" x2="1240.0" y2="560.0" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
+<g transform="translate(1240,560) rotate(270)"><path d="M -9 -11 L 12 0 L -9 11 Z" fill="#f0d6d4" stroke="#30231e" stroke-width="3.2" stroke-linecap="square" stroke-linejoin="miter"/><circle cx="15" cy="0" r="4" fill="#f5f1ea" stroke="#30231e" stroke-width="3.2"/></g>
+<line x1="1230" y1="620" x2="1237.0710678118655" y2="612.9289321881346" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="1250" y1="620" x2="1242.9289321881345" y2="612.9289321881346" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="1240" y1="590" x2="1240.0" y2="600.0" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
+<g transform="translate(1240,610) rotate(270)"><path d="M -10 -19 L 0 -19 A 19 19 0 0 1 0 19 L -10 19 Z" fill="#d1e3c7" stroke="#30231e" stroke-width="3.2" stroke-linecap="square" stroke-linejoin="miter"/></g>
+</g>
+</svg>
