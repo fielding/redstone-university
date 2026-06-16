@@ -128,8 +128,8 @@ import Layout from '../layouts/Layout.astro';
 		position: absolute;
 		inset: -10%;
 		background:
-			radial-gradient(ellipse 50% 45% at 50% 42%, oklch(82% 0.10 70 / 0.45), transparent),
-			radial-gradient(ellipse 90% 70% at 50% 38%, oklch(90% 0.05 80 / 0.35), transparent);
+			radial-gradient(ellipse 50% 45% at 50% 42%, oklch(85% 0.08 80 / 0.40), transparent),
+			radial-gradient(ellipse 90% 70% at 50% 38%, oklch(90% 0.05 83 / 0.32), transparent);
 		pointer-events: none;
 		animation: breathe 10s ease-in-out infinite;
 	}
@@ -139,7 +139,7 @@ import Layout from '../layouts/Layout.astro';
 		content: '';
 		position: absolute;
 		inset: -5%;
-		background: radial-gradient(ellipse 40% 35% at 50% 36%, oklch(78% 0.13 55 / 0.28), transparent);
+		background: radial-gradient(ellipse 40% 35% at 50% 36%, oklch(82% 0.09 74 / 0.22), transparent);
 		pointer-events: none;
 		animation: breathe 7s ease-in-out 3s infinite;
 	}
@@ -155,16 +155,16 @@ import Layout from '../layouts/Layout.astro';
 		width: clamp(280px, 20vw + 180px, 520px);
 		height: auto;
 		margin-bottom: var(--space-xl);
-		filter: drop-shadow(0 0 70px oklch(80% 0.13 70 / 0.50))
-		        drop-shadow(0 0 150px oklch(82% 0.09 60 / 0.32));
+		filter: drop-shadow(0 0 65px oklch(84% 0.10 76 / 0.40))
+		        drop-shadow(0 0 150px oklch(87% 0.07 80 / 0.24));
 		animation: reveal-up 1s var(--ease-out) both;
 		transition: filter 800ms var(--ease-out-quart);
 	}
 
 	/* Torch brightens when you approach — the flame responds */
 	.hero-logo:hover {
-		filter: drop-shadow(0 0 80px oklch(82% 0.16 65 / 0.62))
-		        drop-shadow(0 0 180px oklch(80% 0.12 55 / 0.42));
+		filter: drop-shadow(0 0 70px oklch(86% 0.09 78 / 0.45))
+		        drop-shadow(0 0 170px oklch(86% 0.07 75 / 0.30));
 	}
 
 	.hero-title {
@@ -281,7 +281,7 @@ import Layout from '../layouts/Layout.astro';
 		display: grid;
 		grid-template-columns: 5.5rem 1fr;
 		gap: var(--space-xl);
-		align-items: baseline;
+		align-items: start;
 		text-decoration: none;
 		color: inherit;
 		padding: var(--space-2xl) var(--space-md);
@@ -315,6 +315,7 @@ import Layout from '../layouts/Layout.astro';
 		font-family: var(--font-display);
 		font-size: clamp(3rem, 4vw, 4.5rem);
 		line-height: 1;
+		text-align: right;
 		color: var(--color-primary-dim);
 		transition:
 			color 600ms var(--ease-out-quart),

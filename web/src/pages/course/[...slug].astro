@@ -337,8 +337,8 @@ const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
   /* ── Blockquotes ── */
   .prose :global(blockquote) {
     position: relative;
-    margin: var(--space-2xl) 0;
-    padding: var(--space-xl) var(--space-xl) var(--space-xl) var(--space-2xl);
+    margin: var(--space-lg) 0 var(--space-2xl);
+    padding: var(--space-lg) var(--space-xl) var(--space-lg) var(--space-2xl);
     background: var(--color-panel);
     border-radius: 0 6px 6px 0;
     border: 1px solid var(--color-border-subtle);
@@ -390,6 +390,21 @@ const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
     display: block;
   }
 
+  /* Two images in one paragraph (consecutive lines in the source) sit side by
+     side — e.g. an isometric + aerial pair — and stack on narrow screens. */
+  .prose :global(p:has(img + img)) {
+    display: flex;
+    gap: var(--space-lg);
+    align-items: flex-start;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .prose :global(p:has(img + img) img) {
+    flex: 1 1 280px;
+    min-width: 240px;
+    margin: var(--space-lg) 0 0;
+  }
+
   /* ── Inline code ── */
   .prose :global(code) {
     font-family: var(--font-mono);
@@ -425,7 +440,10 @@ const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
 
   /* ── Tables ── */
   .prose :global(table) {
-    width: 100%;
+    /* hug the content (so the border doesn't box empty space) but never
+       overflow the reading column; wide tables scroll horizontally. */
+    width: max-content;
+    max-width: 100%;
     border-collapse: collapse;
     margin: var(--space-2xl) 0;
     font-variant-numeric: tabular-nums;
