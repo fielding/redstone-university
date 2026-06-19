@@ -65,12 +65,11 @@ This course is structured as a complete curriculum, taking you from zero knowled
 
 -   **Part II: The Thinking Machine – Building the Processor.** Here, we will construct the entire mathematical and logical brain of our computer. We'll engineer an adder and subtractor, give it the ability to make decisions with comparators and status flags, and forge everything into a complete Arithmetic Logic Unit (ALU).
 
--   **Part III: The Automated Computer – Memory and Control.** In this final core part, we will achieve true automation. We'll build registers and addressable RAM to give our processor a memory, then add the clocking, routing, and control logic that let it fetch, decode, and execute instructions from a stored program.
+-   **Part III: The Automated Computer – Memory and Control.** In this final core part, we will achieve true automation across Modules 10–12b. We'll build registers and addressable RAM to give our processor a memory, then add the clocking, routing, and control logic that let it fetch, decode, and execute instructions from a stored program.
 
--   **Part IV: Post-Graduate Studies (Bonus Content).** For those who want to go even further, we'll explore advanced topics, like building the complex hardware required to display multi-digit decimal numbers, just like a real-world calculator.
+-   **Part IV: Post-Graduate Studies (Bonus Content).** For those who want to go even further, Module 13 explores advanced topics, including the hardware required to display multi-digit decimal numbers just like a real-world calculator.
 
-
-Please see `curriculum.md` for the full course outline and `structure.md` for details on how the course is organized.
+The current outline includes 13 numbered modules, with Module 12 intentionally split into **12a** (clock, counter, and control paths) and **12b** (instructions and the first program). Please see `curriculum.md` for the full module-by-module outline and `structure.md` for details on how the course is organized.
 
 ---
 
