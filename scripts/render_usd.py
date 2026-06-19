@@ -97,10 +97,13 @@ def parse_args():
         "elevation": None,
         "margin": 1.3,
         "outline": "sil",
+        "_outline_set": False,   # True once --outline is given explicitly
         "projection": "ortho",
         "top_azimuth": None,
         "max_layer": None,
         "explode": None,
+        "clip": None,
+        "ground_no_outline": False,   # opt-in: drop ground layer from the outline pass
         "grid": True,
         "toon": "off",
         "technical": "off",
@@ -169,10 +172,21 @@ def parse_args():
         elif a == "--explode":
             i += 1
             opts["explode"] = float(args[i])
+        elif a == "--clip":
+            i += 1
+            # "y:0:0.55,x:0.2:1" -> [("y",0.0,0.55),("x",0.2,1.0)] (bbox fractions)
+            cl = []
+            for part in args[i].split(","):
+                ax, lo, hi = part.split(":")
+                cl.append((ax.strip(), float(lo), float(hi)))
+            opts["clip"] = cl
+        elif a == "--ground-no-outline":
+            opts["ground_no_outline"] = True
         elif a == "--outline":
             i += 1
             v = args[i].lower()
             opts["outline"] = "full" if v == "on" else (v if v != "off" else False)
+            opts["_outline_set"] = True
         elif a == "--grid":
             i += 1
             opts["grid"] = args[i].lower() == "on"
@@ -849,7 +863,8 @@ def add_block_grid(image, factor=0.62):
     image.pixels[:] = px.ravel()
 
 
-def import_and_prepare(usd_path, dust_style="schematic", swaps=None, grid=False):
+def import_and_prepare(usd_path, dust_style="schematic", swaps=None, grid=False,
+                       mark_edges=True):
     bpy.ops.wm.read_factory_settings(use_empty=True)
     bpy.ops.wm.usd_import(filepath=usd_path)
     print(f"Imported {len(bpy.data.objects)} objects")
@@ -950,7 +965,8 @@ def import_and_prepare(usd_path, dust_style="schematic", swaps=None, grid=False)
         if dust_objects:
             build_vector_wires(bpy.context.scene, dust_objects)
 
-    mark_block_edges()
+    if mark_edges:   # per-block seam marks are only used by full/thin outlines
+        mark_block_edges()
 
 
 def object_bounds(ob):
@@ -1196,6 +1212,39 @@ def slice_above_layer(scene, fit_coords, max_layer):
     print(f"max-layer {max_layer}: removed {removed} faces above z={thr:.1f}")
 
 
+def clip_geometry(scene, fit_coords, clips):
+    """Cutaway: keep only the geometry within fractional ranges of the build's
+    bounding box. `clips` is a list of (axis, lo, hi) with axis in x/y/z and
+    lo/hi in [0,1]. e.g. ('y',0.0,0.55) keeps the back 55% along Y — slice the
+    front off to peek inside. Call after the camera is fitted so framing holds."""
+    import bmesh
+    AX = {"x": 0, "y": 1, "z": 2}
+    xs, ys, zs = fit_coords[0::3], fit_coords[1::3], fit_coords[2::3]
+    lo_w = [min(xs), min(ys), min(zs)]
+    span = [max(xs) - lo_w[0], max(ys) - lo_w[1], max(zs) - lo_w[2]]
+    planes = []  # (axis_idx, world_lo, world_hi)
+    for ax, lo, hi in clips:
+        i = AX[ax]
+        planes.append((i, lo_w[i] + span[i] * lo, lo_w[i] + span[i] * hi))
+    removed = 0
+    for ob in list(scene.objects):
+        if ob.type != 'MESH' or ob.hide_render:
+            continue
+        bm = bmesh.new(); bm.from_mesh(ob.data); mw = ob.matrix_world
+        # delete VERTICES outside the range (takes their faces with them, and
+        # updates the bounding box so the frame tightens to what remains)
+        doomed = [v for v in bm.verts
+                  if any((mw @ v.co)[i] < a or (mw @ v.co)[i] > b for i, a, b in planes)]
+        if doomed:
+            removed += len(doomed)
+            bmesh.ops.delete(bm, geom=doomed, context='VERTS')
+            bm.to_mesh(ob.data)
+        bm.free()
+        ob.data.update()
+    bpy.context.view_layer.update()   # refresh ob.bound_box so reframing tightens
+    print(f"clip {clips}: removed {removed} verts")
+
+
 def strip_ground(scene, mode, base_z):
     """Handle the flat base layer the circuit sits on (the platform that often
     overhangs the circuit footprint).
@@ -1261,6 +1310,23 @@ def outline_exclude_collection():
     return coll
 
 
+def exclude_ground_from_outline(coll, base_z):
+    """Add objects that live entirely in the bottom block layer (the kept/cropped
+    ground platform) to the no-outline collection, so a zoomed-out build's floor
+    doesn't drown in a grid of per-block outlines. The build above still outlines."""
+    BLOCK, n = 16.0, 0
+    top = base_z + BLOCK + 1.0
+    for ob in bpy.data.objects:
+        if ob.type != 'MESH' or ob.hide_render or ob.name in coll.objects:
+            continue
+        zs = [(ob.matrix_world @ v.co).z for v in ob.data.vertices]
+        if zs and max(zs) <= top:          # whole object sits in the ground layer
+            coll.objects.link(ob); n += 1
+    if n:
+        print(f"ground excluded from outline: {n} object(s)")
+    return n
+
+
 def setup_outlines(scene, mode, exclude=None):
     """Freestyle silhouette lines — separates overlapping levels in iso."""
     scene.render.use_freestyle = bool(mode)
@@ -1275,9 +1341,12 @@ def setup_outlines(scene, mode, exclude=None):
         fs.linesets.remove(ls)
     ls = fs.linesets.new("outline")
     ls.select_silhouette = True
-    ls.select_border = True
+    # 'sil' = outer silhouette only (clean for zoomed-out builds); full/thin add
+    # per-block borders, creases, and block-seam edge marks (the dense schematic
+    # linework that drowns a large build's ground in a grid).
+    ls.select_border = (mode != "sil")
     ls.select_crease = (mode != "sil")
-    ls.select_edge_mark = True   # per-block seams from mark_block_edges()
+    ls.select_edge_mark = (mode != "sil")
     if exclude is not None:
         ls.select_by_collection = True
         ls.collection = exclude
@@ -1340,14 +1409,37 @@ VIEWS = {
 
 def main():
     opts = parse_args()
-    import_and_prepare(opts["usd"], opts["dust"], opts["swap"], opts["grid"])
+    # per-block seam marks are only consumed by full/thin outlines; skip the
+    # expensive edge walk for beauty/sil/off renders (huge on large builds).
+    _mark = opts["outline"] in ("full", "thin", "on") or (
+        opts["technical"] != "off" and not opts["_outline_set"])
+    import_and_prepare(opts["usd"], opts["dust"], opts["swap"], opts["grid"], _mark)
     if opts["hide"]:
+        import re as _re
+        subs = [h for h in opts["hide"] if not h.startswith("=")]
+        exact = {h[1:] for h in opts["hide"] if h.startswith("=")}  # "=stone" -> exact block id
+
+        FACE = ("_top", "_bottom", "_side", "_front", "_back", "_end", "_inner", "_outer")
+
+        def _bid(name):  # "minecraft_block_stone.001" -> "stone"
+            b = _re.sub(r"\.\d+$", "", name.lower())
+            return b[len("minecraft_block_"):] if b.startswith("minecraft_block_") else b
+
+        def _core(bid):  # strip a MiEx face suffix so "deepslate_top" -> "deepslate"
+            for s in FACE:                # but "deepslate_bricks" stays itself
+                if bid.endswith(s):
+                    return bid[:-len(s)]
+            return bid
         n = 0
         for ob in bpy.data.objects:
-            if ob.type == 'MESH' and any(h in ob.name.lower() for h in opts["hide"]):
+            if ob.type != 'MESH':
+                continue
+            nm = ob.name.lower()
+            bid = _bid(nm)
+            if any(h in nm for h in subs) or bid in exact or _core(bid) in exact:
                 ob.hide_render = True
                 n += 1
-        print(f"hid {n} object(s) matching {opts['hide']}")
+        print(f"hid {n} object(s) (subs={subs}, exact={sorted(exact)})")
     if opts["toon"] != "off":
         apply_toon(opts["toon"])
     scene = bpy.context.scene
@@ -1362,8 +1454,12 @@ def main():
     if opts["technical"] != "off":
         ht = opts["height_tint"] if opts["technical"].startswith("schematic") else 0.0
         tech = apply_technical(opts["technical"], ht)
-        opts["outline"] = "full"   # per-block linework is the whole point
+        if not opts["_outline_set"]:
+            opts["outline"] = "full"   # per-block linework is the default schematic look
         opts["grid"] = False       # outlines carry the seams; grid muddies fills
+    if opts["clip"] is not None:
+        clip_geometry(scene, fit_coords, opts["clip"])
+        center, size, fit_coords = scene_bounds(scene, opts["trim"], opts["cluster_gap"])
     if opts["max_layer"] is not None:
         slice_above_layer(scene, fit_coords, opts["max_layer"])
     if opts["explode"] is not None:
@@ -1417,11 +1513,15 @@ def main():
             glare = True
         setup_glare(scene, glare)
         tech_excl = outline_exclude_collection() if (tech is not None and opts["technical"].startswith("schematic")) else None
+        if (tech_excl is not None and opts["outline"] and opts["ground_no_outline"]
+                and opts["ground"] in ("keep", "crop")):
+            exclude_ground_from_outline(tech_excl, min(fit_coords[2::3]))
         setup_outlines(scene, opts["outline"], tech_excl)
-        if tech is not None:
+        if tech is not None and opts["outline"]:
             for ls in bpy.context.view_layer.freestyle_settings.linesets:
-                ls.linestyle.color = _srgb_lin(tech["line"])
-                ls.linestyle.thickness = tech["lw"]
+                if ls.linestyle:
+                    ls.linestyle.color = _srgb_lin(tech["line"])
+                    ls.linestyle.thickness = tech["lw"]
         tele = (view == "iso" and opts["projection"] == "tele")
         margin = opts["margin"]
         if view == "top" and opts["top_margin"] is not None:
