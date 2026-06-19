@@ -23,6 +23,16 @@ If you'd like to directly fix a typo or make an improvement yourself, that's fan
 5.  **Push to your branch** (`git push origin feature/MyAmazingIdea`).
 6.  **Open a Pull Request** back to this repository.
 
+### Local Development Dependencies
+Most contributors only need a text editor: the course content lives in Markdown under `src/`, and the Python scripts in `scripts/` use only the Python standard library. A `requirements.txt` file is included for tooling compatibility, but installing it is intentionally a no-op.
+
+If you want to run the optional local build pipeline yourself:
+1. Use Python 3.10 or newer.
+2. Run `python -m pip install -r requirements.txt` (there are no external Python packages to install).
+3. Run the content build scripts from the repository root, for example `python scripts/publish.py`.
+
+The Astro web preview under `web/` has its own Node dependencies. Run `npm install` from `web/` before using `npm run dev` or `npm run build`.
+
 ### Style Guide
 To ensure all course content is consistent, professional, and easy to follow, we have a detailed style guide. It covers everything from heading levels and formatting to the tone of the course.
 
