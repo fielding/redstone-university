@@ -145,7 +145,28 @@ blender -b -P scripts/render_usd.py -- <usd> --out <dir> --name <n> \
 `--views --res --samples --azimuth --no-trim --cluster-gap --lighting
 --transform --glare --elevation --margin --projection --top-azimuth --ground
 --max-layer --explode --outline --grid --toon --technical --transparent
---height-tint --dust --swap --hide --top-margin`
+--height-tint --dust --swap --hide --top-margin --clip --ground-no-outline`
+
+### Cutaways & block filtering (opt-in; off by default)
+
+These default to no-op, so existing course shots render identically — pass them
+explicitly when you want them:
+- **`--clip <axis:lo:hi[,axis:lo:hi]>`** — keep only a fractional slab of the
+  build's bbox and re-tighten the frame. e.g. `--clip z:0.55:1.0` (top 45%) or a
+  cross-section `--clip y:0.0:0.5`. Axes are Blender world x/y/z (z = vertical).
+- **`--hide =<block>`** — exact block-id match (vs the default substring match),
+  including MiEx face variants (`deepslate_top` etc.). So `--hide =stone,=deepslate`
+  strips raw cave stone without deleting built `stone_bricks`/`deepslate_bricks`.
+  Mix with substring tokens: `--hide =stone,_ore,sculk,water`.
+- **`--outline sil`** — true silhouette only (no per-block border/seam); `off`
+  drops it entirely (right for large/zoomed-out beauty shots — the per-block
+  outline becomes a grid). Schematic mode honors an explicit `--outline`.
+- **`--ground-no-outline`** — drop the kept/cropped ground layer from the outline
+  pass so a zoomed-out floor doesn't drown in per-block lines.
+
+Caveat: filtering can't reveal a tunnel *carved* through stone — removing the
+stone removes the tunnel walls. Use a cross-section `--clip` (keep the rock) for
+carved passages.
 
 Notable behavior:
 - **Stray-geometry trim** runs first (drops bedrock/floor far below the build) so
