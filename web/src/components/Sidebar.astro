@@ -23,6 +23,7 @@ const navigationTree = buildCourseHierarchy(courseEntries);
 <style>
   .sidebar-nav {
     flex: 1;
+    min-height: 0; /* allow the scroll area to shrink inside a flex column */
     overflow-y: auto;
     padding: var(--space-xs) 0;
   }

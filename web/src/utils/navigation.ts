@@ -76,6 +76,25 @@ export function buildCourseHierarchy(entries: CollectionEntry<'course'>[]): Cour
     return root.children;
 }
 
+export type CourseLink = { title: string; slug: string };
+
+/**
+ * Flatten the course hierarchy into the linear reading order shown in the
+ * sidebar (depth-first, parents before their children), keeping only nodes
+ * that point at a real page. Used to compute prev/next pager links.
+ */
+export function flattenCourse(nodes: CourseNode[]): CourseLink[] {
+    const out: CourseLink[] = [];
+    const walk = (ns: CourseNode[]) => {
+        for (const n of ns) {
+            if (n.slug) out.push({ title: n.title, slug: n.slug });
+            if (n.children.length) walk(n.children);
+        }
+    };
+    walk(nodes);
+    return out;
+}
+
 function getOrder(segment: string): number {
     // Extract number + optional letter suffix from "01_Name" or "03b_Interlude-..."
     // So 3.0 < 3.1 (03a) < 3.2 (03b) < 4.0 etc.
@@ -89,11 +108,15 @@ function getOrder(segment: string): number {
         return num + letterOffset;
     }
 
-    if (segment.startsWith('Part-I-')) return 1;
-    if (segment.startsWith('Part-II-')) return 2;
-    if (segment.startsWith('Part-III-')) return 3;
-    if (segment.startsWith('Part-IV-')) return 4;
-    if (segment === 'introduction') return 0;
+    // Slugs are lowercased by Astro (e.g. "part-iii--processor-core"), so match
+    // case-insensitively. Order longest/most-specific first: "part-iii" must be
+    // tested before "part-i" since the latter is a prefix of the former.
+    const seg = segment.toLowerCase();
+    if (seg.startsWith('part-iv-')) return 4;
+    if (seg.startsWith('part-iii-')) return 3;
+    if (seg.startsWith('part-ii-')) return 2;
+    if (seg.startsWith('part-i-')) return 1;
+    if (seg === 'introduction') return 0;
 
     return 999;
 }
