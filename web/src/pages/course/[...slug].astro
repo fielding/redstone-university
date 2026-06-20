@@ -185,7 +185,8 @@ const nextPage =
   /* ── Main Content ── */
   .main {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
     padding: var(--space-3xl) var(--space-2xl) var(--space-4xl);
     min-width: 0;
   }
@@ -772,6 +773,12 @@ const nextPage =
 
     .pager {
       margin-top: var(--space-3xl);
+      flex-direction: column;
+    }
+
+    .pager-next {
+      text-align: left;
+      align-items: flex-start;
     }
   }
 </style>
