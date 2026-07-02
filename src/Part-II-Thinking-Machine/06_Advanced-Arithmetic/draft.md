@@ -131,8 +131,8 @@ For now, our fix is simply to expose that signal clearly. Later, the control uni
 
 The trick is to rewrite subtraction:
 
--   `$A - B$`
--   becomes `$A + (-B)$`
+-   $A - B$
+-   becomes $A + (-B)$
 
 So the real question is this:
 
@@ -142,7 +142,7 @@ The answer is **Two's Complement**.
 
 #### The two-step rule for finding `-X`
 
-1.  **Invert** every bit of `$X$`
+1.  **Invert** every bit of $X$
 2.  **Add `1`**
 
 That is it.
@@ -212,25 +212,25 @@ That is why the same 4-bit pattern can appear as `B` on a hex display and also m
 
 We want a single control signal, `Subtract`, that makes the circuit behave like this:
 
--   if `Subtract = 0`, compute `$A + B$`
--   if `Subtract = 1`, compute `$A + (\neg B) + 1$`, which is `$A - B$`
+-   if `Subtract = 0`, compute $A + B$
+-   if `Subtract = 1`, compute $A + (\neg B) + 1$, which is $A - B$
 
 #### Lab Part A: Build the controllable inverter
 
 The XOR gate does exactly what we need:
 
--   `$B \oplus 0 = B$`
--   `$B \oplus 1 = \neg B$`
+-   $B \oplus 0 = B$
+-   $B \oplus 1 = \neg B$
 
 Build steps:
 
-1.  Take the 4-bit input bus for `$B$`.
+1.  Take the 4-bit input bus for $B$.
 2.  Before it reaches the adder, insert **four XOR gates**, one for each bit.
-3.  Feed the corresponding bit of `$B$` into one side of each XOR gate.
+3.  Feed the corresponding bit of $B$ into one side of each XOR gate.
 4.  Tie the other side of all four XOR gates together and connect them to a new control lever labeled **Subtract**.
 
-When the lever is OFF, the XOR bank passes `$B$` through unchanged.
-When the lever is ON, the XOR bank flips every bit of `$B$`.
+When the lever is OFF, the XOR bank passes $B$ through unchanged.
+When the lever is ON, the XOR bank flips every bit of $B$.
 
 #### Lab Part B: Add the final `+1`
 
@@ -243,7 +243,7 @@ Conveniently, our ripple-carry adder already has a perfect place for that.
 
 Now the control lever does two jobs at once:
 
--   it tells the XOR bank to invert `$B$`
+-   it tells the XOR bank to invert $B$
 -   it injects the required `+1`
 
 ![Adder-Subtractor CircuitVerse Diagram](./images/adder-subtractor-circuitverse.png)

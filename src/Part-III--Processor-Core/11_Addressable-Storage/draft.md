@@ -155,7 +155,7 @@ Before we build the full RAM, we are going to prove the architecture on a smalle
 4.  Create a shared 4-bit **Data In Bus** and feed it to both rows.
 5.  For each row, compute:
 
-    `$RowWrite_i = Select_i \land WRITE$`
+    $RowWrite_i = Select_i \land WRITE$
 
 6.  Feed that row-write pulse into the row's STORE input.
 

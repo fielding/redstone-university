@@ -41,14 +41,14 @@ A MUX is the digital version of a selector knob or railway switch. It chooses on
 
 A **2-to-1 MUX** has:
 
--   two data inputs: `$A$` and `$B$`
--   one select input: `$S$`
--   one output: `$Y$`
+-   two data inputs: $A$ and $B$
+-   one select input: $S$
+-   one output: $Y$
 
 Its behavior is:
 
--   if `$S = 0$`, then `$Y = A$`
--   if `$S = 1$`, then `$Y = B$`
+-   if $S = 0$, then $Y = A$
+-   if $S = 1$, then $Y = B$
 
 That behavior can be written as a truth table:
 
@@ -67,20 +67,20 @@ That behavior can be written as a truth table:
 
 We use two AND gates as gatekeepers and an OR gate as the final combiner:
 
--   left gatekeeper: `$A \land \neg S$`
--   right gatekeeper: `$B \land S$`
--   combine them: `$Y = (A \land \neg S) \lor (B \land S)$`
+-   left gatekeeper: $A \land \neg S$
+-   right gatekeeper: $B \land S$
+-   combine them: $Y = (A \land \neg S) \lor (B \land S)$
 
 Why does this work?
 
--   If `S = 0`, then `\neg S = 1`
-    -   left path becomes `$A \land 1 = A$`
-    -   right path becomes `$B \land 0 = 0$`
-    -   output becomes `$A \lor 0 = A$`
--   If `S = 1`, then `\neg S = 0`
-    -   left path becomes `$A \land 0 = 0$`
-    -   right path becomes `$B \land 1 = B$`
-    -   output becomes `$0 \lor B = B$`
+-   If `S = 0`, then $\neg S = 1$
+    -   left path becomes $A \land 1 = A$
+    -   right path becomes $B \land 0 = 0$
+    -   output becomes $A \lor 0 = A$
+-   If `S = 1`, then $\neg S = 0$
+    -   left path becomes $A \land 0 = 0$
+    -   right path becomes $B \land 1 = B$
+    -   output becomes $0 \lor B = B$
 
 So a MUX is really a very disciplined way of opening exactly one path while closing the other.
 
@@ -88,42 +88,42 @@ So a MUX is really a very disciplined way of opening exactly one path while clos
 
 ### Lesson 8.2: The lab – Building a 1-bit MUX
 
-> **Key Takeaway:** A 1-bit multiplexer is the direct physical implementation of the expression `$Y = (A \land \neg S) \lor (B \land S)$`.
+> **Key Takeaway:** A 1-bit multiplexer is the direct physical implementation of the expression $Y = (A \land \neg S) \lor (B \land S)$.
 
 #### Lab & Experiment
 
 ![1-Bit MUX CircuitVerse Diagram](./images/1-bit-mux-circuitverse.png)
 *Figure: A 1-bit 2-to-1 MUX. The select line and its inverse control which of the two data paths is allowed through.*
 
-1.  Create three input levers labeled `$A$`, `$B$`, and `$S$`.
-2.  Build a NOT gate on the select line to generate `\neg S`.
-3.  Build the first AND gate for `$A \land \neg S$`.
-4.  Build the second AND gate for `$B \land S$`.
+1.  Create three input levers labeled $A$, $B$, and $S$.
+2.  Build a NOT gate on the select line to generate $\neg S$.
+3.  Build the first AND gate for $A \land \neg S$.
+4.  Build the second AND gate for $B \land S$.
 5.  Feed both AND outputs into a final OR gate.
-6.  Connect the OR output to a lamp labeled `$Y$`.
+6.  Connect the OR output to a lamp labeled $Y$.
 
 #### The experiment
 
 Run the following tests slowly and deliberately:
 
 1.  Set `S = 0`.
-    -   Flip `$A$` on and off.
-    -   Verify that `$Y$` follows `$A$` exactly.
-    -   Verify that `$B$` does nothing.
+    -   Flip $A$ on and off.
+    -   Verify that $Y$ follows $A$ exactly.
+    -   Verify that $B$ does nothing.
 2.  Set `S = 1`.
-    -   Flip `$B$` on and off.
-    -   Verify that `$Y$` follows `$B$` exactly.
-    -   Verify that `$A$` does nothing.
+    -   Flip $B$ on and off.
+    -   Verify that $Y$ follows $B$ exactly.
+    -   Verify that $A$ does nothing.
 
 ![1-Bit MUX Minecraft Build](./images/1-bit-mux-minecraft.png)
 *Figure: A 1-bit MUX in Minecraft. The select line determines whether the output copies input A or input B.*
 
 #### A good debugging question
 
-If the output always follows `$A$` and never follows `$B$`, check two places first:
+If the output always follows $A$ and never follows $B$, check two places first:
 
--   Is the `\neg S` inverter working?
--   Is `$S$` actually reaching the AND gate on the `$B$` path?
+-   Is the $\neg S$ inverter working?
+-   Is $S$ actually reaching the AND gate on the $B$ path?
 
 MUX bugs are often just control-line bugs.
 
@@ -144,7 +144,7 @@ Build four identical 1-bit MUX slices:
 -   slice 2 handles bit 2
 -   slice 3 handles bit 3
 
-All four slices share the same select signal `$S$`.
+All four slices share the same select signal $S$.
 
 That means the machine does not choose each bit individually. It chooses the **entire 4-bit word** at once.
 
@@ -153,11 +153,11 @@ That means the machine does not choose each bit individually. It chooses the **e
 1.  Create two 4-bit input buses: **Bus A** and **Bus B**.
 2.  Build four copies of your 1-bit MUX.
 3.  Connect:
-    -   `$A_0$` and `$B_0$` to the first slice
-    -   `$A_1$` and `$B_1$` to the second slice
-    -   `$A_2$` and `$B_2$` to the third slice
-    -   `$A_3$` and `$B_3$` to the fourth slice
-4.  Distribute the same select line `$S$` and its inverse `\neg S` to all four slices.
+    -   $A_0$ and $B_0$ to the first slice
+    -   $A_1$ and $B_1$ to the second slice
+    -   $A_2$ and $B_2$ to the third slice
+    -   $A_3$ and $B_3$ to the fourth slice
+4.  Distribute the same select line $S$ and its inverse $\neg S$ to all four slices.
 5.  Collect the four slice outputs into a single 4-bit output bus.
 
 #### The experiment
@@ -204,7 +204,7 @@ In the next module, we will put that idea to work by assembling the ALU itself. 
 <summary><strong>Show Solution</strong></summary>
 
 1.  A multiplexer chooses one of several inputs and forwards the selected one to its output.
-2.  `$Y = (A \land \neg S) \lor (B \land S)$`
+2.  $Y = (A \land \neg S) \lor (B \land S)$
 3.  You would need **2** select bits, because 2 bits can represent four choices: `00`, `01`, `10`, and `11`.
 
 </details>
@@ -213,13 +213,13 @@ In the next module, we will put that idea to work by assembling the ALU itself. 
 
 A **demultiplexer** does the opposite of a MUX: it takes one input and routes it to one of multiple outputs.
 
-For a 1-to-2 DEMUX with input `$D$`, select `$S$`, and outputs `$Y_0$` and `$Y_1$`, write the two Boolean expressions.
+For a 1-to-2 DEMUX with input $D$, select $S$, and outputs $Y_0$ and $Y_1$, write the two Boolean expressions.
 
 <details>
 <summary><strong>Show Solution</strong></summary>
 
--   `$Y_0 = D \land \neg S$`
--   `$Y_1 = D \land S$`
+-   $Y_0 = D \land \neg S$
+-   $Y_1 = D \land S$
 
 </details>
 
