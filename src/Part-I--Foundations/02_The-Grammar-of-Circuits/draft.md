@@ -131,7 +131,7 @@ NOT logic is everywhere. It's used to create the oscillating signal in a compute
 ![OR Gate in CircuitVerse](./images/OR-gate_circuitverse.png)
 *Figure: The abstract symbol for the OR gate (left) and its function in a circuit (right). The output $Y$ is active if input $A$, $B$, or both are active.*
 
--   **Formal Definition:** The OR gate performs logical **Disjunction**. Think of it as the optimistic gate; it checks if *at least one* of its inputs are True.
+-   **Formal Definition:** The OR gate performs logical **Disjunction**. Think of it as the optimistic gate; it checks if *at least one* of its inputs is True.
 -   **Symbols:**
     -   **Logical Notations:**
         -   *Text-based:* $A \text{ OR } B$
@@ -259,7 +259,7 @@ Design a circuit that implements the logic $A \text{ AND } (\text{NOT } B)$ : $A
 
 **Truth Table for $A \text{ AND } (\text{NOT } B)$:**
 
-| $A$ | $B$ | $\text{ NOT } B$ | $A \text{ OR } (\text{ NOT } B)$ |
+| $A$ | $B$ | $\text{ NOT } B$ | $A \text{ AND } (\text{ NOT } B)$ |
 |:---:|:---:|:---:|:----------:|
 | `0` | `0` | `1` | `0` |
 | `0` | `1` | `0` | `0` |
@@ -313,25 +313,18 @@ Write the single Boolean expression for the alarm $Y$. Which gates would you nee
 
 #### Practice Problem 2.4.3: The Build Challenge
 
-Design and build a Minecraft circuit that implements the logic $A \text{ AND } (\text{NOT } B)$ : $A \land (\neg B)$. Use only the primitive NOT and OR gates. Verify its function against a truth table for all four input combinations.
+Now bring Practice Problem 2.4.2 to life. Build the home security system in Minecraft: three levers for the front door ($A$), the back door ($B$), and the armed switch ($C$), with a lamp for the alarm ($Y$). The circuit should implement $Y = (A \lor B) \land C$ using only the primitive NOT and OR gates. This is your first three-input circuit, so take your time with the wiring.
 
 <details>
 <summary><strong>Show Solution</strong></summary>
 
-**Truth Table:**
-
-| $A$ | $B$ | $\text{ NOT } B$| $A \text{ AND } (\text{ NOT } B)$ |
-|:---:|:---:|:---:|:----------:|
-| `0` | `0` | `1` | `0` |
-| `0` | `1` | `0` | `0` |
-| `1` | `0` | `1` | `1` |
-| `1` | `1` | `0` | `0` |
-
 **Minecraft Circuit:**
-1.  Create inputs for $A$ and $B$.
-2.  Use a Redstone Torch on the $B$ input line to create the signal for $\neg B$.
-3.  Feed the original $A$ signal and the new $\neg B$ signal into a composite **AND** gate (built from two NOTs and an OR, as shown in Lesson 2.3).
-4.  Connect the output to a lamp and test all four states.
+1.  Create inputs for $A$, $B$, and $C$.
+2.  Merge the dust lines from $A$ and $B$ (each through a repeater) into a single line. This **OR** gate produces the signal for $A \lor B$.
+3.  Feed that merged signal and the $C$ signal into a composite **AND** gate (built from two NOTs and an OR, as shown in Lesson 2.3).
+4.  Connect the output to a lamp for $Y$.
+
+**Testing:** With $C$ (armed) OFF, the alarm should stay silent no matter what the doors do. With $C$ ON, opening either door (or both) should light the lamp. That's four quick checks: `C=0` with any doors, then `C=1` with $A$, with $B$, and with neither.
 
 </details>
 
