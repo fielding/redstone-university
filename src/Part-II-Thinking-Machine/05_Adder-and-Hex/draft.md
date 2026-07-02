@@ -1,4 +1,4 @@
-## Module 5: The 4-bit adder & the hexadecimal upgrade
+## Module 5: The 4-Bit Adder & the Hexadecimal Upgrade
 
 ### Module 5 Summary
 

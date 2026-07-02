@@ -1,4 +1,4 @@
-## Module 9: The ALU – The grand assembly
+## Module 9: The ALU – The Grand Assembly
 
 ### Module 9 Summary
 

@@ -1,4 +1,4 @@
-## Module 7: Comparators and status flags – The dawn of decision-making
+## Module 7: Comparators and Status Flags – The Dawn of Decision-Making
 
 ### Module 7 Summary
 

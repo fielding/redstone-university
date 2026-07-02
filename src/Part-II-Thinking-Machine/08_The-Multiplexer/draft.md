@@ -1,4 +1,4 @@
-## Module 8: The multiplexer – The digital switch
+## Module 8: The Multiplexer – The Digital Switch
 
 ### Module 8 Summary
 

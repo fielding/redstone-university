@@ -1,4 +1,4 @@
-## Module 10: The processor's scratchpad – Building a register
+## Module 10: The Processor's Scratchpad – Building a Register
 
 ### Module 10 Summary
 

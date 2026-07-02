@@ -1,4 +1,4 @@
-## Module 12b: The language of the machine – Instructions and the first program
+## Module 12b: The Language of the Machine – Instructions and the First Program
 
 ### Module 12b Summary
 

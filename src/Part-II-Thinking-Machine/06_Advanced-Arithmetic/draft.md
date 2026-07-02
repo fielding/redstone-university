@@ -1,4 +1,4 @@
-## Module 6: Advanced arithmetic – Overflow and subtraction
+## Module 6: Advanced Arithmetic – Overflow and Subtraction
 
 ### Module 6 Summary
 

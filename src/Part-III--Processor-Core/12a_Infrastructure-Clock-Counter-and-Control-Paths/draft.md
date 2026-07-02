@@ -1,4 +1,4 @@
-## Module 12a: The infrastructure – Clock, counter, and control paths
+## Module 12a: The Infrastructure – Clock, Counter, and Control Paths
 
 ### Module 12a Summary
 

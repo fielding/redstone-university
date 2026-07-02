@@ -1,4 +1,4 @@
-## Module 11: Addressable storage – Building RAM
+## Module 11: Addressable Storage – Building RAM
 
 ### Module 11 Summary
 

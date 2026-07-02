@@ -1,4 +1,4 @@
-## Module 13: The "real world" display – The Double Dabble algorithm
+## Module 13: The "Real World" Display – The Double Dabble Algorithm
 
 ### Module 13 Summary
 
