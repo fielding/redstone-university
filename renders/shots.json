@@ -524,8 +524,17 @@
   },
   "ref-8bit-slice": {
     "world": "/Users/fielding/Downloads/study-world-a",
-    "bounds": [-102, 86, -4, 14, 118, 68],
-    "views": ["top"],
+    "bounds": [
+      -102,
+      86,
+      -4,
+      14,
+      118,
+      68
+    ],
+    "views": [
+      "top"
+    ],
     "ground": "remove",
     "height_tint": 0,
     "clip": "z:0.20:0.32",
@@ -533,10 +542,425 @@
   },
   "ref-8bit-legend": {
     "world": "/Users/fielding/Downloads/study-world-a",
-    "bounds": [-102, 86, -4, 14, 118, 68],
-    "views": ["iso", "top"],
+    "bounds": [
+      -102,
+      86,
+      -4,
+      14,
+      118,
+      68
+    ],
+    "views": [
+      "iso",
+      "top"
+    ],
     "ground": "remove",
     "height_tint": 0,
     "tint": "red_wool=a8c4d6,red_stained_glass=a8c4d6,purple_wool=e4b0ab,purple_stained_glass=e4b0ab,light_blue_wool=f2d489,light_blue_stained_glass=f2d489,lime_wool=aecf9c,lime_stained_glass=aecf9c,cyan_wool=ddd5a0,cyan_stained_glass=ddd5a0,black_wool=30231e,black_stained_glass=30231e,blue_wool=f0bd94,blue_stained_glass=f0bd94,pink_wool=f0bd94,pink_stained_glass=f0bd94,magenta_wool=f5f1ea,magenta_stained_glass=f5f1ea,yellow_wool=f5f1ea,yellow_stained_glass=f5f1ea,orange_wool=f5f1ea,orange_stained_glass=f5f1ea"
+  },
+  "cand-alu-01": {
+    "world": "/Users/fielding/Downloads/study-world-b",
+    "bounds": [
+      -8,
+      59,
+      -80,
+      -1,
+      81,
+      -60
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "remove"
+  },
+  "cand-alu-02": {
+    "world": "/Users/fielding/Downloads/study-world-b",
+    "bounds": [
+      6,
+      59,
+      -80,
+      13,
+      81,
+      -59
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "remove"
+  },
+  "cand-alu-03": {
+    "world": "/Users/fielding/Downloads/study-world-b",
+    "bounds": [
+      20,
+      62,
+      -73,
+      53,
+      80,
+      -59
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "remove"
+  },
+  "cand-alu-04": {
+    "world": "/Users/fielding/Downloads/study-world-b",
+    "bounds": [
+      63,
+      58,
+      -82,
+      103,
+      81,
+      -56
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "remove"
+  },
+  "cand-alu-05": {
+    "world": "/Users/fielding/Downloads/study-world-b",
+    "bounds": [
+      116,
+      59,
+      -78,
+      128,
+      81,
+      -54
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "remove"
+  },
+  "cand-alu-06": {
+    "world": "/Users/fielding/Downloads/study-world-b",
+    "bounds": [
+      140,
+      69,
+      -75,
+      150,
+      76,
+      -58
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "remove"
+  },
+  "cand-alu-07": {
+    "world": "/Users/fielding/Downloads/study-world-b",
+    "bounds": [
+      155,
+      66,
+      -75,
+      201,
+      76,
+      -49
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "remove"
+  },
+  "cand-alu-08": {
+    "world": "/Users/fielding/Downloads/study-world-b",
+    "bounds": [
+      208,
+      66,
+      -75,
+      229,
+      77,
+      -49
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "remove"
+  },
+  "cand-alu-09": {
+    "world": "/Users/fielding/Downloads/study-world-b",
+    "bounds": [
+      236,
+      66,
+      -75,
+      257,
+      77,
+      -49
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "remove"
+  },
+  "cand-alu-10": {
+    "world": "/Users/fielding/Downloads/study-world-b",
+    "bounds": [
+      264,
+      66,
+      -75,
+      285,
+      77,
+      -49
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "remove"
+  },
+  "cand-alu-11": {
+    "world": "/Users/fielding/Downloads/study-world-b",
+    "bounds": [
+      292,
+      66,
+      -75,
+      336,
+      77,
+      -49
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "remove"
+  },
+  "cand-alu-12": {
+    "world": "/Users/fielding/Downloads/study-world-b",
+    "bounds": [
+      354,
+      66,
+      -72,
+      362,
+      88,
+      -55
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "remove"
+  },
+  "cand-alu-13": {
+    "world": "/Users/fielding/Downloads/study-world-b",
+    "bounds": [
+      371,
+      66,
+      -72,
+      383,
+      88,
+      -50
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "remove"
+  },
+  "cand-alu-14": {
+    "world": "/Users/fielding/Downloads/study-world-b",
+    "bounds": [
+      390,
+      66,
+      -72,
+      402,
+      88,
+      -50
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "remove"
+  },
+  "cand-alu-15": {
+    "world": "/Users/fielding/Downloads/study-world-b",
+    "bounds": [
+      408,
+      66,
+      -72,
+      421,
+      88,
+      -50
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "remove"
+  },
+  "cand-alu-16": {
+    "world": "/Users/fielding/Downloads/study-world-b",
+    "bounds": [
+      428,
+      65,
+      -72,
+      462,
+      88,
+      -50
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "remove"
+  },
+  "cand-alu-17": {
+    "world": "/Users/fielding/Downloads/study-world-b",
+    "bounds": [
+      469,
+      65,
+      -75,
+      505,
+      88,
+      -50
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "remove"
+  },
+  "cand-reg-01": {
+    "world": "/Users/fielding/Downloads/study-world-c",
+    "bounds": [
+      18,
+      73,
+      -615,
+      40,
+      107,
+      -575
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "remove"
+  },
+  "cand-reg-02": {
+    "world": "/Users/fielding/Downloads/study-world-c",
+    "bounds": [
+      18,
+      75,
+      -566,
+      40,
+      107,
+      -527
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "remove"
+  },
+  "cand-reg-03": {
+    "world": "/Users/fielding/Downloads/study-world-c",
+    "bounds": [
+      18,
+      52,
+      -518,
+      136,
+      107,
+      -438
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "remove"
+  },
+  "cand-reg-04": {
+    "world": "/Users/fielding/Downloads/study-world-c",
+    "bounds": [
+      19,
+      83,
+      -432,
+      31,
+      108,
+      -381
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "remove"
+  },
+  "cand-reg-05": {
+    "world": "/Users/fielding/Downloads/study-world-c",
+    "bounds": [
+      23,
+      86,
+      -376,
+      31,
+      105,
+      -370
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "remove"
+  },
+  "cand-reg-06": {
+    "world": "/Users/fielding/Downloads/study-world-c",
+    "bounds": [
+      23,
+      79,
+      -361,
+      45,
+      105,
+      -343
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "remove"
+  },
+  "cand-reg-07": {
+    "world": "/Users/fielding/Downloads/study-world-c",
+    "bounds": [
+      16,
+      79,
+      -334,
+      45,
+      105,
+      -306
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "remove"
+  },
+  "cand-reg-08": {
+    "world": "/Users/fielding/Downloads/study-world-c",
+    "bounds": [
+      23,
+      79,
+      -297,
+      45,
+      105,
+      -280
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "remove"
+  },
+  "cand-reg-09": {
+    "world": "/Users/fielding/Downloads/study-world-c",
+    "bounds": [
+      27,
+      79,
+      -271,
+      45,
+      105,
+      -254
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "remove"
+  },
+  "cand-reg-10": {
+    "world": "/Users/fielding/Downloads/study-world-c",
+    "bounds": [
+      27,
+      79,
+      -245,
+      45,
+      105,
+      -76
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "remove"
   }
 }
