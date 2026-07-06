@@ -51,6 +51,37 @@ never wash them out.
 - Legacy builds in other blocks don't need rebuilding: add a `swap` to the
   shot, e.g. `--swap white_wool=white_concrete` (render-time retexture only).
 
+## Composition legend treatment (decided 2026-07-06)
+
+For shots that compose large components into one build (the capstone machine,
+decoder/encoder assemblies), the module regions carry the color and everything
+else goes quiet. Opt-in per shot — never a default:
+
+```json
+"height_tint": 0,          // uniform paper structure (height bands OFF —
+                           // they fight the legend for the color channel)
+"tint": "<his/our annotation blocks mapped to region hues>"
+```
+
+Region hues are the course gate-fill pastels one step deeper (structure stays
+paper `f5f1ea`, outlines ink `30231e`):
+
+| Module region | Hex | Family |
+| :-- | :-- | :-- |
+| Registers | `a8c4d6` | dusty-blue (OR) |
+| RAM / ROM | `e4b0ab` | rose (NOT) |
+| ALU | `f2d489` | amber (XOR) |
+| Control | `aecf9c` | sage (AND) |
+| Clock | `ddd5a0` | olive |
+| Display / I/O | `f0bd94` | peach |
+| Bus | `30231e` | ink |
+| unmapped annotation blocks | `f5f1ea` | paper |
+
+Tint keys are block-name substrings (longest wins); redstone components are
+never overridden. Add `"clip"` to cut a single bit-slice for a top-down
+"schematic view" of a stacked build. Working examples: `ref-8bit-legend`,
+`ref-8bit-slice` in `shots.json`.
+
 ## Emissive blocks
 
 Torches, lit lamps, glowstone etc. emit real light and bloom in `beauty`.

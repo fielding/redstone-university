@@ -47,6 +47,8 @@ Options (after the `--`):
     --swap A=B[,C=D]   retexture block A with block B's texture at render time
                        (e.g. --swap white_wool=white_concrete); names are the
                        vanilla block texture names
+    --tint A=RRGGBB[,C=RRGGBB]  recolor blocks whose name contains A toward the
+                       hex color (module-legend tinting, e.g. red_wool=4a90d9)
     --hide A[,B]       hide blocks whose name contains A/B from the render
                        (e.g. --hide lime_concrete for a floating, padless look)
     --top-margin F     extra zoom-out for the aerial 'top' view only
@@ -112,6 +114,7 @@ def parse_args():
         "dust": "vector",
         "swap": {},
         "hide": [],
+        "tint": {},
         "top_margin": None,
         "ground": "keep",
     }
@@ -213,6 +216,14 @@ def parse_args():
         elif a == "--hide":
             i += 1
             opts["hide"] = [s.strip() for s in args[i].split(",") if s.strip()]
+        elif a == "--tint":
+            i += 1
+            for pair in args[i].split(","):
+                block, _, hexcol = pair.partition("=")
+                if block and hexcol:
+                    h = hexcol.strip().lstrip("#")
+                    opts["tint"][block.strip()] = tuple(
+                        int(h[j:j + 2], 16) / 255 for j in (0, 2, 4))
         elif a == "--top-margin":
             i += 1
             opts["top_margin"] = float(args[i])
@@ -749,7 +760,7 @@ def _srgb_lin(c):
                  for v in c[:3])
 
 
-def apply_technical(mode, height_tint=0.0):
+def apply_technical(mode, height_tint=0.0, tints=None):
     """
     Reskin the scene as a technical drawing with full per-block outlines.
     blueprint/cad: everything flat-filled in one palette.
@@ -813,6 +824,18 @@ def apply_technical(mode, height_tint=0.0):
             links.new(em.outputs["Emission"], output.inputs["Surface"])
             continue
 
+        # Legend tint beats the generic structure fill (but never overrides
+        # redstone components above — circuit state must stay readable).
+        # Longest matching key wins so "light_blue_wool" beats "blue_wool".
+        if tints:
+            match = max((k for k in tints if k.lower() in name),
+                        key=len, default=None)
+            if match is not None:
+                em = nodes.new('ShaderNodeEmission')
+                _flat_fill(nodes, links, em, _srgb_lin(tints[match]))
+                links.new(em.outputs["Emission"], output.inputs["Surface"])
+                continue
+
         em = nodes.new('ShaderNodeEmission')
         _flat_fill(nodes, links, em, _srgb_lin(cfg["fill"]), htint)
         links.new(em.outputs["Emission"], output.inputs["Surface"])
@@ -864,7 +887,7 @@ def add_block_grid(image, factor=0.62):
 
 
 def import_and_prepare(usd_path, dust_style="schematic", swaps=None, grid=False,
-                       mark_edges=True):
+                       mark_edges=True, tints=None):
     bpy.ops.wm.read_factory_settings(use_empty=True)
     bpy.ops.wm.usd_import(filepath=usd_path)
     print(f"Imported {len(bpy.data.objects)} objects")
@@ -942,6 +965,23 @@ def import_and_prepare(usd_path, dust_style="schematic", swaps=None, grid=False,
             links.new(tint_out, mix.inputs["B"])
             links.new(mix.outputs["Result"], principled.inputs["Base Color"])
             color_out = mix.outputs["Result"]
+
+        # Component tinting: recolor whole block families toward a legend
+        # color (e.g. red_wool=4a90d9 turns ref's register framing RU-blue).
+        # Longest matching key wins so "red_wool" beats "wool"; the mix keeps
+        # 15% texture so the block grid stays readable.
+        if tints:
+            match = max((k for k in tints if k.lower() in name),
+                        key=len, default=None)
+            if match is not None:
+                tmix = nodes.new('ShaderNodeMix')
+                tmix.data_type = 'RGBA'
+                tmix.blend_type = 'MIX'
+                tmix.inputs["Factor"].default_value = 0.85
+                links.new(color_out, tmix.inputs["A"])
+                tmix.inputs["B"].default_value = (*_srgb_lin(tints[match]), 1.0)
+                links.new(tmix.outputs["Result"], principled.inputs["Base Color"])
+                color_out = tmix.outputs["Result"]
 
         # Wire emissive block textures into the Principled emission socket.
         # OFF/unlit variants must never glow: the lit-vs-unlit contrast is how
@@ -1413,7 +1453,8 @@ def main():
     # expensive edge walk for beauty/sil/off renders (huge on large builds).
     _mark = opts["outline"] in ("full", "thin", "on") or (
         opts["technical"] != "off" and not opts["_outline_set"])
-    import_and_prepare(opts["usd"], opts["dust"], opts["swap"], opts["grid"], _mark)
+    import_and_prepare(opts["usd"], opts["dust"], opts["swap"], opts["grid"], _mark,
+                       tints=opts["tint"])
     if opts["hide"]:
         import re as _re
         subs = [h for h in opts["hide"] if not h.startswith("=")]
@@ -1453,7 +1494,7 @@ def main():
     tech = None
     if opts["technical"] != "off":
         ht = opts["height_tint"] if opts["technical"].startswith("schematic") else 0.0
-        tech = apply_technical(opts["technical"], ht)
+        tech = apply_technical(opts["technical"], ht, tints=opts["tint"])
         if not opts["_outline_set"]:
             opts["outline"] = "full"   # per-block linework is the default schematic look
         opts["grid"] = False       # outlines carry the seams; grid muddies fills

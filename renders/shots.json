@@ -505,5 +505,38 @@
     ],
     "projection": "tele",
     "azimuth": 150
+  },
+  "ref-8bit": {
+    "world": "/Users/fielding/Downloads/study-world-a",
+    "bounds": [
+      -102,
+      86,
+      -4,
+      14,
+      118,
+      68
+    ],
+    "views": [
+      "iso",
+      "top"
+    ],
+    "ground": "remove"
+  },
+  "ref-8bit-slice": {
+    "world": "/Users/fielding/Downloads/study-world-a",
+    "bounds": [-102, 86, -4, 14, 118, 68],
+    "views": ["top"],
+    "ground": "remove",
+    "height_tint": 0,
+    "clip": "z:0.20:0.32",
+    "tint": "red_wool=a8c4d6,red_stained_glass=a8c4d6,purple_wool=e4b0ab,purple_stained_glass=e4b0ab,light_blue_wool=f2d489,light_blue_stained_glass=f2d489,lime_wool=aecf9c,lime_stained_glass=aecf9c,cyan_wool=ddd5a0,cyan_stained_glass=ddd5a0,black_wool=30231e,black_stained_glass=30231e,blue_wool=f0bd94,blue_stained_glass=f0bd94,pink_wool=f0bd94,pink_stained_glass=f0bd94,magenta_wool=f5f1ea,magenta_stained_glass=f5f1ea,yellow_wool=f5f1ea,yellow_stained_glass=f5f1ea,orange_wool=f5f1ea,orange_stained_glass=f5f1ea"
+  },
+  "ref-8bit-legend": {
+    "world": "/Users/fielding/Downloads/study-world-a",
+    "bounds": [-102, 86, -4, 14, 118, 68],
+    "views": ["iso", "top"],
+    "ground": "remove",
+    "height_tint": 0,
+    "tint": "red_wool=a8c4d6,red_stained_glass=a8c4d6,purple_wool=e4b0ab,purple_stained_glass=e4b0ab,light_blue_wool=f2d489,light_blue_stained_glass=f2d489,lime_wool=aecf9c,lime_stained_glass=aecf9c,cyan_wool=ddd5a0,cyan_stained_glass=ddd5a0,black_wool=30231e,black_stained_glass=30231e,blue_wool=f0bd94,blue_stained_glass=f0bd94,pink_wool=f0bd94,pink_stained_glass=f0bd94,magenta_wool=f5f1ea,magenta_stained_glass=f5f1ea,yellow_wool=f5f1ea,yellow_stained_glass=f5f1ea,orange_wool=f5f1ea,orange_stained_glass=f5f1ea"
   }
 }
