@@ -24,8 +24,14 @@ mattbat designs win where scale or contrast is the point.
 | alu-03 | mid-size, visible carry ladder | possible M6 compare/contrast figure |
 | alu-04 | the big one (~3k blocks), machine-scale | M9 "what ALUs grow into" hero shot; too big to teach |
 | alu-06/07 | tiny lecture props | probably skip |
-| alu-08–11 | **flat horizontal designs** | closest to RU-v1 philosophy; strongest adaptation candidates for M9 if any mattbat ALU is adopted; verify component vocabulary (comparator use) in-world |
-| alu-12–17 | tall late-series with I/O columns | reference only |
+| alu-08–11 | **flat horizontal designs** | closest to RU-v1 philosophy; strongest adaptation candidates for M9 if any mattbat ALU is adopted — vocabulary confirmed by schematic stats: torch-forward (24–29 torches, only 16 comparators, ~620–1,200 blocks); alu-07 is the most torch-pure (101 torches, 8 comparators) but sprawls |
+| alu-12–17 | tall late-series with I/O columns | reference only; comparator-dense (73–97) like 01/02/05 |
+
+**Vocabulary stats** (from `schem_stats.js`; no pistons/observers anywhere —
+all pure dust logic): the strip cleanly divides into a comparator idiom
+(alu-01/02/05/12–15: 41–81 comparators, essentially zero ground torches —
+compact-interlude material) and a torch idiom (alu-07–11 — RU-v1-compatible).
+alu-04 is 6,078 blocks / 474 repeaters: display scale only.
 
 ## Register candidates (Module 10)
 
@@ -33,7 +39,7 @@ mattbat designs win where scale or contrast is the point.
 | :-- | :-- | :-- |
 | reg-01/02 | display-scale multi-bit banks | M10 closing "a real register bank" figure; also M12 register-file comparison |
 | reg-03a/b | 03a = large main-strip bank (like 01/02); 03b = separate side build at x~128 | rendered on the contact sheet |
-| reg-04–10 | small single-register variants | granularity matches M10's teaching cell; candidates for the "other ways to hold a bit" aside — RU-v1's repeater-lock stays the taught design (capture-on-release semantics already characterized, §5.1 of the project map) |
+| reg-04–10 | small single-register variants | granularity matches M10's teaching cell; candidates for the "other ways to hold a bit" aside — RU-v1's repeater-lock stays the taught design (capture-on-release semantics already characterized, §5.1 of the project map). Stats highlights: **reg-09** is nearly comparator-free (3 comparators, 61 repeaters, 650 blocks — the most RU-v1-compatible register in the set); **reg-05** is a tiny 127-block single cell; reg-04 is lamp-heavy (138 lamps — a display register) |
 
 ## Standing decisions this doc inherits
 
