@@ -74,6 +74,12 @@ Key per-shot knobs (inherit `_defaults`):
 - `hide: "white_wool,cobblestone,…"` — drop structural meshes by name, keeping
   the component (use for icons; needed for side-mounted parts like levers that
   `remove2` would eat).
+- `tint: "red_wool=a8c4d6,…"` — recolor block families to flat legend colors
+  (substring match, longest key wins; survives the `technical` restyle; never
+  touches redstone components). For composed multi-module builds use the
+  **composition legend treatment**: `tint` + `height_tint: 0`, region hues and
+  rationale in `renders/STYLE.md`; examples `mattbat-8bit-legend` /
+  `mattbat-8bit-slice` (the latter adds `clip` for a bit-slice schematic view).
 
 Commands: `--all` (everything), `<names>` (subset), `--render-only` (reuse cached
 USD), `--export-only`, `--adopt <name>` (make an entry from the last export).

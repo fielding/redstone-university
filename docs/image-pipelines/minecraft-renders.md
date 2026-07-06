@@ -114,6 +114,22 @@ component (lever/torch/repeater/comparator/lamp) remains. Note: a side-mounted
 component (lever, wall torch) sits in the **same** layer as its block, so
 `remove2` would delete it too — use `hide` for those.
 
+### `tint` — recolor block families to legend colors
+
+Comma-separated `block=RRGGBB` pairs matched as substrings against material
+names; longest matching key wins (`light_blue_wool` beats `blue_wool`).
+Matching blocks render as a flat fill in the given color — in `technical`
+modes it replaces the structure fill, so tinted regions survive the schematic
+restyle. Redstone components are never overridden (circuit state stays
+readable). This is the module-legend mechanism: color a build's annotation
+wool by major component, e.g.
+
+```json
+"tint": "red_wool=3f7ad1,red_stained_glass=3f7ad1,purple_wool=8455cf"
+```
+
+(see the `mattbat-8bit-legend` shot for a full legend example).
+
 ## `shots.py` CLI
 
 | Flag | Effect |
@@ -128,8 +144,8 @@ component (lever, wall torch) sits in the **same** layer as its block, so
 
 `shots.py` forwards these per-shot keys to `render_usd.py`: `margin`,
 `elevation`, `outline`, `dust`, `toon`, `projection`, `technical`,
-`height-tint`, `top-azimuth`, `ground`, `hide` (plus `swap`, `transparent`,
-`azimuth`, `views`).
+`height-tint`, `top-azimuth`, `ground`, `hide`, `tint` (plus `swap`,
+`transparent`, `azimuth`, `views`).
 
 ## `render_usd.py` (the renderer)
 
