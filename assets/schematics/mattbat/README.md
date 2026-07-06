@@ -42,7 +42,25 @@ Notes for course use:
 To inspect in-world: `//schem load <name>` then `//paste` (FAWE), or open
 `world-mattbat-8bit` directly.
 
-## Additional source worlds (downloaded 2026-07-06, not yet extracted)
+## Extracted component references (2026-07-06)
+
+- **`alus/mattbat-alu-01..17.schem`** — all 17 standalone ALU designs from the
+  "ALUs" world display strip, in strip order (west→east ≈ simple→advanced;
+  04 is the big ~3,000-block build, 16/17 the tall late designs). Bounds from
+  the offline survey, padded ±2.
+- **`registers/mattbat-reg-01..10.schem`** — the 10 build clusters from the
+  "Registers" world strip, in strip order (north→south). 01–03 are the large
+  display-scale registers; 04–10 the smaller variants. reg-03 and reg-10 are
+  wide clusters that may contain more than one adjacent design — split
+  in-world if needed.
+
+Exporters: `minecraft-agents/tools/ru-testbench/export_alus.js` /
+`export_registers.js` (offline-survey bounds → FAWE `//copy` + `//schem save`).
+CPU Episode 5/6 checkpoint complexes were NOT extracted — they're full-machine
+states, useful for "machine at stage N" renders straight from their worlds via
+MiEx, not as component schematics.
+
+## Additional source worlds (downloaded 2026-07-06)
 
 Standalone component worlds from mattbatwings' newer tutorial series, unpacked
 in `~/Downloads/`. Build bounds found by offline region scan
