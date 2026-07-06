@@ -977,5 +977,95 @@
       "iso"
     ],
     "ground": "remove"
+  },
+  "cand-pc-01": {
+    "world": "/Users/fielding/Downloads/CPU Episode 6",
+    "bounds": [
+      -24,
+      93,
+      -222,
+      -12,
+      115,
+      -214
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "remove"
+  },
+  "cand-pc-02": {
+    "world": "/Users/fielding/Downloads/CPU Episode 6",
+    "bounds": [
+      -24,
+      94,
+      -196,
+      -5,
+      121,
+      -176
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "remove"
+  },
+  "cand-pc-03": {
+    "world": "/Users/fielding/Downloads/CPU Episode 6",
+    "bounds": [
+      -19,
+      95,
+      -159,
+      -5,
+      119,
+      -148
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "remove"
+  },
+  "cand-ep5-01": {
+    "world": "/Users/fielding/Downloads/CPU Episode 5",
+    "bounds": [
+      -282,
+      74,
+      -108,
+      -19,
+      101,
+      -97
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "remove"
+  },
+  "cand-ep5-02": {
+    "world": "/Users/fielding/Downloads/CPU Episode 5",
+    "bounds": [
+      -58,
+      74,
+      -76,
+      -19,
+      89,
+      -66
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "remove"
+  },
+  "cand-ep5-03": {
+    "world": "/Users/fielding/Downloads/CPU Episode 5",
+    "bounds": [
+      -65,
+      61,
+      -40,
+      0,
+      104,
+      26
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "remove"
   }
 }
