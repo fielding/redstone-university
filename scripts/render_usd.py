@@ -778,7 +778,9 @@ def apply_technical(mode, height_tint=0.0, tints=None):
               for c in ob.bound_box]
         if zs:
             base_z, top_z = min(zs), max(zs)
-            nlayers = max(2, round((top_z - base_z) / 16.0))
+            # Blender colorbands hard-cap at 32 elements; huge bboxes (e.g. MiEx
+            # padding an export to full region files) crash past it
+            nlayers = min(32, max(2, round((top_z - base_z) / 16.0)))
             if "band_palette" in cfg:
                 pal = cfg["band_palette"]
                 bands_lin = [_srgb_lin(pal[i % len(pal)]) for i in range(nlayers)]
