@@ -54,11 +54,21 @@ To inspect in-world: `//schem load <name>` then `//paste` (FAWE), or open
   wide clusters that may contain more than one adjacent design — split
   in-world if needed.
 
+- **`pc/mattbat-pc-01..03.schem`** — the teaching-scale counter builds from
+  CPU Episode 6 (the program-counter episode, per Fielding). pc-02 is the full
+  PC (1,299 blocks, 91 repeaters + 53 comparators); pc-01/03 are slim counter
+  towers (pc-01 uses 8 target blocks — unusual vocabulary, worth a look).
+- **`ep5/mattbat-ep5-{line,array,spawn}.schem`** — CPU Episode 5 = **RAM**
+  (confirmed by Fielding). `array` = small comparator-free memory-cell teaching
+  piece (664 blocks); `spawn` = the RAM bank itself, 15k blocks: address/data
+  bus plane feeding the layered cell bank (1,188 repeaters, 590 comparators);
+  `line` = 262-block 16-lane bus bundle (960 repeaters, zero comparators).
+
 Exporters: `minecraft-agents/tools/ru-testbench/export_alus.js` /
-`export_registers.js` (offline-survey bounds → FAWE `//copy` + `//schem save`).
-CPU Episode 5/6 checkpoint complexes were NOT extracted — they're full-machine
-states, useful for "machine at stage N" renders straight from their worlds via
-MiEx, not as component schematics.
+`export_registers.js` / `export_boxes.js` (generic; offline-survey bounds →
+FAWE `//copy` + `//schem save`). The episode worlds' big ~92k-block complexes
+(machine-so-far states) were NOT extracted — render those straight from their
+worlds via MiEx for "machine at stage N" figures.
 
 ## Additional source worlds (downloaded 2026-07-06)
 

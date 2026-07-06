@@ -57,5 +57,5 @@ alu-04 is 6,078 blocks / 474 repeaters: display scale only.
 | 6 Adder/Sub | | |
 | 9 ALU | | |
 | 10 Register | | |
-| 11 RAM | | (no standalone candidates — 8-bit machine bitplane is the only mattbat reference) |
-| 12 Machine | | RU-v1 is the spec; mattbat 8-bit full build = contrast hero |
+| 11 RAM | | ep5 RAM builds: ep5-array (cell teaching piece), ep5-spawn (full bank) — plus the 8-bit machine bitplane |
+| 12 Machine | | RU-v1 is the spec; mattbat 8-bit full build = contrast hero. 12a PC: pc-02 (full PC), pc-01/03 counter variants |
