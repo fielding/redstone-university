@@ -97,6 +97,11 @@ circuit to the state the lesson needs, then exit the world, then export.
 3. `~/apps/MiEx/MiEx.jar` is locally patched (region bounds via CLI);
    stock jar backed up as `MiEx.jar.orig`. Re-apply the patch after any MiEx
    update (see tix ru-7778b0 for details).
+3b. `MIEX_OFFLINE_MODE=1` is set in `~/apps/MiEx/miex.env` — MiEx's startup
+   GitHub check hangs indefinitely when rate-limited (symptom: CLI export
+   times out at 600s with log.txt stuck on "Searching for built-in files in
+   GitHub repositories"). Keep it set; batch exports launch MiEx dozens of
+   times and will trip the rate limit.
 4. Choosing looks: `python3 scripts/sweep.py <shot> --sweep style|angle`
    renders a labeled contact sheet; pick by ID, record the choice in
    `shots.json`.

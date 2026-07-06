@@ -843,21 +843,6 @@
     ],
     "ground": "remove"
   },
-  "cand-reg-03": {
-    "world": "/Users/fielding/Downloads/Registers by mattbatwings",
-    "bounds": [
-      18,
-      52,
-      -518,
-      136,
-      107,
-      -438
-    ],
-    "views": [
-      "iso"
-    ],
-    "ground": "remove"
-  },
   "cand-reg-04": {
     "world": "/Users/fielding/Downloads/Registers by mattbatwings",
     "bounds": [
@@ -957,6 +942,36 @@
       45,
       105,
       -76
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "remove"
+  },
+  "cand-reg-03a": {
+    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-mattbat-registers",
+    "bounds": [
+      16,
+      72,
+      -518,
+      48,
+      108,
+      -438
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "remove"
+  },
+  "cand-reg-03b": {
+    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-mattbat-registers",
+    "bounds": [
+      108,
+      52,
+      -518,
+      140,
+      108,
+      -438
     ],
     "views": [
       "iso"
