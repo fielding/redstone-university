@@ -16,7 +16,7 @@ Everything in the project lives in one of four layers, each with a distinct job:
 | :-- | :-- | :-- | :-- |
 | **The Course** | `course/` (Parts I–IV, Modules 0–13) | Teach: narrative, theory, labs | Drafts exist for all modules |
 | **The Spec** | `architecture.md` (RU-v1) | Single source of truth for the machine | Draft; 13 open questions, several now answerable (§5) |
-| **The Realizations** | (a) testbench machine, (b) ref references, (c) canonical book builds | Prove it works / reference designs / what readers actually build | (a) proven, (b) exported, (c) **not started — the main build work ahead** |
+| **The Realizations** | (a) testbench machine, (b) design studies (private), (c) canonical book builds | Prove it works / explore alternatives / what readers actually build | (a) proven, (b) exported, (c) **not started — the main build work ahead** |
 | **The Pipeline** | `renders/STYLE.md`, `docs/image-pipelines/`, `/render-figures` | Turn builds into book figures | Locked look; operational |
 
 The critical distinction learned this campaign: **the testbench machine and the
@@ -31,25 +31,25 @@ stale-state issues.
 
 ## 2. Module ↔ spec ↔ assets map
 
-| Module | Artifact (course) | Spec section | Testbench proof | ref reference | Notes |
-| :-- | :-- | :-- | :-- | :-- | :-- |
-| 0 Toolkit | lamp circuit | — | — | — | |
-| 1 Input | 4-bit lever panel | §10 front panel | (drivers used throughout) | — | |
-| 2 NOT/OR/AND | gate set | — | `components.js` verified 18/18 (with M3) | — | |
-| 3 XOR/NAND/NOR/XNOR | gate set | — | `components.js` (XOR = dust-bridge design) | — | |
-| 3b Interlude | compact design | — | — | ref center-logic is a compact exemplar | Compact = aside, not vehicle |
-| 4 Decoders/Display | 7-seg system | §3 (decoder reused by RAM) | RAM's 4→16 decoder verified | — | |
-| 4b Interlude | abstraction | — | the `offset()`/template pattern *is* this | — | |
-| 5 Adder + Hex | 4-bit adder | §4 | `alu.js` faSlice | center-logic section | |
-| 6 Adv. arithmetic | adder/subtractor | §4 (SUB), carry lamp | `alu.js` ADD/SUB 8/8 | center-logic | |
-| 7 Comparator/Flags | comparator + 2-bit flag reg | §5 | Z=NOR4 in `alu.js`; flag latch pending integration | — | |
-| 8 MUX | 4-bit 2:1 MUX | §6 selectors | `mux2` verified; **but see §5.3** — integration used gated-OR instead | — | |
-| 9 ALU | grand assembly | §4 | `alu.js` 8/8 standalone | center-logic | |
-| 10 Register | scratchpad reg + pulse limiter + flag latch | §2 | register template 7/7; **capture-on-release semantics characterized (§5.1)** | red-left section (register file) | |
-| 11 RAM | 16×4 RAM | §3 | `ram.js` 3/3; write-settle timing characterized | purple-right section | |
-| 12a Infrastructure | clock, PC, sequencer, selectors, panel | §2 (PC), §6, §7, §10 | PC 8/8; seq ring 7/7 standalone (**flattened to bot-driven phases in integration — see §5.6**); selectors integrated | — | |
-| 12b Language + program | ISA, decoder, validation, countdown | §8, §9 | control matrix 19/19; **integrated: fetch 5/5, LDI A ✓, LDI B ✓, HLT ✓**; ADD/SUB/LDA/LDB/STA/JMP/JIZ + countdown pending | full build (runs programs) | The remaining bring-up is realization work, not design risk |
-| 13 Double-dabble | BCD converter | — | — | ref uses BCD display logic | |
+| Module | Artifact (course) | Spec section | Testbench proof | Notes |
+| :-- | :-- | :-- | :-- | :-- |
+| 0 Toolkit | lamp circuit | — | — | |
+| 1 Input | 4-bit lever panel | §10 front panel | (drivers used throughout) | |
+| 2 NOT/OR/AND | gate set | — | `components.js` verified 18/18 (with M3) | |
+| 3 XOR/NAND/NOR/XNOR | gate set | — | `components.js` (XOR = dust-bridge design) | |
+| 3b Interlude | compact design | — | — | Compact = aside, not vehicle |
+| 4 Decoders/Display | 7-seg system | §3 (decoder reused by RAM) | RAM's 4→16 decoder verified | |
+| 4b Interlude | abstraction | — | the `offset()`/template pattern *is* this | |
+| 5 Adder + Hex | 4-bit adder | §4 | `alu.js` faSlice | |
+| 6 Adv. arithmetic | adder/subtractor | §4 (SUB), carry lamp | `alu.js` ADD/SUB 8/8 | |
+| 7 Comparator/Flags | comparator + 2-bit flag reg | §5 | Z=NOR4 in `alu.js`; flag latch pending integration | |
+| 8 MUX | 4-bit 2:1 MUX | §6 selectors | `mux2` verified; **but see §5.3** — integration used gated-OR instead | |
+| 9 ALU | grand assembly | §4 | `alu.js` 8/8 standalone | |
+| 10 Register | scratchpad reg + pulse limiter + flag latch | §2 | register template 7/7; **capture-on-release semantics characterized (§5.1)** | |
+| 11 RAM | 16×4 RAM | §3 | `ram.js` 3/3; write-settle timing characterized | |
+| 12a Infrastructure | clock, PC, sequencer, selectors, panel | §2 (PC), §6, §7, §10 | PC 8/8; seq ring 7/7 standalone (**flattened to bot-driven phases in integration — see §5.6**); selectors integrated | |
+| 12b Language + program | ISA, decoder, validation, countdown | §8, §9 | control matrix 19/19; **integrated: fetch 5/5, LDI A ✓, LDI B ✓, HLT ✓**; ADD/SUB/LDA/LDB/STA/JMP/JIZ + countdown pending | The remaining bring-up is realization work, not design risk |
+| 13 Double-dabble | BCD converter | — | — | |
 
 **Testbench code as executable blueprints:** `tools/ru-testbench/{components,alu,ram,pc,control,integrate}.js`
 are machine-readable geometry for every component — each verified in-world. They are
@@ -92,19 +92,14 @@ failures that plagued the bot-built testbench (bulk-placement stale dust states)
 | Asset | Location | What it is |
 | :-- | :-- | :-- |
 | RU testbench world | `server/world-redstone-university` (preserved; currently swapped out) | Bot-built machine: all components + integrated datapath; fetch 5/5, LDI A/B + HLT execute |
-| ref world | `server/world-ref-8bit` (**currently active**; source in `~/Downloads`) | reference' 8-bit computer (1.19→1.21.6), Ben-Eater-style, at spawn |
-| `ref-8bit-full.schem` | `assets/schematics/ref/` (in-repo; also on the server) | Whole computer, 281,853 blocks |
-| `ref-red-left.schem` | 〃 | Register-file section (~33k blocks) |
-| `ref-purple-right.schem` | 〃 | RAM / control-ROM grid (~29k blocks) |
-| `ref-center-logic.schem` | 〃 | ALU + flags + control core (~27k blocks) |
-| `ref-ref-*-bitslice.schem` ×3 | 〃 | **Single-unit references** — one bit-slice each of register file, RAM bit-plane, ALU core. His machine is 8 identical bit-slices stacked vertically (period-2 layers, 95–98% autocorrelation), so one slice fully characterizes each design. See the folder README for provenance/credit and course-use notes. |
+| Design studies | kept privately outside the repo | Alternative-approach reference builds and study schematics informing the canonical design decisions (not course artifacts) |
 | Testbench code | `~/src/hack/minecraft-agents/tools/ru-testbench/` | Executable component blueprints + test harnesses |
 | Build guide | `docs/build-guide-ru-39f8f2.md` | The testbench campaign's build/bring-up plan |
 | Render pipeline | `renders/STYLE.md`, `docs/image-pipelines/`, `/render-figures` | Locked look: silhouette outlines, vector dust, power-ramp mode |
 
-ref sections are **reference implementations** (8-bit, compact-leaning) — for
-studying design choices and for credit-worthy comparison callouts, not for pasting
-into the course as-is (RU-v1 is 4-bit and prioritizes legibility).
+The design studies are exploratory alternatives (8-bit, compact-leaning) — useful
+for pressure-testing the canonical choices, not for pasting into the course as-is
+(RU-v1 is 4-bit and prioritizes legibility).
 
 ---
 
@@ -159,7 +154,7 @@ as teaching moments. (Spec updates should flow into `architecture.md` per its ow
 testbench code (verified geometry)
         │  redesign for legibility + hand-buildability
         ▼
-canonical module build (plain, wire-role colors)     ←— ref refs consulted
+canonical module build (plain, wire-role colors)     ←— design studies consulted
         │  /render-figures (STYLE.md locked look)
         ├─► close-up detail figures (plain)
         ▼
@@ -181,11 +176,10 @@ full machine (Module 12) — tint layer = free segmentation for CV pipeline
    one-hot gating/gated-OR), front panel to 12a.6; 12b gained the strobe rule,
    decode-as-NOP, the display-tap caveat, and clock-last bring-up; Module 10 now
    teaches capture-on-release. Remaining ⚠ items tracked in architecture.md §11.
-3. ✅ DONE (2026-07-06) — **Single-component references carved** from the ref
-   sections: three bit-slice schematics (register, RAM bit-plane, ALU) in
-   `assets/schematics/ref/` with a provenance/credit README. Key finding: his
-   machine is bitwise-uniform vertical stacking, so the bit-slice *is* the unit;
-   horizontal single-register carves aren't clean (continuous bus wiring).
+3. ✅ DONE (2026-07-06) — **Alternative-design studies completed** (kept privately,
+   outside the repo): per-component layout comparisons that informed the canonical
+   design decisions. Key finding: compact vertical bit-slice stacking trades
+   legibility for density — reinforcing the horizontal hand-buildable choice.
 4. **Build the canonical module set** *(IN PROGRESS: gates 11/11, M5 full-adder 4/4, M8 mux 4/4, M10 register 5/5 — built, verified, rendered at the canonical row x=400)* in a fresh world/area, Module order 1→12,
    hand-buildable, per the build language — this is the main build effort and it
    produces every chapter's artifact + render source.

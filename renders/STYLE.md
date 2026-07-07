@@ -66,7 +66,7 @@ else goes quiet. Opt-in per shot — never a default:
 ```json
 "height_tint": 0,          // uniform paper structure (height bands OFF —
                            // they fight the legend for the color channel)
-"tint": "<his/our annotation blocks mapped to region hues>"
+"tint": "<annotation blocks mapped to region hues>"
 ```
 
 Region hues are the course gate-fill pastels one step deeper (structure stays
@@ -85,8 +85,8 @@ paper `f5f1ea`, outlines ink `30231e`):
 
 Tint keys are block-name substrings (longest wins); redstone components are
 never overridden. Add `"clip"` to cut a single bit-slice for a top-down
-"schematic view" of a stacked build. Working examples: `ref-8bit-legend`,
-`ref-8bit-slice` in `shots.json`.
+"schematic view" of a stacked build. The canonical-* shots in `shots.json`
+show the lane-tint variant of the same mechanism.
 
 ## Emissive blocks
 

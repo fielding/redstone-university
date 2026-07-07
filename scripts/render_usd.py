@@ -969,7 +969,7 @@ def import_and_prepare(usd_path, dust_style="schematic", swaps=None, grid=False,
             color_out = mix.outputs["Result"]
 
         # Component tinting: recolor whole block families toward a legend
-        # color (e.g. red_wool=4a90d9 turns ref's register framing RU-blue).
+        # color (e.g. blue_concrete=a8c4d6 turns a data lane course dusty-blue).
         # Longest matching key wins so "red_wool" beats "wool"; the mix keeps
         # 15% texture so the block grid stays readable.
         if tints:

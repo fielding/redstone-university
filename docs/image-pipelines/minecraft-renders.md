@@ -125,10 +125,9 @@ readable). This is the module-legend mechanism: color a build's annotation
 wool by major component, e.g.
 
 ```json
-"tint": "red_wool=3f7ad1,red_stained_glass=3f7ad1,purple_wool=8455cf"
+"tint": "blue_concrete=a8c4d6,pink_concrete=e0b6c4,red_concrete=c47a72"
 ```
 
-(see the `ref-8bit-legend` shot for a full legend example).
 
 ## `shots.py` CLI
 
