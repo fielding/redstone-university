@@ -44,9 +44,15 @@ never wash them out.
 - **Platforms / structure:** white concrete (flat, matte — dust traces read
   like ink on it). Light gray concrete where white glares.
 - **Wiring lanes:** colored concrete, one color per signal role, consistent
-  across all modules:
-  - TODO(fielding): lock the lane palette — current lab uses pink, blue,
-    purple, dark red; assign semantics (A bus / B bus / control / output)
+  across all modules. PROPOSED 2026-07-06 (Claude default, veto before first
+  canonical figure ships):
+  - **blue concrete** = A operand / primary data
+  - **purple concrete** = B operand / secondary data
+  - **pink concrete** = control (strobes, selects, enables)
+  - **red concrete** (dark) = output / result
+  Rationale: matches the operand colors readers meet in the module-legend
+  treatment (registers dusty-blue feed A; RAM rose is adjacent to purple), and
+  control-pink stays visually distinct from signal-red dust.
 - **Ground:** sand / smooth sandstone reads like blueprint paper in renders.
 - Legacy builds in other blocks don't need rebuilding: add a `swap` to the
   shot, e.g. `--swap white_wool=white_concrete` (render-time retexture only).
