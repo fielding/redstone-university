@@ -385,21 +385,25 @@ Follow 12b.3's bring-up order exactly — it goes local-to-global:
 
 architecture.md first, then conform the drafts:
 
+> **Renumbering note (2026-07-06):** a fetch-registers lesson (IR + AR + Reg B) was
+> inserted as **12a.4**; the selectors lesson is now **12a.5** and the front panel
+> **12a.6**. Draft references in the rows below predate that shift.
+
 | Done | Open Q | architecture.md edit | Draft(s) to conform |
 | :-: | :-: | :-- | :-- |
-| ☐ | 1 | §2: IR/AR rows — real strobe names, "built in" location | 12a (new lab), 12a.5, 12b.2 |
-| ☐ | 2 | §2: Reg B row | Module 10 Lab B |
-| ☐ | 3 | §6: all five selector tables from the real wiring | 12a.4 |
-| ☐ | 4 | §6 S3: actual structure (cascaded 2:1 recommended) | 12a.4, 12a.5 |
-| ☐ | 5 | §5, §7: shared LD_A/LD_F strobe, width + round-trip ticks | 10 Lab C, 12b.2, 12b.4 |
+| ☑ | 1 | §2: IR/AR rows — real strobe names, "built in" location (12a.4 lab written 2026-07-06) | 12a (new lab), 12a.5, 12b.2 |
+| ☑ | 2 | §2: Reg B row (lab in 12a.4; Module 10 Lab B pointer added) | Module 10 Lab B |
+| ☐ | 3 | §6: selector tables — S1/S2 recorded; S3–S5 still to record (drafts teach the one-hot idiom as of 2026-07-06) | 12a.4 |
+| ☐ | 4 | §6 S3: actual structure (drafts teach the recommended cascade; as-built still unrecorded) | 12a.4, 12a.5 |
+| ☑ | 5 | §5, §7: shared LD_A/LD_F strobe (drafts conformed 2026-07-06; measured tick values still worth recording under Q11) | 10 Lab C, 12b.2, 12b.4 |
 | ☐ | 6 | §10: full MODE gating table | 12a.5 |
 | ☐ | 7 | §4, §9: F1/F0 hardwired `11` (or actual) | 12b.2, Module 9 note |
 | ☐ | 8 | §5: carry lamp "never latched, never consumed" — confirmed | 12b (state it explicitly) |
-| ☐ | 9 | §8: opcodes A–E decode to NOP (unwired matrix rows) | 12b.1 |
+| ☑ | 9 | §8: opcodes A–E decode to NOP (12b.1 states it 2026-07-06; in-world verification still open) | 12b.1 |
 | ☐ | 10 | §9: HLT latch mechanism; resume = RESET only | 12a.1, 12b |
-| ☐ | 11 | §7: fetch ordering with measured d1/d2 tick values | 12a.5 |
-| ☐ | 12 | — (12b.4 decision): canonical display = Reg A | 12b.4 |
-| ☐ | 13 | §6 S4: unify "load bus/argument bus/AR" → AR output | 12a.2, 12a.4, 12b |
+| ☐ | 11 | §7: fetch ordering with measured d1/d2 tick values (phase-width rule stated in 12a.6, 2026-07-06) | 12a.5 |
+| ☑ | 12 | — (12b.4 decision): 12b.4 defaults to the Reg A display with the row-tap caveat stated (2026-07-06) | 12b.4 |
+| ☑ | 13 | §6 S4: unify "load bus/argument bus/AR" → AR output (2026-07-06) | 12a.2, 12a.4, 12b |
 
 Strike each ⚠ OPEN in the doc body as you go; when the table is all checked,
 §11 of architecture.md collapses to nothing, the DRAFT banner comes off, and

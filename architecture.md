@@ -35,10 +35,10 @@ RU-v1 is a 4-bit, two-register, accumulator-style stored-program computer. A 16�
 | Name | Width | Built in | Write enable | Notes |
 | :-- | :-- | :-- | :-- | :-- |
 | Reg A (scratchpad/accumulator) | 4 | Module 10 (Lab B) | `LD_A` (pulse-limited STORE) | Repeater-locking latch; STORE inverted by torch internally. Feeds ALU Bus A, RAM data-in, display. |
-| Reg B | 4 | ✅ RESOLVED — built in the testbench as a second Module 10 register; captures correctly (`LDI B` executes end-to-end). Course still needs a build lab for it (proposed: 12a, alongside IR/AR). | `LD_B` | Second copy of the Module 10 register, confirmed workable. Feeds ALU Bus B. |
+| Reg B | 4 | ✅ RESOLVED — built in the testbench as a second Module 10 register; captures correctly (`LDI B` executes end-to-end). Build lab: Lesson 12a.4 (fetch registers, written 2026-07-06). | `LD_B` | Second copy of the Module 10 register, confirmed workable. Feeds ALU Bus B. |
 | Flag Register (Z, N) | 2 | Module 10 (Lab C) | `LD_F` (draft name: **FLAGS STORE**) | Latches live Z/N from ALU. Holds "previous arithmetic result" for JIZ. |
 | PC | 4 | Module 12a.2 | `PC_INC`, `PC_LOAD`, `RESET` | Synchronous toggle counter (repeater-locking cells + carry chain), 2:1 load selector per bit. Hold/increment/load/reset. |
-| IR (Instruction Register) | 4 | ✅ RESOLVED — built in the testbench as a Module 10 register; fetch verified (captures opcodes from the Memory Output Bus, feeds the decoder; ops 8/9/15 decode). Course still needs the build lab (proposed: new 12a section building IR + AR + Reg B). | `LD_IR` | Holds opcode nibble; feeds decoder. |
+| IR (Instruction Register) | 4 | ✅ RESOLVED — built in the testbench as a Module 10 register; fetch verified (captures opcodes from the Memory Output Bus, feeds the decoder; ops 8/9/15 decode). Build lab: Lesson 12a.4 (written 2026-07-06). | `LD_IR` | Holds opcode nibble; feeds decoder. |
 | AR (Argument Register) | 4 | ✅ RESOLVED — same as IR: built and fetch-verified in the testbench (captures argument nibbles; feeds the Reg A/B input selectors — `LDI A`/`LDI B` execute). RAM-addr and PC-load consumers routed but not yet exercised. | `LD_AR` | Holds argument nibble; feeds RAM addr selector, PC load path, Reg A/B input selectors. |
 | Phase ring (T0/T1/T2) | 3 (one-hot) | Module 12a.3 | clock pulse; RESET → `100` | Three repeater-locking stages in a loop. Optional T3 extension for Bedrock STA timing. |
 
@@ -77,7 +77,7 @@ Inputs: **Bus A** (= Reg A output in the integrated machine), **Bus B** (= Reg B
 
 ✅ RESOLVED: timing of `LD_F` relative to `LD_A` — see §7. The register storage captures **on strobe release**, so the safe pattern is firing `LD_F` and `LD_A` from the same strobe while guaranteeing the *data* fans outlive the strobe fans (Open Question 5).
 
-## 6. Buses & selector networks (12a.4 — "the five routing decisions")
+## 6. Buses & selector networks (12a.5 — "the five routing decisions")
 
 The drafts name the five selectors but give **no control truth tables or encodings**. S1 and S2 are now ✅ RESOLVED from the testbench build; S3–S5 remain ⚠ OPEN as noted.
 
@@ -124,7 +124,7 @@ The drafts name the five selectors but give **no control truth tables or encodin
 ## 7. Timing
 
 - **Clock** (12a.1): free-running repeater loop, gated by **RUN/HALT** lever; **STEP** injects one pulse while halted; **RESET** forces PC=`0000` and phase ring to T0 (does not clock the machine).
-- **Phase sequencer** (12a.3): 3-stage one-hot ring counter, advances one stage per clock pulse: T0 → T1 → T2 → T0. Optional T3 (Bedrock) if STA needs a separate write phase (12b.3 note). Testbench note: the free-running ring verified standalone (7/7) but self-latched when first integrated (route taps + adjacency drove the phase nets); all integration bring-up was done with externally driven single-stepped phases. Course implication for 12a.3/12b.3: teach STEP-driven bring-up first and connect the free-running clock **last**, after every phase's behavior is verified.
+- **Phase sequencer** (12a.3): 3-stage one-hot ring counter, advances one stage per clock pulse: T0 → T1 → T2 → T0. Optional T3 (Bedrock) if STA needs a separate write phase (12b.3 note). Testbench note: the free-running ring verified standalone (7/7) but self-latched when first integrated (route taps + adjacency drove the phase nets); all integration bring-up was done with externally driven single-stepped phases. Course implication for 12a.3/12b.3: teach STEP-driven bring-up first and connect the free-running clock **last**, after every phase's behavior is verified. (Now taught: 12a.3 Integration Note, 12b.3 preface, 12b.4 bring-up step 7 — 2026-07-06.)
 - All register/RAM writes are **brief pulse-limited strobes**, not level enables (12b.2), because the storage is level-sensitive repeater locking.
 
 | Phase | Action |
@@ -160,7 +160,7 @@ Instructions are 8 bits = opcode nibble + argument nibble at **two consecutive R
 
 ## 9. Control matrix
 
-One row per (instruction × phase). T0 and T1 are identical for all instructions. Signal names: `SelMemAddr/SelA/SelB/SelMemIn/SelPC` per §6 (⚠ proposed encodings); `LD_IR`/`LD_AR`/`HALT_SET` ⚠ invented (IR/AR never built); `LD_A`/`LD_B` = register STORE pulses, `LD_F` = FLAGS STORE, `RAM_WR` = WRITE pulse, `ALU_SUB` = Module 9 `SUB` line. "•" = strobe fires; "–" = inactive/don't-care. Run mode assumed throughout (Program mode overrides per §10).
+One row per (instruction × phase). T0 and T1 are identical for all instructions. Signal names: `SelMemAddr/SelA/SelB/SelMemIn/SelPC` per §6 (⚠ proposed encodings); `LD_IR`/`LD_AR` now canonical (built in Lesson 12a.4); `HALT_SET` ⚠ invented; `LD_A`/`LD_B` = register STORE pulses, `LD_F` = FLAGS STORE, `RAM_WR` = WRITE pulse, `ALU_SUB` = Module 9 `SUB` line. "•" = strobe fires; "–" = inactive/don't-care. Run mode assumed throughout (Program mode overrides per §10).
 
 | Instr | Phase | SelMemAddr | SelA | SelB | SelMemIn | SelPC | LD_IR | LD_AR | LD_A | LD_B | LD_F | PC_INC | PC_LOAD | RAM_WR | ALU_SUB | HALT_SET |
 | :-- | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
@@ -184,7 +184,7 @@ Partial ✅: `HALT_SET` is confirmed a **latch** (testbench: op15 decode sets it
 
 **Countdown sanity check** (12b.4 program, RAM[E]=5): T0/T1 fetch per row above; `LDA [E]`→A=5; `LDI B,1`→B=1; `SUB`→A=4, Z=0 latched; `STA [E]`→RAM[E]=4; `JIZ [C]` reads latched Z=0, falls through; `JMP [4]` loops to SUB. Iterates A=4,3,2,1; when SUB produces 0, Z=1 is latched, STA writes 0, JIZ jumps to `C`, HLT stops the clock. **Executes correctly under this matrix — the flag hazard is resolved by the capture-on-release timing pattern in §7 (same-strobe `LD_A`/`LD_F`, data outlives strobe).** Note also that "a display attached to RAM[E]" (12b.4) implies tapping row E's stored bits directly, since the shared Memory Output Bus only shows the currently addressed row. Testbench status: this matrix decodes and executes correctly for the verified rows (all-T0/T1 fetch, LDI A, LDI B, HLT).
 
-## 10. Front panel & modes (12a.5)
+## 10. Front panel & modes (12a.6)
 
 Controls: **MODE** lever (Program/Run), 4 **Address** levers, 4 **Data** levers, **WRITE** button (pulse-limited), **RESET** button, **RUN/HALT** lever, **STEP** button. (Module 9's F1/F0/SUB levers: fate in integrated machine ⚠ OPEN, see §4.)
 
@@ -192,7 +192,7 @@ Controls: **MODE** lever (Program/Run), 4 **Address** levers, 4 **Data** levers,
 | :-- | :-- | :-- |
 | RAM address selector (S3) | Manual Address levers (override) | PC (T0/T1) / AR (T2) per decoder |
 | RAM data-in selector (S5) | Manual Data levers | Reg A (STA) |
-| RAM WRITE | Front-panel WRITE button (gated to Program mode only — 12a.5 safety rule) | Decoder STA strobe at T2 |
+| RAM WRITE | Front-panel WRITE button (gated to Program mode only — 12a.6 safety rule) | Decoder STA strobe at T2 |
 | Decoder STA strobe | ⚠ OPEN — presumably blocked, unspecified | Active |
 | Clock / sequencer / PC | ⚠ OPEN — presumably held/halted in Program mode; drafts never say MODE gates the clock | Free-running or stepped |
 | Reg A/B selectors, PC selector | ⚠ OPEN — unaffected by MODE? unspecified | Per decoder |
@@ -201,16 +201,16 @@ Controls: **MODE** lever (Program/Run), 4 **Address** levers, 4 **Data** levers,
 
 ## 11. Open questions
 
-1. ✅ RESOLVED (design) — **IR and AR are never built** in the drafts, but both were built and fetch-verified in the testbench as Module 10 registers with `LD_IR`/`LD_AR` strobes. Remaining work is editorial: write the build lab (proposed: new section in 12a building IR, AR, and Reg B together) — affects `12a_…/draft.md` Lesson 12a.5 and 12b.2.
-2. ✅ RESOLVED (design) — **Reg B**: a second Module 10 register works as-is (verified via `LDI B`). Same editorial remainder as #1: decide whether the lab lands in Module 10 Lab B or 12a.
-3. ✅ RESOLVED for S1/S2 — the as-built machine uses **one-hot rails + per-source gated-OR merges**, not binary mux encodings (§6, recorded from the in-world build). S3–S5 encodings still to record — affects `12a_…/draft.md` Lesson 12a.4.
-4. **RAM address selector arity.** Draft says PC-vs-AR plus a Program-mode override = three sources. Testbench built the Run-mode 2:1 (PC verified, AR routed); recommend cascaded 2:1 with a MODE-controlled stage. Final structure — affects 12a.4/12a.5.
-5. ✅ RESOLVED — **Flag-latch timing vs Reg A load.** The storage captures on strobe *release* (§7), which inverts the hazard: the danger is the data fan collapsing before the strobe fan at T2's falling edge, not post-writeback flag re-settling. As-built safe pattern: `LD_A` and `LD_F` fire from the same T2 edge, with added repeater delay on the data-side fans so data provably outlives the strobes. Verified live (a same-edge race captured zeros until the data-fan delay was added). Affects `10_…/draft.md` Lab C, 12b.2, 12b.4 — the drafts should teach the capture-on-release model explicitly.
-6. **MODE gating.** Specify how the MODE lever gates each selector and strobe, and whether Program mode halts the clock / freezes PC and the sequencer — affects 12a.5.
+1. ✅ RESOLVED — **IR and AR** built and fetch-verified in the testbench as Module 10 registers with `LD_IR`/`LD_AR` strobes. Editorial remainder done 2026-07-06: Lesson 12a.4 (fetch registers) builds IR, AR, and Reg B; the fetch cycle (12a.6) and 12b now reference built components.
+2. ✅ RESOLVED — **Reg B**: a second Module 10 register works as-is (verified via `LDI B`). Lab lands in Lesson 12a.4 (2026-07-06); Module 10 Lab B carries a forward pointer.
+3. ✅ RESOLVED for S1/S2 — the as-built machine uses **one-hot rails + per-source gated-OR merges**, not binary mux encodings (§6, recorded from the in-world build). Drafts updated 2026-07-06: Lesson 12a.5 teaches one-hot gating/gated-OR for register inputs. S3–S5 encodings still to record.
+4. **RAM address selector arity.** Draft says PC-vs-AR plus a Program-mode override = three sources. Testbench built the Run-mode 2:1 (PC verified, AR routed); recommend cascaded 2:1 with a MODE-controlled stage. Lesson 12a.5 (2026-07-06) teaches the recommended cascade. Final as-built structure — affects 12a.5/12a.6.
+5. ✅ RESOLVED — **Flag-latch timing vs Reg A load.** The storage captures on strobe *release* (§7), which inverts the hazard: the danger is the data fan collapsing before the strobe fan at T2's falling edge, not post-writeback flag re-settling. As-built safe pattern: `LD_A` and `LD_F` fire from the same T2 edge, with added repeater delay on the data-side fans so data provably outlives the strobes. Verified live (a same-edge race captured zeros until the data-fan delay was added). Drafts now teach it explicitly (2026-07-06): Module 10 Lesson 10.3 ("capture on release") + Lab C note, 12b.2 strobe rule, checkpoint questions in both modules.
+6. **MODE gating.** Specify how the MODE lever gates each selector and strobe, and whether Program mode halts the clock / freezes PC and the sequencer — affects 12a.6.
 7. **F1/F0 in the integrated machine.** Hardwired `11`, decoder-driven, or front-panel levers retained? The decoder spec (12b.2) only mentions the `SUB` line — affects 9 and 12b.2.
 8. **Carry/overflow lamp.** Confirm it remains a live diagnostic only (Modules 6/9), never latched and never consumed; Module 7 states the machine uses only Z and N. If so, say it explicitly in 12b.
-9. **Undefined opcodes `A`–`E`.** Decide behavior (proposed: NOP) — affects 12b.1.
+9. **Undefined opcodes `A`–`E`** (design settled, verification open). Drafts (2026-07-06) specify decode-as-NOP in 12b.1: an unrecognized opcode fires no decode line, hence no T2 strobes. ⚠ verify in-world that A–E decode to nothing.
 10. **HLT mechanism and resumption** (partially resolved). `HALT_SET` is confirmed a **latch** in the as-built machine — a momentary HLT decode latches it (verified: op15 fetch → T2 → halt_set stays set). Still open: how the latch gates the clock, composition with the RUN/HALT lever, and resumption (RESET only?) — affects 12a.1, 12b.
-11. **Intra-phase ordering of fetch** (partially resolved). Capture-on-release makes the ordering a *settle-time* budget rather than a sequencing circuit (§7): the RAM→bus→register path must fit inside the phase-high window, and RAM writes need a data-settle window before WRITE. Course build must state the phase-width rule — affects 12a.5.
-12. **Final display.** 12b.4 offers "display attached to RAM[E]" or "debug display attached to Register A"; Module 10 wires Reg A to the hex display. Decide the canonical display tap (note: showing RAM[E] requires tapping row E directly, not the shared read bus) — affects 12b.4.
-13. **PC load source naming.** 12a.2 "load bus" / 12a.4 "argument bus" / 12b "AR" — confirm all three mean the AR output and unify the term.
+11. **Intra-phase ordering of fetch** (partially resolved). Capture-on-release makes the ordering a *settle-time* budget rather than a sequencing circuit (§7): the RAM→bus→register path must fit inside the phase-high window, and RAM writes need a data-settle window before WRITE. Phase-width rule now stated (2026-07-06) in 12a.6 ("How long should a phase be?") plus the strobe rule in 12b.2.
+12. **Final display** (partially resolved, editorial). 12b.4 (2026-07-06) now defaults to the Reg A hex display (wired since Module 10) and explains the direct row-tap requirement for a RAM[E] display. Canonical-tap decision for the flagship build itself still open.
+13. ✅ RESOLVED (editorial, 2026-07-06) — **PC load source naming.** All three terms meant the AR output; drafts unified on "Argument Register (AR) output" (12a.2 load path, 12a.5 selector 4, 12b).
