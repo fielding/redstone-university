@@ -56,6 +56,9 @@ This glossary compiles key terms from the Redstone University curriculum, organi
 **Bus (Input Bus)**
 : A collection of parallel wires that carry a complete piece of binary information. Our 4-bit input interface creates a 4-bit bus. [1]
 
+**Capture on release**
+: The timing behavior of a level-sensitive latch: transparent while its strobe is high, it keeps whatever value is present at the instant the strobe falls. [10]
+
 **Carry bit**
 : A bit that is generated when a column of addition exceeds what can be represented in that column and must spill into the next one. [5]
 
@@ -76,6 +79,9 @@ This glossary compiles key terms from the Redstone University curriculum, organi
 
 **Control decoder**
 : The logic that translates an opcode and timing phase into control signals. [12b]
+
+**Control rail**
+: A one-hot control line that gates one source onto a shared destination. [12a]
 
 **Control signal**
 : A signal that configures or steers a digital system rather than carrying ordinary data. [9]
@@ -138,13 +144,16 @@ This glossary compiles key terms from the Redstone University curriculum, organi
 : The human interface used to program, reset, halt, and step the computer. [12a]
 
 **Full adder**
-: A 1-bit arithmetic circuit that adds `$A$`, `$B$`, and `CarryIn`, producing `Sum` and `CarryOut`. [5]
+: A 1-bit arithmetic circuit that adds $A$, $B$, and `CarryIn`, producing `Sum` and `CarryOut`. [5]
 
 **Functionally Complete**
 : A property of a set of logic gates (or a single gate like NAND/NOR) from which any possible Boolean function can be constructed. [3]
 
 **Gated OR**
 : A readout strategy in which each source is first enabled or disabled by a gate, and the allowed outputs are then combined with OR logic. [11]
+
+**Gated-OR merge**
+: A routing idiom in which each source is ANDed with its own select rail and the results merge onto a shared line; the RAM read bus and the register input networks both use it. [12a]
 
 **Hexadecimal**
 : A base-16 number system that maps perfectly onto 4-bit binary values. [5]
@@ -245,6 +254,9 @@ Your input bus is ready to carry these binary signals to the next stage where lo
 
 The basic building blocks of our computer are about to take shape. Get ready for the world of logic gates and circuits! [1]
 
+**Register B**
+: The register that holds the ALU's second operand and drives Bus B. [12a]
+
 **Repeater**
 : A component that acts as a signal booster (refreshing signal strength to `15`) and a diode. [0]
 
@@ -276,7 +288,7 @@ The basic building blocks of our computer are about to take shape. Get ready for
 : The control signal that tells a multiplexer which input to choose. [8]
 
 **Selector network**
-: A collection of MUXes or equivalent routing logic that chooses which data path is active. [12a]
+: The routing logic, gated-OR merges or 2:1 selectors, that chooses which data path is active. [12a]
 
 **Sequential logic**
 : Logic whose behavior depends on both present inputs and stored state. [10]
@@ -357,22 +369,22 @@ The basic building blocks of our computer are about to take shape. Get ready for
 
 [4]: Module 4: From Binary to Pictures: Building a Digital Display
 
-[5]: Module 5: The 4-bit adder & the hexadecimal upgrade
+[5]: Module 5: The 4-Bit Adder & the Hexadecimal Upgrade
 
-[6]: Module 6: Advanced arithmetic – Overflow and subtraction
+[6]: Module 6: Advanced Arithmetic – Overflow and Subtraction
 
-[7]: Module 7: Comparators and status flags – The dawn of decision-making
+[7]: Module 7: Comparators and Status Flags – The Dawn of Decision-Making
 
-[8]: Module 8: The multiplexer – The digital switch
+[8]: Module 8: The Multiplexer – The Digital Switch
 
-[9]: Module 9: The ALU – The grand assembly
+[9]: Module 9: The ALU – The Grand Assembly
 
-[10]: Module 10: The processor's scratchpad – Building a register
+[10]: Module 10: The Processor's Scratchpad – Building a Register
 
-[11]: Module 11: Addressable storage – Building RAM
+[11]: Module 11: Addressable Storage – Building RAM
 
-[12a]: Module 12a: The infrastructure – Clock, counter, and control paths
+[12a]: Module 12a: The Infrastructure – Clock, Counter, and Control Paths
 
-[12b]: Module 12b: The language of the machine – Instructions and the first program
+[12b]: Module 12b: The Language of the Machine – Instructions and the First Program
 
-[13]: Module 13: The "real world" display – The Double Dabble algorithm
+[13]: Module 13: The "Real World" Display – The Double Dabble Algorithm

@@ -86,6 +86,7 @@ Let’s combine these concepts to build a simple input to process to output circ
 3.  **Wire them up:** Connect the block under the lever to the lamp using a line of **Redstone Dust**.
 4.  **Test:** Flip the lever. The lamp should turn on and off.
 5.  **Experiment:** Now, modify your circuit to test your understanding.
+    -   **Find the edge:** Don't just take Rule 1 on faith; measure it. Stretch your dust line to exactly `15` blocks and put the lamp at the end. It lights, barely: that last piece of dust is carrying a signal strength of just `1`. Now add one more block of dust, making it `16`. The lamp goes dark. You've just found the exact cliff where a Redstone signal dies.
     -   **Invert the signal:** Insert a **Redstone Torch** somewhere in the path. How does the lamp's behavior change? (Hint: The torch acts as a NOT gate).
     -   **Extend the signal:** Make your Redstone Dust wire `20` blocks long. The signal will not reach. Now, place a **Repeater** after block `14`. Observe how it refreshes the signal.
 
@@ -95,7 +96,7 @@ You’ve just built your first working circuit and verified the core rules of Re
 
 ### Module 0 Checkpoint
 
-#### Practice Problem 0.3.1: Knowledge Check
+#### Practice Problem 0.4.1: Knowledge Check
 
 1.  What two essential functions does a Redstone Repeater perform?
 2.  An engineer powers a block with a line of Redstone Dust. Will a piece of dust placed on top of that block receive power? Why or why not?

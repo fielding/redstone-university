@@ -2,7 +2,7 @@
 
 This appendix provides solutions to the practice problems in the Redstone University curriculum, organized by problem number for easy reference.
 
-### Practice Problem 0.3.1: Knowledge Check
+### Practice Problem 0.4.1: Knowledge Check
 
 1.  What two essential functions does a Redstone Repeater perform?
 2.  An engineer powers a block with a line of Redstone Dust. Will a piece of dust placed on top of that block receive power? Why or why not?
@@ -61,7 +61,7 @@ Design a circuit that implements the logic $A \text{ AND } (\text{NOT } B)$ : $A
 
 **Truth Table for $A \text{ AND } (\text{NOT } B)$:**
 
-| $A$ | $B$ | $\text{ NOT } B$ | $A \text{ OR } (\text{ NOT } B)$ |
+| $A$ | $B$ | $\text{ NOT } B$ | $A \text{ AND } (\text{ NOT } B)$ |
 |:---:|:---:|:---:|:----------:|
 | `0` | `0` | `1` | `0` |
 | `0` | `1` | `0` | `0` |
@@ -117,22 +117,15 @@ Write the single Boolean expression for the alarm $Y$. Which gates would you nee
 
 ### Practice Problem 2.4.3: The Build Challenge
 
-Design and build a Minecraft circuit that implements the logic $A \text{ AND } (\text{NOT } B)$ : $A \land (\neg B)$. Use only the primitive NOT and OR gates. Verify its function against a truth table for all four input combinations.
-
-**Truth Table:**
-
-| $A$ | $B$ | $\text{ NOT } B$| $A \text{ AND } (\text{ NOT } B)$ |
-|:---:|:---:|:---:|:----------:|
-| `0` | `0` | `1` | `0` |
-| `0` | `1` | `0` | `0` |
-| `1` | `0` | `1` | `1` |
-| `1` | `1` | `0` | `0` |
+Now bring Practice Problem 2.4.2 to life. Build the home security system in Minecraft: three levers for the front door ($A$), the back door ($B$), and the armed switch ($C$), with a lamp for the alarm ($Y$). The circuit should implement $Y = (A \lor B) \land C$ using only the primitive NOT and OR gates. This is your first three-input circuit, so take your time with the wiring.
 
 **Minecraft Circuit:**
-1.  Create inputs for $A$ and $B$.
-2.  Use a Redstone Torch on the $B$ input line to create the signal for $\neg B$.
-3.  Feed the original $A$ signal and the new $\neg B$ signal into a composite **AND** gate (built from two NOTs and an OR, as shown in Lesson 2.3).
-4.  Connect the output to a lamp and test all four states.
+1.  Create inputs for $A$, $B$, and $C$.
+2.  Merge the dust lines from $A$ and $B$ (each through a repeater) into a single line. This **OR** gate produces the signal for $A \lor B$.
+3.  Feed that merged signal and the $C$ signal into a composite **AND** gate (built from two NOTs and an OR, as shown in Lesson 2.3).
+4.  Connect the output to a lamp for $Y$.
+
+**Testing:** With $C$ (armed) OFF, the alarm should stay silent no matter what the doors do. With $C$ ON, opening either door (or both) should light the lamp. That's four quick checks: `C=0` with any doors, then `C=1` with $A$, with $B$, and with neither.
 
 </details>
 
@@ -590,12 +583,12 @@ Inversion alone produces One's Complement. To get **Two's Complement**, the circ
 
 ### Practice Problem 7.5.2: Design challenge
 
-Without using the dedicated equality comparator from Lesson 7.2, how could a CPU test whether `$A = B$` using only an ALU and flags?
+Without using the dedicated equality comparator from Lesson 7.2, how could a CPU test whether $A = B$ using only an ALU and flags?
 
-The CPU can compute `$A - B$` in the ALU and then inspect the **Zero Flag**.
+The CPU can compute $A - B$ in the ALU and then inspect the **Zero Flag**.
 
--   If the result is `0000`, then `$A = B$`
--   If the result is anything else, then `$A \neq B$`
+-   If the result is `0000`, then $A = B$
+-   If the result is anything else, then $A \neq B$
 
 </details>
 
@@ -624,7 +617,7 @@ The most likely problem is that the Zero Flag circuit is **not seeing all four b
 3.  If you wanted to choose among four different inputs instead of two, how many select bits would you need?
 
 1.  A multiplexer chooses one of several inputs and forwards the selected one to its output.
-2.  `$Y = (A \land \neg S) \lor (B \land S)$`
+2.  $Y = (A \land \neg S) \lor (B \land S)$
 3.  You would need **2** select bits, because 2 bits can represent four choices: `00`, `01`, `10`, and `11`.
 
 </details>
@@ -637,10 +630,10 @@ The most likely problem is that the Zero Flag circuit is **not seeing all four b
 
 A **demultiplexer** does the opposite of a MUX: it takes one input and routes it to one of multiple outputs.
 
-For a 1-to-2 DEMUX with input `$D$`, select `$S$`, and outputs `$Y_0$` and `$Y_1$`, write the two Boolean expressions.
+For a 1-to-2 DEMUX with input $D$, select $S$, and outputs $Y_0$ and $Y_1$, write the two Boolean expressions.
 
--   `$Y_0 = D \land \neg S$`
--   `$Y_1 = D \land S$`
+-   $Y_0 = D \land \neg S$
+-   $Y_1 = D \land S$
 
 </details>
 
@@ -730,10 +723,12 @@ If `SUB` never reaches that circuit, the arithmetic lane remains stuck in additi
 1.  What is the difference between combinational and sequential logic?
 2.  In a repeater-locking latch, what does it mean when the lock repeater is powered?
 3.  Why do we need a pulse limiter on STORE?
+4.  At what exact moment does a repeater-locking latch commit its stored value?
 
 1.  **Combinational logic** depends only on current inputs. **Sequential logic** depends on current inputs and previously stored state.
 2.  It means the data repeater is **locked** and holds its current state.
 3.  Because the latch is level-sensitive. If STORE stays active too long, the latch remains transparent and the output keeps following the input instead of capturing a single clean value.
+4.  At the falling edge of the STORE pulse. The latch is transparent while the pulse is high and keeps whatever value is on the data line at the instant the pulse ends: capture on release.
 
 </details>
 
@@ -809,15 +804,17 @@ The most likely problem is that you forgot the **inverter bank**. Without it, th
 ---
 
 
-### Practice Problem 12a.6.1: Knowledge Check
+### Practice Problem 12a.7.1: Knowledge Check
 
 1.  What are the four required behaviors of the Program Counter?
 2.  Why is a one-hot phase sequencer useful in a Redstone computer?
 3.  Why does our machine need a RAM data-in selector in addition to the runtime data-path selectors?
+4.  Register A can load from three different sources. Why does its input network not need a MUX with encoded select bits?
 
 1.  Hold, increment, load, and reset.
 2.  Because it gives the machine a clear internal rhythm where exactly one phase is active at a time, making fetch and execute behavior easier to build and debug.
 3.  Because RAM input comes from different places in different modes: Register A during `STA` in Run mode, and the manual data levers during Program mode.
+4.  Because the machine uses one-hot gating: each source is ANDed with its own control rail and the results merge onto the register's input, with an inverted gate selecting RAM output as the default when no rail is high. The control unit already produces one line per meaning, so there is nothing to encode.
 
 </details>
 
@@ -825,7 +822,7 @@ The most likely problem is that you forgot the **inverter bank**. Without it, th
 ---
 
 
-### Practice Problem 12a.6.2: The design question
+### Practice Problem 12a.7.2: The design question
 
 Why do we use separate **IR** and **AR** registers instead of trying to keep the whole 8-bit instruction in one place?
 
@@ -837,7 +834,7 @@ Because our bus is only 4 bits wide. We fetch the instruction in two nibbles, so
 ---
 
 
-### Practice Problem 12a.6.3: Debug challenge
+### Practice Problem 12a.7.3: Debug challenge
 
 Your machine resets correctly and the phase sequencer cycles correctly, but during fetch it keeps reading the same memory location over and over.
 
@@ -856,10 +853,12 @@ The **Program Counter increment path** is the first thing to inspect. If the PC 
 1.  Why do RU-v1 jump targets point to even addresses?
 2.  Which instructions update the Flag Register in this version of the machine?
 3.  Why is `STA` the instruction most likely to force a fourth timing phase if one is needed?
+4.  At the end of `T2`, both the data rails and the load strobes collapse. Why must the data rails be the ones that collapse last?
 
 1.  Because each instruction occupies two RAM addresses, so opcode nibbles begin at even addresses.
 2.  `ADD` and `SUB`, the instructions that write arithmetic ALU results back into Register A.
 3.  Because it must switch RAM addressing, place Register A onto the RAM data-in path, and pulse RAM write-enable within the execute window.
+4.  Because our latches capture on the strobe's falling edge. If the data path dies first, the register relocks on the collapsing value instead of the result. Delaying the data-side fans guarantees every register captures a valid value.
 
 </details>
 

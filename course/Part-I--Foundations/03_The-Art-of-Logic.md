@@ -149,6 +149,8 @@ $$ Y = \neg(A \lor \neg(A \lor B)) \lor \neg(B \lor \neg(A \lor B)) $$
 > It's important to understand that this is just one of many ways to build an XOR gate. In Redstone engineering, as in real-world circuit design, there is often no single "correct" answer. Different designs might be bigger but easier to understand, or smaller but more complex. The design above is excellent for visualizing the underlying logic while learning.
 >
 > The complex Boolean expression above is a direct translation of our circuit diagram. It cleverly uses a shared NOR gate ($\text{NOT}(A \text{ OR } B)$ : $\neg(A \lor B)$) to feed the main logic paths. While this expression looks different from the textbook definition ($A \oplus B = (A \land \neg B) \lor (\neg A \land B)$), it is functionally identical.
+>
+> So why not just build the textbook version? Count the torches. Translating $(A \land \neg B) \lor (\neg A \land B)$ directly into our primitives costs four NOT gates: one each for $\neg A$ and $\neg B$, plus one more inside each of the two AND gates. Our shared-NOR design needs only three, because both logic paths reuse the same $\neg(A \lor B)$ signal instead of each computing its own inversions. One torch might not sound like much, but every torch adds delay and every block adds footprint, and we will be building a *lot* of XOR gates when we get to arithmetic. Sharing common subexpressions like this is one of the oldest tricks in circuit design.
 
 ---
 

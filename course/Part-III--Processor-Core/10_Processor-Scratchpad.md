@@ -1,4 +1,4 @@
-## Module 10: The processor's scratchpad – Building a register
+## Module 10: The Processor's Scratchpad – Building a Register
 
 ### Module 10 Summary
 
@@ -153,6 +153,12 @@ So internally we invert the STORE signal with a torch:
 
 This gives us an intuitive user-facing control while preserving the real repeater-lock behavior underneath.
 
+#### When exactly is the value captured?
+
+Read that last bullet again, because it contains the single most important timing fact in the rest of the course: the latch is transparent the whole time STORE is high, and the value it keeps is whatever sits on the data line **at the instant the pulse ends**. We call this **capture on release**.
+
+With your finger on the button, the distinction is invisible. But in Module 12b, when the machine starts firing store pulses at its own registers, capture on release becomes the rule everything else must respect: the data has to still be valid at the moment the strobe falls, not just at the moment it rises.
+
 > **Bedrock / Java Note**
 >
 > Repeater locking is one of the nicest cross-edition mechanisms in Redstone. It works the same way in Bedrock and Java, which is one reason it is so common in Minecraft computer builds.
@@ -214,6 +220,8 @@ At this point, you have a 4-bit register.
 
 <div align="center"><img src="./images/4-bit-register-minecraft.png" alt="4-Bit Register Minecraft Build" width="512px"/><br/><em>Figure: A 4-bit register built from four repeater-locking memory cells. The shared STORE pulse lets the whole 4-bit word be captured at once.</em></div><br/>
 
+Keep this design handy. The finished machine needs four registers of exactly this shape: this scratchpad (which becomes **Register A**), a second operand register for the ALU (**Register B**), and two fetch registers for the instruction cycle. You will copy this block three more times in Module 12a.
+
 #### Lab Part C: Build the 2-bit flag latch
 
 The same memory idea also gives us a perfect place to store processor flags.
@@ -224,6 +232,8 @@ The same memory idea also gives us a perfect place to store processor flags.
 4.  Label the outputs `Z` and `N`.
 
 This tiny 2-bit register will let the control unit look at the **previous** arithmetic result, not just whatever happens to be on the wires right now.
+
+It also obeys capture on release like every other latch in the machine, and that turns out to matter: in Module 12b, the control unit fires FLAGS STORE and Register A's store pulse from the same edge, and the flags come out right precisely because of when a latch commits.
 
 #### The experiment
 
@@ -279,6 +289,7 @@ In the next module, we will scale this idea dramatically. One scratchpad is usef
 1.  What is the difference between combinational and sequential logic?
 2.  In a repeater-locking latch, what does it mean when the lock repeater is powered?
 3.  Why do we need a pulse limiter on STORE?
+4.  At what exact moment does a repeater-locking latch commit its stored value?
 
 <details>
 <summary><strong>Show Solution</strong></summary>
@@ -286,6 +297,7 @@ In the next module, we will scale this idea dramatically. One scratchpad is usef
 1.  **Combinational logic** depends only on current inputs. **Sequential logic** depends on current inputs and previously stored state.
 2.  It means the data repeater is **locked** and holds its current state.
 3.  Because the latch is level-sensitive. If STORE stays active too long, the latch remains transparent and the output keeps following the input instead of capturing a single clean value.
+4.  At the falling edge of the STORE pulse. The latch is transparent while the pulse is high and keeps whatever value is on the data line at the instant the pulse ends: capture on release.
 
 </details>
 
@@ -328,6 +340,7 @@ x = 11
 it feels like the value simply "belongs" to `x` from that moment on. Hardware has to earn that behavior. A value remains available after the assignment only because some memory element, a register, RAM cell, or cache line, physically stores it.
 
 #### Key Terms
+-   **Capture on release**: The timing behavior of a level-sensitive latch: transparent while its strobe is high, it keeps whatever value is present at the instant the strobe falls.
 -   **Combinational logic**: Logic whose outputs depend only on present inputs.
 -   **D-latch**: A memory element that stores one bit and can be opened or closed by a control signal.
 -   **Feedback loop**: A connection in which part of a circuit’s output influences its future behavior.

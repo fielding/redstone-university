@@ -1,4 +1,4 @@
-## Module 7: Comparators and status flags – The dawn of decision-making
+## Module 7: Comparators and Status Flags – The Dawn of Decision-Making
 
 ### Module 7 Summary
 
@@ -76,10 +76,10 @@ The simplest question a computer can ask is:
 
 For 4-bit numbers, that means:
 
--   `$A_3$` must equal `$B_3$`
--   `$A_2$` must equal `$B_2$`
--   `$A_1$` must equal `$B_1$`
--   `$A_0$` must equal `$B_0$`
+-   $A_3$ must equal $B_3$
+-   $A_2$ must equal $B_2$
+-   $A_1$ must equal $B_1$
+-   $A_0$ must equal $B_0$
 
 We already have the perfect gate for checking whether two bits match: **XNOR**.
 
@@ -98,7 +98,7 @@ The equality output is:
 
 $Equal = (A_3 \odot B_3) \land (A_2 \odot B_2) \land (A_1 \odot B_1) \land (A_0 \odot B_0)$
 
-where `\odot` represents XNOR.
+where $\odot$ represents XNOR.
 
 That expression says exactly what we want: **all four pairs must match**.
 
@@ -108,12 +108,12 @@ That expression says exactly what we want: **all four pairs must match**.
 
 <div align="center"><img src="./images/comparator-circuitverse.png" alt="4-Bit Equality Comparator CircuitVerse Diagram" width="512px"/><br/><em>Figure: A 4-bit equality comparator. Each bit-pair is checked with XNOR, and the four match signals are combined through an AND gate.</em></div><br/>
 
-1.  Create two 4-bit input buses, `$A$` and `$B$`.
+1.  Create two 4-bit input buses, $A$ and $B$.
 2.  Build four XNOR gates:
-    -   compare `$A_0$` with `$B_0$`
-    -   compare `$A_1$` with `$B_1$`
-    -   compare `$A_2$` with `$B_2$`
-    -   compare `$A_3$` with `$B_3$`
+    -   compare $A_0$ with $B_0$
+    -   compare $A_1$ with $B_1$
+    -   compare $A_2$ with $B_2$
+    -   compare $A_3$ with $B_3$
 3.  Feed the four XNOR outputs into a 4-input AND gate.
 4.  Connect the final output to a lamp labeled **A = B**.
 
@@ -121,10 +121,10 @@ That expression says exactly what we want: **all four pairs must match**.
 
 Run these tests:
 
--   `$A = 1010$`, `$B = 1010$` → lamp ON
--   `$A = 1010$`, `$B = 1011$` → lamp OFF
--   `$A = 0000$`, `$B = 0000$` → lamp ON
--   `$A = 1111$`, `$B = 0111$` → lamp OFF
+-   $A = 1010$, $B = 1010$ → lamp ON
+-   $A = 1010$, $B = 1011$ → lamp OFF
+-   $A = 0000$, $B = 0000$ → lamp ON
+-   $A = 1111$, $B = 0111$ → lamp OFF
 
 <div align="center"><img src="./images/comparator-minecraft.png" alt="4-Bit Equality Comparator Minecraft Build" width="512px"/><br/><em>Figure: A 4-bit equality comparator in Minecraft. The output lamp is lit only when every bit on bus A matches the corresponding bit on bus B.</em></div><br/>
 
@@ -142,7 +142,7 @@ A real processor does not usually build a dedicated equality comparator for ever
 
 For example:
 
--   To test whether `$A = B$`, compute `$A - B$`
+-   To test whether $A = B$, compute $A - B$
 -   If the result is `0000`, then the values were equal
 
 That is elegant because the ALU is already there. We simply need a compact report describing what the ALU produced. That report lives in a small collection of one-bit signals called **status flags**.
@@ -168,7 +168,7 @@ Our simplified machine uses only `Z` and `N`. Real CPUs often include additional
 
 #### The theory
 
-Let the ALU result bus be `$Y_3 Y_2 Y_1 Y_0$`.
+Let the ALU result bus be $Y_3 Y_2 Y_1 Y_0$.
 
 **The Zero Flag**
 
@@ -201,7 +201,7 @@ That is not even really a “circuit.” It is just a wire tapping the sign bit.
 1.  Create a 4-bit input bus that will eventually come from the ALU result.
 2.  Build a 4-input NOR gate and connect it to all four lines.
 3.  Connect its output to a lamp labeled **Zero (Z)**.
-4.  Run a direct wire from the most-significant bit (`$Y_3$`) to a lamp labeled **Negative (N)**.
+4.  Run a direct wire from the most-significant bit ($Y_3$) to a lamp labeled **Negative (N)**.
 5.  Label both outputs clearly. These two bits together are your machine’s first status report.
 
 #### The experiment
@@ -256,15 +256,15 @@ In the next module, we will build one more crucial control component: the **mult
 
 #### Practice Problem 7.5.2: Design challenge
 
-Without using the dedicated equality comparator from Lesson 7.2, how could a CPU test whether `$A = B$` using only an ALU and flags?
+Without using the dedicated equality comparator from Lesson 7.2, how could a CPU test whether $A = B$ using only an ALU and flags?
 
 <details>
 <summary><strong>Show Solution</strong></summary>
 
-The CPU can compute `$A - B$` in the ALU and then inspect the **Zero Flag**.
+The CPU can compute $A - B$ in the ALU and then inspect the **Zero Flag**.
 
--   If the result is `0000`, then `$A = B$`
--   If the result is anything else, then `$A \neq B$`
+-   If the result is `0000`, then $A = B$
+-   If the result is anything else, then $A \neq B$
 
 </details>
 

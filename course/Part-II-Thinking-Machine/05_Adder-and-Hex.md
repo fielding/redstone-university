@@ -1,4 +1,4 @@
-## Module 5: The 4-bit adder & the hexadecimal upgrade
+## Module 5: The 4-Bit Adder & the Hexadecimal Upgrade
 
 ### Module 5 Summary
 
@@ -77,8 +77,8 @@ So the result is `1000`, which is `8`.
 
 In real hardware, each column after the first must add **three** inputs:
 
--   `$A$`
--   `$B$`
+-   $A$
+-   $B$
 -   `CarryIn`
 
 And it must produce **two** outputs:
@@ -90,8 +90,8 @@ That little 3-input, 2-output circuit is called a **full adder**. It is the LEGO
 
 Its logic is:
 
--   **Sum:** `$A \oplus B \oplus CarryIn$`
--   **Carry-Out:** `$(A \land B) \lor (CarryIn \land (A \oplus B))$`
+-   **Sum:** $A \oplus B \oplus CarryIn$
+-   **Carry-Out:** $(A \land B) \lor (CarryIn \land (A \oplus B))$
 
 There is a nice intuition hiding here:
 
@@ -114,7 +114,7 @@ That is exactly what we need the hardware to do.
 
 A full adder has:
 
--   inputs: `$A$`, `$B$`, `CarryIn`
+-   inputs: $A$, $B$, `CarryIn`
 -   outputs: `Sum`, `CarryOut`
 
 A standard implementation uses:
@@ -129,13 +129,13 @@ Build that once, test it thoroughly, and then repeat it.
 
 #### Lab Part A: Build a 1-bit full adder module
 
-1.  Lay out three labeled inputs: `$A$`, `$B$`, and `CarryIn`.
+1.  Lay out three labeled inputs: $A$, $B$, and `CarryIn`.
 2.  Build the XOR path for the **Sum** output:
-    -   First compute `$A \oplus B$`.
+    -   First compute $A \oplus B$.
     -   Then XOR that result with `CarryIn`.
 3.  Build the carry path:
-    -   One AND gate computes `$A \land B$`.
-    -   A second AND gate computes `$CarryIn \land (A \oplus B)$`.
+    -   One AND gate computes $A \land B$.
+    -   A second AND gate computes $CarryIn \land (A \oplus B)$.
     -   OR those two results together to produce `CarryOut`.
 4.  Label the two outputs clearly.
 5.  Test all eight input combinations.
@@ -158,10 +158,10 @@ A quick test plan:
 1.  Create two 4-bit input buses: **Input A** and **Input B**.
 2.  Place four copies of your full adder in a row, one for each bit position.
 3.  Wire the least-significant stage:
-    -   Connect `$A_0$` and `$B_0$`.
+    -   Connect $A_0$ and $B_0$.
     -   Tie its `CarryIn` to `0`.
 4.  Wire the next three stages:
-    -   Connect `$A_1$/$B_1$`, then `$A_2$/$B_2$`, then `$A_3$/$B_3$`.
+    -   Connect $A_1$/$B_1$, then $A_2$/$B_2$, then $A_3$/$B_3$.
     -   Connect each stage’s `CarryOut` to the next stage’s `CarryIn`.
 5.  Collect the four `Sum` outputs into a 4-bit result bus.
 6.  Keep the final `CarryOut` wire accessible. We are going to need it in the next module.
@@ -191,7 +191,7 @@ Now for the fun part. Let’s connect our new adder to the display system from M
 
 1.  Wire the adder’s 4-bit `Sum` bus into the input of your display decoder.
 2.  Try a case that stays inside the decimal range we already support:
-    -   `$4 + 3$`
+    -   $4 + 3$
     -   binary: `0100 + 0011 = 0111`
     -   expected display: `7`
 
@@ -199,7 +199,7 @@ That should work beautifully.
 
 Now try this:
 
--   `$8 + 4$`
+-   $8 + 4$
 -   binary: `1000 + 0100 = 1100`
 -   decimal: `12`
 
@@ -403,7 +403,7 @@ That clever software trick is just a looped version of the same arithmetic logic
 -   **Adder**: A digital circuit that performs binary addition.
 -   **Binary-Coded Decimal (BCD)**: A representation in which each decimal digit `0` through `9` is stored as its own 4-bit binary pattern.
 -   **Carry bit**: A bit that is generated when a column of addition exceeds what can be represented in that column and must spill into the next one.
--   **Full adder**: A 1-bit arithmetic circuit that adds `$A$`, `$B$`, and `CarryIn`, producing `Sum` and `CarryOut`.
+-   **Full adder**: A 1-bit arithmetic circuit that adds $A$, $B$, and `CarryIn`, producing `Sum` and `CarryOut`.
 -   **Hexadecimal**: A base-16 number system that maps perfectly onto 4-bit binary values.
 -   **Nibble**: A group of 4 bits.
 -   **Ripple-carry adder**: A multi-bit adder made by chaining full adders so the carry propagates from stage to stage.

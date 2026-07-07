@@ -139,6 +139,8 @@ Practicing will make binary numbers feel as natural as decimal. The more you pra
 
 While not the ideal version of a game, this is a great way to build speed. Pick a random number between `0` and `15` and see how quickly you can represent it on your input interface. This will burn the powers of two (`1`, `2`, `4`, `8`) into your memory.
 
+There's a built-in way to check your answer, too: once your levers are set, add up the place values of every lever that's ON. If the sum matches the number you picked, you got it right. For example, if you were aiming for `13` and your ON levers are `8`, `4`, and `1`, then $8 + 4 + 1 = 13$. Correct! If the sum comes out wrong, you'll know exactly which column to go fix. This self-check works both directions, so it doubles as extra binary-to-decimal practice.
+
 ---
 
 ### Module 1 Checkpoint

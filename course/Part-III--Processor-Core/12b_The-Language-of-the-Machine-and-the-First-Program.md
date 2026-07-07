@@ -1,4 +1,4 @@
-## Module 12b: The language of the machine – Instructions and the first program
+## Module 12b: The Language of the Machine – Instructions and the First Program
 
 ### Module 12b Summary
 
@@ -69,6 +69,10 @@ Jump targets should always point to one of those opcode addresses.
 | `9` | `LDI B, [data]` | Load the argument nibble directly into Register B |
 | `F` | `HLT` | Halt the computer |
 
+#### What about opcodes `A` through `E`?
+
+The table stops at `9` and then jumps to `F`, which leaves five opcodes unassigned. We leave them undefined on purpose, and the decoder's structure makes that safe: control strobes only fire for opcodes the decoder explicitly recognizes, so an unrecognized opcode fires nothing at `T2`, and the machine simply fetches onward. Undefined opcodes behave as `NOP`s, not as chaos. That is room to grow, at no extra hardware cost.
+
 #### A note on the second nibble
 
 Even instructions like `ADD`, `SUB`, and `HLT` still occupy two RAM addresses.
@@ -108,8 +112,8 @@ The decoder must consider:
 
 The decoder must be able to drive:
 
--   Register A input selection and load pulse
--   Register B input selection and load pulse
+-   Register A's input rails and load pulse
+-   Register B's input rail and load pulse
 -   ALU mode (`ADD` or `SUB`)
 -   Flag Register store pulse
 -   RAM address selection
@@ -125,6 +129,16 @@ At a high level:
 
 In practice, the decoder's job is to generate **brief load and write strobes**, not long enable levels. That matters because our registers and RAM rows are built from level-sensitive repeater-locking latches.
 
+#### The strobe rule: data must outlive the strobe
+
+Recall the exact behavior of our latches from Module 10: transparent while the strobe is high, and the value that gets kept is whatever sits on the data line **at the instant the strobe falls**. Capture happens on release.
+
+That has a sharp consequence at the end of `T2`. When the phase ends, the strobe lines and the data rails both start to collapse, and whichever dies first decides what the register keeps. If a source's select rail drops even a moment before the register relocks, the register captures the collapse instead of the result. In the world, this looks like a register "randomly" storing zeros, and it is neither random nor a broken register.
+
+The rule that prevents it: **make the data path provably outlive the strobe path.** Add repeater delay to the data-side fans, never the strobe side, so every register relocks while its input is still valid.
+
+The same rule quietly settles a timing question you might have worried about with `SUB`: do the flags latch the old result or the new one? Fire the Register A load pulse and the Flag Register store pulse from the same `T2` edge, and the flags come out right automatically. The new value's round trip, into Register A, back through the ALU, out to the flag inputs, is far longer than any skew between two strobes fired together, so `Z` and `N` capture the result being written, not the one it replaces.
+
 #### A useful way to think about T2
 
 Here is the execute-phase meaning of a few instructions:
@@ -138,9 +152,8 @@ Here is the execute-phase meaning of a few instructions:
     -   Register B receives a load pulse
 -   **`SUB`**
     -   ALU goes into subtract mode
-    -   Register A input selector chooses ALU result
-    -   Register A receives a load pulse
-    -   Flag Register receives a store pulse
+    -   Register A's ALU input rail goes high
+    -   Register A receives a load pulse, and the Flag Register receives its store pulse from the same edge (see the strobe rule above)
 -   **`STA [addr]`**
     -   RAM address selector chooses `AR`
     -   RAM data-in selector chooses Register A
@@ -166,7 +179,7 @@ Either is valid. The important thing is not which aesthetic you choose, but that
 
 Do not go straight from "the pieces exist" to "the whole machine should run a program."
 
-Instead, validate instructions one at a time.
+Instead, validate instructions one at a time, and do all of it under **STEP**. The free-running clock is the last thing you connect, after every instruction below passes. As the integration note in Lesson 12a.3 warned, a phase ring that behaves perfectly on its own can still latch solid once the full machine's control wiring lands next to it, and you want that failure to show up while you are stepping, not while you are watching.
 
 #### Recommended bring-up order
 
@@ -288,7 +301,7 @@ Once Register A has been initialized from `RAM[E]`, the program can continue sub
     -   PC = `0000`
     -   phase sequencer = `T0`
 6.  HALT the clock and single-step through the first few instructions.
-7.  Once the early fetch and execute behavior looks correct, flip RUN.
+7.  Once the early fetch and execute behavior looks correct, flip RUN. (If you kept the free-running clock disconnected during bring-up, as Lesson 12a.3 recommends, this is the moment it finally earns its wire.)
 
 #### The payoff
 
@@ -303,12 +316,11 @@ If everything is wired correctly, the machine will now count down:
 
 Then it will halt.
 
-That output can be observed on:
+Where do you watch it? The easy answer is **Register A**: it has been wired to your hex display since Module 10, and the countdown passes through it on every lap of the loop.
 
--   a display attached to `RAM[E]`
--   or a debug display attached to Register A
+If you want the counter cell itself on a display, one warning: the shared Memory Output Bus will not do it. That bus only shows the currently *addressed* row, and the machine spends most of its time addressing instructions, not `RAM[E]`. A dedicated `RAM[E]` display means tapping row `E`'s stored bits directly. Both displays work; the wiring cost is just very different.
 
-Either is fine. The key point is that the machine, not the human, is now driving the sequence.
+Either way, the key point is that the machine, not the human, is now driving the sequence.
 
 <div align="center"><img src="./images/final-computer-minecraft.png" alt="Final Computer Minecraft Build" width="512px"/><br/><em>Figure: The final integrated computer. The ALU, registers, RAM, front panel, clock, and control logic now work together as a complete stored-program system.</em></div><br/>
 
@@ -343,6 +355,7 @@ In our post-graduate module, we will return to a human-facing problem we cleverl
 1.  Why do RU-v1 jump targets point to even addresses?
 2.  Which instructions update the Flag Register in this version of the machine?
 3.  Why is `STA` the instruction most likely to force a fourth timing phase if one is needed?
+4.  At the end of `T2`, both the data rails and the load strobes collapse. Why must the data rails be the ones that collapse last?
 
 <details>
 <summary><strong>Show Solution</strong></summary>
@@ -350,6 +363,7 @@ In our post-graduate module, we will return to a human-facing problem we cleverl
 1.  Because each instruction occupies two RAM addresses, so opcode nibbles begin at even addresses.
 2.  `ADD` and `SUB`, the instructions that write arithmetic ALU results back into Register A.
 3.  Because it must switch RAM addressing, place Register A onto the RAM data-in path, and pulse RAM write-enable within the execute window.
+4.  Because our latches capture on the strobe's falling edge. If the data path dies first, the register relocks on the collapsing value instead of the result. Delaying the data-side fans guarantees every register captures a valid value.
 
 </details>
 
@@ -406,6 +420,7 @@ A software interpreter or virtual machine often follows the same pattern as our 
 The form is different, but the architecture is the same. That is why understanding a tiny hardware instruction cycle makes higher-level systems feel less mysterious too.
 
 #### Key Terms
+-   **Capture on release**: The timing behavior of a level-sensitive latch: transparent while its strobe is high, it keeps whatever value is present at the instant the strobe falls.
 -   **Control decoder**: The logic that translates an opcode and timing phase into control signals.
 -   **Execute phase**: The phase in which the current instruction actually changes machine state.
 -   **Fetch phase**: The phase in which the machine reads the opcode or argument nibble from RAM.

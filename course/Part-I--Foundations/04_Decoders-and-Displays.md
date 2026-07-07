@@ -12,9 +12,9 @@
     -   Lesson 4.1: The Goal: Building Our 7-Segment Display
     -   Lesson 4.2: The Master Plan: A Two-Stage Translation
     -   Lesson 4.3: The Decoder Lab: A Simple "Brute-Force" Build
-    -   Lesson 4.4: The Decoder Solution: An Elegant, Compact Design
-    -   Lesson 4.5: The Encoder: Building a "Diode Matrix" ROM
-    -   Lesson 4.6: The Grand Payoff: The Final Connection
+    -   Lesson 4.4: The Decoder Lab, Part 2: An Elegant, Compact Solution
+    -   Lesson 4.5: The Encoder: Programming a "Diode Matrix" ROM
+    -   Lesson 4.6: The Grand Payoff: System Integration
 -   **Minecraft Artifact**: A working two-stage translator: a 4-to-10 BCD decoder and a 7-segment display encoder, forming a complete digital display system.
 
 ---
@@ -187,8 +187,10 @@ Technically, the entire structure for each output line is a **Multi-Input NOR Ga
 
 We use two different methods to tap the bus. This clever approach allows a single bus line (e.g., `B1`) to do the work of the two separate `B1` and `!B1` lines we needed in the brute-force build, cutting our bus width in half.
 
-1.  **The Repeater Tap (Checks for a `1`)**: A Repeater placed to tap a bus line will only activate if that bus line is **ON (`1`)**. We use this to detect a `1` where we expect a `0`.
-2.  **The Torch Tap (Checks for a `0`)**: A Torch placed to tap a bus line will only activate if that bus line is **OFF (`0`)**. We use this to detect a `0` where we expect a `1`.
+To be precise about what "activates" means here: each tap sits between a bus line above and an output wire below, and when a tap activates, it **powers the output wire underneath it**. A powered output wire means "mismatch detected," which turns that line's lamp OFF.
+
+1.  **The Repeater Tap (Checks for a `1`)**: A Repeater tapping a bus line passes power through only when that bus line is **ON (`1`)**. So it powers the output wire, flagging a mismatch, whenever a `1` shows up where the line's identity expects a `0`.
+2.  **The Torch Tap (Checks for a `0`)**: A Torch attached to a bus line inverts it, so the torch lights only when that bus line is **OFF (`0`)**. It powers the output wire, flagging a mismatch, whenever a `0` shows up where the line's identity expects a `1`.
 
 ##### The Simple Rule for Building
 
