@@ -2,27 +2,29 @@
 
 ### Module 12a Summary
 
--   **Narrative Beat:** Before the computer can understand a program, it needs timing, routing, and discipline. In this module, we build the machine's heartbeat, its program counter, its phase sequencer, and the bus selectors that let all the major subsystems cooperate.
+-   **Narrative Beat:** Before the computer can understand a program, it needs timing, routing, and discipline. In this module, we build the machine's heartbeat, its program counter, its phase sequencer, the last of its registers, and the routing network that lets all the major subsystems cooperate.
 -   **Learning Goals:**
     -   Build a controllable system clock with **RUN**, **HALT**, **STEP**, and **RESET** behavior.
     -   Understand the four jobs of the **Program Counter**: hold, increment, load, and reset.
     -   Build a one-hot **three-phase sequencer** for `T0`, `T1`, and `T2`.
-    -   Identify the five selector networks that route data through the machine.
+    -   Build the machine's three remaining registers: the **Instruction Register**, the **Argument Register**, and **Register B**.
+    -   Identify the five routing decisions inside the machine, and pick the right idiom, one-hot gating or a 2:1 selector, for each.
     -   Understand how **Program mode** and **Run mode** share the same hardware safely.
     -   Validate the fetch path for two-nibble instructions on a 4-bit bus.
 -   **Lesson Overview:**
     -   Lesson 12a.1: The heartbeat – RUN, HALT, STEP, and RESET
     -   Lesson 12a.2: The Program Counter – Hold, increment, load, reset
     -   Lesson 12a.3: The phase sequencer – T0, T1, T2
-    -   Lesson 12a.4: The selectors – The five routing decisions inside the machine
-    -   Lesson 12a.5: The front panel and fetch cycle
--   **Minecraft Artifact:** A controllable clock, a loadable 4-bit Program Counter, a three-phase sequencer, and the selector network that prepares the computer to run programs.
+    -   Lesson 12a.4: The fetch registers – IR, AR, and Register B
+    -   Lesson 12a.5: The selectors – The five routing decisions inside the machine
+    -   Lesson 12a.6: The front panel and fetch cycle
+-   **Minecraft Artifact:** A controllable clock, a loadable 4-bit Program Counter, a three-phase sequencer, the machine's three remaining registers (IR, AR, and Register B), and the routing network that prepares the computer to run programs.
 
 ---
 
 ### Module 12a Introduction
 
-Our machine now has memory. It has an ALU. It has registers. It has flags.
+Our machine now has memory. It has an ALU. It has a scratchpad register and a pair of latched flags.
 
 What it still does not have is **discipline**.
 
@@ -37,7 +39,8 @@ By the end of this module, the computer will have:
 -   a heartbeat
 -   a counter that can step through memory
 -   a sequencer that divides instruction execution into phases
--   and the selector networks that tell the buses where to go
+-   the rest of its registers
+-   and the routing network that tells the buses where to go
 
 This is the chapter where the machine stops being a pile of components and starts becoming an organized system.
 
@@ -98,7 +101,7 @@ For our computer, it must be able to do four jobs:
 
 1.  **Hold** its current value
 2.  **Increment** by `1`
-3.  **Load** a new value from the bus for jumps
+3.  **Load** a new value for jumps (in the finished machine, that value comes from the **Argument Register**, which we build in Lesson 12a.4)
 4.  **Reset** to `0000`
 
 #### Why we are not using a full adder here
@@ -125,14 +128,14 @@ That carry chain is what makes the counter add `1`.
 Before each PC bit captures a new state, a 2:1 selector chooses between:
 
 -   the normal increment path
--   the direct load path from the bus
+-   the direct load path (fed by the Argument Register once the machine is assembled)
 
 That is what makes jumps possible.
 
 #### Lab & Experiment: Build the 4-bit PC
 
 1.  Build the 4-bit synchronous counter core.
-2.  Add the load path so the PC can capture a value from the bus.
+2.  Add the load path so the PC can capture a value from its load inputs.
 3.  Add reset logic that forces the PC to `0000`.
 4.  Test all four operations separately:
     -   Hold
@@ -144,7 +147,7 @@ A good manual test sequence is:
 
 1.  Reset the PC -> `0000`
 2.  Step the machine three times -> `0001`, `0010`, `0011`
-3.  Put `1010` on the load bus and pulse PC load -> PC becomes `1010`
+3.  Put `1010` on the PC's load inputs (temporary levers are fine for now) and pulse PC load -> PC becomes `1010`
 4.  Step once more with increment active -> PC becomes `1011`
 
 If that works, the PC is ready.
@@ -199,61 +202,123 @@ If you see more than one lamp on at once, or none of them on, you have a sequenc
 >
 > Our base architecture uses three phases. If later testing shows that `STA` needs an extra settling phase on your Bedrock layout, the clean fix is to add one more stage to the ring and create `T3`. The architecture survives that change easily.
 
+> **Integration Note**
+>
+> A ring that passes every test on its own can still misbehave the first time it meets the rest of the machine. Once long control lines start tapping the phase outputs, that new wiring can feed power back into the ring and latch it solid. So when integration time comes in Module 12b: bring the machine up by driving phases with **STEP**, and connect the free-running clock **last**, after every phase's behavior has been verified in place.
+
 ---
 
-### Lesson 12a.4: The selectors – The five routing decisions inside the machine
+### Lesson 12a.4: The fetch registers – IR, AR, and Register B
 
-> **Key Takeaway:** A computer is full of tiny decisions about which bus should feed which subsystem. In our machine, five selector networks do that work.
+> **Key Takeaway:** Fetching an instruction in two nibbles only works if each nibble has somewhere to land. The machine needs three more registers, and every one of them is a copy of the block you built in Module 10.
 
-By now we already know how to build a MUX. This module is where we use that idea over and over.
+Think about what the two-nibble fetch actually requires.
 
-Our architecture needs five selector networks:
+At `T0`, RAM produces the opcode nibble. The machine must hold onto it, because the opcode has to keep steering the decoder for the entire instruction. At `T1`, RAM produces the argument nibble, and the machine must hold onto that too, because at `T2` it may become a RAM address, a jump target, or a literal value.
 
-#### 1. Register A input selector
+Two nibbles that must survive past their fetch phase means two registers:
+
+-   the **Instruction Register (IR)** holds the opcode nibble
+-   the **Argument Register (AR)** holds the argument nibble
+
+And there is one more gap to close. The ALU computes on two buses, but so far only **Bus A** has a register behind it (the Module 10 scratchpad, our Register A). Bus B has been driven by levers. For the machine to compute `A + B` on its own, the second operand needs a home:
+
+-   **Register B** holds the ALU's second operand
+
+#### Where each register's output goes
+
+| Register | Loaded during | Output feeds |
+| :-- | :-- | :-- |
+| IR | `T0` (fetch opcode) | the instruction decoder (Module 12b) |
+| AR | `T1` (fetch argument) | the RAM address path, the PC load path, and the register input gating (for `LDI`) |
+| Register B | `T2` of `LDB` / `LDI B` | the ALU's Bus B |
+
+#### Lab & Experiment: Build IR, AR, and Register B
+
+There is no new circuit in this lab, and that is the point. You proved the 4-bit repeater-locking register in Module 10. The machine needs three more, so you build three copies.
+
+1.  Build three 4-bit registers exactly like Module 10 Lab B.
+2.  Give each one its own pulse-limited store line, and label them: `LD_IR`, `LD_AR`, `LD_B`.
+    Keep them separate. Each strobe means something different, and in Module 12b the control unit will fire them at different phases.
+3.  Test each register standalone with temporary levers on its data inputs: store a value, change the levers, confirm the value holds, store again.
+4.  Position them with their consumers in mind: IR near where the decoder will live, AR near the RAM address path and the PC, Register B feeding the ALU's Bus B.
+5.  Connect Register B's output to Bus B and retire the levers that have been driving it since Module 9.
+
+![Fetch Registers Minecraft Build](./images/fetch-registers-minecraft.png)
+*Figure: Three more copies of the Module 10 register: IR, AR, and Register B, each with its own labeled, pulse-limited store line.*
+
+This is the least glamorous lab in Part III, and it might also be the strongest argument for abstraction in the whole course. The machine needed three more memory elements, and you got all three by copying a block you already trust.
+
+---
+
+### Lesson 12a.5: The selectors – The five routing decisions inside the machine
+
+> **Key Takeaway:** A computer is full of tiny decisions about which bus should feed which subsystem. Our machine makes five of them, using two idioms: one-hot gating for register inputs, and 2:1 selectors for binary choices.
+
+We have two routing tools by now.
+
+Module 8 gave us the **MUX**: encode a choice into select bits, and the selector routes one input through.
+
+Module 11 quietly gave us the other one. Look back at how the RAM read bus works: every row's bits pass through an AND gate with that row's select line, and all the gate outputs merge onto one shared bus. No encoder, no tree, just *gate each source, then merge*. That idiom is called a **gated-OR merge**, and it is about to do most of the routing work in the machine.
+
+#### The one-hot gating idiom
+
+For register inputs, we do not build an encoded MUX at all.
+
+Each candidate source gets one **control rail**. Each source bus passes, per bit, through an AND gate with its rail, and the gate outputs merge onto the register's input. The control logic guarantees at most one rail is high at a time, so at most one source ever reaches the register.
+
+Why prefer this over a MUX with encoded select bits? Two reasons.
+
+1.  **There is nothing to encode.** The control unit we build in Module 12b naturally produces one line per meaning: "this is an `LDI A`," "this is an `ADD`." Those lines can drop straight onto the rails. A binary-encoded MUX would force us to build an encoder in front of it, only to decode the same information again inside.
+2.  **You have already built it.** This is the RAM read bus idiom pointed at a register input. Same gates, same merge, new job.
+
+#### The five routing decisions
+
+##### 1. Register A input gating
 
 Register A can load from three meaningful sources:
 
 -   RAM output (`LDA`)
--   the argument nibble (`LDI A`)
+-   the Argument Register (`LDI A`)
 -   the ALU result (`ADD`, `SUB`)
 
-In practice, we implement this as a 4:1 selector and simply leave one input unused.
+Three sources means two rails plus a default: gate the AR path with one rail and the ALU path with another, and let an inverted gate select the RAM output whenever neither rail is high. `LDA` never needs a rail of its own.
 
-#### 2. Register B input selector
+##### 2. Register B input gating
 
 Register B can load from two sources:
 
 -   RAM output (`LDB`)
--   the argument nibble (`LDI B`)
+-   the Argument Register (`LDI B`)
 
-#### 3. RAM address selector
+Same idiom, one rail: the AR path is gated by the rail, and RAM output is the default when the rail is low.
 
-During fetch, RAM must be addressed by the **Program Counter**.
-During execute, RAM may need to be addressed by the **Argument Register** instead.
+##### 3. RAM address selector
 
-So the RAM address path needs a selector between:
+During fetch, RAM must be addressed by the **Program Counter**. During execute, RAM may need to be addressed by the **Argument Register** instead. And in Program mode, the human's manual Address levers must override both.
 
--   PC
--   AR
+This one is a genuine either/or choice per bit, so we build it as 2:1 selectors: one stage choosing PC vs AR, cascaded into a MODE-controlled stage that hands the address lines to the manual levers in Program mode.
 
-#### 4. Program Counter input selector
+##### 4. Program Counter input selector
 
-The PC usually takes its next value from the increment path.
-For jumps, it must instead load the target address from the argument bus.
+The PC usually takes its next value from the increment path. For jumps, it must instead load the target address from the Argument Register's output.
 
-So the PC input path needs a selector between:
+You already built this 2:1 selection into the PC in Lesson 12a.2. Now it has a real source to load from.
 
--   increment path
--   jump/load path
-
-#### 5. RAM data-in selector
+##### 5. RAM data-in selector
 
 This is the selector that only becomes obvious once you add **Program mode**.
 
-During normal execution, RAM data input comes from **Register A** for `STA`.
-During front-panel programming, RAM data input must come from the **manual data levers** instead.
+During normal execution, RAM data input comes from **Register A** for `STA`. During front-panel programming, RAM data input must come from the **manual Data levers** instead.
 
-That makes this the fifth selector in the machine.
+Another true either/or, so another 2:1 selector.
+
+#### Which idiom, when
+
+The pattern behind the five decisions is worth stating once, plainly:
+
+-   When a register can be fed by several sources and the control unit already speaks in one-hot lines, use **gated-OR merges** driven by rails.
+-   When the choice is genuinely binary, PC or AR, machine or human, use a **2:1 selector**.
 
 #### Why this matters
 
@@ -266,11 +331,11 @@ But just as important are the control decisions that say:
 -   whether the PC increments or jumps
 -   whether RAM is being programmed by the human or by the machine itself
 
-Those are selector problems, and selectors are what keep the data path under control.
+Those are routing problems, and routing is what keeps the data path under control.
 
 ---
 
-### Lesson 12a.5: The front panel and fetch cycle
+### Lesson 12a.6: The front panel and fetch cycle
 
 > **Key Takeaway:** Program mode and Run mode are not separate machines. They are two ways of driving the same RAM through carefully chosen selector settings.
 
@@ -309,13 +374,13 @@ Now we can state the machine's fetch behavior precisely.
 ##### T0: Fetch opcode
 
 -   RAM address selector chooses **PC**
--   RAM output is loaded into **Instruction Register (IR)**
+-   RAM output is loaded into the **Instruction Register (IR)**
 -   PC increments
 
 ##### T1: Fetch argument
 
 -   RAM address selector still chooses **PC**
--   RAM output is loaded into **Argument Register (AR)**
+-   RAM output is loaded into the **Argument Register (AR)**
 -   PC increments
 
 ##### T2: Execute
@@ -323,6 +388,12 @@ Now we can state the machine's fetch behavior precisely.
 -   the instruction decoder looks at IR
 -   the data path is configured appropriately
 -   registers, RAM, ALU, or PC perform the requested action
+
+#### How long should a phase be?
+
+Remember when each of our latches actually commits: at the instant its store pulse ends (Module 10). During `T0`, the whole chain, RAM row, read bus, register input, has to settle *while* the phase is active, so that IR captures a valid opcode when the strobe falls.
+
+That gives us the phase-width rule: **each phase must be at least as long as the slowest data path it feeds.** Long bus runs drain slowly in Redstone, and a phase that ends too early captures whatever the wires looked like mid-flight. If you are unsure whether a path fits, single-step; a phase can be as long as your patience when you drive it by hand.
 
 #### Lab & Experiment: Validate the fetch path
 
@@ -348,7 +419,7 @@ If that works, the fetch path is ready for real instructions.
 
 You have built the machine's infrastructure.
 
-That may sound less glamorous than building the ALU or the display, but in many ways it is the part that turns a collection of parts into a computer architecture. The machine now has timing, sequence, routing, and a disciplined way to move information from one place to another.
+That may sound less glamorous than building the ALU or the display, but in many ways it is the part that turns a collection of parts into a computer architecture. The machine now has timing, sequence, every register it will ever need, and a disciplined way to move information from one place to another.
 
 It also has something else important: a front panel. You can now load memory by hand, reset the machine, single-step it, and watch its internal rhythm unfold. That is the perfect setup for our next chapter.
 
@@ -358,11 +429,12 @@ In Module 12b, we will define the machine's instruction set, build the decoder t
 
 ### Module 12a Checkpoint
 
-#### Practice Problem 12a.6.1: Knowledge Check
+#### Practice Problem 12a.7.1: Knowledge Check
 
 1.  What are the four required behaviors of the Program Counter?
 2.  Why is a one-hot phase sequencer useful in a Redstone computer?
 3.  Why does our machine need a RAM data-in selector in addition to the runtime data-path selectors?
+4.  Register A can load from three different sources. Why does its input network not need a MUX with encoded select bits?
 
 <details>
 <summary><strong>Show Solution</strong></summary>
@@ -370,10 +442,11 @@ In Module 12b, we will define the machine's instruction set, build the decoder t
 1.  Hold, increment, load, and reset.
 2.  Because it gives the machine a clear internal rhythm where exactly one phase is active at a time, making fetch and execute behavior easier to build and debug.
 3.  Because RAM input comes from different places in different modes: Register A during `STA` in Run mode, and the manual data levers during Program mode.
+4.  Because the machine uses one-hot gating: each source is ANDed with its own control rail and the results merge onto the register's input, with an inverted gate selecting RAM output as the default when no rail is high. The control unit already produces one line per meaning, so there is nothing to encode.
 
 </details>
 
-#### Practice Problem 12a.6.2: The design question
+#### Practice Problem 12a.7.2: The design question
 
 Why do we use separate **IR** and **AR** registers instead of trying to keep the whole 8-bit instruction in one place?
 
@@ -384,7 +457,7 @@ Because our bus is only 4 bits wide. We fetch the instruction in two nibbles, so
 
 </details>
 
-#### Practice Problem 12a.6.3: Debug challenge
+#### Practice Problem 12a.7.3: Debug challenge
 
 Your machine resets correctly and the phase sequencer cycles correctly, but during fetch it keeps reading the same memory location over and over.
 
@@ -408,12 +481,15 @@ At the software level, virtual machines and interpreters often have the same bas
 #### Key Terms
 -   **Argument Register (AR)**: The register that stores the second nibble of the current instruction.
 -   **Clock**: The timing signal that coordinates state changes across the machine.
+-   **Control rail**: A one-hot control line that gates one source onto a shared destination.
 -   **Front panel**: The human interface used to program, reset, halt, and step the computer.
+-   **Gated-OR merge**: A routing idiom in which each source is ANDed with its own select rail and the results merge onto a shared line; the RAM read bus and the register input networks both use it.
 -   **Instruction Register (IR)**: The register that stores the current opcode nibble.
 -   **One-hot**: A signal convention in which exactly one line in a group is active at a time.
 -   **Phase sequencer**: The control structure that cycles through `T0`, `T1`, and `T2`.
 -   **Program Counter (PC)**: The register that stores the address of the next memory nibble to fetch.
 -   **Program mode**: The operating mode in which the human manually writes values into RAM.
+-   **Register B**: The register that holds the ALU's second operand and drives Bus B.
 -   **Run mode**: The operating mode in which the machine uses its own control logic and clock to execute instructions.
--   **Selector network**: A collection of MUXes or equivalent routing logic that chooses which data path is active.
+-   **Selector network**: The routing logic, gated-OR merges or 2:1 selectors, that chooses which data path is active.
 -   **Step**: A manually triggered single clock pulse used for debugging.
