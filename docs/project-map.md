@@ -186,7 +186,7 @@ full machine (Module 12) — tint layer = free segmentation for CV pipeline
    `assets/schematics/mattbat/` with a provenance/credit README. Key finding: his
    machine is bitwise-uniform vertical stacking, so the bit-slice *is* the unit;
    horizontal single-register carves aren't clean (continuous bus wiring).
-4. **Build the canonical module set** *(IN PROGRESS: gates 11/11, M5 full-adder 4/4, M10 register 5/5 — built, verified, rendered at the canonical row x=400)* in a fresh world/area, Module order 1→12,
+4. **Build the canonical module set** *(IN PROGRESS: gates 11/11, M5 full-adder 4/4, M8 mux 4/4, M10 register 5/5 — built, verified, rendered at the canonical row x=400)* in a fresh world/area, Module order 1→12,
    hand-buildable, per the build language — this is the main build effort and it
    produces every chapter's artifact + render source.
 5. **Render per module** as builds complete (don't batch at the end).
