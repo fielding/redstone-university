@@ -64,9 +64,22 @@ To inspect in-world: `//schem load <name>` then `//paste` (FAWE), or open
   bus plane feeding the layered cell bank (1,188 repeaters, 590 comparators);
   `line` = 262-block 16-lane bus bundle (960 repeaters, zero comparators).
 
+- **`branch/mattbat-br-01..05.schem`** — CPU Episode 7 (**jumping/branching**)
+  teaching builds. br-02..05 are block-identical copies (1,443 blocks, 100
+  repeaters + 73 comparators — likely the same condition unit shown at
+  successive lecture stages); br-01 is the slightly larger first version.
+  Course fit: Module 7 flags + Module 12b JMP/JIZ comparisons.
+- **`io/mattbat-io-01..05.schem`** — CPU Episode 10 (**input and output**)
+  teaching builds. io-02 is a 16×16 lamp screen (256 lamps + 256 torches +
+  64 levers, zero comparators); io-01 is comparator-dense port/encoder logic
+  (300 comparators); io-03/04 small drivers; io-05 a dense repeater driver
+  (209 repeaters). Course fit: Module 1 input panel, Module 4 display,
+  Module 13 BCD output.
+
 Exporters: `minecraft-agents/tools/ru-testbench/export_alus.js` /
 `export_registers.js` / `export_boxes.js` (generic; offline-survey bounds →
-FAWE `//copy` + `//schem save`). The episode worlds' big ~92k-block complexes
+FAWE `//copy` + `//schem save`). Survey tools: `survey2d.js` (per-block, any
+1.20+ world), `survey_palette.js` (any version, section granularity). The episode worlds' big ~92k-block complexes
 (machine-so-far states) were NOT extracted — render those straight from their
 worlds via MiEx for "machine at stage N" figures.
 
