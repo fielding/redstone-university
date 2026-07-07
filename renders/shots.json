@@ -1251,5 +1251,22 @@
     ],
     "ground": "keep",
     "tint": "blue_concrete=a8c4d6,purple_concrete=b9a6cc,pink_concrete=e0b6c4,red_concrete=c47a72"
+  },
+  "canonical-gates": {
+    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+    "bounds": [
+      398,
+      58,
+      -313,
+      430,
+      66,
+      -281
+    ],
+    "views": [
+      "iso",
+      "top"
+    ],
+    "ground": "keep",
+    "tint": "blue_concrete=a8c4d6,purple_concrete=b9a6cc,pink_concrete=e0b6c4,red_concrete=c47a72"
   }
 }
