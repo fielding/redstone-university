@@ -78,8 +78,15 @@ Two color systems at two scales, plus a composition rule:
    One legend across all chapters, so a reader who met the ALU as orange in Module 9
    instantly parses the orange region in the Module 12 full-machine render.
 4. **Canonical = hand-buildable, modular, legible** (the reference / Ben Eater
-   tradition). Spread-out "see every gate" layouts serve as explanatory *figures*;
-   compact builds appear only in interludes (3b already exists for this).
+   tradition). Spread-out "see every gate" layouts serve as explanatory *figures*
+   and remain the teaching vehicle everywhere. **Compact designs enter the main
+   line at the multi-bit assemblies** (decided 2026-07-07): M9/M10/M11 each close
+   with the *bit-slice arc* — legible 1-bit unit (already built as the module's
+   lab) → the same logic compacted into a 2-tall slice → stacked ×4. Compactness
+   costs readability, not hand-buildability: the slice is built from an exact
+   layer map, which teaches building faithfully from a schematic. Prerequisite
+   lessons (new, once, in M9): vertical routing ("the third dimension") and
+   signal-strength-as-data. 3b stays as the early seed/motivation.
 
 Why hand-buildable is a correctness feature, not just pedagogy: the entire class of
 failures that plagued the bot-built testbench (bulk-placement stale dust states)
