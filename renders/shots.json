@@ -1234,5 +1234,22 @@
     ],
     "ground": "keep",
     "tint": "blue_concrete=a8c4d6,purple_concrete=b9a6cc,pink_concrete=e0b6c4,red_concrete=c47a72"
+  },
+  "canonical-m10-reg": {
+    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+    "bounds": [
+      378,
+      58,
+      -361,
+      414,
+      66,
+      -329
+    ],
+    "views": [
+      "iso",
+      "top"
+    ],
+    "ground": "keep",
+    "tint": "blue_concrete=a8c4d6,purple_concrete=b9a6cc,pink_concrete=e0b6c4,red_concrete=c47a72"
   }
 }
