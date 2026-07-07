@@ -5,6 +5,8 @@ export type CourseNode = {
     slug?: string;
     children: CourseNode[];
     order: number;
+    /** True when the node belongs to an unpublished part (see utils/gating). */
+    gated?: boolean;
 };
 
 export function buildCourseHierarchy(entries: CollectionEntry<'course'>[]): CourseNode[] {
