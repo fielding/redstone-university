@@ -1067,5 +1067,155 @@
       "iso"
     ],
     "ground": "remove"
+  },
+  "cand-br-01": {
+    "world": "/Users/fielding/Downloads/study-world-e",
+    "bounds": [
+      -75,
+      145,
+      -504,
+      -56,
+      161,
+      -477
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "remove"
+  },
+  "cand-br-02": {
+    "world": "/Users/fielding/Downloads/study-world-e",
+    "bounds": [
+      -75,
+      145,
+      -462,
+      -59,
+      161,
+      -437
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "remove"
+  },
+  "cand-br-03": {
+    "world": "/Users/fielding/Downloads/study-world-e",
+    "bounds": [
+      -75,
+      145,
+      -422,
+      -59,
+      161,
+      -397
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "remove"
+  },
+  "cand-br-04": {
+    "world": "/Users/fielding/Downloads/study-world-e",
+    "bounds": [
+      -75,
+      145,
+      -386,
+      -59,
+      161,
+      -361
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "remove"
+  },
+  "cand-br-05": {
+    "world": "/Users/fielding/Downloads/study-world-e",
+    "bounds": [
+      -75,
+      145,
+      -350,
+      -59,
+      161,
+      -325
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "remove"
+  },
+  "cand-io-01": {
+    "world": "/Users/fielding/Downloads/study-world-f",
+    "bounds": [
+      -2543,
+      104,
+      -84,
+      -2524,
+      114,
+      -45
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "remove"
+  },
+  "cand-io-02": {
+    "world": "/Users/fielding/Downloads/study-world-f",
+    "bounds": [
+      -2258,
+      91,
+      -77,
+      -2239,
+      110,
+      -65
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "remove"
+  },
+  "cand-io-03": {
+    "world": "/Users/fielding/Downloads/study-world-f",
+    "bounds": [
+      -1978,
+      104,
+      -91,
+      -1959,
+      123,
+      -77
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "remove"
+  },
+  "cand-io-04": {
+    "world": "/Users/fielding/Downloads/study-world-f",
+    "bounds": [
+      -1386,
+      102,
+      -130,
+      -1379,
+      121,
+      -120
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "remove"
+  },
+  "cand-io-05": {
+    "world": "/Users/fielding/Downloads/study-world-f",
+    "bounds": [
+      -1349,
+      103,
+      -131,
+      -1334,
+      122,
+      -105
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "remove"
   }
 }
