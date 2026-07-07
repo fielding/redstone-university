@@ -175,14 +175,18 @@ full machine (Module 12) — tint layer = free segmentation for CV pipeline
 ## 7. Roadmap
 
 1. **Confirm the color legend** (§3.3) — one decision, then it's frozen book-wide.
-2. **Flow §5's answers into `architecture.md`** — resolves Q1/2/3/5 (+partial 10/11)
-   with evidence citations; unblocks 12a.4/12a.5/12b.2 drafts.
+2. ✅ DONE (2026-07-06) — **Flow §5's answers into `architecture.md` and conform the
+   drafts** (Q1/2/3/5, partial 9/10/11/12, editorial 13): a fetch-registers lesson
+   (IR/AR/Reg B) was inserted as 12a.4, selectors renumbered to 12a.5 (now teaching
+   one-hot gating/gated-OR), front panel to 12a.6; 12b gained the strobe rule,
+   decode-as-NOP, the display-tap caveat, and clock-last bring-up; Module 10 now
+   teaches capture-on-release. Remaining ⚠ items tracked in architecture.md §11.
 3. ✅ DONE (2026-07-06) — **Single-component references carved** from the ref
    sections: three bit-slice schematics (register, RAM bit-plane, ALU) in
    `assets/schematics/ref/` with a provenance/credit README. Key finding: his
    machine is bitwise-uniform vertical stacking, so the bit-slice *is* the unit;
    horizontal single-register carves aren't clean (continuous bus wiring).
-4. **Build the canonical module set** in a fresh world/area, Module order 1→12,
+4. **Build the canonical module set** *(IN PROGRESS: gates 11/11, M5 full-adder 4/4, M10 register 5/5 — built, verified, rendered at the canonical row x=400)* in a fresh world/area, Module order 1→12,
    hand-buildable, per the build language — this is the main build effort and it
    produces every chapter's artifact + render source.
 5. **Render per module** as builds complete (don't batch at the end).
