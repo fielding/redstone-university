@@ -1,5 +1,41 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { LIVE_PARTS } from '../utils/gating';
+
+const parts = [
+	{
+		numeral: 'I',
+		dir: 'part-i--foundations',
+		title: 'The Foundations',
+		desc: 'Master Redstone basics, Boolean logic, and build a complete input/output system — a 4-bit interface with a working 7-segment display.',
+		meta: '5 modules + 2 interludes',
+		advanced: false,
+	},
+	{
+		numeral: 'II',
+		dir: 'part-ii-thinking-machine',
+		title: 'The Thinking Machine',
+		desc: 'Build the brain. Design an adder, add subtraction, status flags, and a multiplexer — then assemble them into a full Arithmetic Logic Unit.',
+		meta: '5 modules',
+		advanced: false,
+	},
+	{
+		numeral: 'III',
+		dir: 'part-iii--processor-core',
+		title: 'The Processor Core',
+		desc: 'Give the machine memory, a clock, and a program counter. Define an instruction set and run the first real program on hardware you built.',
+		meta: '4 modules',
+		advanced: false,
+	},
+	{
+		numeral: 'IV',
+		dir: 'part-iv--post-graduate',
+		title: 'Post-Graduate Studies',
+		desc: 'For those who want more. Implement the Double Dabble algorithm to display true decimal output — the hardest challenge in the course.',
+		meta: 'Advanced track',
+		advanced: true,
+	},
+].map((p) => ({ ...p, live: LIVE_PARTS.has(p.dir) }));
 ---
 
 <Layout title="Redstone University">
@@ -42,63 +78,42 @@ import Layout from '../layouts/Layout.astro';
 		<section class="curriculum">
 			<h2 class="section-label scroll-reveal">The Curriculum</h2>
 			<ol class="parts-list">
-				<li>
-					<a href="/course/part-i--foundations/introduction" class="part scroll-reveal">
-						<span class="part-numeral">I</span>
-						<div class="part-body">
-							<h3 class="part-title">The Foundations</h3>
-							<p class="part-desc">
-								Master Redstone basics, Boolean logic, and build a complete
-								input/output system — a 4-bit interface with a working
-								7-segment display.
-							</p>
-							<span class="part-meta">5 modules + 2 interludes</span>
-						</div>
-					</a>
-				</li>
-				<li>
-					<a href="/course/part-ii-thinking-machine/introduction" class="part scroll-reveal">
-						<span class="part-numeral">II</span>
-						<div class="part-body">
-							<h3 class="part-title">The Thinking Machine</h3>
-							<p class="part-desc">
-								Build the brain. Design an adder, add subtraction, status
-								flags, and a multiplexer — then assemble them into a full
-								Arithmetic Logic Unit.
-							</p>
-							<span class="part-meta">5 modules</span>
-						</div>
-					</a>
-				</li>
-				<li>
-					<a href="/course/part-iii--processor-core/introduction" class="part scroll-reveal">
-						<span class="part-numeral">III</span>
-						<div class="part-body">
-							<h3 class="part-title">The Processor Core</h3>
-							<p class="part-desc">
-								Give the machine memory, a clock, and a program counter.
-								Define an instruction set and run the first real program on
-								hardware you built.
-							</p>
-							<span class="part-meta">4 modules</span>
-						</div>
-					</a>
-				</li>
-				<li>
-					<a href="/course/part-iv--post-graduate/introduction" class="part part--advanced scroll-reveal">
-						<span class="part-numeral">IV</span>
-						<div class="part-body">
-							<h3 class="part-title">Post-Graduate Studies</h3>
-							<p class="part-desc">
-								For those who want more. Implement the Double Dabble algorithm
-								to display true decimal output — the hardest challenge in the
-								course.
-							</p>
-							<span class="part-meta">Advanced track</span>
-						</div>
-					</a>
-				</li>
+				{parts.map((p) => (
+					<li>
+						{p.live ? (
+							<a
+								href={`/course/${p.dir}/introduction`}
+								class:list={['part', 'scroll-reveal', { 'part--advanced': p.advanced }]}
+							>
+								<span class="part-numeral">{p.numeral}</span>
+								<div class="part-body">
+									<h3 class="part-title">{p.title}</h3>
+									<p class="part-desc">{p.desc}</p>
+									<span class="part-meta">{p.meta}</span>
+								</div>
+							</a>
+						) : (
+							<div
+								class:list={['part', 'part--gated', 'scroll-reveal', { 'part--advanced': p.advanced }]}
+							>
+								<span class="part-numeral">{p.numeral}</span>
+								<div class="part-body">
+									<h3 class="part-title">
+										{p.title}
+										<span class="part-status">in build</span>
+									</h3>
+									<p class="part-desc">{p.desc}</p>
+									<span class="part-meta">{p.meta}</span>
+								</div>
+							</div>
+						)}
+					</li>
+				))}
 			</ol>
+			<p class="curriculum-note scroll-reveal">
+				The remaining parts are written and their in-world builds are underway.
+				Impatient? <a href="https://github.com/fielding/redstone-university">Read ahead on GitHub</a>.
+			</p>
 		</section>
 
 		<footer class="closing scroll-reveal">
@@ -363,6 +378,62 @@ import Layout from '../layouts/Layout.astro';
 
 	.part--advanced:hover {
 		opacity: 1;
+	}
+
+	/* ── Gated parts (in build) — visible roadmap, clearly not clickable ── */
+	.part--gated {
+		cursor: default;
+		opacity: 0.55;
+	}
+
+	.part--gated:hover {
+		background: none;
+	}
+
+	.part--gated:hover .part-body {
+		transform: none;
+	}
+
+	.part--gated:hover .part-numeral {
+		color: var(--color-primary-dim);
+		text-shadow: none;
+	}
+
+	.part--gated.in-view .part-numeral {
+		color: var(--color-primary-dim);
+	}
+
+	.part-status {
+		font-family: var(--font-mono);
+		font-size: 0.62rem;
+		font-weight: 500;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		color: var(--color-text-faint);
+		border: 1px solid var(--color-border-subtle);
+		border-radius: 999px;
+		padding: 2px 9px;
+		margin-left: var(--space-md);
+		vertical-align: middle;
+		white-space: nowrap;
+	}
+
+	.curriculum-note {
+		margin-top: var(--space-2xl);
+		padding-top: var(--space-lg);
+		border-top: 1px solid var(--color-border-subtle);
+		font-size: 0.85rem;
+		color: var(--color-text-faint);
+	}
+
+	.curriculum-note a {
+		color: var(--color-text-secondary);
+		text-decoration: underline;
+		text-underline-offset: 3px;
+	}
+
+	.curriculum-note a:hover {
+		color: var(--color-primary-light);
 	}
 
 	/* ── Closing ── */

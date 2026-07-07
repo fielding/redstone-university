@@ -3,9 +3,11 @@ import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import Sidebar from '../../components/Sidebar.astro';
 import { buildCourseHierarchy, flattenCourse } from '../../utils/navigation';
+import { liveEntries } from '../../utils/gating';
 
 export async function getStaticPaths() {
-  const courseEntries = await getCollection('course');
+  // Only published parts get routes; gated drafts stay title-only in the sidebar.
+  const courseEntries = liveEntries(await getCollection('course'));
   return courseEntries.map(entry => ({
     params: { slug: entry.slug }, props: { entry },
   }));
@@ -18,8 +20,9 @@ const pageTitle = entry.data.title || 'Redstone University';
 // Surface h2/h3 as in-page navigation — these are Lessons and subsections
 const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
 
-// Prev/next pager — linear reading order matches the sidebar
-const orderedPages = flattenCourse(buildCourseHierarchy(await getCollection('course')));
+// Prev/next pager — linear reading order matches the sidebar, live pages only
+// (so the last published module never points "Next" at an unbuilt route)
+const orderedPages = flattenCourse(buildCourseHierarchy(liveEntries(await getCollection('course'))));
 const currentIndex = orderedPages.findIndex((p) => p.slug === entry.slug);
 const prevPage = currentIndex > 0 ? orderedPages[currentIndex - 1] : null;
 const nextPage =

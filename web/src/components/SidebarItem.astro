@@ -21,6 +21,13 @@ const isCurrent = node.slug === currentSlug;
     >
       {node.title}
     </a>
+  ) : node.gated && hasChildren ? (
+    <span class="nav-section nav-section--gated">
+      {node.title}
+      <span class="nav-badge">in build</span>
+    </span>
+  ) : node.gated ? (
+    <span class="nav-link is-gated">{node.title}</span>
   ) : (
     <span class="nav-section">{node.title}</span>
   )}
@@ -57,6 +64,32 @@ const isCurrent = node.slug === currentSlug;
   .nav-link.is-active {
     color: var(--color-primary-light);
     font-weight: 500;
+  }
+
+  /* Unpublished module titles: visible roadmap, clearly not clickable */
+  .nav-link.is-gated {
+    color: var(--color-text-faint);
+    opacity: 0.55;
+    cursor: default;
+  }
+
+  .nav-section--gated {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-sm);
+  }
+
+  .nav-badge {
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-faint);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: 999px;
+    padding: 1px 7px;
+    white-space: nowrap;
   }
 
   .nav-section {

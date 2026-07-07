@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import { buildCourseHierarchy } from '../utils/navigation';
+import { applyGating } from '../utils/gating';
 import SidebarItem from './SidebarItem.astro';
 
 interface Props {
@@ -9,7 +10,8 @@ interface Props {
 
 const { currentSlug } = Astro.props;
 const courseEntries = await getCollection('course');
-const navigationTree = buildCourseHierarchy(courseEntries);
+const navigationTree = applyGating(buildCourseHierarchy(courseEntries));
+const anyGated = navigationTree.some((node) => node.gated);
 ---
 
 <nav class="sidebar-nav" aria-label="Course navigation">
@@ -18,6 +20,12 @@ const navigationTree = buildCourseHierarchy(courseEntries);
       <SidebarItem node={node} currentSlug={currentSlug} />
     ))}
   </ul>
+  {anyGated && (
+    <p class="nav-footnote">
+      The remaining parts are drafted and their in-world builds are underway.
+      Impatient? <a href="https://github.com/fielding/redstone-university">Read ahead on GitHub</a>.
+    </p>
+  )}
 </nav>
 
 <style>
@@ -31,6 +39,25 @@ const navigationTree = buildCourseHierarchy(courseEntries);
   .nav-root {
     padding: 0;
     margin: 0;
+  }
+
+  .nav-footnote {
+    margin: var(--space-lg) 0 0;
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--color-border-subtle);
+    font-size: 0.72rem;
+    line-height: 1.6;
+    color: var(--color-text-faint);
+  }
+
+  .nav-footnote a {
+    color: var(--color-text-secondary);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .nav-footnote a:hover {
+    color: var(--color-primary-light);
   }
 
   .sidebar-nav::-webkit-scrollbar {
