@@ -34,6 +34,17 @@ GITHUB_REPO = "redstone-university"
 GITHUB_BRANCH = "main"
 RAW_BASE_URL = f"https://media.githubusercontent.com/media/{GITHUB_USER}/{GITHUB_REPO}/" f"{GITHUB_BRANCH}/"
 
+# Files under COURSE_DIR that GitBook owns and this script does NOT generate:
+# the table of contents, and the README GitBook auto-creates for the
+# appendix section (which has no src/ introduction.md to generate one from).
+# The clean rebuild below wipes COURSE_DIR, so these are preserved and
+# restored — otherwise GitBook keeps re-committing them, which used to cause
+# a rebuild<->sync commit loop on main.
+GITBOOK_MANAGED = [
+    "SUMMARY.md",
+    os.path.join("z-appendices", "README.md"),
+]
+
 # A list of gate names used for special image handling in tables.
 GATE_SYMBOLS = ["NOT", "AND", "OR", "NAND", "NOR", "XOR", "XNOR"]
 
@@ -86,8 +97,20 @@ def optimize_and_copy_image(src_image_path, dest_image_path):
 
 
 def setup_directories():
-    """Cleans and creates the necessary build directories."""
+    """Cleans and creates the necessary build directories.
+
+    GitBook-managed files (see GITBOOK_MANAGED) are read before the wipe and
+    written back after, so a rebuild never deletes them.
+    """
     print("🧹 Cleaning old build directories...")
+
+    preserved = {}
+    for rel in GITBOOK_MANAGED:
+        path = os.path.join(COURSE_DIR, rel)
+        if os.path.exists(path):
+            with open(path, "rb") as f:
+                preserved[rel] = f.read()
+
     if os.path.exists(COURSE_DIR):
         shutil.rmtree(COURSE_DIR)
     if os.path.exists(ASSETS_IMG_DIR):
@@ -95,6 +118,15 @@ def setup_directories():
 
     os.makedirs(COURSE_DIR)
     os.makedirs(ASSETS_IMG_DIR)
+
+    for rel, data in preserved.items():
+        path = os.path.join(COURSE_DIR, rel)
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        with open(path, "wb") as f:
+            f.write(data)
+    if preserved:
+        print(f"🔒 Preserved GitBook-managed files: {', '.join(sorted(preserved))}")
+
     print("📁 Created fresh build directories.")
 
 

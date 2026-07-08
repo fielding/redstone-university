@@ -8,8 +8,8 @@ ASSETS_IMG_DIR = "assets/images"
 PDF_INPUT_FILE = os.path.join(COURSE_DIR, "Redstone-University.md")
 
 # Appendices to add at the end
-APPENDIX_A = "course/Z-Appendices/Appendix-A_Solutions.md"
-APPENDIX_B = "course/Z-Appendices/Appendix-B_Glossary.md"
+APPENDIX_A = "course/z-appendices/Appendix-A_Solutions.md"
+APPENDIX_B = "course/z-appendices/Appendix-B_Glossary.md"
 
 # --- GitHub URL Configuration ---
 GITHUB_USER = "fielding"

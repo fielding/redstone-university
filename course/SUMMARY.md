@@ -24,5 +24,5 @@
   * [Module 13: The "Real World" Display – The Double Dabble Algorithm](Part-IV--Post-Graduate/13_Double-Dabble.md)
   * [Graduation: Beyond Redstone University](Part-IV--Post-Graduate/99_Graduation.md)
 * [Z-Appendices](z-appendices/README.md)
-  * [Appendix A: Solutions](Z-Appendices/Appendix-A_Solutions.md)
-  * [Appendix B: Glossary](Z-Appendices/Appendix-B_Glossary.md)
+  * [Appendix A: Solutions](z-appendices/Appendix-A_Solutions.md)
+  * [Appendix B: Glossary](z-appendices/Appendix-B_Glossary.md)

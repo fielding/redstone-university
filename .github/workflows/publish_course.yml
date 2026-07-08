@@ -66,6 +66,15 @@ jobs:
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add -f course/ assets/
+          # The PDF embeds a fresh timestamp and document ID on every run, so it
+          # differs byte-for-byte even when the content is identical. If it is
+          # the ONLY staged change, that's metadata noise — discard it so we
+          # don't churn a ~19 MB LFS object (and used to feed a commit loop).
+          if [ -z "$(git diff --staged --name-only | grep -v '^course/Redstone-University.pdf$')" ]; then
+            echo "Only the PDF changed (metadata noise); discarding it."
+            git restore --staged --worktree course/Redstone-University.pdf 2>/dev/null \
+              || { git reset -q HEAD course/Redstone-University.pdf; git checkout -- course/Redstone-University.pdf; }
+          fi
           git status
           if ! git diff --staged --quiet; then
             git commit -m "docs: Rebuild course materials and PDF"
