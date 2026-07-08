@@ -2,6 +2,15 @@ name: Build and Publish Course
 on:
   push:
     branches: [main]
+    # Only rebuild when sources change. Without this filter the workflow
+    # retriggers on its own "Rebuild course materials" commit and on
+    # GitBook's sync commits, ping-ponging indefinitely (both only touch
+    # course/ and assets/ outputs).
+    paths:
+      - "src/**"
+      - "scripts/**"
+      - "web/**"
+      - ".github/workflows/**"
 
 jobs:
   build:
