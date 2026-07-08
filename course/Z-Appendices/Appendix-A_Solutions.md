@@ -661,22 +661,6 @@ One select bit controls the first-stage choices, and the other select bit contro
 ---
 
 
-### Practice Problem 9.5.1: Knowledge Check
-
-1.  Why is it useful to compute several ALU lanes in parallel instead of trying to build only the selected operation on demand?
-2.  In our ALU design, what do the bits `F1 F0 = 10` select?
-3.  If the ALU result is `1000`, what should the `Z` and `N` flags be?
-
-1.  Parallel lanes make the design more modular and simpler to control. The hardware computes candidate results continuously, and the selector only needs to choose which one to forward.
-2.  `F1 F0 = 10` selects the **XOR** lane.
-3.  `Z = 0` and `N = 1`.
-
-</details>
-
-
----
-
-
 ### Practice Problem 9.5.2: The expansion
 
 You want to add a new ALU function: **NOT A**.
@@ -711,6 +695,22 @@ That line must do two jobs inside the adder/subtractor:
 -   drive the initial carry-in that adds the required `1`
 
 If `SUB` never reaches that circuit, the arithmetic lane remains stuck in addition mode.
+
+</details>
+
+
+---
+
+
+### Practice Problem 9.6.1: Knowledge Check
+
+1.  Why is it useful to compute several ALU lanes in parallel instead of trying to build only the selected operation on demand?
+2.  In our ALU design, what do the bits `F1 F0 = 10` select?
+3.  If the ALU result is `1000`, what should the `Z` and `N` flags be?
+
+1.  Parallel lanes make the design more modular and simpler to control. The hardware computes candidate results continuously, and the selector only needs to choose which one to forward.
+2.  `F1 F0 = 10` selects the **XOR** lane.
+3.  `Z = 0` and `N = 1`.
 
 </details>
 
