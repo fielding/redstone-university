@@ -4,7 +4,7 @@ from glob import glob
 from typing import List, Tuple
 
 SRC_DIR = "src"
-APPENDIX_FILE = "course/z-appendices/Appendix-A_Solutions.md"
+APPENDIX_FILE = "course/z-appendices/appendix-a-solutions.md"
 
 
 def parse_label_part(part: str) -> Tuple[int, str]:

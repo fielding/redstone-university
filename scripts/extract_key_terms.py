@@ -4,7 +4,7 @@ from glob import glob
 from typing import Dict, List, Tuple
 
 SRC_DIR = "src"
-APPENDIX_FILE = "course/z-appendices/Appendix-B_Glossary.md"
+APPENDIX_FILE = "course/z-appendices/appendix-b-glossary.md"
 
 GITHUB_USER = "fielding"
 GITHUB_REPO = "redstone-university"
