@@ -250,6 +250,29 @@ def render(scope, scale=2.0, gate_colors=False, inputs=None, only=None):
     only = set(only) if only else None
     N = scope["allNodes"]
     pos = abs_nodes(scope)
+    # CircuitVerse gives subcircuit pins at interior offsets; drawn as-is they
+    # float inside the box and wires visibly penetrate to reach them. Snap each
+    # pin onto its box edge so the box reads as a real IC — pins ON the boundary,
+    # wires terminating there. Box is fixed from the raw pin bbox (+pad); pins
+    # snap to it, so box and pins stay consistent for both wiring and drawing.
+    SUB_PAD = 14
+    sub_boxes = {}
+    for si, sub in enumerate(scope.get("SubCircuit", [])):
+        pj = [j for j in sub.get("inputNodes", []) + sub.get("outputNodes", []) if j < len(N)]
+        if not pj:
+            continue
+        pxs = [pos[j][0] for j in pj]; pys = [pos[j][1] for j in pj]
+        bx0, by0, bx1, by1 = min(pxs) - SUB_PAD, min(pys) - SUB_PAD, max(pxs) + SUB_PAD, max(pys) + SUB_PAD
+        sub_boxes[si] = (bx0, by0, bx1, by1)
+        for j in pj:
+            px, py = pos[j]
+            dl, dr, dt, db = px - bx0, bx1 - px, py - by0, by1 - py
+            m = min(dl, dr, dt, db)
+            if m == dl: px = bx0
+            elif m == dr: px = bx1
+            elif m == dt: py = by0
+            else: py = by1
+            pos[j] = (px, py)
     # optional input override: a list of 0/1 applied to Input boxes left→right
     # (by x), so a circuit can show the same defining case as its abstract figure.
     forced = None
@@ -453,21 +476,18 @@ def render(scope, scale=2.0, gate_colors=False, inputs=None, only=None):
                 pass
 
     # subcircuit boxes
-    for sub in scope.get("SubCircuit", []):
-        pins = [pos[j] for j in sub.get("inputNodes", []) + sub.get("outputNodes", [])
-                if j < len(N)]
-        if not pins:
+    for si, sub in enumerate(scope.get("SubCircuit", [])):
+        if si not in sub_boxes:
             continue
-        pxs = [p[0] for p in pins]; pys = [p[1] for p in pins]
-        x0, x1 = min(pxs), max(pxs); y0, y1 = min(pys), max(pys)
-        body.append(f'<rect x="{x0-10}" y="{y0-10}" width="{x1-x0+20}" height="{y1-y0+20}" '
+        x0, y0, x1, y1 = sub_boxes[si]
+        body.append(f'<rect x="{x0}" y="{y0}" width="{x1-x0}" height="{y1-y0}" '
                     f'fill="{PAPER}" stroke="{INK}" stroke-width="{GW}"/>')
         raw = (SUBCIRCUIT_NAMES.get(str(sub.get("id")))
                or sub.get("label", "") or "circuit")
         # wrap to the box's actual inner width so the label never runs into the
         # border (~0.56em per char for Young Serif at this size; 16px padding).
         fs = 15
-        avail = (x1 - x0 + 20) - 18
+        avail = (x1 - x0) - 18
         budget = max(6, int(avail / (fs * 0.56)))
         lines = wrap_label(raw, budget)
         cx, cy = (x0 + x1) / 2, (y0 + y1) / 2
