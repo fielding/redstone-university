@@ -56,6 +56,15 @@ never wash them out.
   (Decided 2026-07-07, correcting an earlier over-application of lanes to
   small canonical samples.)
 - **Ground:** sand / smooth sandstone reads like blueprint paper in renders.
+- **Ground/platform rule (decided 2026-07-08):** a render includes the ground
+  layer *only* where the redstone actually rests on it — the single substrate
+  layer directly under the dust/components stays; any decorative floor beneath
+  it, and any platform margin extending past the circuit, is dropped. In the
+  pipeline this is the `ground: remove` default (keeps the build's own base
+  block, deletes the layer below). Never use `ground: keep` for course figures
+  — it drags in the full platform (the mistake in the retired canonical M5
+  render). Build circuits on their own base blocks with a separate floor below,
+  same as Part I, and `remove` does the right thing automatically.
 - Legacy builds in other blocks don't need rebuilding: add a `swap` to the
   shot, e.g. `--swap white_wool=white_concrete` (render-time retexture only).
 

@@ -187,12 +187,21 @@ full machine (Module 12) — tint layer = free segmentation for CV pipeline
    outside the repo): per-component layout comparisons that informed the canonical
    design decisions. Key finding: compact vertical bit-slice stacking trades
    legibility for density — reinforcing the horizontal hand-buildable choice.
-4. **Build the canonical module set** *(IN PROGRESS: gates 11/11, M5 full-adder 4/4, M8 mux 4/4, M10 register 5/5 — built, verified, rendered at the canonical row x=400)* in a fresh world/area, Module order 1→12,
-   hand-buildable, per the build language — this is the main build effort and it
-   produces every chapter's artifact + render source.
-5. **Render per module** as builds complete (don't batch at the end).
-6. **Optional capstone:** the full canonical machine running the countdown — now a
-   deliberate, low-risk build (logic proven; hand-buildable style dodges the bot
-   fragility), not a research project.
+4. **Figures for Parts II–IV** (decided 2026-07-08). Part I is done and stays as
+   is. Fielding hand-builds each remaining module's Minecraft artifact in the
+   Bedrock circuit lab — the same workflow that produced Part I. Three figure
+   tiers: **small** (single component — iso only), **medium** (multi-component —
+   iso + top), **large** (full assembly — color-coded composition legend). The
+   per-module build list lives in `docs/figure-build-list.md` and in tix.
+   Where the compact-design arc applies (M5 adder, M9 ALU, optionally M11), a
+   module gets both the legible build and the compact slice + stack.
+   The bot's role is **verification/reference only** — it does not produce
+   figures. (The earlier "bot-built canonical module set" experiment is retired;
+   its scratch renders were discarded.)
+5. **Render + place per module** as each build lands: add the `shots.json`
+   entry, run the pipeline (tier → views + ground `remove`), copy the PNG into
+   the module's `images/`, reference it in `draft.md`.
+6. **Capstone:** the assembled machine (M12b) as the large color-coded hero —
+   logic is proven, so this is a deliberate build, not a research project.
 7. **Testbench:** keep `world-redstone-university` frozen as the validation record;
    swap back only when a spec question needs another in-world experiment.
