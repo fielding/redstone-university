@@ -126,7 +126,7 @@ A standard implementation uses:
 Build that once, test it thoroughly, and then repeat it.
 
 ![1-Bit Full Adder CircuitVerse Diagram](./images/full-adder_circuitverse.png)
-*Figure: A standard 1-bit full adder. Two XOR stages generate the Sum bit, while the AND/OR network generates Carry-Out. Shown computing `1 + 0 + 1`: Sum is `0`, Carry-Out is `1`.*
+*Figure: A standard 1-bit full adder. Two XOR stages generate the Sum bit, while the AND/OR network generates Carry-Out. Shown computing `1 + 1 + 0`: the two ones make Sum `0` and hand a `1` to Carry-Out.*
 
 #### Lab Part A: Build a 1-bit full adder module
 
@@ -160,7 +160,7 @@ A quick test plan:
 #### Lab Part B: Assemble the 4-bit ripple-carry adder
 
 ![4-Bit Ripple-Carry Adder CircuitVerse Diagram](./images/4-bit-rca_circuitverse.png)
-*Figure: Four full-adder modules chained into a 4-bit ripple-carry adder. Each stage's Carry-Out feeds the next stage's Carry-In.*
+*Figure: Four full-adder modules chained into a 4-bit ripple-carry adder. Each stage's Carry-Out feeds the next stage's Carry-In. Shown computing `0101 + 0011` (the `5 + 3` from Lesson 5.1): the carry ripples through every stage and the result reads `1000`.*
 
 1.  Create two 4-bit input buses: **Input A** and **Input B**.
 2.  Place four copies of your full adder in a row, one for each bit position.
