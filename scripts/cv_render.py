@@ -312,8 +312,18 @@ def render(scope, scale=2.0, gate_colors=False, inputs=None, only=None):
         pj = [j for j in sub.get("inputNodes", []) + sub.get("outputNodes", []) if j < len(N)]
         if not pj:
             continue
-        pxs = [pos[j][0] for j in pj]; pys = [pos[j][1] for j in pj]
-        bx0, by0, bx1, by1 = min(pxs) - SUB_PAD, min(pys) - SUB_PAD, max(pxs) + SUB_PAD, max(pys) + SUB_PAD
+        # the child scope's layout carries the TRUE box size CircuitVerse
+        # draws — use it so tightly-tiled boxes don't inflate and fuse.
+        # Fallback: infer from the pin bbox (older exports without layout).
+        child = SCOPES_BY_ID.get(str(sub.get("id")))
+        lay = (child or {}).get("layout") or {}
+        if lay.get("width") and lay.get("height"):
+            bx0, by0 = sub.get("x", 0), sub.get("y", 0)
+            bx1, by1 = bx0 + lay["width"], by0 + lay["height"]
+        else:
+            pxs = [pos[j][0] for j in pj]; pys = [pos[j][1] for j in pj]
+            bx0, by0 = min(pxs) - SUB_PAD, min(pys) - SUB_PAD
+            bx1, by1 = max(pxs) + SUB_PAD, max(pys) + SUB_PAD
         sub_boxes[si] = (bx0, by0, bx1, by1)
         for j in pj:
             px, py = pos[j]
