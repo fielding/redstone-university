@@ -155,7 +155,7 @@ A quick test plan:
 | `1` | `1` | `1` | `1` | `1` |
 
 ![1-Bit Full Adder Minecraft Build](./images/full-adder_minecraft.png)
-*Figure: The 1-bit full adder module in Minecraft — inputs on the left, the two XOR stages in the middle, Sum and Carry-Out lamps on the right.*
+*Figure: The 1-bit full adder module in Minecraft, set to the same `1 + 1 + 0` as the diagram above — both input lamps lit, the Sum lamp dark, and the Carry-Out lamp glowing.*
 
 #### Lab Part B: Assemble the 4-bit ripple-carry adder
 
@@ -174,7 +174,7 @@ A quick test plan:
 6.  Keep the final `CarryOut` wire accessible. We are going to need it in the next module.
 
 ![4-Bit Ripple-Carry Adder Minecraft Build](./images/4-bit-rca-aerial_minecraft.png)
-*Figure: The full 4-bit ripple-carry adder in Minecraft, seen from above. Four copies of the same full-adder module sit in a row; the carry signal passes from one stage to the next, moving from the least-significant bit toward the most-significant bit.*
+*Figure: The full 4-bit ripple-carry adder in Minecraft, seen from above and computing the same `5 + 3` as the diagram — four copies of the same full-adder module in a row, the carry rippling from the least-significant stage on the right toward the most-significant on the left, and only the leftmost Sum lamp lit: `1000`.*
 
 #### The experiment
 
