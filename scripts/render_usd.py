@@ -649,6 +649,12 @@ COMPONENT_KW = ("torch", "lever", "repeater", "comparator", "lamp", "button",
                 "redstone_block", "observer", "target", "tripwire", "piston",
                 "dispenser", "dropper", "note_block", "rail")
 
+# circuit geometry is never "ground": generated wire ribbons, MiEx dust quads,
+# and component meshes must survive ground stripping even though flat builds
+# put them inside the lowest 16-unit band (dust sits ~0.2 units above the
+# floor it rests on)
+CIRCUIT_KW = ("ru_wires", "redstone_dust") + COMPONENT_KW
+
 
 def _flat_fill(nodes, links, em, rgb, htint=None):
     """
@@ -1291,29 +1297,58 @@ def strip_ground(scene, mode, base_z):
     """Handle the flat base layer the circuit sits on (the platform that often
     overhangs the circuit footprint).
       remove: delete the lowest block layer entirely (circuit sits on its own base)
-      crop:   keep the lowest layer only under the circuit's footprint (the XY
-              cells occupied by geometry in the layers above it)
+      crop:   keep the lowest layer only under the circuit — cells occupied by
+              geometry above the layer OR by dust/wires/components resting
+              directly on it (builds laid out on the bare ground)
+    Circuit geometry (CIRCUIT_KW) is never deleted: flat dust and the generated
+    wire ribbons live inside the lowest band, and stripping them used to gut
+    on-ground builds.
     `base_z` must be the build's real base (call AFTER stray bedrock is trimmed).
     Re-frame after calling so the frame tightens to what remains."""
     if mode not in ("remove", "remove2", "crop"):
         return
     import bmesh
+    import math as _math
     BLOCK = 16.0
     layers = 2 if mode == "remove2" else 1    # remove2 also drops the base block
     band_top = base_z + layers * BLOCK + 1.0  # everything in the lowest layer(s)
+
+    def is_circuit(ob):
+        nm = ob.name.lower()
+        return any(k in nm for k in CIRCUIT_KW)
+
+    def covered_cells(xs, ys):
+        # every block cell an AABB overlaps (centers at multiples of BLOCK,
+        # cell b spans [16b-8, 16b+8]); eps keeps shared edges out
+        eps = 0.01
+        for bx in range(_math.floor((min(xs) + eps + BLOCK / 2) / BLOCK),
+                        _math.floor((max(xs) - eps + BLOCK / 2) / BLOCK) + 1):
+            for by in range(_math.floor((min(ys) + eps + BLOCK / 2) / BLOCK),
+                            _math.floor((max(ys) - eps + BLOCK / 2) / BLOCK) + 1):
+                yield (bx, by)
+
     footprint = set()
     if mode == "crop":
         for ob in scene.objects:
             if ob.type != 'MESH' or ob.hide_render:
                 continue
+            circuit = is_circuit(ob)
             mw = ob.matrix_world
-            for poly in ob.data.polygons:
+            me = ob.data
+            for poly in me.polygons:
                 c = mw @ poly.center
                 if c.z > band_top:
                     footprint.add((round(c.x / BLOCK), round(c.y / BLOCK)))
+                elif circuit:
+                    # in-band circuit faces (dust plates, wire ribbons, merged
+                    # dust strips) claim every cell they cover so their
+                    # substrate survives
+                    pts = [mw @ me.vertices[v].co for v in poly.vertices]
+                    footprint.update(covered_cells([p.x for p in pts],
+                                                   [p.y for p in pts]))
     removed = 0
     for ob in list(scene.objects):
-        if ob.type != 'MESH' or ob.hide_render:
+        if ob.type != 'MESH' or ob.hide_render or is_circuit(ob):
             continue
         bm = bmesh.new(); bm.from_mesh(ob.data); mw = ob.matrix_world
         doomed = []
@@ -1432,7 +1467,21 @@ def make_camera(scene, name, elevation_deg, azimuth_deg, ortho, center, size, fi
     loc, fit_scale = cam.camera_fit_coords(deps, fit_coords)
     cam.location = loc
     if ortho:
-        cam_data.ortho_scale = fit_scale * 1.05 * margin
+        # camera_fit_coords under-fits when the content aspect differs a lot
+        # from the render aspect (it can crop the long axis of a wide flat
+        # build). Compute the true contain-fit in camera space and never go
+        # below it; max() keeps existing well-behaved framings identical.
+        rot_inv = cam.rotation_euler.to_matrix().inverted()
+        pts = [rot_inv @ Vector(fit_coords[i:i + 3])
+               for i in range(0, len(fit_coords), 3)]
+        w = max(p.x for p in pts) - min(p.x for p in pts)
+        h = max(p.y for p in pts) - min(p.y for p in pts)
+        rx, ry = scene.render.resolution_x, scene.render.resolution_y
+        # sensor_fit AUTO: ortho_scale spans the larger render dimension
+        need = max(w, h * rx / ry) if rx >= ry else max(h, w * ry / rx)
+        print(f"ortho fit: content {w:.0f}x{h:.0f} units, "
+              f"fit_scale={fit_scale:.0f}, contain={need:.0f}")
+        cam_data.ortho_scale = max(fit_scale, need) * 1.05 * margin
     else:
         direction = (loc - center).normalized()
         cam.location = loc + direction * size * (0.08 + 0.6 * (margin - 1.0))

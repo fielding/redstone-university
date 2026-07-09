@@ -51,9 +51,22 @@ DIRS = {"RIGHT": (0, lambda x, y: (x, y)),
         "UP":    (270, lambda x, y: (y, -x))}
 
 
+# scope id -> scope, so simulate() can evaluate subcircuit internals; filled by
+# load() (single project file per invocation)
+SCOPES_BY_ID = {}
+
+
 def load(path):
     with open(path) as f:
-        return json.load(f)
+        data = json.load(f)
+    # only project files carry scopes — loading a batch config must not wipe
+    # the registry the project just filled
+    scopes = data.get("scopes")
+    if isinstance(scopes, list) and scopes:
+        SCOPES_BY_ID.clear()
+        for s in scopes:
+            SCOPES_BY_ID[str(s.get("id"))] = s
+    return data
 
 
 # ── geometry ──────────────────────────────────────────────────────────────
@@ -96,9 +109,12 @@ GATE_FN = {
 }
 
 
-def simulate(scope, forced=None):
+def simulate(scope, forced=None, _stack=frozenset()):
     """Return netval: node index -> 0/1/None (None = undriven).
-    forced: {input output-node index -> 0/1} overrides stored Input states."""
+    forced: {input output-node index -> 0/1} overrides stored Input states.
+    SubCircuit elements are evaluated by recursively simulating their child
+    scope (pin order = the child's Input/Output array order), so values flow
+    through abstraction boxes — Sum pins, 7-seg segments, chained carries."""
     N = scope["allNodes"]
     parent = list(range(len(N)))
 
@@ -142,6 +158,29 @@ def simulate(scope, forced=None):
             out = nd.get("output1")
             if out is not None:
                 drivers.append((out, ins, GATE_FN[ot]))
+    # subcircuit drivers (cycle-guarded; memo keyed on the input vector)
+    sub_drivers = []
+    sid = str(scope.get("id"))
+    for sub in scope.get("SubCircuit", []):
+        child = SCOPES_BY_ID.get(str(sub.get("id")))
+        if child is None or str(sub.get("id")) in _stack:
+            continue
+        cin = [e.get("customData", {}).get("nodes", {}).get("output1")
+               for e in child.get("Input", [])]
+        cout = [e.get("customData", {}).get("nodes", {}).get("inp1")
+                for e in child.get("Output", [])]
+        sub_drivers.append((sub.get("inputNodes", []), sub.get("outputNodes", []),
+                            child, cin, cout))
+    memo = {}
+
+    def eval_sub(child, cin, cout, invals):
+        key = (id(child), tuple(invals))
+        if key not in memo:
+            f = {p: v for p, v in zip(cin, invals) if p is not None and v is not None}
+            cnet = simulate(child, forced=f, _stack=_stack | {sid})
+            memo[key] = [cnet.get(p) if p is not None else None for p in cout]
+        return memo[key]
+
     # iterate to fixpoint (combinational converges; cap guards latches)
     for _ in range(200):
         changed = False
@@ -153,6 +192,18 @@ def simulate(scope, forced=None):
                 continue
             if val.get(r) != o:
                 val[r] = o; changed = True
+        for pins_in, pins_out, child, cin, cout in sub_drivers:
+            invals = [val.get(find(p)) if isinstance(p, int) and p < len(N) else None
+                      for p in pins_in]
+            outs = eval_sub(child, cin, cout, invals)
+            for p, o in zip(pins_out, outs):
+                if not isinstance(p, int) or p >= len(N) or o is None:
+                    continue
+                r = find(p)
+                if r in src_roots:
+                    continue
+                if val.get(r) != o:
+                    val[r] = o; changed = True
         if not changed:
             break
     return {i: val.get(find(i)) for i in range(len(N))}
@@ -386,11 +437,23 @@ def render(scope, scale=2.0, gate_colors=False, inputs=None, only=None):
         body.append(f'<circle cx="{x}" cy="{y}" r="{DOT}" fill="{wcol(net.get(src))}"/>')
 
     # elements
-    def label(el, cx, cy):
+    def label(el, cx, cy, pin=None):
         lbl = esc(el.get("label", ""))
         if not lbl:
             return
         d = el.get("labelDirection", "UP")
+        # IO labels always read OUTWARD (away from the wire): the stored
+        # direction sometimes points back into the circuit, burying the label
+        # under a gate (the Full Adder's CarryOut). The pin position tells us
+        # which side the circuit is on.
+        if pin is not None:
+            px, py = pin
+            ddx, ddy = cx - px, cy - py
+            if ddx or ddy:
+                if abs(ddx) >= abs(ddy):
+                    d = "RIGHT" if ddx > 0 else "LEFT"
+                else:
+                    d = "DOWN" if ddy > 0 else "UP"
         off = 22
         dx, dy, anchor = {
             "LEFT":  (-off, 5, "end"),
@@ -400,6 +463,16 @@ def render(scope, scale=2.0, gate_colors=False, inputs=None, only=None):
         }.get(d, (0, -off, "middle"))
         body.append(f'<text x="{cx+dx}" y="{cy+dy}" font-family="ui-monospace,monospace" '
                     f'font-size="14" text-anchor="{anchor}" fill="{INK}">{lbl}</text>')
+        # grow the canvas to the text extent so edge labels never clip
+        w = len(lbl) * 8.5
+        tx = cx + dx
+        if anchor == "start":
+            xs.extend((tx, tx + w))
+        elif anchor == "end":
+            xs.extend((tx - w, tx))
+        else:
+            xs.extend((tx - w / 2, tx + w / 2))
+        ys.extend((cy + dy - 14, cy + dy + 5))
 
     for k, v in scope.items():
         if not (isinstance(v, list) and v and isinstance(v[0], dict)
@@ -436,15 +509,16 @@ def render(scope, scale=2.0, gate_colors=False, inputs=None, only=None):
                             + "".join(gp) + "</g>")
             elif ot in ("Input", "Output"):
                 if ot == "Input":
-                    out = el.get("customData", {}).get("nodes", {}).get("output1")
+                    pin = el.get("customData", {}).get("nodes", {}).get("output1")
                     st = el.get("customData", {}).get("values", {}).get("state")
-                    if forced is not None and out in forced:
-                        st = forced[out]
+                    if forced is not None and pin in forced:
+                        st = forced[pin]
                 else:  # output: show the simulated value at its input pin
-                    inp = el.get("customData", {}).get("nodes", {}).get("inp1")
-                    st = net.get(inp) if inp is not None else None
+                    pin = el.get("customData", {}).get("nodes", {}).get("inp1")
+                    st = net.get(pin) if pin is not None else None
                 body.append(io_box(ex, ey, st))
-                label(el, ex, ey)
+                label(el, ex, ey,
+                      pos[pin] if pin is not None and pin < len(N) else None)
             elif ot == "SevenSegDisplay":
                 nd = el.get("customData", {}).get("nodes", {})
                 deg = DIRS.get(el.get("direction", "RIGHT"), DIRS["RIGHT"])[0]

@@ -86,9 +86,9 @@
     "circuit": "4-bit binary to display (composite)",
     "name": "4-bit-binary-to-display-composite"
   },
-  "4-bit-adder": {
-    "circuit": "4-bit adder",
-    "name": "4-bit-adder"
+  "full-adder": {
+    "circuit": "Full Adder",
+    "name": "full-adder"
   },
   "4-bit-rca": {
     "circuit": "4-bit RCA",
