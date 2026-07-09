@@ -823,6 +823,16 @@ def apply_technical(mode, height_tint=0.0, tints=None):
             links.new(em.outputs["Emission"], output.inputs["Surface"])
             continue
 
+        if mat.name == "RU_GroundPads":
+            # synthesized base layer (ground crop): match the Part I bottoms —
+            # the warm cream band, not white (decided 2026-07-09)
+            pal = cfg.get("band_palette")
+            rgb = pal[1] if pal else cfg["fill"]
+            em = nodes.new('ShaderNodeEmission')
+            _flat_fill(nodes, links, em, _srgb_lin(rgb))
+            links.new(em.outputs["Emission"], output.inputs["Surface"])
+            continue
+
         if schem and any(k in name for k in COMPONENT_KW):
             em = nodes.new('ShaderNodeEmission')
             if _emit_texture(nodes, links, em, output):

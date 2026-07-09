@@ -79,13 +79,16 @@ never wash them out.
   - **`remove` (default)** — build is on its own base blocks with a separate
     floor below (the Part I pattern). Deletes the floor layer, keeps the pads.
   - **`crop`** — build is laid out directly on the ground (most hand-built
-    figures). Deletes the true ground entirely and **generates a clean white
-    base block under every cell the circuit occupies** — the ground is treated
+    figures). Deletes the true ground entirely and **generates a clean base
+    block under every cell the circuit occupies** — the ground is treated
     as if it were just the block the build sits on, reproducing the
     hand-lift-and-export look of the Part I figures without touching the
     world; ground with nothing on it vanishes. Circuit geometry (dust, wires,
     components) is never stripped. (Buried ground has no side faces in a MiEx
     export, which is why the blocks are synthesized rather than kept.)
+    The generated layer renders in the **warm cream band, matching the Part I
+    bottoms — not white** (decided 2026-07-09: white stays reserved for the
+    page and for ghosted structure in legend shots).
   - **`keep`** — not used for course figures.
 - Legacy builds in other blocks don't need rebuilding: add a `swap` to the
   shot, e.g. `--swap white_wool=white_concrete` (render-time retexture only).
