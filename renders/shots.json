@@ -506,7 +506,7 @@
     "projection": "tele",
     "azimuth": 150
   },
-  "full-adder": {
+  "05_full-adder": {
     "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
     "bounds": [
       -107,
@@ -521,7 +521,7 @@
     ],
     "ground": "crop"
   },
-  "hex-display": {
+  "05_hex-display": {
     "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
     "bounds": [
       -42,
@@ -537,7 +537,23 @@
     ],
     "ground": "crop"
   },
-  "4-bit-rca": {
+  "05_hex-display-digit": {
+    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "bounds": [
+      -52,
+      55,
+      -58,
+      -16,
+      71,
+      -36
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "crop",
+    "azimuth": 315
+  },
+  "05_4-bit-rca": {
     "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
     "bounds": [
       -321,
