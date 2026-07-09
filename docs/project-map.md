@@ -192,7 +192,8 @@ full machine (Module 12) — tint layer = free segmentation for CV pipeline
    Bedrock circuit lab — the same workflow that produced Part I. Three figure
    tiers: **small** (single component — iso only), **medium** (multi-component —
    iso + top), **large** (full assembly — color-coded composition legend). The
-   per-module build list lives in `docs/figure-build-list.md` and in tix.
+   per-module build list is tracked in tix (tag `figures`); a readable working
+   copy is kept privately outside the repo.
    Where the compact-design arc applies (M5 adder, M9 ALU, optionally M11), a
    module gets both the legible build and the compact slice + stack.
    The bot's role is **verification/reference only** — it does not produce
