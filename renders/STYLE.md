@@ -43,16 +43,18 @@ never wash them out.
 
 - **Platforms / structure:** white concrete (flat, matte — dust traces read
   like ink on it). Light gray concrete where white glares.
-- **Wiring lanes:** colored concrete, one color per signal role, consistent
-  across all modules. PROPOSED 2026-07-06 (Claude default, veto before first
-  canonical figure ships):
-  - **blue concrete** = A operand / primary data
-  - **purple concrete** = B operand / secondary data
-  - **pink concrete** = control (strobes, selects, enables)
-  - **red concrete** (dark) = output / result
-  Rationale: matches the operand colors readers meet in the module-legend
-  treatment (registers dusty-blue feed A; RAM rose is adjacent to purple), and
-  control-pink stays visually distinct from signal-red dust.
+- **Wiring lanes (LARGE SCHEMATICS ONLY):** individual components render
+  **plain** — white platform, plain dust/components — same as every Part I
+  figure. Colored-concrete signal lanes are a *sectioning aid reserved for
+  large, busy schematics* (the full ALU datapath, the assembled machine),
+  where color helps trace which lane is which; they are **not** applied to
+  small single-component builds (a gate, an adder slice, a MUX, a register).
+  When lanes are used, the roles are:
+  - **blue** = A operand / primary data · **purple** = B operand / secondary
+    data · **pink** = control (strobes, selects, enables) · **red** = output /
+    result.
+  (Decided 2026-07-07, correcting an earlier over-application of lanes to
+  small canonical samples.)
 - **Ground:** sand / smooth sandstone reads like blueprint paper in renders.
 - Legacy builds in other blocks don't need rebuilding: add a `swap` to the
   shot, e.g. `--swap white_wool=white_concrete` (render-time retexture only).

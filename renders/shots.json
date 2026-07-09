@@ -520,8 +520,7 @@
       "iso",
       "top"
     ],
-    "ground": "keep",
-    "tint": "blue_concrete=a8c4d6,purple_concrete=b9a6cc,pink_concrete=e0b6c4,red_concrete=c47a72"
+    "ground": "keep"
   },
   "canonical-m10-reg": {
     "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
@@ -537,8 +536,7 @@
       "iso",
       "top"
     ],
-    "ground": "keep",
-    "tint": "blue_concrete=a8c4d6,purple_concrete=b9a6cc,pink_concrete=e0b6c4,red_concrete=c47a72"
+    "ground": "keep"
   },
   "canonical-gates": {
     "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
@@ -554,8 +552,7 @@
       "iso",
       "top"
     ],
-    "ground": "keep",
-    "tint": "blue_concrete=a8c4d6,purple_concrete=b9a6cc,pink_concrete=e0b6c4,red_concrete=c47a72"
+    "ground": "keep"
   },
   "canonical-m8-mux": {
     "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
@@ -571,7 +568,6 @@
       "iso",
       "top"
     ],
-    "ground": "keep",
-    "tint": "blue_concrete=a8c4d6,purple_concrete=b9a6cc,pink_concrete=e0b6c4,red_concrete=c47a72"
+    "ground": "keep"
   }
 }
