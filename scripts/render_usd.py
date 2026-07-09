@@ -1297,18 +1297,22 @@ def strip_ground(scene, mode, base_z):
     """Handle the flat base layer the circuit sits on (the platform that often
     overhangs the circuit footprint).
       remove: delete the lowest block layer entirely (circuit sits on its own base)
-      crop:   keep the lowest layer only under the circuit — cells occupied by
-              geometry above the layer OR by dust/wires/components resting
-              directly on it (builds laid out on the bare ground)
+      crop:   delete the TRUE ground and generate a clean base block under every
+              cell the build occupies — the ground is treated as if it were just
+              the block the circuit sits on. Reproduces the hand-lift-and-export
+              look of the Part I figures (full bottom blocks, floating build)
+              without touching the world; bare ground vanishes.
     Circuit geometry (CIRCUIT_KW) is never deleted: flat dust and the generated
     wire ribbons live inside the lowest band, and stripping them used to gut
-    on-ground builds.
+    on-ground builds. Buried ground has no side faces in a MiEx export, so crop
+    synthesizes full cubes instead of keeping original faces.
     `base_z` must be the build's real base (call AFTER stray bedrock is trimmed).
     Re-frame after calling so the frame tightens to what remains."""
     if mode not in ("remove", "remove2", "crop"):
         return
     import bmesh
     import math as _math
+    from mathutils import Matrix
     BLOCK = 16.0
     layers = 2 if mode == "remove2" else 1    # remove2 also drops the base block
     band_top = base_z + layers * BLOCK + 1.0  # everything in the lowest layer(s)
@@ -1316,6 +1320,23 @@ def strip_ground(scene, mode, base_z):
     def is_circuit(ob):
         nm = ob.name.lower()
         return any(k in nm for k in CIRCUIT_KW)
+
+    if mode == "crop":
+        # The resting plane: the block-grid plane the lowest circuit geometry
+        # sits on. Depending on the export's minY this differs from base_z —
+        # bounds starting AT the dust level leave the true ground as a paper
+        # thin face sheet at base_z (dust ~0.25 above it), while bounds one
+        # block lower include the full ground layer (dust ~BLOCK above).
+        # Clamped to at most one layer above base_z so a mistaken crop on a
+        # pad-built build can't eat the build itself.
+        circ_z = [(ob.matrix_world @ v.co).z
+                  for ob in scene.objects
+                  if ob.type == 'MESH' and not ob.hide_render and is_circuit(ob)
+                  for v in ob.data.vertices]
+        rest = _math.floor((min(circ_z) - base_z) / BLOCK) * BLOCK + base_z \
+            if circ_z else base_z + BLOCK
+        rest = max(base_z, min(rest, base_z + BLOCK))
+        band_top = rest + 1.0
 
     def covered_cells(xs, ys):
         # every block cell an AABB overlaps (centers at multiples of BLOCK,
@@ -1329,6 +1350,9 @@ def strip_ground(scene, mode, base_z):
 
     footprint = set()
     if mode == "crop":
+        # every cell occupied by the build itself: any geometry above the
+        # ground band, plus circuit geometry inside it (flat dust, wire
+        # ribbons). AABB rasterization so MiEx's merged strips count fully.
         for ob in scene.objects:
             if ob.type != 'MESH' or ob.hide_render:
                 continue
@@ -1337,12 +1361,7 @@ def strip_ground(scene, mode, base_z):
             me = ob.data
             for poly in me.polygons:
                 c = mw @ poly.center
-                if c.z > band_top:
-                    footprint.add((round(c.x / BLOCK), round(c.y / BLOCK)))
-                elif circuit:
-                    # in-band circuit faces (dust plates, wire ribbons, merged
-                    # dust strips) claim every cell they cover so their
-                    # substrate survives
+                if c.z > band_top or circuit:
                     pts = [mw @ me.vertices[v].co for v in poly.vertices]
                     footprint.update(covered_cells([p.x for p in pts],
                                                    [p.y for p in pts]))
@@ -1355,15 +1374,41 @@ def strip_ground(scene, mode, base_z):
         for f in bm.faces:
             c = mw @ f.calc_center_median()
             if c.z <= band_top:
-                if mode in ("remove", "remove2"):
-                    doomed.append(f)
-                elif (round(c.x / BLOCK), round(c.y / BLOCK)) not in footprint:
-                    doomed.append(f)
+                doomed.append(f)
         if doomed:
             removed += len(doomed)
             bmesh.ops.delete(bm, geom=doomed, context='FACES')
             bm.to_mesh(ob.data)
         bm.free()
+    if mode == "crop" and footprint:
+        # synthesize the build's bottom layer: one clean white cube per
+        # occupied cell, in place of the deleted ground
+        bm = bmesh.new()
+        for (bx, by) in footprint:
+            bmesh.ops.create_cube(
+                bm, size=BLOCK,
+                matrix=Matrix.Translation((bx * BLOCK, by * BLOCK,
+                                           rest - BLOCK / 2)))
+        me = bpy.data.meshes.new("RU_GroundPads")
+        bm.to_mesh(me)
+        bm.free()
+        # per-block seams: the import-time edge-mark pass already ran, so mark
+        # the generated cubes' edges ourselves (freestyle_edge attribute —
+        # same mechanism as mark_block_edges)
+        attr = me.attributes.new("freestyle_edge", 'BOOLEAN', 'EDGE')
+        for i in range(len(me.edges)):
+            attr.data[i].value = True
+        mat = bpy.data.materials.new("RU_GroundPads")
+        mat.use_nodes = True
+        bsdf = next((n for n in mat.node_tree.nodes
+                     if n.type == 'BSDF_PRINCIPLED'), None)
+        if bsdf is not None:
+            bsdf.inputs["Base Color"].default_value = (0.92, 0.92, 0.93, 1.0)
+        me.materials.append(mat)
+        pads = bpy.data.objects.new("RU_GroundPads", me)
+        scene.collection.objects.link(pads)
+        print(f"ground crop: {len(footprint)} base blocks generated "
+              f"(resting plane z={rest:.0f})")
     print(f"ground {mode}: removed {removed} faces (base z={base_z:.1f})")
 
 

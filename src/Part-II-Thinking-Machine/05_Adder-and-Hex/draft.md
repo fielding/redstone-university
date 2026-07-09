@@ -125,8 +125,8 @@ A standard implementation uses:
 
 Build that once, test it thoroughly, and then repeat it.
 
-![1-Bit Full Adder CircuitVerse Diagram](./images/full-adder-circuitverse.png)
-*Figure: A standard 1-bit full adder. Two XOR stages generate the Sum bit, while the AND/OR network generates Carry-Out.*
+![1-Bit Full Adder CircuitVerse Diagram](./images/full-adder_circuitverse.png)
+*Figure: A standard 1-bit full adder. Two XOR stages generate the Sum bit, while the AND/OR network generates Carry-Out. Shown computing `1 + 0 + 1`: Sum is `0`, Carry-Out is `1`.*
 
 #### Lab Part A: Build a 1-bit full adder module
 
@@ -154,7 +154,13 @@ A quick test plan:
 | `1` | `1` | `0` | `0` | `1` |
 | `1` | `1` | `1` | `1` | `1` |
 
+![1-Bit Full Adder Minecraft Build](./images/full-adder_minecraft.png)
+*Figure: The 1-bit full adder module in Minecraft — inputs on the left, the two XOR stages in the middle, Sum and Carry-Out lamps on the right.*
+
 #### Lab Part B: Assemble the 4-bit ripple-carry adder
+
+![4-Bit Ripple-Carry Adder CircuitVerse Diagram](./images/4-bit-rca_circuitverse.png)
+*Figure: Four full-adder modules chained into a 4-bit ripple-carry adder. Each stage's Carry-Out feeds the next stage's Carry-In.*
 
 1.  Create two 4-bit input buses: **Input A** and **Input B**.
 2.  Place four copies of your full adder in a row, one for each bit position.
@@ -167,8 +173,8 @@ A quick test plan:
 5.  Collect the four `Sum` outputs into a 4-bit result bus.
 6.  Keep the final `CarryOut` wire accessible. We are going to need it in the next module.
 
-![4-Bit Ripple-Carry Adder Minecraft Build](./images/4-bit-adder-minecraft.png)
-*Figure: A 4-bit ripple-carry adder in Minecraft. The carry signal passes from one full-adder stage to the next, moving from the least-significant bit toward the most-significant bit.*
+![4-Bit Ripple-Carry Adder Minecraft Build](./images/4-bit-rca_minecraft.png)
+*Figure: The full 4-bit ripple-carry adder in Minecraft, seen from above. Four copies of the same full-adder module sit in a row; the carry signal passes from one stage to the next, moving from the least-significant bit toward the most-significant bit.*
 
 #### The experiment
 
@@ -275,6 +281,9 @@ That is why hexadecimal is everywhere in low-level programming, debugging, and c
 
 This is one of the most satisfying moments in the course. We are about to benefit directly from the modular architecture we chose in Module 4.
 
+![Hexadecimal Display System Abstract Diagram](./images/4-bit-binary-to-hexadecimal-display-abstract_circuitverse.png)
+*Figure: The upgraded display system as two clean stages — a 4-to-16 decoder feeding a hex decoder/driver. Shown reading `0101` and displaying `5`.*
+
 #### Lab Part A: Upgrade the decoder
 
 1.  Return to your 4-to-10 decoder.
@@ -287,6 +296,9 @@ This is one of the most satisfying moments in the course. We are about to benefi
     -   `LE` for `1110`
     -   `LF` for `1111`
 4.  Use the same tap logic from Module 4. Each new line simply recognizes one more identity pattern.
+
+![4-to-16 Decoder CircuitVerse Diagram](./images/4-to-16-decoder_circuitverse.png)
+*Figure: The full 4-to-16 binary decoder. Sixteen output lines, one per 4-bit pattern — here the input `1111` activates line `LF`.*
 
 #### Lab Part B: Upgrade the ROM
 
@@ -305,6 +317,12 @@ A common 7-segment convention is:
 -   `E`: segments `a, d, e, f, g`
 -   `F`: segments `a, e, f, g`
 
+![7-Segment Hex Decoder/Driver CircuitVerse Diagram](./images/7-segment-hex-decoder-driver_circuitverse.png)
+*Figure: The extended decoder/driver ROM — all sixteen line inputs, one OR column per segment.*
+
+![Hexadecimal Display System Aerial View](./images/hex-display-aerial_minecraft.png)
+*Figure: The upgraded display system from above — the 4-bit input bus enters at the right, the 4-to-16 decoder's sixteen lines run down into the diode-matrix ROM, and the seven segment lines exit to the display.*
+
 #### The payoff test
 
 Repeat the test that failed earlier:
@@ -320,6 +338,9 @@ Now the system should behave like this:
 3.  The display lights up a bright, unmistakable `C`.
 
 Bug fixed. System upgraded. No rebuild required.
+
+![Hexadecimal Display System Minecraft Build](./images/hex-display_minecraft.png)
+*Figure: The complete upgraded display system in Minecraft — decoder, ROM, and 7-segment display.*
 
 ---
 

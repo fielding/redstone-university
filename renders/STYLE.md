@@ -12,6 +12,23 @@ Every circuit gets up to two renders:
 | `iso` | build-step / diagram images in lessons | orthographic, 35.26° elevation, azimuth per shot, margin 1.3 | bright with defined soft shadow (shadows are load-bearing for multi-level dust legibility) | Standard | off |
 | `beauty` | module hero shots, part openers | perspective, 28° elevation | warm sun, soft shadows | AgX Punchy | on |
 
+### Large flat builds (decided 2026-07-09)
+
+A wide single-layer build (the legible 4-bit RCA, ~100×36 blocks) gets **no
+iso** — at that aspect the angled view collapses into a sliver of detail
+floating in empty frame. Treatment:
+
+- **Top view only, high resolution.** Give the shot a `"res"` matched to the
+  build's aspect — the render log's `ortho fit: content WxH` line has the
+  exact numbers; canvas aspect = W:H keeps the margins even (the 4-bit RCA is
+  `3600x1306`).
+- **Pair the overview with the module close-up.** The hi-res top shows the
+  repetition and the carry chain; the small-tier iso of the repeated module
+  (the 1-bit full adder) carries the gate-level detail. Overview + detail,
+  never one image trying to do both.
+- The ortho camera contain-fits since 2026-07-09 — a mismatched res
+  letterboxes instead of cropping, so this can't silently cut a build off.
+
 ## The locked look (decided 2026-06-12)
 
 - **Outlines: silhouettes+borders only** (`--outline sil`, the default). Crease
@@ -56,15 +73,20 @@ never wash them out.
   (Decided 2026-07-07, correcting an earlier over-application of lanes to
   small canonical samples.)
 - **Ground:** sand / smooth sandstone reads like blueprint paper in renders.
-- **Ground/platform rule (decided 2026-07-08):** a render includes the ground
-  layer *only* where the redstone actually rests on it — the single substrate
-  layer directly under the dust/components stays; any decorative floor beneath
-  it, and any platform margin extending past the circuit, is dropped. In the
-  pipeline this is the `ground: remove` default (keeps the build's own base
-  block, deletes the layer below). Never use `ground: keep` for course figures
-  — it drags in the full platform (the mistake in the retired canonical M5
-  render). Build circuits on their own base blocks with a separate floor below,
-  same as Part I, and `remove` does the right thing automatically.
+- **Ground/platform rule (decided 2026-07-08, crop rebuilt 2026-07-09):**
+  every figure floats on the build's own bottom blocks — the true ground never
+  appears. Pick the mode by how the build sits:
+  - **`remove` (default)** — build is on its own base blocks with a separate
+    floor below (the Part I pattern). Deletes the floor layer, keeps the pads.
+  - **`crop`** — build is laid out directly on the ground (most hand-built
+    figures). Deletes the true ground entirely and **generates a clean white
+    base block under every cell the circuit occupies** — the ground is treated
+    as if it were just the block the build sits on, reproducing the
+    hand-lift-and-export look of the Part I figures without touching the
+    world; ground with nothing on it vanishes. Circuit geometry (dust, wires,
+    components) is never stripped. (Buried ground has no side faces in a MiEx
+    export, which is why the blocks are synthesized rather than kept.)
+  - **`keep`** — not used for course figures.
 - Legacy builds in other blocks don't need rebuilding: add a `swap` to the
   shot, e.g. `--swap white_wool=white_concrete` (render-time retexture only).
 
