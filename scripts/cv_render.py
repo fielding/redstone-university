@@ -483,8 +483,27 @@ def render(scope, scale=2.0, gate_colors=False, inputs=None, only=None):
     pool = []      # (net, x1, y1, x2, y2) normalized axis-aligned segments
 
     def add_pool(r, x1, y1, x2, y2):
-        if (x1, y1) != (x2, y2):
-            pool.append((r, min(x1, x2), min(y1, y2), max(x1, x2), max(y1, y2)))
+        if (x1, y1) == (x2, y2):
+            return
+        seg = [r, min(x1, x2), min(y1, y2), max(x1, x2), max(y1, y2)]
+        # merge collinear same-net touches into maximal runs: a joint between
+        # two segments of one wire is not an endpoint, and the endpoint
+        # checks in leg_contact must not mistake it for one
+        merged = True
+        while merged:
+            merged = False
+            for i, (pr, sx1, sy1, sx2, sy2) in enumerate(pool):
+                if pr != seg[0]:
+                    continue
+                if (seg[1] == seg[3] == sx1 == sx2
+                        and not (sy1 > seg[4] or seg[2] > sy2)):
+                    seg[2], seg[4] = min(seg[2], sy1), max(seg[4], sy2)
+                    pool.pop(i); merged = True; break
+                if (seg[2] == seg[4] == sy1 == sy2
+                        and not (sx1 > seg[3] or seg[1] > sx2)):
+                    seg[1], seg[3] = min(seg[1], sx1), max(seg[3], sx2)
+                    pool.pop(i); merged = True; break
+        pool.append(tuple(seg))
 
     def pt_seg_dist(x, y, x1, y1, x2, y2):
         cx = min(max(x, x1), x2); cy = min(max(y, y1), y2)
