@@ -16,8 +16,13 @@ def trim(im):
     return im.crop(im.getchannel('A').getbbox())
 
 names = ['7seg-8', '7seg-wall', '7seg-lit', '7seg-closeup']
-panels = [trim(Image.open(os.path.join(OUT, f'{n}_iso.png')).convert('RGBA'))
-          for n in names]
+MIRROR = {'7seg-lit', '7seg-closeup'}   # shot from az315; mirroring restores
+panels = []                              # the az135 stagger, faces stay front
+for n in names:
+    p = trim(Image.open(os.path.join(OUT, f'{n}_iso.png')).convert('RGBA'))
+    if n in MIRROR:
+        p = p.transpose(Image.FLIP_LEFT_RIGHT)
+    panels.append(p)
 H = max(p.height for p in panels[:3])
 scaled = []
 for i, p in enumerate(panels):
