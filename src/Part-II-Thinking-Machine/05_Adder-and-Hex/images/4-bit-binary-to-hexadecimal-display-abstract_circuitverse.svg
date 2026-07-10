@@ -7,11 +7,9 @@
 <line x1="1090" y1="330" x2="1100" y2="330" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="1100" y1="330" x2="1100" y2="150" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="1050" y1="320" x2="1070" y2="320" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
-<polyline points="940,252 920,252 920,260" fill="none" stroke="#f0392a" stroke-width="3.0" stroke-linecap="square" stroke-linejoin="miter"/>
 <line x1="950" y1="252" x2="950" y2="250" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="970" y1="252" x2="970" y2="240" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="980" y1="252" x2="980" y2="230" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
-<polyline points="940,368 920,368 920,360" fill="none" stroke="#5a1816" stroke-width="3.0" stroke-linecap="square" stroke-linejoin="miter"/>
 <line x1="950" y1="368" x2="950" y2="370" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="970" y1="368" x2="970" y2="380" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="980" y1="230" x2="890" y2="230" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
@@ -72,6 +70,8 @@
 <line x1="1160" y1="150" x2="1160" y2="330" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="1070" y1="150" x2="1070" y2="320" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="1170" y1="330" x2="1160" y2="330" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="940" y1="252" x2="920" y2="260" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="940" y1="368" x2="920" y2="360" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <circle cx="1170" cy="340" r="3.1500000000000004" fill="#f0392a"/>
 <circle cx="1130" cy="340" r="3.1500000000000004" fill="#5a1816"/>
 <circle cx="1090" cy="340" r="3.1500000000000004" fill="#f0392a"/>

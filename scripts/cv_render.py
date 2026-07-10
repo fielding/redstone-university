@@ -308,6 +308,10 @@ def render(scope, scale=2.0, gate_colors=False, inputs=None, only=None):
     # snap to it, so box and pins stay consistent for both wiring and drawing.
     SUB_PAD = 14
     sub_boxes = {}
+    # snapped pins want their wire to arrive perpendicular to the edge they sit
+    # on (that's the geometry the author drew before we moved the pin); the
+    # router reads this to pick which way an L-bend leaves the pin.
+    edge_axis = {}
     for si, sub in enumerate(scope.get("SubCircuit", [])):
         pj = [j for j in sub.get("inputNodes", []) + sub.get("outputNodes", []) if j < len(N)]
         if not pj:
@@ -329,10 +333,10 @@ def render(scope, scale=2.0, gate_colors=False, inputs=None, only=None):
             px, py = pos[j]
             dl, dr, dt, db = px - bx0, bx1 - px, py - by0, by1 - py
             m = min(dl, dr, dt, db)
-            if m == dl: px = bx0
-            elif m == dr: px = bx1
-            elif m == dt: py = by0
-            else: py = by1
+            if m == dl: px = bx0; edge_axis[j] = "h"
+            elif m == dr: px = bx1; edge_axis[j] = "h"
+            elif m == dt: py = by0; edge_axis[j] = "v"
+            else: py = by1; edge_axis[j] = "v"
             pos[j] = (px, py)
     # 7-seg pins: CircuitVerse places them just inside the display outline, so
     # wires visibly punch through the frame. Snap each pin onto the frame edge
@@ -350,13 +354,13 @@ def render(scope, scale=2.0, gate_colors=False, inputs=None, only=None):
                 dl, dr, dt, db = px - bx0, bx1 - px, py - by0, by1 - py
                 m = min(dl, dr, dt, db)
                 if m == dl:
-                    px = bx0
+                    px = bx0; edge_axis[j] = "h"
                 elif m == dr:
-                    px = bx1
+                    px = bx1; edge_axis[j] = "h"
                 elif m == dt:
-                    py = by0
+                    py = by0; edge_axis[j] = "v"
                 else:
-                    py = by1
+                    py = by1; edge_axis[j] = "v"
                 pos[j] = (px, py)
 
     # optional input override: a list of 0/1 applied to Input boxes left→right
@@ -387,6 +391,9 @@ def render(scope, scale=2.0, gate_colors=False, inputs=None, only=None):
                 for idx in el.get("customData", {}).get("nodes", {}).values():
                     for j in (idx if isinstance(idx, list) else [idx]):
                         axis[j] = ax
+    # a snapped pin's approach comes from the box edge it sits on, not the
+    # element's rotation (subcircuit pins aren't in customData.nodes at all)
+    axis.update(edge_axis)
 
     # wires
     edges = set()
@@ -394,6 +401,22 @@ def render(scope, scale=2.0, gate_colors=False, inputs=None, only=None):
         for j in n["connections"]:
             if j < len(N):
                 edges.add((min(i, j), max(i, j)))
+
+    # net id per node — routed bends must stay off OTHER nets' geometry: any
+    # touch or collinear run reads as a junction that doesn't exist (ru-b24cda)
+    parent = list(range(len(N)))
+
+    def _find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]; x = parent[x]
+        return x
+
+    for i, n in enumerate(N):
+        for j in n["connections"]:
+            if j < len(N):
+                ri, rj = _find(i), _find(j)
+                if ri != rj:
+                    parent[ri] = rj
 
     def bus_run(t, exclude):
         """If t's neighbours (minus `exclude`) form a straight bus through t,
@@ -407,8 +430,77 @@ def render(scope, scale=2.0, gate_colors=False, inputs=None, only=None):
             xs = [pos[j][0] for j in nb]; return ("h", min(xs), max(xs))
         return None
 
+    # ── contact-aware Manhattan routing (ru-b24cda) ──────────────────────────
+    # `pool` holds every placed segment with its net. A candidate bend is
+    # rejected if any leg touches a different net: collinear overlap, parallel
+    # runs close enough to visually merge, or an endpoint landing on/near the
+    # other's line. Perpendicular pass-throughs are honest crossings and stay.
+    EPS = 4.0      # endpoint gap that still reads as touching at LW≈3
+    PARA = 6.0     # parallel-merge distance (grid pitch is 10)
+    pool = []      # (net, x1, y1, x2, y2) normalized axis-aligned segments
+
+    def add_pool(r, x1, y1, x2, y2):
+        if (x1, y1) != (x2, y2):
+            pool.append((r, min(x1, x2), min(y1, y2), max(x1, x2), max(y1, y2)))
+
+    def pt_seg_dist(x, y, x1, y1, x2, y2):
+        cx = min(max(x, x1), x2); cy = min(max(y, y1), y2)
+        return ((x - cx) ** 2 + (y - cy) ** 2) ** 0.5
+
+    def leg_contact(r, ax_, ay_, bx_, by_):
+        lx1, ly1, lx2, ly2 = min(ax_, bx_), min(ay_, by_), max(ax_, bx_), max(ay_, by_)
+        lv = lx1 == lx2
+        for (pr, sx1, sy1, sx2, sy2) in pool:
+            if pr == r:
+                continue
+            if lv == (sx1 == sx2):             # parallel
+                if lv:
+                    d = abs(lx1 - sx1)
+                    ov = min(ly2, sy2) - max(ly1, sy1)
+                else:
+                    d = abs(ly1 - sy1)
+                    ov = min(lx2, sx2) - max(lx1, sx1)
+                if d < PARA and ov > 0:
+                    return True
+                if d < EPS and ov > -EPS:      # collinear wires ending mouth-to-mouth
+                    return True
+            else:                              # perpendicular: only ends can lie
+                if (pt_seg_dist(lx1, ly1, sx1, sy1, sx2, sy2) <= EPS
+                        or pt_seg_dist(lx2, ly2, sx1, sy1, sx2, sy2) <= EPS
+                        or pt_seg_dist(sx1, sy1, lx1, ly1, lx2, ly2) <= EPS
+                        or pt_seg_dist(sx2, sy2, lx1, ly1, lx2, ly2) <= EPS):
+                    return True
+        return False
+
+    def route(r, sx, sy, ex, ey, hf):
+        """Grid candidates from (sx,sy) to (ex,ey): the plain L, then Z-jogs
+        keeping the same exit axis, then the flipped L and its jogs. First
+        contact-free route wins. A crossed pair that has no clean orthogonal
+        layout keeps its original diagonal — a slant is honest, a false
+        junction is not."""
+        def cands(hfirst):
+            if hfirst:
+                yield [(sx, sy), (ex, sy), (ex, ey)]
+                lo, hi = (sx, ex) if sx < ex else (ex, sx)
+                for m in sorted(range(int(lo // 10 + 1) * 10, int(hi), 10),
+                                key=lambda m: abs(m - ex)):
+                    yield [(sx, sy), (m, sy), (m, ey), (ex, ey)]
+            else:
+                yield [(sx, sy), (sx, ey), (ex, ey)]
+                lo, hi = (sy, ey) if sy < ey else (ey, sy)
+                for m in sorted(range(int(lo // 10 + 1) * 10, int(hi), 10),
+                                key=lambda m: abs(m - ey)):
+                    yield [(sx, sy), (sx, m), (ex, m), (ex, ey)]
+        for pts in list(cands(hf)) + list(cands(not hf)):
+            if not any(leg_contact(r, p[0], p[1], q[0], q[1])
+                       for p, q in zip(pts, pts[1:])):
+                return pts
+        return None
+
     suppress = set()   # tapped bus nodes that become pass-through (no dot)
     taps = []          # (x, y, net-source-node) perpendicular bus connections
+    diags = []         # bends to route once all forced geometry is placed
+    kept_diagonals = []
     for a, b in (() if only else sorted(edges)):
         (x1, y1), (x2, y2) = pos[a], pos[b]
         c = wcol(net.get(a))
@@ -416,6 +508,7 @@ def render(scope, scale=2.0, gate_colors=False, inputs=None, only=None):
         if x1 == x2 or y1 == y2:
             body.append(f'<line x1="{x1}" y1="{y1}" x2="{x2}" y2="{y2}" stroke="{c}" '
                         f'stroke-width="{LW}" stroke-linecap="round"/>')
+            add_pool(_find(a), x1, y1, x2, y2)
             continue
         # diagonal. If one end is a pin and the other sits on a straight bus,
         # tap the bus perpendicularly at the pin's level (a real T-junction)
@@ -429,22 +522,43 @@ def render(scope, scale=2.0, gate_colors=False, inputs=None, only=None):
             if run and axis[pin] == "h" and run[0] == "v" and run[1] <= py <= run[2]:
                 body.append(f'<line x1="{px}" y1="{py}" x2="{tx}" y2="{py}" stroke="{c}" '
                             f'stroke-width="{LW}" stroke-linecap="round"/>')
+                add_pool(_find(a), px, py, tx, py)
                 taps.append((tx, py, pin)); suppress.add(t); routed = True
             elif run and axis[pin] == "v" and run[0] == "h" and run[1] <= px <= run[2]:
                 body.append(f'<line x1="{px}" y1="{py}" x2="{px}" y2="{ty}" stroke="{c}" '
                             f'stroke-width="{LW}" stroke-linecap="round"/>')
+                add_pool(_find(a), px, py, px, ty)
                 taps.append((px, ty, pin)); suppress.add(t); routed = True
-        if not routed:                        # fallback: L-bend along pin axis
-            if a in axis:
-                hf = axis[a] == "h"; (sx, sy), (ex, ey) = (x1, y1), (x2, y2)
-            elif b in axis:
-                hf = axis[b] == "h"; (sx, sy), (ex, ey) = (x2, y2), (x1, y1)
-            else:
-                hf = True; (sx, sy), (ex, ey) = (x1, y1), (x2, y2)
-            cx, cy = (ex, sy) if hf else (sx, ey)
-            body.append(f'<polyline points="{sx},{sy} {cx},{cy} {ex},{ey}" fill="none" '
+        if not routed:
+            diags.append((a, b))
+    for a, b in diags:
+        (x1, y1), (x2, y2) = pos[a], pos[b]
+        c = wcol(net.get(a))
+        if a in axis:
+            hf = axis[a] == "h"; (sx, sy), (ex, ey) = (x1, y1), (x2, y2)
+        elif b in axis:
+            hf = axis[b] == "h"; (sx, sy), (ex, ey) = (x2, y2), (x1, y1)
+        else:
+            hf = True; (sx, sy), (ex, ey) = (x1, y1), (x2, y2)
+        pts = route(_find(a), sx, sy, ex, ey, hf)
+        if pts:
+            pstr = " ".join(f"{px},{py}" for px, py in pts)
+            body.append(f'<polyline points="{pstr}" fill="none" '
                         f'stroke="{c}" stroke-width="{LW}" stroke-linecap="square" '
                         f'stroke-linejoin="miter"/>')
+            for p, q in zip(pts, pts[1:]):
+                add_pool(_find(a), p[0], p[1], q[0], q[1])
+        else:
+            body.append(f'<line x1="{sx}" y1="{sy}" x2="{ex}" y2="{ey}" stroke="{c}" '
+                        f'stroke-width="{LW}" stroke-linecap="round"/>')
+            kept_diagonals.append((a, b))
+
+    # routed-geometry dump so tooling can assert the no-false-junction
+    # invariant on the real output (scripts/check_cv_junctions.py)
+    if not only and os.environ.get("CV_DEBUG_SEGS"):
+        with open(os.environ["CV_DEBUG_SEGS"], "a") as f:
+            f.write(json.dumps({"scope": scope.get("name"), "segs": pool,
+                                "kept_diagonals": len(kept_diagonals)}) + "\n")
 
     # gate pins get a lead into the gate instead of a dot (above), so the gate
     # stays the focal element — collect them to skip in the dot pass.
@@ -467,6 +581,13 @@ def render(scope, scale=2.0, gate_colors=False, inputs=None, only=None):
         deg = sum(1 for j in n["connections"] if j < len(N))
         if n["type"] in (0, 1) or deg != 2:
             x, y = pos[i]
+            # a dangling stub's terminal dot is decoration — skip it when it
+            # would sit on another net's wire and mark a junction that isn't
+            if n["type"] == 2 and deg <= 1:
+                r = _find(i)
+                if any(pr != r and pt_seg_dist(x, y, sx1, sy1, sx2, sy2) <= PARA
+                       for (pr, sx1, sy1, sx2, sy2) in pool):
+                    continue
             body.append(f'<circle cx="{x}" cy="{y}" r="{DOT}" fill="{wcol(net.get(i))}"/>')
     for x, y, src in (() if only else taps):
         body.append(f'<circle cx="{x}" cy="{y}" r="{DOT}" fill="{wcol(net.get(src))}"/>')

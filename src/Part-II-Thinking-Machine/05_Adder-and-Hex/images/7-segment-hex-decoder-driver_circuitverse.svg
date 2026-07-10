@@ -133,8 +133,6 @@
 <line x1="130" y1="190" x2="250" y2="190" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="130" y1="150" x2="550" y2="150" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="130" y1="110" x2="270" y2="110" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
-<polyline points="230,830 230,750 210,750" fill="none" stroke="#5a1816" stroke-width="3.0" stroke-linecap="square" stroke-linejoin="miter"/>
-<polyline points="210,830 210,810 230,810" fill="none" stroke="#5a1816" stroke-width="3.0" stroke-linecap="square" stroke-linejoin="miter"/>
 <line x1="280" y1="720" x2="280" y2="270" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="270" y1="720" x2="270" y2="190" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="250" y1="720" x2="250" y2="110" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
@@ -147,8 +145,6 @@
 <line x1="270" y1="110" x2="1110" y2="110" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="280" y1="70" x2="130" y2="70" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="280" y1="70" x2="1380" y2="70" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
-<polyline points="520,790 520,760 500,760" fill="none" stroke="#5a1816" stroke-width="3.0" stroke-linecap="square" stroke-linejoin="miter"/>
-<polyline points="500,790 500,760 520,760" fill="none" stroke="#5a1816" stroke-width="3.0" stroke-linecap="square" stroke-linejoin="miter"/>
 <line x1="550" y1="710" x2="550" y2="270" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="530" y1="710" x2="530" y2="150" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="540" y1="740" x2="540" y2="760" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
@@ -160,8 +156,6 @@
 <line x1="820" y1="710" x2="820" y2="230" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="810" y1="710" x2="810" y2="150" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="820" y1="740" x2="820" y2="770" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
-<polyline points="800,800 800,770 780,770" fill="none" stroke="#5a1816" stroke-width="3.0" stroke-linecap="square" stroke-linejoin="miter"/>
-<polyline points="780,800 780,770 800,770" fill="none" stroke="#5a1816" stroke-width="3.0" stroke-linecap="square" stroke-linejoin="miter"/>
 <line x1="760" y1="770" x2="780" y2="770" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="800" y1="770" x2="820" y2="770" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="810" y1="270" x2="1320" y2="270" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
@@ -196,8 +190,6 @@
 <line x1="1100" y1="150" x2="1360" y2="150" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="1110" y1="110" x2="1370" y2="110" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="1030" y1="770" x2="1050" y2="770" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
-<polyline points="1070,790 1070,770 1050,770" fill="none" stroke="#5a1816" stroke-width="3.0" stroke-linecap="square" stroke-linejoin="miter"/>
-<polyline points="1050,790 1050,770 1070,770" fill="none" stroke="#5a1816" stroke-width="3.0" stroke-linecap="square" stroke-linejoin="miter"/>
 <line x1="1090" y1="770" x2="1070" y2="770" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="1320" y1="270" x2="1620" y2="270" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="1330" y1="230" x2="1630" y2="230" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
@@ -207,16 +199,10 @@
 <line x1="1380" y1="70" x2="1660" y2="70" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="1320" y1="920" x2="1320" y2="820" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="1320" y1="920" x2="1320" y2="1200" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
-<polyline points="1330,790 1330,760 1310,760" fill="none" stroke="#5a1816" stroke-width="3.0" stroke-linecap="square" stroke-linejoin="miter"/>
-<polyline points="1310,790 1310,760 1330,760" fill="none" stroke="#5a1816" stroke-width="3.0" stroke-linecap="square" stroke-linejoin="miter"/>
 <line x1="1610" y1="910" x2="1610" y2="810" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="1610" y1="910" x2="1610" y2="1180" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
-<polyline points="1620,780 1620,750 1600,750" fill="none" stroke="#5a1816" stroke-width="3.0" stroke-linecap="square" stroke-linejoin="miter"/>
-<polyline points="1600,780 1600,750 1620,750" fill="none" stroke="#5a1816" stroke-width="3.0" stroke-linecap="square" stroke-linejoin="miter"/>
 <line x1="1900" y1="910" x2="1900" y2="810" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="1900" y1="910" x2="1900" y2="1190" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
-<polyline points="1910,780 1910,750 1890,750" fill="none" stroke="#5a1816" stroke-width="3.0" stroke-linecap="square" stroke-linejoin="miter"/>
-<polyline points="1890,780 1890,750 1910,750" fill="none" stroke="#5a1816" stroke-width="3.0" stroke-linecap="square" stroke-linejoin="miter"/>
 <line x1="1290" y1="760" x2="1310" y2="760" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="1330" y1="760" x2="1350" y2="760" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="1580" y1="750" x2="1600" y2="750" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
@@ -227,11 +213,9 @@
 <line x1="1630" y1="230" x2="1920" y2="230" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="1660" y1="70" x2="1950" y2="70" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="1650" y1="110" x2="1940" y2="110" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
-<polyline points="2350,1132 2330,1132 2330,1140" fill="none" stroke="#5a1816" stroke-width="3.0" stroke-linecap="square" stroke-linejoin="miter"/>
 <line x1="2360" y1="1132" x2="2360" y2="1130" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="2380" y1="1132" x2="2380" y2="1120" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="2390" y1="1132" x2="2390" y2="1110" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
-<polyline points="2350,1248 2330,1248 2330,1240" fill="none" stroke="#5a1816" stroke-width="3.0" stroke-linecap="square" stroke-linejoin="miter"/>
 <line x1="2360" y1="1248" x2="2360" y2="1250" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="2380" y1="1248" x2="2380" y2="1260" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="2390" y1="1110" x2="2300" y2="1110" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
@@ -253,6 +237,22 @@
 <line x1="2310" y1="1170" x2="220" y2="1170" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="2300" y1="1160" x2="510" y2="1160" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="2330" y1="1190" x2="1900" y2="1190" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
+<polyline points="230,830 230,820 210,820 210,750" fill="none" stroke="#5a1816" stroke-width="3.0" stroke-linecap="square" stroke-linejoin="miter"/>
+<polyline points="210,830 220,830 220,810 230,810" fill="none" stroke="#5a1816" stroke-width="3.0" stroke-linecap="square" stroke-linejoin="miter"/>
+<polyline points="520,790 520,770 500,770 500,760" fill="none" stroke="#5a1816" stroke-width="3.0" stroke-linecap="square" stroke-linejoin="miter"/>
+<polyline points="500,790 510,790 510,760 520,760" fill="none" stroke="#5a1816" stroke-width="3.0" stroke-linecap="square" stroke-linejoin="miter"/>
+<polyline points="800,800 800,780 780,780 780,770" fill="none" stroke="#5a1816" stroke-width="3.0" stroke-linecap="square" stroke-linejoin="miter"/>
+<polyline points="780,800 790,800 790,770 800,770" fill="none" stroke="#5a1816" stroke-width="3.0" stroke-linecap="square" stroke-linejoin="miter"/>
+<polyline points="1070,790 1070,780 1050,780 1050,770" fill="none" stroke="#5a1816" stroke-width="3.0" stroke-linecap="square" stroke-linejoin="miter"/>
+<polyline points="1050,790 1060,790 1060,770 1070,770" fill="none" stroke="#5a1816" stroke-width="3.0" stroke-linecap="square" stroke-linejoin="miter"/>
+<polyline points="1330,790 1330,770 1310,770 1310,760" fill="none" stroke="#5a1816" stroke-width="3.0" stroke-linecap="square" stroke-linejoin="miter"/>
+<polyline points="1310,790 1320,790 1320,760 1330,760" fill="none" stroke="#5a1816" stroke-width="3.0" stroke-linecap="square" stroke-linejoin="miter"/>
+<polyline points="1620,780 1620,760 1600,760 1600,750" fill="none" stroke="#5a1816" stroke-width="3.0" stroke-linecap="square" stroke-linejoin="miter"/>
+<polyline points="1600,780 1610,780 1610,750 1620,750" fill="none" stroke="#5a1816" stroke-width="3.0" stroke-linecap="square" stroke-linejoin="miter"/>
+<polyline points="1910,780 1910,760 1890,760 1890,750" fill="none" stroke="#5a1816" stroke-width="3.0" stroke-linecap="square" stroke-linejoin="miter"/>
+<polyline points="1890,780 1900,780 1900,750 1910,750" fill="none" stroke="#5a1816" stroke-width="3.0" stroke-linecap="square" stroke-linejoin="miter"/>
+<line x1="2350" y1="1132" x2="2330" y2="1140" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="2350" y1="1248" x2="2330" y2="1240" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <circle cx="220" cy="920" r="3.1500000000000004" fill="#5a1816"/>
 <circle cx="510" cy="920" r="3.1500000000000004" fill="#5a1816"/>
 <circle cx="790" cy="920" r="3.1500000000000004" fill="#5a1816"/>

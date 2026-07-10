@@ -96,7 +96,15 @@ cv_render.py <cv> [name] [options]
   or it also iterates `allNodes` and corrupts the bounds.
 - **Wires.** CircuitVerse stores some gate-input wires as raw diagonals; the
   renderer Manhattan-routes them and taps buses perpendicularly (the alignment
-  you used to fix by hand in Figma).
+  you used to fix by hand in Figma). Routing is contact-aware: two wires of
+  different nets may only meet as a perpendicular crossing, so a bend candidate
+  (plain L, then grid Z-jogs, then the flipped L) is rejected if any leg would
+  overlap, nearly merge with, or end on another net's wire. A crossed pair with
+  no clean orthogonal layout keeps its original diagonal — a slant is honest, a
+  false junction is not. Pins snapped onto a box edge (subcircuits, 7-seg) are
+  approached perpendicular to that edge. The invariant is checkable:
+  `CV_DEBUG_SEGS=/tmp/segs.jsonl` during a render dumps routed geometry, and
+  `scripts/check_cv_junctions.py /tmp/segs.jsonl` fails on any cross-net touch.
 - **Gate leads.** Each gate pin gets a short lead *into* the gate (snapped to the
   dominant axis) and the gate is drawn on top, so wires meet it flush with no
   dots on the gate. Connection dots appear only at real junctions/terminals/I/O.

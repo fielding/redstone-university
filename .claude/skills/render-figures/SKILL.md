@@ -51,6 +51,14 @@ Special generators (write to `--out` dir): `--heroes` (7 gate symbols),
 `--gate-intros` (7 hero+example), `--layout-demo` (subcircuit before/after),
 `--seg-labeled` (7-segment naming reference).
 
+After touching the router/wire code, assert the no-false-junction invariant
+(wires of different nets only meet as perpendicular crossings):
+
+```bash
+CV_DEBUG_SEGS=/tmp/segs.jsonl python3 scripts/cv_render.py "$CV" --batch renders/diagrams.json
+python3 scripts/check_cv_junctions.py /tmp/segs.jsonl
+```
+
 If text uses the wrong font, the Young Serif / Fira Code TTFs aren't installed
 for cairosvg (`~/Library/Fonts` + `fc-cache -f`).
 

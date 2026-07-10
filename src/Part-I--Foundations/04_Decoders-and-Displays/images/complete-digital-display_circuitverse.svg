@@ -145,7 +145,6 @@
 <line x1="120" y1="820" x2="120" y2="580" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="110" y1="820" x2="110" y2="530" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="100" y1="820" x2="100" y2="480" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
-<polyline points="90,820 90,530 130,530" fill="none" stroke="#5a1816" stroke-width="3.0" stroke-linecap="square" stroke-linejoin="miter"/>
 <line x1="80" y1="820" x2="80" y2="380" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="70" y1="820" x2="70" y2="330" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="110" y1="850" x2="110" y2="860" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
@@ -234,11 +233,9 @@
 <line x1="200" y1="870" x2="200" y2="1000" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="190" y1="880" x2="190" y2="1010" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="210" y1="860" x2="210" y2="1060" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
-<polyline points="480,972 460,972 460,980" fill="none" stroke="#5a1816" stroke-width="3.0" stroke-linecap="square" stroke-linejoin="miter"/>
 <line x1="490" y1="972" x2="490" y2="970" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="510" y1="972" x2="510" y2="960" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="520" y1="972" x2="520" y2="950" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
-<polyline points="480,1088 460,1088 460,1080" fill="none" stroke="#f0392a" stroke-width="3.0" stroke-linecap="square" stroke-linejoin="miter"/>
 <line x1="490" y1="1088" x2="490" y2="1090" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="510" y1="1088" x2="510" y2="1100" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="520" y1="950" x2="430" y2="950" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
@@ -263,6 +260,9 @@
 <line x1="400" y1="680" x2="400" y2="530" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="400" y1="680" x2="420" y2="680" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="420" y1="680" x2="420" y2="580" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="90" y1="820" x2="130" y2="530" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="480" y1="972" x2="460" y2="980" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="480" y1="1088" x2="460" y2="1080" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
 <circle cx="900" cy="1060" r="3.1500000000000004" fill="#5a1816"/>
 <circle cx="940" cy="1060" r="3.1500000000000004" fill="#5a1816"/>
 <circle cx="900" cy="280" r="3.1500000000000004" fill="#5a1816"/>
