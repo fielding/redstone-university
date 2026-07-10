@@ -215,6 +215,9 @@ The adder works.
 
 And the display goes blank.
 
+![The display system receiving 1100](./images/4-bit-binary-to-display-abstract-1100_circuitverse.png)
+*Figure: The bug, exactly as the hardware sees it. The adder hands the display system `1100` — but the 4-to-10 decoder only knows the ten patterns for `0` through `9`. No output line fires, the ROM stays quiet, and the display shows nothing.*
+
 #### The diagnosis
 
 This is our first real system bug, and it is a great one.

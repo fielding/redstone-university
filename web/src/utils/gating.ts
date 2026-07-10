@@ -10,7 +10,14 @@ import type { CourseNode } from './navigation';
  */
 export const LIVE_PARTS = new Set(['part-i--foundations']);
 
+// Local preview of unreleased parts: PREVIEW_ALL_PARTS=true npm run dev
+// (never set in CI/production — the gate stays closed for real builds)
+const PREVIEW_ALL =
+    typeof process !== 'undefined' &&
+    process.env?.PREVIEW_ALL_PARTS === 'true';
+
 export function isLiveSlug(slug: string): boolean {
+    if (PREVIEW_ALL) return true;
     const head = slug.split('/')[0];
     // Root-level pages (the course introduction) are always live.
     if (!head.startsWith('part-')) return true;
