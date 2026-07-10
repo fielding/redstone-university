@@ -1,26 +1,26 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="392" height="572" viewBox="0 0 196 286">
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="572" viewBox="0 0 210 286">
 <g transform="translate(-602,378)">
-<rect x="654" y="-296" width="82" height="132" fill="none" stroke="#d2cdc5" stroke-width="2.2" stroke-dasharray="8 6"/>
+<rect x="654" y="-296" width="112" height="132" fill="none" stroke="#d2cdc5" stroke-width="2.2" stroke-dasharray="8 6"/>
 <line x1="700" y1="-250" x2="700" y2="-230" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
-<line x1="720" y1="-250" x2="720" y2="-230" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
-<line x1="710" y1="-290" x2="710" y2="-310" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="720" y1="-250" x2="720" y2="-230" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="710" y1="-290" x2="710" y2="-310" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="680" y1="-160" x2="680" y2="-180" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
-<line x1="740" y1="-160" x2="740" y2="-230" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="740" y1="-160" x2="740" y2="-230" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="680" y1="-230" x2="700" y2="-230" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="680" y1="-230" x2="680" y2="-210" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
-<line x1="740" y1="-230" x2="720" y2="-230" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="740" y1="-230" x2="720" y2="-230" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
 <circle cx="680" cy="-160" r="3.1500000000000004" fill="#f0392a"/>
-<circle cx="740" cy="-160" r="3.1500000000000004" fill="#5a1816"/>
-<circle cx="710" cy="-310" r="3.1500000000000004" fill="#5a1816"/>
-<rect x="670" y="-160" width="20" height="20" rx="4" fill="#f0392a" stroke="#f0392a" stroke-width="3.2"/><text x="680" y="-145" font-family="Fira Code, ui-monospace, monospace" font-size="14" font-weight="600" text-anchor="middle" fill="#f5f1ea">1</text>
-<rect x="730" y="-160" width="20" height="20" rx="4" fill="#ffffff" stroke="#30231e" stroke-width="3.2"/><text x="740" y="-145" font-family="Fira Code, ui-monospace, monospace" font-size="14" font-weight="600" text-anchor="middle" fill="#30231e">0</text>
-<rect x="700" y="-330" width="20" height="20" rx="4" fill="#ffffff" stroke="#30231e" stroke-width="3.2"/><text x="710" y="-315" font-family="Fira Code, ui-monospace, monospace" font-size="14" font-weight="600" text-anchor="middle" fill="#30231e">0</text>
-<line x1="680" y1="-210" x2="680.0" y2="-200.0" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
-<line x1="680" y1="-180" x2="680.0" y2="-190.0" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
+<circle cx="740" cy="-160" r="3.1500000000000004" fill="#f0392a"/>
+<circle cx="710" cy="-310" r="3.1500000000000004" fill="#f0392a"/>
+<rect x="670" y="-160" width="20" height="20" fill="#ffffff" stroke="#f0392a" stroke-width="3.2"/><text x="680" y="-145" font-family="Fira Code, ui-monospace, monospace" font-size="14" font-weight="600" text-anchor="middle" fill="#f0392a">1</text>
+<rect x="730" y="-160" width="20" height="20" fill="#ffffff" stroke="#f0392a" stroke-width="3.2"/><text x="740" y="-145" font-family="Fira Code, ui-monospace, monospace" font-size="14" font-weight="600" text-anchor="middle" fill="#f0392a">1</text>
+<rect x="700" y="-330" width="20" height="20" fill="#ffffff" stroke="#f0392a" stroke-width="3.2"/><text x="710" y="-315" font-family="Fira Code, ui-monospace, monospace" font-size="14" font-weight="600" text-anchor="middle" fill="#f0392a">1</text>
+<line x1="680" y1="-210" x2="680" y2="-200" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="680" y1="-180" x2="680" y2="-190" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
 <g transform="translate(680,-190) rotate(270)"><path d="M -9 -11 L 12 0 L -9 11 Z" fill="#f0d6d4" stroke="#30231e" stroke-width="3.2" stroke-linecap="square" stroke-linejoin="miter"/><circle cx="15" cy="0" r="4" fill="#f5f1ea" stroke="#30231e" stroke-width="3.2"/></g>
-<line x1="700" y1="-250" x2="704.4721359549995" y2="-258.94427190999915" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
-<line x1="720" y1="-250" x2="715.5278640450005" y2="-258.94427190999915" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
-<line x1="710" y1="-290" x2="710.0" y2="-280.0" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
-<g transform="translate(710,-270) rotate(270)"><path d="M -20 -19 Q -7 0 -20 19" fill="none" stroke="#30231e" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M -16 -19 Q -3 0 -16 19 Q 6 18 19 0 Q 6 -18 -16 -19 Z" fill="#fce8ba" stroke="#30231e" stroke-width="3.2" stroke-linecap="square" stroke-linejoin="miter"/></g>
+<line x1="700" y1="-250" x2="700" y2="-260" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="720" y1="-250" x2="720" y2="-260" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="710" y1="-290" x2="710" y2="-280" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
+<g transform="translate(710,-270) rotate(270)"><path d="M -24 -19 Q -11 0 -24 19" fill="none" stroke="#30231e" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M -16 -19 Q -3 0 -16 19 Q 6 18 19 0 Q 6 -18 -16 -19 Z" fill="#fce8ba" stroke="#30231e" stroke-width="3.2" stroke-linecap="square" stroke-linejoin="miter"/></g>
 </g>
 </svg>

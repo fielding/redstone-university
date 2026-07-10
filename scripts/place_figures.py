@@ -38,8 +38,14 @@ def load(rel):
 def pairs():
     """Yield (source_abs, dest_abs) for every placed figure."""
     diagrams = load("renders/diagrams.json")
+    # generator outputs (--gate-intros, --seg-labeled, ...): source and dest
+    # filenames are explicit and identical in basename, png+svg
+    for name, dest in diagrams.get("_generated", {}).items():
+        for ext in (".png", ".svg"):
+            yield (os.path.join(REPO, "renders/cv-out", name + ext),
+                   os.path.join(REPO, dest + ext))
     for key, entry in diagrams.items():
-        if key == "_defaults" or not isinstance(entry, dict):
+        if key in ("_defaults", "_generated") or not isinstance(entry, dict):
             continue
         place = entry.get("place")
         if not place:

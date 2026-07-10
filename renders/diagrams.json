@@ -11,7 +11,7 @@
       1,
       0
     ],
-    "place": "src/Part-I--Foundations/03_The-Art-of-Logic/images/XOR-gate"
+    "place": "src/Part-I--Foundations/03_The-Art-of-Logic/images/XOR-gate-composite"
   },
   "4bit-input-interface": {
     "circuit": "4bit Input Interface",
@@ -28,17 +28,15 @@
       1,
       1
     ],
-    "place": "src/Part-I--Foundations/03_The-Art-of-Logic/images/XNOR-gate"
+    "place": "src/Part-I--Foundations/03_The-Art-of-Logic/images/XNOR-gate-composite"
   },
   "not-gate": {
     "circuit": "NOT Gate",
-    "name": "not-gate",
-    "place": "src/Part-I--Foundations/02_The-Grammar-of-Circuits/images/NOT-gate"
+    "name": "not-gate"
   },
   "or-gate": {
     "circuit": "OR Gate",
-    "name": "or-gate",
-    "place": "src/Part-I--Foundations/02_The-Grammar-of-Circuits/images/OR-gate"
+    "name": "or-gate"
   },
   "and-gate": {
     "circuit": "AND Gate",
@@ -47,7 +45,7 @@
       1,
       1
     ],
-    "place": "src/Part-I--Foundations/02_The-Grammar-of-Circuits/images/AND-gate"
+    "place": "src/Part-I--Foundations/02_The-Grammar-of-Circuits/images/AND-gate-composite"
   },
   "nor-gate": {
     "circuit": "NOR Gate",
@@ -56,7 +54,7 @@
       0,
       0
     ],
-    "place": "src/Part-I--Foundations/03_The-Art-of-Logic/images/NOR-gate"
+    "place": "src/Part-I--Foundations/03_The-Art-of-Logic/images/NOR-gate-composite"
   },
   "nand-gate": {
     "circuit": "NAND Gate",
@@ -65,7 +63,7 @@
       1,
       1
     ],
-    "place": "src/Part-I--Foundations/03_The-Art-of-Logic/images/NAND-gate"
+    "place": "src/Part-I--Foundations/03_The-Art-of-Logic/images/NAND-gate-composite"
   },
   "redstone-university": {
     "circuit": "Redstone University",
@@ -170,5 +168,15 @@
     "circuit": "4-bit binary to hexadecimal display (abstract)",
     "name": "4-bit-binary-to-hexadecimal-display-abstract",
     "place": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/4-bit-binary-to-hexadecimal-display-abstract"
+  },
+  "_generated": {
+    "AND-gate_circuitverse": "src/Part-I--Foundations/02_The-Grammar-of-Circuits/images/AND-gate_circuitverse",
+    "NOT-gate_circuitverse": "src/Part-I--Foundations/02_The-Grammar-of-Circuits/images/NOT-gate_circuitverse",
+    "OR-gate_circuitverse": "src/Part-I--Foundations/02_The-Grammar-of-Circuits/images/OR-gate_circuitverse",
+    "NAND-gate_circuitverse": "src/Part-I--Foundations/03_The-Art-of-Logic/images/NAND-gate_circuitverse",
+    "NOR-gate_circuitverse": "src/Part-I--Foundations/03_The-Art-of-Logic/images/NOR-gate_circuitverse",
+    "XNOR-gate_circuitverse": "src/Part-I--Foundations/03_The-Art-of-Logic/images/XNOR-gate_circuitverse",
+    "XOR-gate_circuitverse": "src/Part-I--Foundations/03_The-Art-of-Logic/images/XOR-gate_circuitverse",
+    "7-segment-display_labeled": "src/Part-I--Foundations/04_Decoders-and-Displays/images/7-segment-display_labeled"
   }
 }

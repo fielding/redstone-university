@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="550" height="966" viewBox="-172 -302 344 604">
+<rect x="-160" y="-290" width="320" height="580" fill="#f5f1ea" stroke="#30231e" stroke-width="7"/>
+<g transform="scale(5.0)">
+<path d="M -18 -46 L 18 -46" fill="none" stroke="#f0392a" stroke-width="5" stroke-linecap="round"/>
+<path d="M 22 -42 L 22 -6" fill="none" stroke="#f0392a" stroke-width="5" stroke-linecap="round"/>
+<path d="M 22 6 L 22 42" fill="none" stroke="#f0392a" stroke-width="5" stroke-linecap="round"/>
+<path d="M -18 46 L 18 46" fill="none" stroke="#f0392a" stroke-width="5" stroke-linecap="round"/>
+<path d="M -22 6 L -22 42" fill="none" stroke="#f0392a" stroke-width="5" stroke-linecap="round"/>
+<path d="M -22 -42 L -22 -6" fill="none" stroke="#f0392a" stroke-width="5" stroke-linecap="round"/>
+<path d="M -18 0 L 18 0" fill="none" stroke="#f0392a" stroke-width="5" stroke-linecap="round"/>
+</g>
+<text x="0" y="-222" font-family="Young Serif, Georgia, serif" font-size="22" font-weight="700" text-anchor="middle" fill="#f5f1ea">a</text>
+<text x="110" y="-112" font-family="Young Serif, Georgia, serif" font-size="22" font-weight="700" text-anchor="middle" fill="#f5f1ea">b</text>
+<text x="110" y="128" font-family="Young Serif, Georgia, serif" font-size="22" font-weight="700" text-anchor="middle" fill="#f5f1ea">c</text>
+<text x="0" y="238" font-family="Young Serif, Georgia, serif" font-size="22" font-weight="700" text-anchor="middle" fill="#f5f1ea">d</text>
+<text x="-110" y="128" font-family="Young Serif, Georgia, serif" font-size="22" font-weight="700" text-anchor="middle" fill="#f5f1ea">e</text>
+<text x="-110" y="-112" font-family="Young Serif, Georgia, serif" font-size="22" font-weight="700" text-anchor="middle" fill="#f5f1ea">f</text>
+<text x="0" y="2" font-family="Young Serif, Georgia, serif" font-size="22" font-weight="700" text-anchor="middle" fill="#f5f1ea">g</text>
+</svg>
