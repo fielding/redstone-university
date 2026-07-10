@@ -686,5 +686,69 @@
     "place": {
       "iso": "src/Part-I--Foundations/03b_Interlude-Compact-Design-final/images/XOR-gate-composite_minecraft.png"
     }
+  },
+  "7seg-8": {
+    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+    "bounds": [
+      124,
+      56,
+      -480,
+      146,
+      74,
+      -476
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "crop",
+    "tint": "black_concrete=f5f1ea"
+  },
+  "7seg-wall": {
+    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+    "bounds": [
+      124,
+      56,
+      -473,
+      146,
+      74,
+      -469
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "crop",
+    "tint": "black_concrete=f5f1ea"
+  },
+  "7seg-lit": {
+    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+    "bounds": [
+      124,
+      56,
+      -467,
+      140,
+      74,
+      -461
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "crop",
+    "tint": "black_concrete=f5f1ea"
+  },
+  "7seg-closeup": {
+    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+    "bounds": [
+      139,
+      55,
+      -464,
+      144,
+      62,
+      -457
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "crop",
+    "tint": "black_concrete=f5f1ea"
   }
 }
