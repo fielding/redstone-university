@@ -114,7 +114,8 @@
   },
   "7-segment-0-9-decoder-driver-diode-matrix-rom": {
     "circuit": "7-Segment 0-9 Decoder/Driver (diode-matrix ROM)",
-    "name": "7-segment-0-9-decoder-driver-diode-matrix-rom"
+    "name": "7-segment-0-9-decoder-driver-diode-matrix-rom",
+    "place": "src/Part-I--Foundations/04_Decoders-and-Displays/images/10-to-7-encoder"
   },
   "4-bit-binary-to-display-abstract": {
     "circuit": "4-bit binary to display (abstract)",
