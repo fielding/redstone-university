@@ -9,3 +9,6 @@ renders/usd/
 renders/out/
 renders/cv-out/
 scripts/__pycache__/
+
+# issue tracker is local-only (not published with the repo)
+.tix/
