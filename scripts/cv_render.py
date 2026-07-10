@@ -334,6 +334,31 @@ def render(scope, scale=2.0, gate_colors=False, inputs=None, only=None):
             elif m == dt: py = by0
             else: py = by1
             pos[j] = (px, py)
+    # 7-seg pins: CircuitVerse places them just inside the display outline, so
+    # wires visibly punch through the frame. Snap each pin onto the frame edge
+    # so connections terminate at the border like every other abstraction box.
+    for el in scope.get("SevenSegDisplay", []):
+        ex, ey = el.get("x", 0), el.get("y", 0)
+        deg = DIRS.get(el.get("direction", "RIGHT"), DIRS["RIGHT"])[0]
+        hw, hh = (32, 58) if deg % 180 == 0 else (58, 32)
+        bx0, by0, bx1, by1 = ex - hw, ey - hh, ex + hw, ey + hh
+        for idx in el.get("customData", {}).get("nodes", {}).values():
+            for j in (idx if isinstance(idx, list) else [idx]):
+                if j >= len(N):
+                    continue
+                px, py = pos[j]
+                dl, dr, dt, db = px - bx0, bx1 - px, py - by0, by1 - py
+                m = min(dl, dr, dt, db)
+                if m == dl:
+                    px = bx0
+                elif m == dr:
+                    px = bx1
+                elif m == dt:
+                    py = by0
+                else:
+                    py = by1
+                pos[j] = (px, py)
+
     # optional input override: a list of 0/1 applied to Input boxes left→right
     # (by x), so a circuit can show the same defining case as its abstract figure.
     forced = None
