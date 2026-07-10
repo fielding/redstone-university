@@ -1,5 +1,9 @@
 ---
 import { getCollection } from 'astro:content';
+// self-hosted KaTeX styles, version-locked to the katex that rehype-katex
+// renders with (the CDN copy shipped with a bad SRI hash, so browsers
+// dropped it and both math layers showed)
+import 'katex/dist/katex.min.css';
 import Layout from '../../layouts/Layout.astro';
 import Sidebar from '../../components/Sidebar.astro';
 import { buildCourseHierarchy, flattenCourse } from '../../utils/navigation';
@@ -31,7 +35,7 @@ const nextPage =
     : null;
 ---
 
-<Layout title={pageTitle} math>
+<Layout title={pageTitle}>
   <div class="reading-progress" aria-hidden="true"></div>
 
   <!-- Mobile top bar: hamburger toggle for the course drawer -->

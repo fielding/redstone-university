@@ -3,10 +3,9 @@ import '../styles/global.css';
 
 interface Props {
 	title: string;
-	math?: boolean;
 }
 
-const { title, math = false } = Astro.props;
+const { title } = Astro.props;
 const fontUrl = 'https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Hanken+Grotesk:ital,wght@0,300..700;1,300..700&family=Literata:ital,opsz,wght@0,7..72,300..700;1,7..72,300..700&family=Young+Serif&display=swap';
 ---
 
@@ -26,15 +25,6 @@ const fontUrl = 'https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500
 		<link rel="preload" as="style" href={fontUrl} />
 		<link rel="stylesheet" href={fontUrl} />
 
-		<!-- KaTeX — only on pages with math content -->
-		{math && (
-			<link
-				rel="stylesheet"
-				href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css"
-				integrity="sha384-nB0miv6/jRmo5EGIE/ycnhicV2PkaJy2eLXauADVsrtkmGKILwIHN4cnFIBQgAIG"
-				crossorigin="anonymous"
-			/>
-		)}
 	</head>
 	<body>
 		<slot />
