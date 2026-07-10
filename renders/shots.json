@@ -707,7 +707,7 @@
     "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
     "bounds": [
       124,
-      56,
+      55,
       -473,
       146,
       74,
@@ -717,7 +717,7 @@
       "iso"
     ],
     "ground": "remove",
-    "tint": "black_concrete=f5f1ea"
+    "tint": "black_concrete=f5f1ea,pink=f5f1ea,orange=f5f1ea,terracotta=f5f1ea,magenta=f5f1ea"
   },
   "7seg-lit": {
     "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",

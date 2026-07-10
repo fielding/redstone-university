@@ -147,3 +147,12 @@ circuit to the state the lesson needs, then exit the world, then export.
 4. Choosing looks: `python3 scripts/sweep.py <shot> --sweep style|angle`
    renders a labeled contact sheet; pick by ID, record the choice in
    `shots.json`.
+
+## 7-segment displays (decided 2026-07-09)
+
+Display walls render **white**: neutralize the bezel/frame blocks per shot with
+`"tint": "black_concrete=f5f1ea,pink=f5f1ea,orange=f5f1ea,terracotta=f5f1ea,magenta=f5f1ea"`
+so lamps carry all the contrast. Applies to every 7-segment figure going
+forward. Multi-panel display figures are shot per-panel (own centered camera,
+no cross-frame parallax) and stitched with scripts/compose_7segment.py;
+panels facing away are shot from the opposite azimuth and mirrored back.
