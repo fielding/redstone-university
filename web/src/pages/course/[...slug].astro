@@ -650,9 +650,108 @@ const nextPage =
     display: none;
   }
 
+  /* ── Image lightbox ── */
+  /* Figures are detail-dense (hi-res aerials squeezed into a 66ch column) —
+     click opens them full-screen in place; a second click toggles 1:1 pixels
+     with scroll-to-pan. No navigation, Esc/backdrop closes. */
+  .prose :global(img) {
+    cursor: zoom-in;
+  }
+
+  :global(.lightbox) {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: oklch(10% 0.01 65 / 0.88);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    animation: lightbox-in 180ms var(--ease-out) both;
+    overflow: auto;
+  }
+
+  @keyframes lightbox-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  :global(.lightbox-img) {
+    max-width: min(94vw, 1800px);
+    max-height: 86vh;
+    width: auto;
+    height: auto;
+    margin: auto;
+    display: block;
+    cursor: zoom-in;
+    border-radius: 4px;
+    box-shadow: 0 24px 80px oklch(0% 0 0 / 0.5);
+    background: var(--color-bg);
+  }
+
+  :global(.lightbox.zoomed) {
+    display: block;
+  }
+
+  :global(.lightbox.zoomed .lightbox-img) {
+    max-width: none;
+    max-height: none;
+    cursor: zoom-out;
+    margin: 0 auto;
+    padding: var(--space-2xl);
+    box-sizing: content-box;
+  }
+
+  :global(.lightbox-caption) {
+    position: fixed;
+    left: 50%;
+    bottom: var(--space-lg);
+    transform: translateX(-50%);
+    max-width: 80vw;
+    padding: var(--space-xs) var(--space-lg);
+    border-radius: 999px;
+    background: oklch(0% 0 0 / 0.55);
+    color: oklch(96% 0.01 85);
+    font-family: var(--font-reading);
+    font-size: 0.82rem;
+    line-height: 1.4;
+    text-align: center;
+    pointer-events: none;
+  }
+
+  :global(.lightbox-close) {
+    position: fixed;
+    top: var(--space-lg);
+    right: var(--space-lg);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid oklch(100% 0 0 / 0.25);
+    background: oklch(0% 0 0 / 0.45);
+    color: oklch(96% 0.01 85);
+    font-size: 1.2rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  :global(.lightbox-close:hover) {
+    background: oklch(0% 0 0 / 0.7);
+  }
+
+  :global(body.lightbox-open) {
+    overflow: hidden;
+  }
+
   /* ── Reduced motion ── */
   @media (prefers-reduced-motion: reduce) {
     .fade-in {
+      animation: none;
+    }
+    :global(.lightbox) {
       animation: none;
     }
     .reading-progress {
@@ -847,6 +946,74 @@ const nextPage =
       anchor.setAttribute('aria-label', 'Link to this section');
       heading.prepend(anchor);
     });
+
+    // Image lightbox — in-page modal, no navigation. Click: fit-to-screen;
+    // click the image again: 1:1 pixels with scroll-to-pan; Esc/backdrop/×
+    // closes and returns exactly where you were.
+    const proseImgs = document.querySelectorAll('.prose img');
+    if (proseImgs.length > 0) {
+      let box = null;
+
+      const close = () => {
+        if (!box) return;
+        box.remove();
+        box = null;
+        document.body.classList.remove('lightbox-open');
+      };
+
+      const open = (img) => {
+        close();
+        box = document.createElement('div');
+        box.className = 'lightbox';
+        box.setAttribute('role', 'dialog');
+        box.setAttribute('aria-label', img.alt || 'Image viewer');
+
+        const big = document.createElement('img');
+        big.className = 'lightbox-img';
+        big.src = img.currentSrc || img.src;
+        big.alt = img.alt || '';
+        box.appendChild(big);
+
+        if (img.alt) {
+          const cap = document.createElement('div');
+          cap.className = 'lightbox-caption';
+          cap.textContent = img.alt;
+          box.appendChild(cap);
+        }
+
+        const x = document.createElement('button');
+        x.className = 'lightbox-close';
+        x.setAttribute('aria-label', 'Close image viewer');
+        x.textContent = '×';
+        box.appendChild(x);
+
+        big.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const zoomed = box.classList.toggle('zoomed');
+          if (zoomed) {
+            // land centered on the same spot rather than the top-left corner
+            const rx = e.offsetX / big.clientWidth;
+            const ry = e.offsetY / big.clientHeight;
+            requestAnimationFrame(() => {
+              box.scrollLeft = big.scrollWidth * rx - box.clientWidth / 2;
+              box.scrollTop = big.scrollHeight * ry - box.clientHeight / 2;
+            });
+          }
+        });
+        box.addEventListener('click', close);
+        x.addEventListener('click', close);
+
+        document.body.appendChild(box);
+        document.body.classList.add('lightbox-open');
+      };
+
+      proseImgs.forEach((img) => {
+        img.addEventListener('click', () => open(img));
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') close();
+      });
+    }
 
     // TOC active-section highlighting
     const tocLinks = document.querySelectorAll('.toc-link');
