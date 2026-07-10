@@ -1,43 +1,32 @@
-# Astro Starter Kit: Minimal
+# redstone.university — website
 
-```sh
-npm create astro@latest -- --template minimal
-```
+The Astro site that serves the course at [redstone.university](https://redstone.university).
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## How content gets here
 
-## 🚀 Project Structure
+Lessons are authored at the repository root in `src/` — this directory never
+holds hand-edited course content. `scripts/sync-content.mjs` copies the course
+into `web/src/content/course/` before every dev run and build; that folder is
+generated, so don't edit it or commit it. Set `STRICT_IMAGES=1` to make the
+sync fail on missing images instead of just reporting them.
 
-Inside of your Astro project, you'll see the following folders and files:
+## Commands
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+Run from `web/`:
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+| Command           | What it does                                  |
+| ----------------- | --------------------------------------------- |
+| `npm install`     | install dependencies                          |
+| `npm run dev`     | sync content, then start the dev server       |
+| `npm run build`   | sync content, type-check, build to `dist/`    |
+| `npm run preview` | serve the built site locally                  |
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+Unreleased course parts are gated on the live site; to preview them locally,
+run `PREVIEW_ALL_PARTS=true npm run dev` (see `src/utils/gating.ts`).
 
-Any static assets, like images, can be placed in the `public/` directory.
+## Deploys
 
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Pushes to `main` deploy the site via `.github/workflows/deploy.yml`
+(GitHub Pages). The course PDF and `course/` directory are built by a separate
+workflow — see the root README and `.github/CONTRIBUTING.md` before
+contributing.
