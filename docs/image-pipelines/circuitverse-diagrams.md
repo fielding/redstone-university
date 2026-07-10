@@ -98,11 +98,16 @@ cv_render.py <cv> [name] [options]
   renderer Manhattan-routes them and taps buses perpendicularly (the alignment
   you used to fix by hand in Figma). Routing is contact-aware: two wires of
   different nets may only meet as a perpendicular crossing, so a bend candidate
-  (plain L, then grid Z-jogs, then the flipped L) is rejected if any leg would
-  overlap, nearly merge with, or end on another net's wire. A crossed pair with
-  no clean orthogonal layout keeps its original diagonal — a slant is honest, a
-  false junction is not. Pins snapped onto a box edge (subcircuits, 7-seg) are
-  approached perpendicular to that edge. The invariant is checkable:
+  is rejected if any leg would overlap, nearly merge with, or end on another
+  net's wire, pin, or junction point. Long spans try the plain L, half-grid
+  Z-jogs (the clean lane in a 10-pitch matrix is between rows), then the
+  flipped L; short hops (a few grid steps) skip the jogs and fall back to the
+  author's original diagonal, so crossed pairs feeding a second-level gate
+  render as their natural X. A slant is honest, a false junction is not.
+  Subcircuit pins snap onto their box edge and are approached perpendicular to
+  it; 7-seg display pins stay at their raw interior positions and the
+  paper-filled display body masks the wire tails, so hookups read as ending at
+  the frame (gate-style, no pin dots). The invariant is checkable:
   `CV_DEBUG_SEGS=/tmp/segs.jsonl` during a render dumps routed geometry, and
   `scripts/check_cv_junctions.py /tmp/segs.jsonl` fails on any cross-net touch.
 - **Gate leads.** Each gate pin gets a short lead *into* the gate (snapped to the

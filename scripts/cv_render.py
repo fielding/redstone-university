@@ -338,30 +338,12 @@ def render(scope, scale=2.0, gate_colors=False, inputs=None, only=None):
             elif m == dt: py = by0; edge_axis[j] = "v"
             else: py = by1; edge_axis[j] = "v"
             pos[j] = (px, py)
-    # 7-seg pins: CircuitVerse places them just inside the display outline, so
-    # wires visibly punch through the frame. Snap each pin onto the frame edge
-    # so connections terminate at the border like every other abstraction box.
-    for el in scope.get("SevenSegDisplay", []):
-        ex, ey = el.get("x", 0), el.get("y", 0)
-        deg = DIRS.get(el.get("direction", "RIGHT"), DIRS["RIGHT"])[0]
-        hw, hh = (32, 58) if deg % 180 == 0 else (58, 32)
-        bx0, by0, bx1, by1 = ex - hw, ey - hh, ex + hw, ey + hh
-        for idx in el.get("customData", {}).get("nodes", {}).values():
-            for j in (idx if isinstance(idx, list) else [idx]):
-                if j >= len(N):
-                    continue
-                px, py = pos[j]
-                dl, dr, dt, db = px - bx0, bx1 - px, py - by0, by1 - py
-                m = min(dl, dr, dt, db)
-                if m == dl:
-                    px = bx0; edge_axis[j] = "h"
-                elif m == dr:
-                    px = bx1; edge_axis[j] = "h"
-                elif m == dt:
-                    py = by0; edge_axis[j] = "v"
-                else:
-                    py = by1; edge_axis[j] = "v"
-                pos[j] = (px, py)
+    # 7-seg pins stay at their raw (interior) positions: the author's feeder
+    # wires are straight on the 10-unit grid there, and moving pins onto the
+    # frame turned them into off-grid diagonals fused against neighboring runs.
+    # The display rect is paper-filled and drawn after the wires, so the short
+    # tails that reach inside are masked and connections read as ending at the
+    # frame — gate-style, no pin dots.
 
     # optional input override: a list of 0/1 applied to Input boxes left→right
     # (by x), so a circuit can show the same defining case as its abstract figure.
@@ -436,7 +418,10 @@ def render(scope, scale=2.0, gate_colors=False, inputs=None, only=None):
     # runs close enough to visually merge, or an endpoint landing on/near the
     # other's line. Perpendicular pass-throughs are honest crossings and stay.
     EPS = 4.0      # endpoint gap that still reads as touching at LW≈3
-    PARA = 6.0     # parallel-merge distance (grid pitch is 10)
+    # parallel-merge distance: at LW≈3 two wires 5 apart (half the 10-unit
+    # grid pitch) still read as separate, so half-grid jog legs stay legal in
+    # dense matrices; the fusions this guards against were ≤2 apart
+    PARA = 4.5
     pool = []      # (net, x1, y1, x2, y2) normalized axis-aligned segments
 
     def add_pool(r, x1, y1, x2, y2):
@@ -446,6 +431,11 @@ def render(scope, scale=2.0, gate_colors=False, inputs=None, only=None):
     def pt_seg_dist(x, y, x1, y1, x2, y2):
         cx = min(max(x, x1), x2); cy = min(max(y, y1), y2)
         return ((x - cx) ** 2 + (y - cy) ** 2) ** 0.5
+
+    # pins and junction points of other nets are off-limits too — their wires
+    # may not be pooled yet (diagonals still queued to route) or may be drawn
+    # as gate leads, but a bend landing on one still reads as a connection
+    node_pts = []
 
     def leg_contact(r, ax_, ay_, bx_, by_):
         lx1, ly1, lx2, ly2 = min(ax_, bx_), min(ay_, by_), max(ax_, bx_), max(ay_, by_)
@@ -470,28 +460,39 @@ def render(scope, scale=2.0, gate_colors=False, inputs=None, only=None):
                         or pt_seg_dist(sx1, sy1, lx1, ly1, lx2, ly2) <= EPS
                         or pt_seg_dist(sx2, sy2, lx1, ly1, lx2, ly2) <= EPS):
                     return True
-        return False
+        return any(qr != r and pt_seg_dist(qx, qy, lx1, ly1, lx2, ly2) <= EPS
+                   for (qx, qy, qr) in node_pts)
 
     def route(r, sx, sy, ex, ey, hf):
-        """Grid candidates from (sx,sy) to (ex,ey): the plain L, then Z-jogs
-        keeping the same exit axis, then the flipped L and its jogs. First
-        contact-free route wins. A crossed pair that has no clean orthogonal
-        layout keeps its original diagonal — a slant is honest, a false
-        junction is not."""
-        def cands(hfirst):
+        """Grid candidates from (sx,sy) to (ex,ey): the plain L, the flipped
+        L, and — only for spans long enough that a slant would read as a
+        mistake — Z-jogs on the grid. First contact-free route wins; when
+        nothing is clean the wire keeps its original diagonal. Short hops
+        (a couple of grid steps, e.g. a crossed pair feeding a second-level
+        gate) skip the jogs: the author's slant reads better than a
+        staircase, and a slant is honest where a false junction is not."""
+        short = abs(ex - sx) <= 30 and abs(ey - sy) <= 30
+
+        def L(hfirst):
+            return [(sx, sy), (ex, sy) if hfirst else (sx, ey), (ex, ey)]
+
+        def zjogs(hfirst):
+            # jog positions sweep the half-grid too — in a matrix every
+            # multiple of 10 is a live wire, and the clean lane is between
+            # rows; on-grid wins ties so uncontested areas stay grid-pure
             if hfirst:
-                yield [(sx, sy), (ex, sy), (ex, ey)]
                 lo, hi = (sx, ex) if sx < ex else (ex, sx)
-                for m in sorted(range(int(lo // 10 + 1) * 10, int(hi), 10),
-                                key=lambda m: abs(m - ex)):
-                    yield [(sx, sy), (m, sy), (m, ey), (ex, ey)]
-            else:
-                yield [(sx, sy), (sx, ey), (ex, ey)]
-                lo, hi = (sy, ey) if sy < ey else (ey, sy)
-                for m in sorted(range(int(lo // 10 + 1) * 10, int(hi), 10),
-                                key=lambda m: abs(m - ey)):
-                    yield [(sx, sy), (sx, m), (ex, m), (ex, ey)]
-        for pts in list(cands(hf)) + list(cands(not hf)):
+                ms = sorted(range(int(lo // 5 + 1) * 5, int(hi), 5),
+                            key=lambda m: (abs(m - ex), m % 10 != 0))
+                return [[(sx, sy), (m, sy), (m, ey), (ex, ey)] for m in ms]
+            lo, hi = (sy, ey) if sy < ey else (ey, sy)
+            ms = sorted(range(int(lo // 5 + 1) * 5, int(hi), 5),
+                        key=lambda m: (abs(m - ey), m % 10 != 0))
+            return [[(sx, sy), (sx, m), (ex, m), (ex, ey)] for m in ms]
+
+        cands = [L(hf), L(not hf)] if short else \
+            [L(hf)] + zjogs(hf) + [L(not hf)] + zjogs(not hf)
+        for pts in cands:
             if not any(leg_contact(r, p[0], p[1], q[0], q[1])
                        for p, q in zip(pts, pts[1:])):
                 return pts
@@ -531,6 +532,10 @@ def render(scope, scale=2.0, gate_colors=False, inputs=None, only=None):
                 taps.append((px, ty, pin)); suppress.add(t); routed = True
         if not routed:
             diags.append((a, b))
+    for i, n in (() if only else enumerate(N)):
+        deg = sum(1 for j in n["connections"] if j < len(N))
+        if n["type"] in (0, 1) or deg != 2:    # pins + dotted junctions
+            node_pts.append((pos[i][0], pos[i][1], _find(i)))
     for a, b in diags:
         (x1, y1), (x2, y2) = pos[a], pos[b]
         c = wcol(net.get(a))
@@ -558,7 +563,8 @@ def render(scope, scale=2.0, gate_colors=False, inputs=None, only=None):
     if not only and os.environ.get("CV_DEBUG_SEGS"):
         with open(os.environ["CV_DEBUG_SEGS"], "a") as f:
             f.write(json.dumps({"scope": scope.get("name"), "segs": pool,
-                                "kept_diagonals": len(kept_diagonals)}) + "\n")
+                                "kept_diagonals": [[pos[a], pos[b]]
+                                                   for a, b in kept_diagonals]}) + "\n")
 
     # gate pins get a lead into the gate instead of a dot (above), so the gate
     # stays the focal element — collect them to skip in the dot pass.
@@ -678,8 +684,10 @@ def render(scope, scale=2.0, gate_colors=False, inputs=None, only=None):
             elif ot == "SevenSegDisplay":
                 nd = el.get("customData", {}).get("nodes", {})
                 deg = DIRS.get(el.get("direction", "RIGHT"), DIRS["RIGHT"])[0]
+                # paper fill masks the feeder-wire tails and pin dots that sit
+                # just inside the frame (pins are drawn at raw positions)
                 segs = [f'<rect x="-32" y="-58" width="64" height="116" '
-                        f'fill="none" stroke="{INK}" stroke-width="{GW}"/>']
+                        f'fill="{PAPER}" stroke="{INK}" stroke-width="{GW}"/>']
                 for seg, d in SEG_PATH.items():
                     idx = nd.get(seg)
                     lit = idx is not None and net.get(idx) == 1

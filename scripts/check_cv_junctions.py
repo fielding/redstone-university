@@ -12,7 +12,7 @@ draws a junction that doesn't exist in the circuit (ru-b24cda).
 import json, sys
 
 EPS = 4.0    # endpoint gap that still reads as touching at wire stroke ≈3
-PARA = 6.0   # parallel runs closer than this merge visually (grid pitch 10)
+PARA = 4.5   # parallel runs closer than this merge visually (half-grid = 5 is legal)
 
 
 def merge_runs(segs):
@@ -87,7 +87,8 @@ def main():
         seen.add(name)
         runs = merge_runs(rec["segs"])
         bad = violations(runs)
-        diag = rec.get("kept_diagonals", 0)
+        kd = rec.get("kept_diagonals", [])
+        diag = kd if isinstance(kd, int) else len(kd)
         status = "ok" if not bad else f"{len(bad)} VIOLATIONS"
         extra = f", {diag} kept diagonal(s)" if diag else ""
         print(f"{name}: {status}{extra}")

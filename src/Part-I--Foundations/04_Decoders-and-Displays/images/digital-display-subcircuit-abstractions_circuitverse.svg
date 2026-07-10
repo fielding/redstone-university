@@ -29,11 +29,13 @@
 <line x1="480" y1="890" x2="480" y2="900" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="510" y1="890" x2="510" y2="910" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="540" y1="890" x2="540" y2="920" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
-<line x1="670" y1="1002" x2="670" y2="1000" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
-<line x1="690" y1="1002" x2="690" y2="990" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
-<line x1="700" y1="1002" x2="700" y2="980" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
-<line x1="670" y1="1118" x2="670" y2="1120" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
-<line x1="690" y1="1118" x2="690" y2="1130" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="660" y1="1010" x2="640" y2="1010" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="670" y1="1010" x2="670" y2="1000" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="690" y1="1010" x2="690" y2="990" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="700" y1="1010" x2="700" y2="980" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="660" y1="1110" x2="640" y2="1110" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="670" y1="1110" x2="670" y2="1120" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="690" y1="1110" x2="690" y2="1130" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="700" y1="980" x2="610" y2="980" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="670" y1="1120" x2="630" y2="1120" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="640" y1="1110" x2="640" y2="1070" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
@@ -67,8 +69,6 @@
 <line x1="470" y1="910" x2="470" y2="1050" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="740" y1="800" x2="650" y2="800" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="650" y1="810" x2="650" y2="800" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
-<line x1="660" y1="1002" x2="640" y2="1010" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
-<line x1="660" y1="1118" x2="640" y2="1110" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
 <circle cx="890" cy="1090" r="3.1500000000000004" fill="#5a1816"/>
 <circle cx="850" cy="1090" r="3.1500000000000004" fill="#5a1816"/>
 <circle cx="810" cy="1090" r="3.1500000000000004" fill="#5a1816"/>
@@ -90,14 +90,14 @@
 <circle cx="480" cy="890" r="3.1500000000000004" fill="#f0392a"/>
 <circle cx="510" cy="890" r="3.1500000000000004" fill="#f0392a"/>
 <circle cx="540" cy="890" r="3.1500000000000004" fill="#f0392a"/>
-<circle cx="660" cy="1002" r="3.1500000000000004" fill="#f0392a"/>
-<circle cx="670" cy="1002" r="3.1500000000000004" fill="#f0392a"/>
-<circle cx="690" cy="1002" r="3.1500000000000004" fill="#f0392a"/>
-<circle cx="700" cy="1002" r="3.1500000000000004" fill="#f0392a"/>
-<circle cx="660" cy="1118" r="3.1500000000000004" fill="#f0392a"/>
-<circle cx="670" cy="1118" r="3.1500000000000004" fill="#f0392a"/>
-<circle cx="690" cy="1118" r="3.1500000000000004" fill="#f0392a"/>
-<circle cx="700" cy="1118" r="3.1500000000000004" fill="#5a1816"/>
+<circle cx="660" cy="1010" r="3.1500000000000004" fill="#f0392a"/>
+<circle cx="670" cy="1010" r="3.1500000000000004" fill="#f0392a"/>
+<circle cx="690" cy="1010" r="3.1500000000000004" fill="#f0392a"/>
+<circle cx="700" cy="1010" r="3.1500000000000004" fill="#f0392a"/>
+<circle cx="660" cy="1110" r="3.1500000000000004" fill="#f0392a"/>
+<circle cx="670" cy="1110" r="3.1500000000000004" fill="#f0392a"/>
+<circle cx="690" cy="1110" r="3.1500000000000004" fill="#f0392a"/>
+<circle cx="700" cy="1110" r="3.1500000000000004" fill="#5a1816"/>
 <circle cx="740" cy="860" r="3.1500000000000004" fill="#5a1816"/>
 <circle cx="740" cy="840" r="3.1500000000000004" fill="#5a1816"/>
 <circle cx="740" cy="820" r="3.1500000000000004" fill="#5a1816"/>
@@ -118,7 +118,7 @@
 <rect x="840" y="1090" width="20" height="20" fill="#ffffff" stroke="#30231e" stroke-width="3.2"/><text x="850" y="1105" font-family="Fira Code, ui-monospace, monospace" font-size="14" font-weight="600" text-anchor="middle" fill="#30231e">0</text>
 <rect x="800" y="1090" width="20" height="20" fill="#ffffff" stroke="#30231e" stroke-width="3.2"/><text x="810" y="1105" font-family="Fira Code, ui-monospace, monospace" font-size="14" font-weight="600" text-anchor="middle" fill="#30231e">0</text>
 <rect x="760" y="1090" width="20" height="20" fill="#ffffff" stroke="#f0392a" stroke-width="3.2"/><text x="770" y="1105" font-family="Fira Code, ui-monospace, monospace" font-size="14" font-weight="600" text-anchor="middle" fill="#f0392a">1</text>
-<g transform="translate(680,1060) rotate(0)"><rect x="-32" y="-58" width="64" height="116" fill="none" stroke="#30231e" stroke-width="3.2"/><path d="M -18 -46 L 18 -46" stroke="#f0392a" stroke-width="6" stroke-linecap="round"/><path d="M 22 -42 L 22 -6" stroke="#f0392a" stroke-width="6" stroke-linecap="round"/><path d="M 22 6 L 22 42" stroke="#f0392a" stroke-width="6" stroke-linecap="round"/><path d="M -18 46 L 18 46" stroke="#f0392a" stroke-width="6" stroke-linecap="round"/><path d="M -22 6 L -22 42" stroke="#f0392a" stroke-width="6" stroke-linecap="round"/><path d="M -22 -42 L -22 -6" stroke="#f0392a" stroke-width="6" stroke-linecap="round"/><path d="M -18 0 L 18 0" stroke="#f0392a" stroke-width="6" stroke-linecap="round"/></g>
+<g transform="translate(680,1060) rotate(0)"><rect x="-32" y="-58" width="64" height="116" fill="#f5f1ea" stroke="#30231e" stroke-width="3.2"/><path d="M -18 -46 L 18 -46" stroke="#f0392a" stroke-width="6" stroke-linecap="round"/><path d="M 22 -42 L 22 -6" stroke="#f0392a" stroke-width="6" stroke-linecap="round"/><path d="M 22 6 L 22 42" stroke="#f0392a" stroke-width="6" stroke-linecap="round"/><path d="M -18 46 L 18 46" stroke="#f0392a" stroke-width="6" stroke-linecap="round"/><path d="M -22 6 L -22 42" stroke="#f0392a" stroke-width="6" stroke-linecap="round"/><path d="M -22 -42 L -22 -6" stroke="#f0392a" stroke-width="6" stroke-linecap="round"/><path d="M -18 0 L 18 0" stroke="#f0392a" stroke-width="6" stroke-linecap="round"/></g>
 <rect x="330" y="660" width="240" height="230" fill="#f5f1ea" stroke="#30231e" stroke-width="3.2"/>
 <text x="450.0" y="762.0" font-family="Young Serif, Georgia, serif" font-size="15" text-anchor="middle" fill="#30231e">7-Segment 0-9</text>
 <text x="450.0" y="780.0" font-family="Young Serif, Georgia, serif" font-size="15" text-anchor="middle" fill="#30231e">Decoder/Driver</text>
