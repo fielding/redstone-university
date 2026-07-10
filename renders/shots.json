@@ -718,7 +718,9 @@
     ],
     "ground": "remove",
     "tint": "black_concrete=f5f1ea,pink=f5f1ea,orange=f5f1ea,terracotta=f5f1ea,magenta=f5f1ea",
-    "height_tint": 0
+    "height_tint": 0,
+    "azimuth": 315,
+    "projection": "ortho"
   },
   "7seg-lit": {
     "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
@@ -735,7 +737,8 @@
     ],
     "ground": "remove",
     "tint": "black_concrete=f5f1ea",
-    "azimuth": 315
+    "azimuth": 315,
+    "projection": "ortho"
   },
   "7seg-closeup": {
     "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
@@ -752,6 +755,7 @@
     ],
     "ground": "remove",
     "tint": "black_concrete=f5f1ea",
-    "azimuth": 315
+    "azimuth": 315,
+    "projection": "ortho"
   }
 }

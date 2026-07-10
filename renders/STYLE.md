@@ -155,4 +155,4 @@ Display walls render **white**: neutralize the bezel/frame blocks per shot with
 so lamps carry all the contrast, and set "height_tint": 0 on plain display faces (the top band otherwise rose-tints the top row). Applies to every 7-segment figure going
 forward. Multi-panel display figures are shot per-panel (own centered camera,
 no cross-frame parallax) and stitched with scripts/compose_7segment.py;
-panels facing away are shot from the opposite azimuth and mirrored back.
+all panels share ONE azimuth and use "projection": "ortho" — the tele lens foreshortens walls differently by depth, pure ortho keeps every panel plane-parallel. Rebuild: shots.py 7seg-wall 7seg-lit 7seg-closeup, then compose_7segment.py, place manually over 04/images/7-segment-display_minecraft.png.
