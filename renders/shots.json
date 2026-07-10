@@ -736,9 +736,10 @@
       "iso"
     ],
     "ground": "remove",
-    "tint": "black_concrete=f5f1ea",
+    "tint": "light_blue_wool=ccdbe5,lime_wool=d1e3c7,black_concrete=f5f1ea",
     "azimuth": 315,
-    "projection": "ortho"
+    "projection": "ortho",
+    "height_tint": 0
   },
   "7seg-closeup": {
     "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
@@ -754,8 +755,9 @@
       "iso"
     ],
     "ground": "remove",
-    "tint": "black_concrete=f5f1ea",
+    "tint": "light_blue_wool=ccdbe5,lime_wool=d1e3c7,black_concrete=f5f1ea",
     "azimuth": 315,
-    "projection": "ortho"
+    "projection": "ortho",
+    "height_tint": 0
   }
 }
