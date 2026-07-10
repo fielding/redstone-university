@@ -13,7 +13,7 @@
     -   Lesson 6.2: The lab – Discovering and handling overflow
     -   Lesson 6.3: The theory – The magic of Two's Complement
     -   Lesson 6.4: The lab – Building the adder/subtractor unit
--   **Minecraft Artifact:** A 4-bit adder/subtractor with a carry/overflow indicator lamp.
+-   **Minecraft Artifact:** A 4-bit adder/subtractor with a carry-out indicator lamp.
 
 ---
 
@@ -79,7 +79,7 @@ That is enough to make the machine more honest.
 
 1.  Keep your system wired as it was at the end of Module 5.
 2.  Take the final `CarryOut` wire from the most-significant full adder stage.
-3.  Connect it to a separate Redstone Lamp labeled **Carry / Overflow**.
+3.  Connect it to a separate Redstone Lamp labeled **Carry-Out**.
 4.  Run this test:
     -   Input A: `1100` (`C`, or 12)
     -   Input B: `0101` (`5`)
@@ -88,7 +88,7 @@ Expected observation:
 
 -   The 4-bit result bus shows `0001`
 -   The hex display shows `1`
--   The Carry / Overflow lamp is **ON**
+-   The Carry-Out lamp is **ON**
 
 ![Overflow Bug Minecraft Build](./images/overflow-bug-minecraft.png)
 *Figure: The arithmetic result does not fit in four bits. The main display only shows the low four bits, while the carry lamp reveals that a fifth bit existed.*
