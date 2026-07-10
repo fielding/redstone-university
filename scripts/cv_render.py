@@ -345,6 +345,34 @@ def render(scope, scale=2.0, gate_colors=False, inputs=None, only=None):
     # tails that reach inside are masked and connections read as ending at the
     # frame — gate-style, no pin dots.
 
+    # a commutative gate doesn't care which input takes which wire, so when the
+    # two feeds of a 2-input gate cross each other, swap the pins' draw
+    # positions: the .cv's pin assignment is arbitrary and the crossing carries
+    # no meaning — both wires get to run straight instead
+    def _crosses(p1, p2, q1, q2):
+        def o(a, b, c):
+            v = (b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0])
+            return (v > 0) - (v < 0)
+        return (o(p1, p2, q1) * o(p1, p2, q2) < 0
+                and o(q1, q2, p1) * o(q1, q2, p2) < 0)
+
+    for k, v in scope.items():
+        if not (isinstance(v, list) and v and isinstance(v[0], dict)
+                and v[0].get("objectType") in GATE_FN):
+            continue
+        for el in v:
+            ins = el["customData"]["nodes"].get("inp")
+            if not (isinstance(ins, list) and len(ins) == 2):
+                continue
+            p, q = ins
+            if not all(isinstance(j, int) and j < len(N) for j in (p, q)):
+                continue
+            pp = [j for j in N[p]["connections"] if j < len(N)]
+            qq = [j for j in N[q]["connections"] if j < len(N)]
+            if len(pp) == 1 and len(qq) == 1 and \
+                    _crosses(pos[p], pos[pp[0]], pos[q], pos[qq[0]]):
+                pos[p], pos[q] = pos[q], pos[p]
+
     # optional input override: a list of 0/1 applied to Input boxes left→right
     # (by x), so a circuit can show the same defining case as its abstract figure.
     forced = None
@@ -399,6 +427,36 @@ def render(scope, scale=2.0, gate_colors=False, inputs=None, only=None):
                 ri, rj = _find(i), _find(j)
                 if ri != rj:
                     parent[ri] = rj
+
+    # a net that never reaches an element pin is an editor leftover the author
+    # abandoned in the .cv — drawing it puts disconnected lines in the figure
+    live = {_find(i) for i, n in enumerate(N) if n["type"] in (0, 1)}
+    for sub in scope.get("SubCircuit", []):
+        for j in sub.get("inputNodes", []) + sub.get("outputNodes", []):
+            if j < len(N):
+                live.add(_find(j))
+
+    # tiny dangling tails on live nets (leftovers a delete didn't take with
+    # it) draw as disconnected slivers — drop leaf edges under two grid steps,
+    # repeatedly, so a hook of two short segments goes too. Real rail
+    # overhangs (bus ends past their last tap) are full grid steps and stay.
+    pruned, hidden = set(), set()
+    for _ in range(3):
+        changed = False
+        for i, n in enumerate(N):
+            if n["type"] != 2 or i in hidden:
+                continue
+            nb = [j for j in n["connections"]
+                  if j < len(N) and (min(i, j), max(i, j)) not in pruned]
+            if len(nb) != 1:
+                continue
+            (x1, y1), (x2, y2) = pos[i], pos[nb[0]]
+            if abs(x2 - x1) + abs(y2 - y1) < 20:
+                pruned.add((min(i, nb[0]), max(i, nb[0])))
+                hidden.add(i)
+                changed = True
+        if not changed:
+            break
 
     def bus_run(t, exclude):
         """If t's neighbours (minus `exclude`) form a straight bus through t,
@@ -479,14 +537,22 @@ def render(scope, scale=2.0, gate_colors=False, inputs=None, only=None):
         def zjogs(hfirst):
             # jog positions sweep the half-grid too — in a matrix every
             # multiple of 10 is a live wire, and the clean lane is between
-            # rows; on-grid wins ties so uncontested areas stay grid-pure
+            # rows; on-grid wins ties so uncontested areas stay grid-pure.
+            # A lane under a full grid step from the wire's own lanes is
+            # banned: a 5-unit sidestep at this stroke width doesn't read as
+            # a jog, it reads as a broken wire. Lanes slightly OUTSIDE the
+            # span are allowed (a U-detour beats a slash across a matrix).
             if hfirst:
                 lo, hi = (sx, ex) if sx < ex else (ex, sx)
-                ms = sorted(range(int(lo // 5 + 1) * 5, int(hi), 5),
+                ms = sorted((m for m in range(int((lo - 30) // 5 + 1) * 5,
+                                              int(hi + 30), 5)
+                             if abs(m - sx) >= 10 and abs(m - ex) >= 10),
                             key=lambda m: (abs(m - ex), m % 10 != 0))
                 return [[(sx, sy), (m, sy), (m, ey), (ex, ey)] for m in ms]
             lo, hi = (sy, ey) if sy < ey else (ey, sy)
-            ms = sorted(range(int(lo // 5 + 1) * 5, int(hi), 5),
+            ms = sorted((m for m in range(int((lo - 30) // 5 + 1) * 5,
+                                          int(hi + 30), 5)
+                         if abs(m - sy) >= 10 and abs(m - ey) >= 10),
                         key=lambda m: (abs(m - ey), m % 10 != 0))
             return [[(sx, sy), (sx, m), (ex, m), (ex, ey)] for m in ms]
 
@@ -503,6 +569,8 @@ def render(scope, scale=2.0, gate_colors=False, inputs=None, only=None):
     diags = []         # bends to route once all forced geometry is placed
     kept_diagonals = []
     for a, b in (() if only else sorted(edges)):
+        if _find(a) not in live or (a, b) in pruned:
+            continue
         (x1, y1), (x2, y2) = pos[a], pos[b]
         c = wcol(net.get(a))
         note(x1, y1); note(x2, y2)
@@ -534,8 +602,8 @@ def render(scope, scale=2.0, gate_colors=False, inputs=None, only=None):
             diags.append((a, b))
     for i, n in (() if only else enumerate(N)):
         deg = sum(1 for j in n["connections"] if j < len(N))
-        if n["type"] in (0, 1) or deg != 2:    # pins + dotted junctions
-            node_pts.append((pos[i][0], pos[i][1], _find(i)))
+        if (n["type"] in (0, 1) or deg != 2) and _find(i) in live and i not in hidden:
+            node_pts.append((pos[i][0], pos[i][1], _find(i)))    # pins + dotted junctions
     for a, b in diags:
         (x1, y1), (x2, y2) = pos[a], pos[b]
         c = wcol(net.get(a))
@@ -582,8 +650,8 @@ def render(scope, scale=2.0, gate_colors=False, inputs=None, only=None):
     # taps get none; perpendicular taps add their own dot.
     DOT = LW * 1.05
     for i, n in (() if only else enumerate(N)):
-        if i in suppress or i in gate_pins:   # gate pins use leads, not dots
-            continue
+        if i in suppress or i in gate_pins or _find(i) not in live or i in hidden:
+            continue                          # gate pins use leads, not dots
         deg = sum(1 for j in n["connections"] if j < len(N))
         if n["type"] in (0, 1) or deg != 2:
             x, y = pos[i]

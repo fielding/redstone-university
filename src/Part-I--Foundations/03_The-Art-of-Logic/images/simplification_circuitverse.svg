@@ -20,14 +20,12 @@
 <line x1="-330" y1="-270" x2="-210" y2="-270" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="-380" y1="-250" x2="-380" y2="-270" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="-380" y1="-250" x2="-290" y2="-250" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
-<line x1="-200" y1="-270" x2="-210" y2="-270" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="-310" y1="-290" x2="-230" y2="-290" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
 <circle cx="-400" cy="-290" r="3.1500000000000004" fill="#f0392a"/>
 <circle cx="-400" cy="-250" r="3.1500000000000004" fill="#5a1816"/>
 <circle cx="-200" cy="-290" r="3.1500000000000004" fill="#f0392a"/>
 <circle cx="-200" cy="-250" r="3.1500000000000004" fill="#5a1816"/>
 <circle cx="-380" cy="-250" r="3.1500000000000004" fill="#5a1816"/>
-<circle cx="-200" cy="-270" r="3.1500000000000004" fill="#f0392a"/>
 <circle cx="-310" cy="-290" r="3.1500000000000004" fill="#f0392a"/>
 <circle cx="-230" cy="-290" r="3.1500000000000004" fill="#f0392a"/>
 <circle cx="-210" cy="-270" r="3.1500000000000004" fill="#f0392a"/>

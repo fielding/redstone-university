@@ -17,14 +17,14 @@
 <line x1="-280" y1="-630" x2="-250" y2="-630" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="-280" y1="-680" x2="-250" y2="-680" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="-280" y1="-730" x2="-250" y2="-730" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
-<line x1="-220" y1="-620" x2="-130" y2="-620" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
-<line x1="-220" y1="-640" x2="-170" y2="-640" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
-<line x1="-220" y1="-670" x2="-150" y2="-670" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
-<line x1="-220" y1="-690" x2="-190" y2="-690" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
-<line x1="-220" y1="-720" x2="-130" y2="-720" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
-<line x1="-220" y1="-740" x2="-190" y2="-740" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
-<line x1="-220" y1="-570" x2="-150" y2="-570" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
-<line x1="-220" y1="-590" x2="-170" y2="-590" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="-220" y1="-640" x2="-130" y2="-640" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="-220" y1="-620" x2="-170" y2="-620" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="-220" y1="-690" x2="-150" y2="-690" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="-220" y1="-670" x2="-190" y2="-670" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="-220" y1="-740" x2="-130" y2="-740" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="-220" y1="-720" x2="-190" y2="-720" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="-220" y1="-590" x2="-150" y2="-590" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="-220" y1="-570" x2="-170" y2="-570" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="-170" y1="-550" x2="-170" y2="-570" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="-170" y1="-570" x2="-170" y2="-620" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="-150" y1="-590" x2="-150" y2="-690" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
@@ -42,14 +42,14 @@
 <circle cx="-280" cy="-630" r="3.1500000000000004" fill="#5a1816"/>
 <circle cx="-280" cy="-680" r="3.1500000000000004" fill="#5a1816"/>
 <circle cx="-280" cy="-730" r="3.1500000000000004" fill="#f0392a"/>
-<circle cx="-130" cy="-620" r="3.1500000000000004" fill="#f0392a"/>
-<circle cx="-170" cy="-640" r="3.1500000000000004" fill="#5a1816"/>
-<circle cx="-150" cy="-670" r="3.1500000000000004" fill="#5a1816"/>
-<circle cx="-190" cy="-690" r="3.1500000000000004" fill="#f0392a"/>
-<circle cx="-130" cy="-720" r="3.1500000000000004" fill="#f0392a"/>
-<circle cx="-190" cy="-740" r="3.1500000000000004" fill="#f0392a"/>
-<circle cx="-150" cy="-570" r="3.1500000000000004" fill="#5a1816"/>
-<circle cx="-170" cy="-590" r="3.1500000000000004" fill="#5a1816"/>
+<circle cx="-170" cy="-570" r="3.1500000000000004" fill="#5a1816"/>
+<circle cx="-150" cy="-590" r="3.1500000000000004" fill="#5a1816"/>
+<circle cx="-170" cy="-620" r="3.1500000000000004" fill="#5a1816"/>
+<circle cx="-130" cy="-640" r="3.1500000000000004" fill="#f0392a"/>
+<circle cx="-190" cy="-670" r="3.1500000000000004" fill="#f0392a"/>
+<circle cx="-150" cy="-690" r="3.1500000000000004" fill="#5a1816"/>
+<circle cx="-190" cy="-720" r="3.1500000000000004" fill="#f0392a"/>
+<circle cx="-130" cy="-740" r="3.1500000000000004" fill="#f0392a"/>
 <rect x="-180" y="-470" width="20" height="20" fill="#ffffff" stroke="#f0392a" stroke-width="3.2"/><text x="-170" y="-455" font-family="Fira Code, ui-monospace, monospace" font-size="14" font-weight="600" text-anchor="middle" fill="#f0392a">1</text>
 <text x="-170" y="-432" font-family="ui-monospace,monospace" font-size="14" text-anchor="middle" fill="#30231e">B1</text>
 <rect x="-140" y="-470" width="20" height="20" fill="#ffffff" stroke="#f0392a" stroke-width="3.2"/><text x="-130" y="-455" font-family="Fira Code, ui-monospace, monospace" font-size="14" font-weight="600" text-anchor="middle" fill="#f0392a">1</text>
@@ -68,20 +68,20 @@
 <line x1="-170" y1="-550" x2="-170" y2="-540" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="-170" y1="-520" x2="-170" y2="-530" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
 <g transform="translate(-170,-530) rotate(270)"><path d="M -9 -11 L 12 0 L -9 11 Z" fill="#f0d6d4" stroke="#30231e" stroke-width="3.2" stroke-linecap="square" stroke-linejoin="miter"/><circle cx="15" cy="0" r="4" fill="#f5f1ea" stroke="#30231e" stroke-width="3.2"/></g>
-<line x1="-220" y1="-620" x2="-230" y2="-620" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
-<line x1="-220" y1="-640" x2="-230" y2="-640" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="-220" y1="-640" x2="-230" y2="-640" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="-220" y1="-620" x2="-230" y2="-620" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="-250" y1="-630" x2="-240" y2="-630" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <g transform="translate(-230,-630) rotate(180)"><path d="M -10 -19 L 0 -19 A 19 19 0 0 1 0 19 L -10 19 Z" fill="#d1e3c7" stroke="#30231e" stroke-width="3.2" stroke-linecap="square" stroke-linejoin="miter"/></g>
-<line x1="-220" y1="-670" x2="-230" y2="-670" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
-<line x1="-220" y1="-690" x2="-230" y2="-690" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="-220" y1="-690" x2="-230" y2="-690" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="-220" y1="-670" x2="-230" y2="-670" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="-250" y1="-680" x2="-240" y2="-680" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <g transform="translate(-230,-680) rotate(180)"><path d="M -10 -19 L 0 -19 A 19 19 0 0 1 0 19 L -10 19 Z" fill="#d1e3c7" stroke="#30231e" stroke-width="3.2" stroke-linecap="square" stroke-linejoin="miter"/></g>
-<line x1="-220" y1="-720" x2="-230" y2="-720" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="-220" y1="-740" x2="-230" y2="-740" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="-220" y1="-720" x2="-230" y2="-720" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="-250" y1="-730" x2="-240" y2="-730" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
 <g transform="translate(-230,-730) rotate(180)"><path d="M -10 -19 L 0 -19 A 19 19 0 0 1 0 19 L -10 19 Z" fill="#d1e3c7" stroke="#30231e" stroke-width="3.2" stroke-linecap="square" stroke-linejoin="miter"/></g>
-<line x1="-220" y1="-570" x2="-230" y2="-570" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="-220" y1="-590" x2="-230" y2="-590" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="-220" y1="-570" x2="-230" y2="-570" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="-250" y1="-580" x2="-240" y2="-580" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <g transform="translate(-230,-580) rotate(180)"><path d="M -10 -19 L 0 -19 A 19 19 0 0 1 0 19 L -10 19 Z" fill="#d1e3c7" stroke="#30231e" stroke-width="3.2" stroke-linecap="square" stroke-linejoin="miter"/></g>
 </g>

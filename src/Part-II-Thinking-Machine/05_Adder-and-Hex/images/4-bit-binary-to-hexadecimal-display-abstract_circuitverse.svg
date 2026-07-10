@@ -60,7 +60,6 @@
 <line x1="1010" y1="20" x2="850" y2="20" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="1010" y1="0" x2="850" y2="0" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="1010" y1="-20" x2="850" y2="-20" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
-<line x1="1010" y1="-20" x2="1010" y2="-10" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="1010" y1="-40" x2="850" y2="-40" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="1010" y1="-60" x2="850" y2="-60" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="1010" y1="-80" x2="850" y2="-80" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
@@ -127,7 +126,6 @@
 <circle cx="760" cy="140" r="3.1500000000000004" fill="#5a1816"/>
 <circle cx="790" cy="140" r="3.1500000000000004" fill="#f0392a"/>
 <circle cx="820" cy="140" r="3.1500000000000004" fill="#f0392a"/>
-<circle cx="1010" cy="-10" r="3.1500000000000004" fill="#5a1816"/>
 <rect x="1160" y="340" width="20" height="20" fill="#ffffff" stroke="#f0392a" stroke-width="3.2"/><text x="1170" y="355" font-family="Fira Code, ui-monospace, monospace" font-size="14" font-weight="600" text-anchor="middle" fill="#f0392a">1</text>
 <rect x="1120" y="340" width="20" height="20" fill="#ffffff" stroke="#30231e" stroke-width="3.2"/><text x="1130" y="355" font-family="Fira Code, ui-monospace, monospace" font-size="14" font-weight="600" text-anchor="middle" fill="#30231e">0</text>
 <rect x="1080" y="340" width="20" height="20" fill="#ffffff" stroke="#f0392a" stroke-width="3.2"/><text x="1090" y="355" font-family="Fira Code, ui-monospace, monospace" font-size="14" font-weight="600" text-anchor="middle" fill="#f0392a">1</text>

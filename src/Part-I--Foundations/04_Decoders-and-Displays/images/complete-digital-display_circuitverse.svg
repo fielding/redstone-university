@@ -21,7 +21,6 @@
 <line x1="840" y1="860" x2="840" y2="840" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="840" y1="810" x2="840" y2="590" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="800" y1="840" x2="800" y2="860" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
-<line x1="800" y1="840" x2="810" y2="840" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="800" y1="810" x2="800" y2="400" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="820" y1="860" x2="800" y2="860" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="820" y1="860" x2="820" y2="800" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
@@ -262,7 +261,7 @@
 <line x1="400" y1="680" x2="400" y2="530" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="400" y1="680" x2="420" y2="680" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="420" y1="680" x2="420" y2="580" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
-<polyline points="90,820 95,820 95,530 130,530" fill="none" stroke="#5a1816" stroke-width="3.0" stroke-linecap="square" stroke-linejoin="miter"/>
+<line x1="90" y1="820" x2="130" y2="530" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <circle cx="900" cy="1060" r="3.1500000000000004" fill="#5a1816"/>
 <circle cx="940" cy="1060" r="3.1500000000000004" fill="#5a1816"/>
 <circle cx="900" cy="280" r="3.1500000000000004" fill="#5a1816"/>
@@ -278,7 +277,6 @@
 <circle cx="820" cy="860" r="3.1500000000000004" fill="#5a1816"/>
 <circle cx="800" cy="280" r="3.1500000000000004" fill="#f0392a"/>
 <circle cx="840" cy="280" r="3.1500000000000004" fill="#f0392a"/>
-<circle cx="810" cy="840" r="3.1500000000000004" fill="#5a1816"/>
 <circle cx="-200" cy="780" r="3.1500000000000004" fill="#f0392a"/>
 <circle cx="-200" cy="730" r="3.1500000000000004" fill="#5a1816"/>
 <circle cx="-200" cy="680" r="3.1500000000000004" fill="#5a1816"/>

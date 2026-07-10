@@ -22,7 +22,6 @@
 <line x1="870" y1="700" x2="870" y2="680" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="870" y1="650" x2="870" y2="430" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="830" y1="680" x2="830" y2="700" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
-<line x1="830" y1="680" x2="840" y2="680" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="830" y1="650" x2="830" y2="240" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="850" y1="700" x2="830" y2="700" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="850" y1="700" x2="850" y2="640" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
@@ -127,7 +126,6 @@
 <circle cx="850" cy="700" r="3.1500000000000004" fill="#5a1816"/>
 <circle cx="830" cy="120" r="3.1500000000000004" fill="#f0392a"/>
 <circle cx="870" cy="120" r="3.1500000000000004" fill="#f0392a"/>
-<circle cx="840" cy="680" r="3.1500000000000004" fill="#5a1816"/>
 <circle cx="660" cy="620" r="3.1500000000000004" fill="#5a1816"/>
 <circle cx="660" cy="570" r="3.1500000000000004" fill="#f0392a"/>
 <circle cx="660" cy="520" r="3.1500000000000004" fill="#5a1816"/>

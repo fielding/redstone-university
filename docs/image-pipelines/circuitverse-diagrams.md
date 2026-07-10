@@ -102,8 +102,14 @@ cv_render.py <cv> [name] [options]
   net's wire, pin, or junction point. Long spans try the plain L, half-grid
   Z-jogs (the clean lane in a 10-pitch matrix is between rows), then the
   flipped L; short hops (a few grid steps) skip the jogs and fall back to the
-  author's original diagonal, so crossed pairs feeding a second-level gate
-  render as their natural X. A slant is honest, a false junction is not.
+  author's original diagonal. A jog lane must sit at least a full grid step
+  from the wire's own lanes (a 5-unit sidestep reads as a broken wire, not a
+  jog) and may detour slightly outside the span (U-route). When the two feeds
+  of a 2-input gate cross, the pins' draw positions are swapped — the gate is
+  commutative, so both wires run straight instead of drawing a meaningless X.
+  Nets that reach no element pin (abandoned editor leftovers) and dangling
+  tails under two grid steps are not drawn at all. A slant is honest, a false
+  junction is not.
   Subcircuit pins snap onto their box edge and are approached perpendicular to
   it; 7-seg display pins stay at their raw interior positions and the
   paper-filled display body masks the wire tails, so hookups read as ending at
