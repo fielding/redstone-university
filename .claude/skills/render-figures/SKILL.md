@@ -33,6 +33,7 @@ A figure is "in the book" only after **all** of:
 
 ```bash
 CV="$HOME/Downloads/Redstone University.cv"
+python3 scripts/pull_cv.py                          # refresh from circuitverse.org first
 python3 scripts/cv_render.py "$CV" --list           # confirm the scope name exists
 # add/extend the entry in renders/diagrams.json, then:
 python3 scripts/cv_render.py "$CV" --batch renders/diagrams.json

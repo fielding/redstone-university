@@ -2,7 +2,8 @@
   "_defaults": {
     "out": "renders/cv-out",
     "gate_colors": true,
-    "scale": 2
+    "scale": 2,
+    "cv_project": "redstone-university-cafe6ad2-2c4f-41b6-8a91-51fd8fa24698"
   },
   "xor-gate": {
     "circuit": "XOR Gate",

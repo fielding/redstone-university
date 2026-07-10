@@ -6,8 +6,12 @@ so wires are perfectly aligned and everything is recolorable to the design
 system.
 
 - **Script:** `scripts/cv_render.py`
-- **Source graph:** `~/Downloads/Redstone University.cv` (the exported
-  CircuitVerse project; one file holds *all* circuits as named scopes)
+- **Source graph:** `~/Downloads/Redstone University.cv` (the CircuitVerse
+  project data; one file holds *all* circuits as named scopes). Refresh it
+  straight from circuitverse.org with `python3 scripts/pull_cv.py` — the
+  project id lives in `renders/diagrams.json` `_defaults.cv_project`, the
+  previous file is kept as `.bak`, and a manual "Export as file" download
+  works too (identical JSON).
 - **Config:** `renders/diagrams.json`
 - **Output:** `renders/cv-out/<name>.svg` + `.png` → placed as
   `src/.../images/<placed-name>_circuitverse.png`
@@ -17,6 +21,7 @@ system.
 ```bash
 CV="$HOME/Downloads/Redstone University.cv"
 
+python3 scripts/pull_cv.py                                # refresh $CV from circuitverse.org
 python3 scripts/cv_render.py "$CV" --list                 # list every circuit/scope
 python3 scripts/cv_render.py "$CV" --batch renders/diagrams.json   # render the whole set
 python3 scripts/cv_render.py "$CV" "XOR Gate" -o /tmp/x.svg --gate-colors --png  # one circuit

@@ -15,7 +15,7 @@
 <line x1="570" y1="860" x2="740" y2="860" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="570" y1="840" x2="740" y2="840" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="570" y1="820" x2="740" y2="820" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
-<line x1="570" y1="800" x2="650" y2="800" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="570" y1="800" x2="740" y2="800" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="570" y1="780" x2="740" y2="780" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="570" y1="760" x2="740" y2="760" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="570" y1="740" x2="740" y2="740" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
@@ -67,7 +67,6 @@
 <line x1="540" y1="920" x2="480" y2="920" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="480" y1="920" x2="480" y2="1060" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="470" y1="910" x2="470" y2="1050" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
-<line x1="740" y1="800" x2="650" y2="800" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <circle cx="890" cy="1090" r="3.1500000000000004" fill="#5a1816"/>
 <circle cx="850" cy="1090" r="3.1500000000000004" fill="#5a1816"/>
 <circle cx="810" cy="1090" r="3.1500000000000004" fill="#5a1816"/>
@@ -111,7 +110,6 @@
 <circle cx="860" cy="890" r="3.1500000000000004" fill="#5a1816"/>
 <circle cx="800" cy="890" r="3.1500000000000004" fill="#f0392a"/>
 <circle cx="820" cy="890" r="3.1500000000000004" fill="#5a1816"/>
-<circle cx="650" cy="800" r="3.1500000000000004" fill="#5a1816"/>
 <rect x="880" y="1090" width="20" height="20" fill="#ffffff" stroke="#30231e" stroke-width="3.2"/><text x="890" y="1105" font-family="Fira Code, ui-monospace, monospace" font-size="14" font-weight="600" text-anchor="middle" fill="#30231e">0</text>
 <rect x="840" y="1090" width="20" height="20" fill="#ffffff" stroke="#30231e" stroke-width="3.2"/><text x="850" y="1105" font-family="Fira Code, ui-monospace, monospace" font-size="14" font-weight="600" text-anchor="middle" fill="#30231e">0</text>
 <rect x="800" y="1090" width="20" height="20" fill="#ffffff" stroke="#30231e" stroke-width="3.2"/><text x="810" y="1105" font-family="Fira Code, ui-monospace, monospace" font-size="14" font-weight="600" text-anchor="middle" fill="#30231e">0</text>

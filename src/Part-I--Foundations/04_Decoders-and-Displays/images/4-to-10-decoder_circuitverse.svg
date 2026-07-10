@@ -23,8 +23,8 @@
 <line x1="870" y1="650" x2="870" y2="430" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="830" y1="680" x2="830" y2="700" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="830" y1="650" x2="830" y2="240" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
-<line x1="850" y1="700" x2="830" y2="700" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="850" y1="700" x2="850" y2="640" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="850" y1="700" x2="830" y2="700" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="830" y1="120" x2="830" y2="190" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="870" y1="120" x2="870" y2="280" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="660" y1="620" x2="710" y2="620" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
