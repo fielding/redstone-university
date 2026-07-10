@@ -478,7 +478,7 @@ This points to a catastrophic failure in the "programming" of the `L2` line in y
 2.  What is the hexadecimal symbol for binary `1110`?
 3.  Why did our original display fail on the result `1100`?
 
-1.  The **Sum** output is the current bit of the result for that column. The **CarryOut** output is the overflow bit that must be passed into the next column to the left.
+1.  The **Sum** output is the current bit of the result for that column. The **CarryOut** output is the carry bit that must be passed into the next column to the left.
 2.  The hexadecimal symbol is **`E`**.
 3.  The original display used a **BCD decoder**, which only knew how to interpret the patterns for decimal `0` through `9`. It had no rule for `1100`.
 
