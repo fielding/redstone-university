@@ -668,5 +668,23 @@
     "place": {
       "top": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/4-bit-rca-aerial_minecraft.png"
     }
+  },
+  "03b_XOR-gate-composite": {
+    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "bounds": [
+      23,
+      54,
+      -490,
+      33,
+      61,
+      -474
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "crop",
+    "place": {
+      "iso": "src/Part-I--Foundations/03b_Interlude-Compact-Design-final/images/XOR-gate-composite_minecraft.png"
+    }
   }
 }
