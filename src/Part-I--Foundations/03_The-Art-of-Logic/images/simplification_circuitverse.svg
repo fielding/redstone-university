@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1326" height="612" viewBox="0 0 663.0 306.0">
+<g transform="translate(0.0,0.0)">
+<g transform="translate(468.5,498)">
+<line x1="-400" y1="-290" x2="-310" y2="-290" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="-400" y1="-250" x2="-380" y2="-250" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="-310" y1="-310" x2="-310" y2="-290" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="-290" y1="-310" x2="-290" y2="-250" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="-300" y1="-340" x2="-300" y2="-350" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="-230" y1="-310" x2="-230" y2="-290" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="-210" y1="-310" x2="-210" y2="-270" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="-220" y1="-340" x2="-220" y2="-350" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="-270" y1="-380" x2="-270" y2="-350" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="-250" y1="-380" x2="-250" y2="-350" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="-260" y1="-410" x2="-260" y2="-430" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="-220" y1="-350" x2="-250" y2="-350" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="-300" y1="-350" x2="-270" y2="-350" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="-200" y1="-290" x2="-230" y2="-290" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="-200" y1="-250" x2="-290" y2="-250" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="-360" y1="-270" x2="-380" y2="-270" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="-330" y1="-270" x2="-210" y2="-270" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="-380" y1="-250" x2="-380" y2="-270" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="-380" y1="-250" x2="-290" y2="-250" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="-200" y1="-270" x2="-210" y2="-270" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="-310" y1="-290" x2="-230" y2="-290" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
+<circle cx="-400" cy="-290" r="3.1500000000000004" fill="#f0392a"/>
+<circle cx="-400" cy="-250" r="3.1500000000000004" fill="#5a1816"/>
+<circle cx="-200" cy="-290" r="3.1500000000000004" fill="#f0392a"/>
+<circle cx="-200" cy="-250" r="3.1500000000000004" fill="#5a1816"/>
+<circle cx="-380" cy="-250" r="3.1500000000000004" fill="#5a1816"/>
+<circle cx="-200" cy="-270" r="3.1500000000000004" fill="#f0392a"/>
+<circle cx="-310" cy="-290" r="3.1500000000000004" fill="#f0392a"/>
+<circle cx="-230" cy="-290" r="3.1500000000000004" fill="#f0392a"/>
+<circle cx="-210" cy="-270" r="3.1500000000000004" fill="#f0392a"/>
+<circle cx="-290" cy="-250" r="3.1500000000000004" fill="#5a1816"/>
+<circle cx="-260" cy="-430" r="3.1500000000000004" fill="#f0392a"/>
+<rect x="-420" y="-300" width="20" height="20" fill="#ffffff" stroke="#f0392a" stroke-width="3.2"/><text x="-410" y="-285" font-family="Fira Code, ui-monospace, monospace" font-size="14" font-weight="600" text-anchor="middle" fill="#f0392a">1</text>
+<text x="-432" y="-285" font-family="ui-monospace,monospace" font-size="14" text-anchor="end" fill="#30231e">A</text>
+<rect x="-420" y="-260" width="20" height="20" fill="#ffffff" stroke="#30231e" stroke-width="3.2"/><text x="-410" y="-245" font-family="Fira Code, ui-monospace, monospace" font-size="14" font-weight="600" text-anchor="middle" fill="#30231e">0</text>
+<text x="-432" y="-245" font-family="ui-monospace,monospace" font-size="14" text-anchor="end" fill="#30231e">B</text>
+<rect x="-270" y="-450" width="20" height="20" fill="#ffffff" stroke="#f0392a" stroke-width="3.2"/><text x="-260" y="-435" font-family="Fira Code, ui-monospace, monospace" font-size="14" font-weight="600" text-anchor="middle" fill="#f0392a">1</text>
+<line x1="-330" y1="-270" x2="-340" y2="-270" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="-360" y1="-270" x2="-350" y2="-270" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
+<g transform="translate(-350,-270) rotate(0)"><path d="M -9 -11 L 12 0 L -9 11 Z" fill="#f0d6d4" stroke="#30231e" stroke-width="3.2" stroke-linecap="square" stroke-linejoin="miter"/><circle cx="15" cy="0" r="4" fill="#f5f1ea" stroke="#30231e" stroke-width="3.2"/></g>
+<line x1="-270" y1="-380" x2="-260" y2="-380" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="-250" y1="-380" x2="-260" y2="-380" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="-260" y1="-410" x2="-260" y2="-400" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
+<g transform="translate(-260,-390) rotate(270)"><path d="M -16 -19 Q -3 0 -16 19 Q 6 18 19 0 Q 6 -18 -16 -19 Z" fill="#ccdbe5" stroke="#30231e" stroke-width="3.2" stroke-linecap="square" stroke-linejoin="miter"/></g>
+<line x1="-310" y1="-310" x2="-300" y2="-310" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="-290" y1="-310" x2="-300" y2="-310" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="-300" y1="-340" x2="-300" y2="-330" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
+<g transform="translate(-300,-320) rotate(270)"><path d="M -10 -19 L 0 -19 A 19 19 0 0 1 0 19 L -10 19 Z" fill="#d1e3c7" stroke="#30231e" stroke-width="3.2" stroke-linecap="square" stroke-linejoin="miter"/></g>
+<line x1="-230" y1="-310" x2="-220" y2="-310" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="-210" y1="-310" x2="-220" y2="-310" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="-220" y1="-340" x2="-220" y2="-330" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
+<g transform="translate(-220,-320) rotate(270)"><path d="M -10 -19 L 0 -19 A 19 19 0 0 1 0 19 L -10 19 Z" fill="#d1e3c7" stroke="#30231e" stroke-width="3.2" stroke-linecap="square" stroke-linejoin="miter"/></g>
+</g>
+</g>
+<line x1="387.5" y1="144.0" x2="413.5" y2="144.0" stroke="#30231e" stroke-width="4.5" stroke-linecap="round"/>
+<line x1="387.5" y1="153.0" x2="413.5" y2="153.0" stroke="#30231e" stroke-width="4.5" stroke-linecap="round"/>
+<line x1="387.5" y1="162.0" x2="413.5" y2="162.0" stroke="#30231e" stroke-width="4.5" stroke-linecap="round"/>
+<g transform="translate(486.5,50.0)">
+<g transform="translate(-601.5,-512)">
+<line x1="670" y1="620" x2="720" y2="620" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="720" y1="620" x2="720" y2="580" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
+<circle cx="670" cy="620" r="3.1500000000000004" fill="#f0392a"/>
+<circle cx="670" cy="660" r="3.1500000000000004" fill="#5a1816"/>
+<circle cx="720" cy="580" r="3.1500000000000004" fill="#f0392a"/>
+<rect x="650" y="610" width="20" height="20" fill="#ffffff" stroke="#f0392a" stroke-width="3.2"/><text x="660" y="625" font-family="Fira Code, ui-monospace, monospace" font-size="14" font-weight="600" text-anchor="middle" fill="#f0392a">1</text>
+<text x="638" y="625" font-family="ui-monospace,monospace" font-size="14" text-anchor="end" fill="#30231e">A</text>
+<rect x="650" y="650" width="20" height="20" fill="#ffffff" stroke="#30231e" stroke-width="3.2"/><text x="660" y="665" font-family="Fira Code, ui-monospace, monospace" font-size="14" font-weight="600" text-anchor="middle" fill="#30231e">0</text>
+<text x="638" y="665" font-family="ui-monospace,monospace" font-size="14" text-anchor="end" fill="#30231e">B</text>
+<rect x="710" y="560" width="20" height="20" fill="#ffffff" stroke="#f0392a" stroke-width="3.2"/><text x="720" y="575" font-family="Fira Code, ui-monospace, monospace" font-size="14" font-weight="600" text-anchor="middle" fill="#f0392a">1</text>
+</g>
+</g>
+</svg>

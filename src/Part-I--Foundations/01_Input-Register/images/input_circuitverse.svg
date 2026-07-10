@@ -1,40 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="472" height="492" viewBox="0 0 236 246">
-<g transform="translate(-882,-252)">
-<line x1="980" y1="430" x2="980" y2="350" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
-<line x1="1060" y1="430" x2="1060" y2="350" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
-<line x1="1020" y1="430" x2="1020" y2="350" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
-<line x1="940" y1="430" x2="940" y2="350" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
-<line x1="940" y1="350" x2="940" y2="350" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
-<line x1="980" y1="350" x2="980" y2="350" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
-<line x1="1020" y1="350" x2="1020" y2="350" stroke="#f0392a" stroke-width="3.0" stroke-linecap="round"/>
-<line x1="1060" y1="350" x2="1060" y2="350" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
-<circle cx="980" cy="430" r="3.1500000000000004" fill="#f0392a"/>
-<circle cx="1060" cy="430" r="3.1500000000000004" fill="#5a1816"/>
-<circle cx="1020" cy="430" r="3.1500000000000004" fill="#f0392a"/>
-<circle cx="940" cy="430" r="3.1500000000000004" fill="#5a1816"/>
-<circle cx="940" cy="350" r="3.1500000000000004" fill="#5a1816"/>
-<circle cx="980" cy="350" r="3.1500000000000004" fill="#f0392a"/>
-<circle cx="1020" cy="350" r="3.1500000000000004" fill="#f0392a"/>
-<circle cx="1060" cy="350" r="3.1500000000000004" fill="#5a1816"/>
-<circle cx="940" cy="350" r="3.1500000000000004" fill="#5a1816"/>
-<circle cx="980" cy="350" r="3.1500000000000004" fill="#f0392a"/>
-<circle cx="1020" cy="350" r="3.1500000000000004" fill="#f0392a"/>
-<circle cx="1060" cy="350" r="3.1500000000000004" fill="#5a1816"/>
-<rect x="970" y="430" width="20" height="20" rx="4" fill="#f0392a" stroke="#f0392a" stroke-width="3.2"/><text x="980" y="445" font-family="Fira Code, ui-monospace, monospace" font-size="14" font-weight="600" text-anchor="middle" fill="#f5f1ea">1</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="472" height="238" viewBox="0 0 236 119">
+<g transform="translate(-882,-382)">
+<rect x="970" y="430" width="20" height="20" fill="#ffffff" stroke="#f0392a" stroke-width="3.2"/><text x="980" y="445" font-family="Fira Code, ui-monospace, monospace" font-size="14" font-weight="600" text-anchor="middle" fill="#f0392a">1</text>
 <text x="980" y="468" font-family="ui-monospace,monospace" font-size="14" text-anchor="middle" fill="#30231e">B2</text>
-<rect x="1050" y="430" width="20" height="20" rx="4" fill="#ffffff" stroke="#30231e" stroke-width="3.2"/><text x="1060" y="445" font-family="Fira Code, ui-monospace, monospace" font-size="14" font-weight="600" text-anchor="middle" fill="#30231e">0</text>
+<rect x="1050" y="430" width="20" height="20" fill="#ffffff" stroke="#30231e" stroke-width="3.2"/><text x="1060" y="445" font-family="Fira Code, ui-monospace, monospace" font-size="14" font-weight="600" text-anchor="middle" fill="#30231e">0</text>
 <text x="1060" y="468" font-family="ui-monospace,monospace" font-size="14" text-anchor="middle" fill="#30231e">B0</text>
-<rect x="1010" y="430" width="20" height="20" rx="4" fill="#f0392a" stroke="#f0392a" stroke-width="3.2"/><text x="1020" y="445" font-family="Fira Code, ui-monospace, monospace" font-size="14" font-weight="600" text-anchor="middle" fill="#f5f1ea">1</text>
+<rect x="1010" y="430" width="20" height="20" fill="#ffffff" stroke="#f0392a" stroke-width="3.2"/><text x="1020" y="445" font-family="Fira Code, ui-monospace, monospace" font-size="14" font-weight="600" text-anchor="middle" fill="#f0392a">1</text>
 <text x="1020" y="468" font-family="ui-monospace,monospace" font-size="14" text-anchor="middle" fill="#30231e">B1</text>
-<rect x="930" y="430" width="20" height="20" rx="4" fill="#ffffff" stroke="#30231e" stroke-width="3.2"/><text x="940" y="445" font-family="Fira Code, ui-monospace, monospace" font-size="14" font-weight="600" text-anchor="middle" fill="#30231e">0</text>
+<rect x="930" y="430" width="20" height="20" fill="#ffffff" stroke="#30231e" stroke-width="3.2"/><text x="940" y="445" font-family="Fira Code, ui-monospace, monospace" font-size="14" font-weight="600" text-anchor="middle" fill="#30231e">0</text>
 <text x="940" y="468" font-family="ui-monospace,monospace" font-size="14" text-anchor="middle" fill="#30231e">B3</text>
-<rect x="930" y="330" width="20" height="20" rx="4" fill="#ffffff" stroke="#30231e" stroke-width="3.2"/><text x="940" y="345" font-family="Fira Code, ui-monospace, monospace" font-size="14" font-weight="600" text-anchor="middle" fill="#30231e">0</text>
-<rect x="970" y="330" width="20" height="20" rx="4" fill="#f0392a" stroke="#f0392a" stroke-width="3.2"/><text x="980" y="345" font-family="Fira Code, ui-monospace, monospace" font-size="14" font-weight="600" text-anchor="middle" fill="#f5f1ea">1</text>
-<rect x="1010" y="330" width="20" height="20" rx="4" fill="#f0392a" stroke="#f0392a" stroke-width="3.2"/><text x="1020" y="345" font-family="Fira Code, ui-monospace, monospace" font-size="14" font-weight="600" text-anchor="middle" fill="#f5f1ea">1</text>
-<rect x="1050" y="330" width="20" height="20" rx="4" fill="#ffffff" stroke="#30231e" stroke-width="3.2"/><text x="1060" y="345" font-family="Fira Code, ui-monospace, monospace" font-size="14" font-weight="600" text-anchor="middle" fill="#30231e">0</text>
-<circle cx="940" cy="310" r="13" fill="#f5f1ea" stroke="#30231e" stroke-width="3.2"/>
-<circle cx="980" cy="310" r="13" fill="#f0392a" stroke="#30231e" stroke-width="3.2"/>
-<circle cx="1020" cy="310" r="13" fill="#f0392a" stroke="#30231e" stroke-width="3.2"/>
-<circle cx="1060" cy="310" r="13" fill="#f5f1ea" stroke="#30231e" stroke-width="3.2"/>
 </g>
 </svg>

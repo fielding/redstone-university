@@ -10,14 +10,16 @@
     "inputs": [
       1,
       0
-    ]
+    ],
+    "place": "src/Part-I--Foundations/03_The-Art-of-Logic/images/XOR-gate"
   },
   "4bit-input-interface": {
     "circuit": "4bit Input Interface",
     "name": "4bit-input-interface",
     "only": [
       "Input"
-    ]
+    ],
+    "place": "src/Part-I--Foundations/01_Input-Register/images/input"
   },
   "xnor-gate": {
     "circuit": "XNOR Gate",
@@ -25,15 +27,18 @@
     "inputs": [
       1,
       1
-    ]
+    ],
+    "place": "src/Part-I--Foundations/03_The-Art-of-Logic/images/XNOR-gate"
   },
   "not-gate": {
     "circuit": "NOT Gate",
-    "name": "not-gate"
+    "name": "not-gate",
+    "place": "src/Part-I--Foundations/02_The-Grammar-of-Circuits/images/NOT-gate"
   },
   "or-gate": {
     "circuit": "OR Gate",
-    "name": "or-gate"
+    "name": "or-gate",
+    "place": "src/Part-I--Foundations/02_The-Grammar-of-Circuits/images/OR-gate"
   },
   "and-gate": {
     "circuit": "AND Gate",
@@ -41,7 +46,8 @@
     "inputs": [
       1,
       1
-    ]
+    ],
+    "place": "src/Part-I--Foundations/02_The-Grammar-of-Circuits/images/AND-gate"
   },
   "nor-gate": {
     "circuit": "NOR Gate",
@@ -49,7 +55,8 @@
     "inputs": [
       0,
       0
-    ]
+    ],
+    "place": "src/Part-I--Foundations/03_The-Art-of-Logic/images/NOR-gate"
   },
   "nand-gate": {
     "circuit": "NAND Gate",
@@ -57,7 +64,8 @@
     "inputs": [
       1,
       1
-    ]
+    ],
+    "place": "src/Part-I--Foundations/03_The-Art-of-Logic/images/NAND-gate"
   },
   "redstone-university": {
     "circuit": "Redstone University",
@@ -81,7 +89,8 @@
       1,
       0
     ],
-    "sep": "equiv"
+    "sep": "equiv",
+    "place": "src/Part-I--Foundations/03_The-Art-of-Logic/images/simplification"
   },
   "7-segment-display": {
     "circuit": "7-segment display",
@@ -89,7 +98,8 @@
   },
   "2-to-4-decoder": {
     "circuit": "2-to-4 decoder",
-    "name": "2-to-4-decoder"
+    "name": "2-to-4-decoder",
+    "place": "src/Part-I--Foundations/04_Decoders-and-Displays/images/2-to-4-decder"
   },
   "simplified-a-and-b-or-a-and-notb": {
     "circuit": "Simplified (A AND B) OR (A AND !B)",
@@ -101,7 +111,8 @@
   },
   "4-to-10-decoder": {
     "circuit": "4-to-10 decoder",
-    "name": "4-to-10-decoder"
+    "name": "4-to-10-decoder",
+    "place": "src/Part-I--Foundations/04_Decoders-and-Displays/images/4-to-10-decoder"
   },
   "7-segment-0-9-decoder-driver-diode-matrix-rom": {
     "circuit": "7-Segment 0-9 Decoder/Driver (diode-matrix ROM)",
@@ -109,7 +120,11 @@
   },
   "4-bit-binary-to-display-abstract": {
     "circuit": "4-bit binary to display (abstract)",
-    "name": "4-bit-binary-to-display-abstract"
+    "name": "4-bit-binary-to-display-abstract",
+    "place": [
+      "src/Part-I--Foundations/04_Decoders-and-Displays/images/digital-display-subcircuit-abstractions",
+      "src/Part-I--Foundations/04b_Interlude-Power-of_Abstraction/images/digital-display-subcircuit-abstractions"
+    ]
   },
   "4-bit-binary-to-display-abstract-1100": {
     "circuit": "4-bit binary to display (abstract)",
@@ -119,19 +134,23 @@
       1,
       0,
       0
-    ]
+    ],
+    "place": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/4-bit-binary-to-display-abstract-1100"
   },
   "4-bit-binary-to-display-composite": {
     "circuit": "4-bit binary to display (composite)",
-    "name": "4-bit-binary-to-display-composite"
+    "name": "4-bit-binary-to-display-composite",
+    "place": "src/Part-I--Foundations/04_Decoders-and-Displays/images/complete-digital-display"
   },
   "full-adder": {
     "circuit": "Full Adder",
-    "name": "full-adder"
+    "name": "full-adder",
+    "place": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/full-adder"
   },
   "4-bit-rca": {
     "circuit": "4-bit RCA",
-    "name": "4-bit-rca"
+    "name": "4-bit-rca",
+    "place": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/4-bit-rca"
   },
   "4-bit-bcd": {
     "circuit": "4-bit BCD",
@@ -139,14 +158,17 @@
   },
   "4-to-16-decoder": {
     "circuit": "4-to-16 Decoder",
-    "name": "4-to-16-decoder"
+    "name": "4-to-16-decoder",
+    "place": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/4-to-16-decoder"
   },
   "7-segment-hex-decoder-driver": {
     "circuit": "7-segment Hex Decoder/Driver",
-    "name": "7-segment-hex-decoder-driver"
+    "name": "7-segment-hex-decoder-driver",
+    "place": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/7-segment-hex-decoder-driver"
   },
   "4-bit-binary-to-hexadecimal-display-abstract": {
     "circuit": "4-bit binary to hexadecimal display (abstract)",
-    "name": "4-bit-binary-to-hexadecimal-display-abstract"
+    "name": "4-bit-binary-to-hexadecimal-display-abstract",
+    "place": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/4-bit-binary-to-hexadecimal-display-abstract"
   }
 }

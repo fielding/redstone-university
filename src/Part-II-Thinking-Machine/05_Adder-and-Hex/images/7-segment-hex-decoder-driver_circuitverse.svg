@@ -227,13 +227,13 @@
 <line x1="1630" y1="230" x2="1920" y2="230" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="1660" y1="70" x2="1950" y2="70" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="1650" y1="110" x2="1940" y2="110" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
-<line x1="2350" y1="1140" x2="2330" y2="1140" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
-<line x1="2360" y1="1140" x2="2360" y2="1130" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
-<line x1="2380" y1="1140" x2="2380" y2="1120" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
-<line x1="2390" y1="1140" x2="2390" y2="1110" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
-<line x1="2350" y1="1240" x2="2330" y2="1240" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
-<line x1="2360" y1="1240" x2="2360" y2="1250" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
-<line x1="2380" y1="1240" x2="2380" y2="1260" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
+<polyline points="2350,1132 2330,1132 2330,1140" fill="none" stroke="#5a1816" stroke-width="3.0" stroke-linecap="square" stroke-linejoin="miter"/>
+<line x1="2360" y1="1132" x2="2360" y2="1130" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="2380" y1="1132" x2="2380" y2="1120" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="2390" y1="1132" x2="2390" y2="1110" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
+<polyline points="2350,1248 2330,1248 2330,1240" fill="none" stroke="#5a1816" stroke-width="3.0" stroke-linecap="square" stroke-linejoin="miter"/>
+<line x1="2360" y1="1248" x2="2360" y2="1250" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
+<line x1="2380" y1="1248" x2="2380" y2="1260" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="2390" y1="1110" x2="2300" y2="1110" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="2360" y1="1250" x2="2320" y2="1250" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
 <line x1="2330" y1="1240" x2="2330" y2="1200" stroke="#5a1816" stroke-width="3.0" stroke-linecap="round"/>
@@ -298,14 +298,14 @@
 <circle cx="1900" cy="910" r="3.1500000000000004" fill="#5a1816"/>
 <circle cx="1640" cy="190" r="3.1500000000000004" fill="#5a1816"/>
 <circle cx="1930" cy="150" r="3.1500000000000004" fill="#5a1816"/>
-<circle cx="2350" cy="1140" r="3.1500000000000004" fill="#5a1816"/>
-<circle cx="2360" cy="1140" r="3.1500000000000004" fill="#5a1816"/>
-<circle cx="2380" cy="1140" r="3.1500000000000004" fill="#5a1816"/>
-<circle cx="2390" cy="1140" r="3.1500000000000004" fill="#5a1816"/>
-<circle cx="2350" cy="1240" r="3.1500000000000004" fill="#5a1816"/>
-<circle cx="2360" cy="1240" r="3.1500000000000004" fill="#5a1816"/>
-<circle cx="2380" cy="1240" r="3.1500000000000004" fill="#5a1816"/>
-<circle cx="2390" cy="1240" r="3.1500000000000004" fill="#5a1816"/>
+<circle cx="2350" cy="1132" r="3.1500000000000004" fill="#5a1816"/>
+<circle cx="2360" cy="1132" r="3.1500000000000004" fill="#5a1816"/>
+<circle cx="2380" cy="1132" r="3.1500000000000004" fill="#5a1816"/>
+<circle cx="2390" cy="1132" r="3.1500000000000004" fill="#5a1816"/>
+<circle cx="2350" cy="1248" r="3.1500000000000004" fill="#5a1816"/>
+<circle cx="2360" cy="1248" r="3.1500000000000004" fill="#5a1816"/>
+<circle cx="2380" cy="1248" r="3.1500000000000004" fill="#5a1816"/>
+<circle cx="2390" cy="1248" r="3.1500000000000004" fill="#5a1816"/>
 <circle cx="230" cy="670" r="3.1500000000000004" fill="#5a1816"/>
 <circle cx="220" cy="590" r="3.1500000000000004" fill="#5a1816"/>
 <circle cx="210" cy="550" r="3.1500000000000004" fill="#5a1816"/>

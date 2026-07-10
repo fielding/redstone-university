@@ -130,7 +130,10 @@
       73,
       320,
       -444
-    ]
+    ],
+    "place": {
+      "iso": "src/Part-I--Foundations/00_Prelude-The-Redstone-Toolkit/images/basic-circuit_minecraft.png"
+    }
   },
   "00_strongly-powered-block": {
     "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
@@ -141,7 +144,10 @@
       84,
       320,
       -447
-    ]
+    ],
+    "place": {
+      "iso": "src/Part-I--Foundations/00_Prelude-The-Redstone-Toolkit/images/strongly-powered-block_minecraft.png"
+    }
   },
   "00_weakly-powered-block": {
     "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
@@ -152,7 +158,10 @@
       92,
       320,
       -446
-    ]
+    ],
+    "place": {
+      "iso": "src/Part-I--Foundations/00_Prelude-The-Redstone-Toolkit/images/weakly-powered-block_minecraft.png"
+    }
   },
   "01_input": {
     "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
@@ -163,7 +172,10 @@
       91,
       320,
       -487
-    ]
+    ],
+    "place": {
+      "iso": "src/Part-I--Foundations/01_Input-Register/images/input_minecraft.png"
+    }
   },
   "02_AND-gate-composite": {
     "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
@@ -174,7 +186,10 @@
       52,
       320,
       -483
-    ]
+    ],
+    "place": {
+      "iso": "src/Part-I--Foundations/02_The-Grammar-of-Circuits/images/AND-gate-composite_minecraft.png"
+    }
   },
   "02_NOT-gate": {
     "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
@@ -185,7 +200,10 @@
       74,
       320,
       -482
-    ]
+    ],
+    "place": {
+      "iso": "src/Part-I--Foundations/02_The-Grammar-of-Circuits/images/NOT-gate_minecraft.png"
+    }
   },
   "02_OR_gate": {
     "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
@@ -196,7 +214,10 @@
       64,
       320,
       -482
-    ]
+    ],
+    "place": {
+      "iso": "src/Part-I--Foundations/02_The-Grammar-of-Circuits/images/OR_gate_minecraft.png"
+    }
   },
   "03_NAND-gate-composite": {
     "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
@@ -207,7 +228,10 @@
       -73,
       320,
       -484
-    ]
+    ],
+    "place": {
+      "iso": "src/Part-I--Foundations/03_The-Art-of-Logic/images/NAND-gate-composite_minecraft.png"
+    }
   },
   "03_XNOR-gate-composite": {
     "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
@@ -218,7 +242,10 @@
       -56,
       320,
       -477
-    ]
+    ],
+    "place": {
+      "iso": "src/Part-I--Foundations/03_The-Art-of-Logic/images/XNOR-gate-composite_minecraft.png"
+    }
   },
   "03_XOR-gate-composite": {
     "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
@@ -229,7 +256,10 @@
       31,
       320,
       -476
-    ]
+    ],
+    "place": {
+      "iso": "src/Part-I--Foundations/03_The-Art-of-Logic/images/XOR-gate-composite_minecraft.png"
+    }
   },
   "03b_AND-gate": {
     "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
@@ -240,7 +270,10 @@
       40,
       320,
       -485
-    ]
+    ],
+    "place": {
+      "iso": "src/Part-I--Foundations/03b_Interlude-Compact-Design-final/images/AND-gate_minecraft.png"
+    }
   },
   "03b_AND-gate-composite": {
     "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
@@ -251,7 +284,10 @@
       17,
       320,
       -482
-    ]
+    ],
+    "place": {
+      "iso": "src/Part-I--Foundations/03b_Interlude-Compact-Design-final/images/AND-gate-composite_minecraft.png"
+    }
   },
   "03b_XOR-gate": {
     "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
@@ -262,7 +298,10 @@
       -20,
       320,
       -481
-    ]
+    ],
+    "place": {
+      "iso": "src/Part-I--Foundations/03b_Interlude-Compact-Design-final/images/XOR-gate_minecraft.png"
+    }
   },
   "04_10-to-7-encoder-L9": {
     "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
@@ -279,7 +318,10 @@
       "top"
     ],
     "projection": "tele",
-    "azimuth": 150
+    "azimuth": 150,
+    "place": {
+      "iso": "src/Part-I--Foundations/04_Decoders-and-Displays/images/10-to-7-encoder-L9_minecraft.png"
+    }
   },
   "04_2-to-4-decoder-1": {
     "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
@@ -290,7 +332,10 @@
       36,
       320,
       -462
-    ]
+    ],
+    "place": {
+      "iso": "src/Part-I--Foundations/04_Decoders-and-Displays/images/2-to-4-decoder-1_minecraft.png"
+    }
   },
   "04_2-to-4-decoder-2": {
     "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
@@ -301,7 +346,11 @@
       19,
       320,
       -462
-    ]
+    ],
+    "place": {
+      "top": "src/Part-I--Foundations/04_Decoders-and-Displays/images/2-to-4-decoder-2-aerial_minecraft.png",
+      "iso": "src/Part-I--Foundations/04_Decoders-and-Displays/images/2-to-4-decoder-2_minecraft.png"
+    }
   },
   "04_2-to-4-decoder-3": {
     "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
@@ -312,7 +361,10 @@
       -6,
       320,
       -451
-    ]
+    ],
+    "place": {
+      "iso": "src/Part-I--Foundations/04_Decoders-and-Displays/images/2-to-4-decoder-3_minecraft.png"
+    }
   },
   "04_4-to-10-decoder-compact-1": {
     "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
@@ -323,7 +375,10 @@
       -86,
       320,
       -460
-    ]
+    ],
+    "place": {
+      "iso": "src/Part-I--Foundations/04_Decoders-and-Displays/images/4-to-10-decoder-compact-1_minecraft.png"
+    }
   },
   "04_4-to-10-decoder-compact-2": {
     "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
@@ -334,7 +389,10 @@
       -105,
       320,
       -459
-    ]
+    ],
+    "place": {
+      "iso": "src/Part-I--Foundations/04_Decoders-and-Displays/images/4-to-10-decoder-compact-2_minecraft.png"
+    }
   },
   "04_4-to-10-decoder-compact-3": {
     "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
@@ -345,7 +403,10 @@
       -125,
       320,
       -459
-    ]
+    ],
+    "place": {
+      "iso": "src/Part-I--Foundations/04_Decoders-and-Displays/images/4-to-10-decoder-compact-3_minecraft.png"
+    }
   },
   "04_4-to-10-decoder-compact-complete": {
     "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
@@ -362,7 +423,10 @@
       "top"
     ],
     "projection": "tele",
-    "azimuth": 150
+    "azimuth": 150,
+    "place": {
+      "iso": "src/Part-I--Foundations/04_Decoders-and-Displays/images/4-to-10-decoder-compact-complete_minecraft.png"
+    }
   },
   "7-segment-a": {
     "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
@@ -429,7 +493,10 @@
       -185,
       320,
       -460
-    ]
+    ],
+    "place": {
+      "iso": "src/Part-I--Foundations/04_Decoders-and-Displays/images/10-to-7-encoder-1_minecraft.png"
+    }
   },
   "04_10-to-7-encoder-2": {
     "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
@@ -440,7 +507,10 @@
       -212,
       320,
       -460
-    ]
+    ],
+    "place": {
+      "iso": "src/Part-I--Foundations/04_Decoders-and-Displays/images/10-to-7-encoder-2_minecraft.png"
+    }
   },
   "04_10-to-7-encoder-complete": {
     "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
@@ -451,7 +521,10 @@
       -269,
       320,
       -460
-    ]
+    ],
+    "place": {
+      "iso": "src/Part-I--Foundations/04_Decoders-and-Displays/images/10-to-7-encoder-complete_minecraft.png"
+    }
   },
   "04_4-to-10-decoder-L3": {
     "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
@@ -462,7 +535,10 @@
       -144,
       320,
       -457
-    ]
+    ],
+    "place": {
+      "iso": "src/Part-I--Foundations/04_Decoders-and-Displays/images/4-to-10-decoder-L3_minecraft.png"
+    }
   },
   "04_4-to-10-decoder-L3-test": {
     "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
@@ -473,7 +549,10 @@
       -144,
       320,
       -472
-    ]
+    ],
+    "place": {
+      "iso": "src/Part-I--Foundations/04_Decoders-and-Displays/images/4-to-10-decoder-L3-test_minecraft.png"
+    }
   },
   "03_NOR-gate": {
     "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
@@ -487,7 +566,10 @@
     ],
     "views": [
       "iso"
-    ]
+    ],
+    "place": {
+      "iso": "src/Part-I--Foundations/03_The-Art-of-Logic/images/NOR-gate_minecraft.png"
+    }
   },
   "04_complete-digital-display": {
     "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
@@ -504,7 +586,11 @@
       "top"
     ],
     "projection": "tele",
-    "azimuth": 150
+    "azimuth": 150,
+    "place": {
+      "top": "src/Part-I--Foundations/04_Decoders-and-Displays/images/complete-digital-display-aerial_minecraft.png",
+      "iso": "src/Part-I--Foundations/04_Decoders-and-Displays/images/complete-digital-display_minecraft.png"
+    }
   },
   "05_full-adder": {
     "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
@@ -520,7 +606,10 @@
       "iso"
     ],
     "ground": "crop",
-    "azimuth": 135
+    "azimuth": 135,
+    "place": {
+      "iso": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/full-adder_minecraft.png"
+    }
   },
   "05_hex-display": {
     "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
@@ -536,7 +625,11 @@
       "iso",
       "top"
     ],
-    "ground": "crop"
+    "ground": "crop",
+    "place": {
+      "top": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/hex-display-aerial_minecraft.png",
+      "iso": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/hex-display_minecraft.png"
+    }
   },
   "05_hex-display-digit": {
     "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
@@ -571,6 +664,9 @@
     "ground": "crop",
     "azimuth": 315,
     "top_azimuth": 180,
-    "res": "3600x1310"
+    "res": "3600x1310",
+    "place": {
+      "top": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/4-bit-rca-aerial_minecraft.png"
+    }
   }
 }
