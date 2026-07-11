@@ -101,8 +101,16 @@ with Pillow — crop each to `getbbox()` and paste on a transparent canvas.
 
 ## When you're done
 
-- Confirm the figure renders in the running dev site (or `node
-  web/scripts/sync-content.mjs` then rebuild).
+- The dev site (localhost:4321) serves the **src/ drafts**: `sync-content.mjs`
+  wipes and re-copies `src/` → `web/src/content/` when the server starts.
+  After placing a figure, **restart the dev server** (`PREVIEW_ALL_PARTS=true
+  npm run dev` in `web/`) — a running server keeps serving its cached
+  processed copy of a replaced image even after a manual sync.
+- `course/` and `assets/images/` are **built outputs**, not places to put
+  files: `scripts/publish.py` (run by CI on every push to main) flattens each
+  module to `course/<Part>/<Module>.md` and copies images to
+  `assets/images/<module-prefix>_<name>.png`. After pushing, pull the bot's
+  "Rebuild course materials" commit rather than editing those trees.
 - If you added genuinely new pipeline capability, update
   `docs/image-pipelines/` and this skill.
 
