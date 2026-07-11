@@ -101,6 +101,10 @@ Key per-shot knobs (inherit `_defaults`):
   **composition legend treatment**: `tint` + `height_tint: 0`, region hues and
   rationale in `renders/STYLE.md`; the canonical-* shots show the lane-tint
   variant (`clip` additionally cuts a bit-slice schematic view).
+- `torch_marks`: `stroke` (default) rims every top-view torch dot with heavy
+  ink (2.5× linework) so torches read against dust; `off` disables. Iso views
+  are never marked. Related: crop pads are never synthesized under levers —
+  levers render as floating inputs.
 
 Commands: `--all` (everything), `<names>` (subset), `--render-only` (reuse cached
 USD), `--export-only`, `--adopt <name>` (make an entry from the last export).

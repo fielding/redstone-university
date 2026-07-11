@@ -103,7 +103,18 @@ computed **after** stray-bedrock trimming so it's the build, not the world floor
 - `remove` — delete the lowest block layer (the platform); the build keeps its
   own base block.
 - `remove2` — delete the lowest **two** layers (platform **and** the base block).
-- `crop` — keep the platform only under the build's footprint.
+- `crop` — keep the platform only under the build's footprint (synthesized
+  "pad" blocks stand in as a clean floor). Lever cells never seed pads — the
+  block under/behind a lever is render noise; levers read as floating inputs.
+
+### `torch-marks` — top-view torch legibility (default: `stroke`)
+
+From above, a torch head is a 2-px dot that vanishes against dust strokes.
+In schematic top views every redstone torch (including repeater/comparator
+indicators) gets a heavy ink rim — its own Freestyle lineset at
+`TORCH_STROKE_MULT` (2.5×) the base linework weight, so "rimmed dot = torch,
+plain dot = dust" reads instantly. Iso views are never marked. Disable
+per-shot with `"torch_marks": "off"`.
 
 ### `hide` — drop blocks by mesh name
 
