@@ -1433,9 +1433,24 @@ def strip_ground(scene, mode, base_z):
         # falling back to the topmost face it replaced (a build's own base
         # course, which the band swallowed) — a legend tint can then color a
         # region's base the same as the region instead of cream.
+        fam_by_cell = {cell: region_src.get(cell, cell_src.get(cell, (0, "")))[1]
+                       for cell in footprint}
+        # a fully buried course block (repeater on top, solid flanks, ground
+        # below) exports no faces at all, so its cell knows no family — adopt
+        # the neighbors' region when they agree instead of leaving a cream
+        # hole in the middle of a colored field
+        for cell, fam in list(fam_by_cell.items()):
+            if fam:
+                continue
+            nb = [fam_by_cell.get((cell[0] + dx, cell[1] + dy))
+                  for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1))]
+            nb = [f for f in nb if f]
+            if nb:
+                best = max(set(nb), key=nb.count)
+                if nb.count(best) >= 2:
+                    fam_by_cell[cell] = best
         groups = {}
-        for cell in footprint:
-            fam = region_src.get(cell, cell_src.get(cell, (0, "")))[1]
+        for cell, fam in fam_by_cell.items():
             groups.setdefault(fam, []).append(cell)
         for fam, cells in groups.items():
             bm = bmesh.new()
