@@ -53,6 +53,9 @@ Options (after the `--`):
                        (e.g. --hide lime_concrete for a floating, padless look)
     --top-margin F     extra zoom-out for the aerial 'top' view only
                        (default: inherits --margin)
+    --torch-marks M    stroke (default) rims top-view torch dots with heavy
+                       ink (TORCH_STROKE_MULT x linework) so they read against
+                       dust; off disables. Iso views are never marked.
     --dust STYLE       how to draw redstone dust (default: vector)
                        vector    - REPLACE dust geometry with generated wire
                                    ribbons: connection graph computed from
@@ -117,6 +120,7 @@ def parse_args():
         "tint": {},
         "top_margin": None,
         "ground": "keep",
+        "torch_marks": "stroke",   # stroke | off — heavy ink rim on top-view torches
     }
     i = 0
     while i < len(args):
@@ -227,6 +231,9 @@ def parse_args():
         elif a == "--top-margin":
             i += 1
             opts["top_margin"] = float(args[i])
+        elif a == "--torch-marks":
+            i += 1
+            opts["torch_marks"] = args[i].lower()
         elif not a.startswith("--") and opts["usd"] is None:
             opts["usd"] = os.path.abspath(os.path.expanduser(a))
         else:
@@ -643,6 +650,9 @@ TECHNICAL = {
 
 # ambient-occlusion contact shadows on schematic fills (depth cue for iso)
 _AO_ENABLED = True
+
+# top-view torch stroke weight, relative to the base linework (ru-6776a8)
+TORCH_STROKE_MULT = 2.5
 
 # redstone components kept in real color against ghosted white structure
 COMPONENT_KW = ("torch", "lever", "repeater", "comparator", "lamp", "button",
@@ -1382,6 +1392,10 @@ def strip_ground(scene, mode, base_z):
                 continue
             circuit = is_circuit(ob)
             nm = ob.name.lower()
+            if circuit and "lever" in nm:
+                # levers read as floating inputs — never conjure a pad under
+                # one (the block under a lever is render noise, per Fielding)
+                continue
             mw = ob.matrix_world
             me = ob.data
             for poly in me.polygons:
@@ -1483,23 +1497,45 @@ def strip_ground(scene, mode, base_z):
     print(f"ground {mode}: removed {removed} faces (base z={base_z:.1f})")
 
 
-def outline_exclude_collection():
+def outline_exclude_collection(stroke_torches=False):
     """
     Collection of glowing/colored objects (components + dust wires) to keep
     OUT of the Freestyle outline pass — a light outline haloing a lit lamp
     looks wrong; let components read by their own color/texture instead.
+
+    stroke_torches: leave redstone torches IN the ink pass so their tiny
+    top-view dots get a dark rim (torch legibility, ru-6776a8). The
+    collection persists across views, so torches are actively unlinked
+    here and re-linked when the next view calls without the flag.
     """
     coll = bpy.data.collections.get("RU_NoOutline")
     if coll is None:
         coll = bpy.data.collections.new("RU_NoOutline")
         bpy.context.scene.collection.children.link(coll)
+    stroke = bpy.data.collections.get("RU_TorchStroke")
+    if stroke is None:
+        stroke = bpy.data.collections.new("RU_TorchStroke")
+        bpy.context.scene.collection.children.link(stroke)
+    stroked = 0
     for ob in bpy.data.objects:
         if ob.type != 'MESH':
             continue
         n = ob.name.lower()
         if ob.name == "RU_Wires" or any(k in n for k in COMPONENT_KW):
+            if stroke_torches and "redstone_torch" in n:
+                if ob.name in coll.objects:
+                    coll.objects.unlink(ob)
+                if ob.name not in stroke.objects:
+                    stroke.objects.link(ob)
+                stroked += 1
+                continue
             if ob.name not in coll.objects:
                 coll.objects.link(ob)
+            if ob.name in stroke.objects:   # e.g. iso view after a stroked top
+                stroke.objects.unlink(ob)
+    if stroke_torches:
+        print(f"outline: {stroked} torch object(s) get the heavy stroke, "
+              f"{len(coll.objects)} object(s) excluded from ink")
     return coll
 
 
@@ -1546,6 +1582,20 @@ def setup_outlines(scene, mode, exclude=None):
         ls.collection_negation = 'EXCLUSIVE'   # outline everything NOT in it
     ls.linestyle.color = (0.08, 0.07, 0.07)
     ls.linestyle.thickness = width
+    # torch legibility (ru-6776a8): torches pulled out of the exclusion get
+    # their own heavier ink pass so the tiny top-view dots read clearly
+    tsc = bpy.data.collections.get("RU_TorchStroke")
+    if tsc is not None and len(tsc.objects):
+        tls = fs.linesets.new("torch-stroke")
+        tls.select_silhouette = True
+        tls.select_border = True
+        tls.select_crease = True
+        tls.select_edge_mark = False
+        tls.select_by_collection = True
+        tls.collection = tsc
+        tls.collection_negation = 'INCLUSIVE'
+        tls.linestyle.color = (0.08, 0.07, 0.07)
+        tls.linestyle.thickness = width * TORCH_STROKE_MULT
 
 
 def setup_render(scene, res, samples):
@@ -1691,6 +1741,7 @@ def main():
             print(f"Unknown view '{view}' (choices: {', '.join(VIEWS)})")
             continue
         elevation, azimuth, ortho, lighting, glare = VIEWS[view]
+        topv = (view == "top")
         if view == "top":
             # plan view keeps the build squared to the frame — it does NOT
             # inherit the iso azimuth; override with --top-azimuth if needed.
@@ -1720,7 +1771,9 @@ def main():
         if opts["technical"] == "schematic_dark":
             glare = True
         setup_glare(scene, glare)
-        tech_excl = outline_exclude_collection() if (tech is not None and opts["technical"].startswith("schematic")) else None
+        tech_excl = outline_exclude_collection(
+            stroke_torches=(opts["torch_marks"] == "stroke" and topv)
+        ) if (tech is not None and opts["technical"].startswith("schematic")) else None
         if (tech_excl is not None and opts["outline"] and opts["ground_no_outline"]
                 and opts["ground"] in ("keep", "crop")):
             exclude_ground_from_outline(tech_excl, min(fit_coords[2::3]))
@@ -1729,7 +1782,8 @@ def main():
             for ls in bpy.context.view_layer.freestyle_settings.linesets:
                 if ls.linestyle:
                     ls.linestyle.color = _srgb_lin(tech["line"])
-                    ls.linestyle.thickness = tech["lw"]
+                    ls.linestyle.thickness = tech["lw"] * (
+                        TORCH_STROKE_MULT if ls.name == "torch-stroke" else 1.0)
         tele = (view == "iso" and opts["projection"] == "tele")
         margin = opts["margin"]
         if view == "top" and opts["top_margin"] is not None:
@@ -1743,7 +1797,8 @@ def main():
             w = max(0.5, min(1.6, 1.2 * ref / cam.data.ortho_scale))
             scene.render.line_thickness = w
             for ls in bpy.context.view_layer.freestyle_settings.linesets:
-                ls.linestyle.thickness = w
+                ls.linestyle.thickness = w * (
+                    TORCH_STROKE_MULT if ls.name == "torch-stroke" else 1.0)
         elif opts["outline"] and tele:
             # perspective has no single ortho_scale to key off; the build is
             # framed to fill, so a fixed weight matching the ortho cap keeps
@@ -1751,7 +1806,8 @@ def main():
             w = 1.5
             scene.render.line_thickness = w
             for ls in bpy.context.view_layer.freestyle_settings.linesets:
-                ls.linestyle.thickness = w
+                ls.linestyle.thickness = w * (
+                    TORCH_STROKE_MULT if ls.name == "torch-stroke" else 1.0)
         out_path = os.path.join(opts["out"], f"{opts['name']}_{view}.png")
         scene.render.filepath = out_path
         bpy.ops.render.render(write_still=True)
