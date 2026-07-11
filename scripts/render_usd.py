@@ -823,11 +823,21 @@ def apply_technical(mode, height_tint=0.0, tints=None):
             links.new(em.outputs["Emission"], output.inputs["Surface"])
             continue
 
-        if mat.name == "RU_GroundPads":
-            # synthesized base layer (ground crop): match the Part I bottoms —
-            # the warm cream band, not white (decided 2026-07-09)
-            pal = cfg.get("band_palette")
-            rgb = pal[1] if pal else cfg["fill"]
+        if mat.name.startswith("RU_GroundPads"):
+            # synthesized base layer (ground crop): warm cream to match the
+            # Part I bottoms (decided 2026-07-09) — unless the pad replaced a
+            # block family that carries a legend tint, in which case the
+            # region's base wears the region color
+            fam = mat.name.partition("|")[2].lower()
+            rgb = None
+            if tints and fam:
+                m = max((k for k in tints if k.lower() in fam),
+                        key=len, default=None)
+                if m is not None:
+                    rgb = tints[m]
+            if rgb is None:
+                pal = cfg.get("band_palette")
+                rgb = pal[1] if pal else cfg["fill"]
             em = nodes.new('ShaderNodeEmission')
             _flat_fill(nodes, links, em, _srgb_lin(rgb))
             links.new(em.outputs["Emission"], output.inputs["Surface"])
@@ -1376,49 +1386,65 @@ def strip_ground(scene, mode, base_z):
                     footprint.update(covered_cells([p.x for p in pts],
                                                    [p.y for p in pts]))
     removed = 0
+    cell_src = {}   # crop: cell -> (z, block family) of the topmost deleted face
     for ob in list(scene.objects):
         if ob.type != 'MESH' or ob.hide_render or is_circuit(ob):
             continue
+        nm = ob.name.lower()
         bm = bmesh.new(); bm.from_mesh(ob.data); mw = ob.matrix_world
         doomed = []
         for f in bm.faces:
             c = mw @ f.calc_center_median()
             if c.z <= band_top:
                 doomed.append(f)
+                if mode == "crop":
+                    pts = [mw @ v.co for v in f.verts]
+                    for cell in covered_cells([p.x for p in pts],
+                                              [p.y for p in pts]):
+                        if cell not in cell_src or c.z > cell_src[cell][0]:
+                            cell_src[cell] = (c.z, nm)
         if doomed:
             removed += len(doomed)
             bmesh.ops.delete(bm, geom=doomed, context='FACES')
             bm.to_mesh(ob.data)
         bm.free()
     if mode == "crop" and footprint:
-        # synthesize the build's bottom layer: one clean white cube per
-        # occupied cell, in place of the deleted ground
-        bm = bmesh.new()
-        for (bx, by) in footprint:
-            bmesh.ops.create_cube(
-                bm, size=BLOCK,
-                matrix=Matrix.Translation((bx * BLOCK, by * BLOCK,
-                                           rest - BLOCK / 2)))
-        me = bpy.data.meshes.new("RU_GroundPads")
-        bm.to_mesh(me)
-        bm.free()
-        # per-block seams: the import-time edge-mark pass already ran, so mark
-        # the generated cubes' edges ourselves (freestyle_edge attribute —
-        # same mechanism as mark_block_edges)
-        attr = me.attributes.new("freestyle_edge", 'BOOLEAN', 'EDGE')
-        for i in range(len(me.edges)):
-            attr.data[i].value = True
-        mat = bpy.data.materials.new("RU_GroundPads")
-        mat.use_nodes = True
-        bsdf = next((n for n in mat.node_tree.nodes
-                     if n.type == 'BSDF_PRINCIPLED'), None)
-        if bsdf is not None:
-            bsdf.inputs["Base Color"].default_value = (0.92, 0.92, 0.93, 1.0)
-        me.materials.append(mat)
-        pads = bpy.data.objects.new("RU_GroundPads", me)
-        scene.collection.objects.link(pads)
-        print(f"ground crop: {len(footprint)} base blocks generated "
-              f"(resting plane z={rest:.0f})")
+        # synthesize the build's bottom layer: one clean cube per occupied
+        # cell, in place of the deleted ground. Each pad remembers the block
+        # family it replaced (topmost deleted face wins, so a build's own
+        # base course shadows the world ground) — a legend tint can then
+        # color a region's base the same as the region instead of cream.
+        groups = {}
+        for cell in footprint:
+            groups.setdefault(cell_src.get(cell, (0, ""))[1], []).append(cell)
+        for fam, cells in groups.items():
+            bm = bmesh.new()
+            for (bx, by) in cells:
+                bmesh.ops.create_cube(
+                    bm, size=BLOCK,
+                    matrix=Matrix.Translation((bx * BLOCK, by * BLOCK,
+                                               rest - BLOCK / 2)))
+            suffix = f"|{fam}" if fam else ""
+            me = bpy.data.meshes.new(f"RU_GroundPads{suffix}")
+            bm.to_mesh(me)
+            bm.free()
+            # per-block seams: the import-time edge-mark pass already ran, so
+            # mark the generated cubes' edges ourselves (freestyle_edge
+            # attribute — same mechanism as mark_block_edges)
+            attr = me.attributes.new("freestyle_edge", 'BOOLEAN', 'EDGE')
+            for i in range(len(me.edges)):
+                attr.data[i].value = True
+            mat = bpy.data.materials.new(f"RU_GroundPads{suffix}")
+            mat.use_nodes = True
+            bsdf = next((n for n in mat.node_tree.nodes
+                         if n.type == 'BSDF_PRINCIPLED'), None)
+            if bsdf is not None:
+                bsdf.inputs["Base Color"].default_value = (0.92, 0.92, 0.93, 1.0)
+            me.materials.append(mat)
+            pads = bpy.data.objects.new(f"RU_GroundPads{suffix}", me)
+            scene.collection.objects.link(pads)
+        print(f"ground crop: {len(footprint)} base blocks generated in "
+              f"{len(groups)} region groups (resting plane z={rest:.0f})")
     print(f"ground {mode}: removed {removed} faces (base z={base_z:.1f})")
 
 

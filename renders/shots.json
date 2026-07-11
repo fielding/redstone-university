@@ -780,6 +780,7 @@
       "iso": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/integration-bug_minecraft.png"
     },
     "height_tint": 0,
-    "tint": "yellow_concrete=f2d489,orange_concrete=f2d489,blue_wool=aecf9c,gray_wool=e4b0ab,cyan_wool=f5f1ea,black_concrete=f5f1ea,smooth_stone=f5f1ea"
+    "tint": "yellow_concrete=f2d489,orange_concrete=f2d489,white_concrete=f2d489,blue_wool=aecf9c,gray_wool=e4b0ab,cyan_wool=a8c4d6,black_concrete=f5f1ea,white_wool=f5f1ea,smooth_stone=f5f1ea",
+    "swap": ""
   }
 }
