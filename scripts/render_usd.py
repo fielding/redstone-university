@@ -1369,22 +1369,32 @@ def strip_ground(scene, mode, base_z):
                 yield (bx, by)
 
     footprint = set()
+    region_src = {}  # crop: cell -> (z, family) of the LOWEST build geometry above
     if mode == "crop":
         # every cell occupied by the build itself: any geometry above the
         # ground band, plus circuit geometry inside it (flat dust, wire
         # ribbons). AABB rasterization so MiEx's merged strips count fully.
+        # The lowest non-circuit geometry standing on each cell names the
+        # region the cell belongs to — a build sitting directly on ground has
+        # buried bottoms, so the deleted faces below can't tell us.
         for ob in scene.objects:
             if ob.type != 'MESH' or ob.hide_render:
                 continue
             circuit = is_circuit(ob)
+            nm = ob.name.lower()
             mw = ob.matrix_world
             me = ob.data
             for poly in me.polygons:
                 c = mw @ poly.center
                 if c.z > band_top or circuit:
                     pts = [mw @ me.vertices[v].co for v in poly.vertices]
-                    footprint.update(covered_cells([p.x for p in pts],
-                                                   [p.y for p in pts]))
+                    cells = list(covered_cells([p.x for p in pts],
+                                               [p.y for p in pts]))
+                    footprint.update(cells)
+                    if not circuit and c.z > band_top:
+                        for cell in cells:
+                            if cell not in region_src or c.z < region_src[cell][0]:
+                                region_src[cell] = (c.z, nm)
     removed = 0
     cell_src = {}   # crop: cell -> (z, block family) of the topmost deleted face
     for ob in list(scene.objects):
@@ -1410,13 +1420,15 @@ def strip_ground(scene, mode, base_z):
         bm.free()
     if mode == "crop" and footprint:
         # synthesize the build's bottom layer: one clean cube per occupied
-        # cell, in place of the deleted ground. Each pad remembers the block
-        # family it replaced (topmost deleted face wins, so a build's own
-        # base course shadows the world ground) — a legend tint can then
-        # color a region's base the same as the region instead of cream.
+        # cell, in place of the deleted ground. Each pad takes the family of
+        # the region standing on it (lowest build geometry above the band),
+        # falling back to the topmost face it replaced (a build's own base
+        # course, which the band swallowed) — a legend tint can then color a
+        # region's base the same as the region instead of cream.
         groups = {}
         for cell in footprint:
-            groups.setdefault(cell_src.get(cell, (0, ""))[1], []).append(cell)
+            fam = region_src.get(cell, cell_src.get(cell, (0, "")))[1]
+            groups.setdefault(fam, []).append(cell)
         for fam, cells in groups.items():
             bm = bmesh.new()
             for (bx, by) in cells:
