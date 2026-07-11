@@ -105,6 +105,12 @@ else goes quiet. Opt-in per shot — never a default:
 "tint": "<annotation blocks mapped to region hues>"
 ```
 
+With `ground: crop`, the synthesized base pads inherit the block family they
+replaced (a build's own base course shadows the world ground), so a region
+whose base is built from a tinted family carries its color at ground level
+too — block a region's base in a dedicated family and the whole region reads
+as one mass instead of markers floating on cream.
+
 Region hues are the course gate-fill pastels one step deeper (structure stays
 paper `f5f1ea`, outlines ink `30231e`):
 
