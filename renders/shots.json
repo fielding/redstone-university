@@ -759,5 +759,24 @@
     "azimuth": 315,
     "projection": "ortho",
     "height_tint": 0
+  },
+  "05_rca-hex-display": {
+    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+    "bounds": [
+      -404,
+      56,
+      -457,
+      -343,
+      67,
+      -391
+    ],
+    "views": [
+      "iso"
+    ],
+    "ground": "crop",
+    "azimuth": 135,
+    "place": {
+      "iso": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/rca-hex-display_minecraft.png"
+    }
   }
 }
