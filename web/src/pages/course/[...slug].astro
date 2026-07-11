@@ -473,7 +473,7 @@ const nextPage =
   /* ── Code blocks ── */
   .prose :global(pre) {
     font-family: var(--font-mono);
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     line-height: 1.7;
     background: var(--color-code-bg) !important;
     padding: var(--space-xl);
@@ -481,6 +481,45 @@ const nextPage =
     border: 1px solid var(--color-border);
     margin: var(--space-2xl) 0;
     overflow-x: auto;
+  }
+
+  /* Copy button: the script wraps each pre in .code-block and pins a quiet
+     chip to the corner (outside the scroll area, so it never rides along) */
+  .prose :global(.code-block) {
+    position: relative;
+    margin: var(--space-2xl) 0;
+  }
+
+  .prose :global(.code-block pre) {
+    margin: 0;
+  }
+
+  .prose :global(.code-copy) {
+    position: absolute;
+    top: var(--space-sm);
+    right: var(--space-sm);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.04em;
+    padding: 3px 10px;
+    border-radius: 4px;
+    border: 1px solid var(--color-border);
+    background: var(--color-bg);
+    color: var(--color-text-secondary);
+    opacity: 0.65;
+    cursor: pointer;
+    transition: opacity 150ms var(--ease-out), color 150ms var(--ease-out);
+  }
+
+  .prose :global(.code-block:hover .code-copy),
+  .prose :global(.code-copy:focus-visible) {
+    opacity: 1;
+  }
+
+  .prose :global(.code-copy.is-copied) {
+    color: var(--color-primary-light);
+    border-color: var(--color-primary);
+    opacity: 1;
   }
 
   .prose :global(pre code) {
@@ -933,6 +972,43 @@ const nextPage =
       }, { passive: true });
       update();
     }
+
+    // Code copy buttons — wrap each block so the chip stays pinned while
+    // the code scrolls beneath it
+    document.querySelectorAll('.prose pre').forEach((pre) => {
+      const wrap = document.createElement('div');
+      wrap.className = 'code-block';
+      pre.parentNode.insertBefore(wrap, pre);
+      wrap.appendChild(pre);
+
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'code-copy';
+      btn.textContent = 'Copy';
+      btn.setAttribute('aria-label', 'Copy code to clipboard');
+      btn.addEventListener('click', async () => {
+        const code = pre.querySelector('code');
+        const text = (code || pre).innerText.replace(/\n$/, '');
+        try {
+          await navigator.clipboard.writeText(text);
+          btn.textContent = 'Copied';
+          btn.classList.add('is-copied');
+        } catch {
+          // clipboard API blocked: select the code so a manual copy works
+          const range = document.createRange();
+          range.selectNodeContents(code || pre);
+          const sel = window.getSelection();
+          sel.removeAllRanges();
+          sel.addRange(range);
+          btn.textContent = 'Select+copy';
+        }
+        setTimeout(() => {
+          btn.textContent = 'Copy';
+          btn.classList.remove('is-copied');
+        }, 1600);
+      });
+      wrap.appendChild(btn);
+    });
 
     // Heading anchor links
     document.querySelectorAll('.prose h2, .prose h3, .prose h4').forEach((heading) => {
