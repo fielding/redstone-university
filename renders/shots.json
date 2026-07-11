@@ -364,7 +364,8 @@
       -451
     ],
     "place": {
-      "iso": "src/Part-I--Foundations/04_Decoders-and-Displays/images/2-to-4-decoder-3_minecraft.png"
+      "iso": "src/Part-I--Foundations/04_Decoders-and-Displays/images/2-to-4-decoder-3_minecraft.png",
+      "top": "src/Part-I--Foundations/04_Decoders-and-Displays/images/2-to-4-decoder-3-aerial_minecraft.png"
     }
   },
   "04_4-to-10-decoder-compact-1": {
@@ -426,7 +427,8 @@
     "projection": "tele",
     "azimuth": 150,
     "place": {
-      "iso": "src/Part-I--Foundations/04_Decoders-and-Displays/images/4-to-10-decoder-compact-complete_minecraft.png"
+      "iso": "src/Part-I--Foundations/04_Decoders-and-Displays/images/4-to-10-decoder-compact-complete_minecraft.png",
+      "top": "src/Part-I--Foundations/04_Decoders-and-Displays/images/4-to-10-decoder-compact-complete-aerial_minecraft.png"
     }
   },
   "7-segment-a": {
@@ -524,7 +526,8 @@
       -460
     ],
     "place": {
-      "iso": "src/Part-I--Foundations/04_Decoders-and-Displays/images/10-to-7-encoder-complete_minecraft.png"
+      "iso": "src/Part-I--Foundations/04_Decoders-and-Displays/images/10-to-7-encoder-complete_minecraft.png",
+      "top": "src/Part-I--Foundations/04_Decoders-and-Displays/images/10-to-7-encoder-complete-aerial_minecraft.png"
     }
   },
   "04_4-to-10-decoder-L3": {
