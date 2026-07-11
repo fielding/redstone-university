@@ -777,6 +777,8 @@
     "azimuth": 135,
     "place": {
       "iso": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/integration-bug_minecraft.png"
-    }
+    },
+    "height_tint": 0,
+    "tint": "yellow_concrete=f2d489,orange_concrete=f2d489,gray_wool=e4b0ab,blue_wool=e4b0ab,cyan_wool=f5f1ea,black_concrete=f5f1ea,smooth_stone=f5f1ea"
   }
 }
