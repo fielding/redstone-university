@@ -71,6 +71,9 @@ for cairosvg (`~/Library/Fonts` + `fc-cache -f`).
 #    ~/apps/MiEx/log.txt  (minX minY minZ maxX maxY maxZ per export block).
 #    The GUI export renders black (MaterialX) — we only want its bounds.
 # 2. Add the shot to renders/shots.json with those bounds (see schema).
+#    Bounds rule: minY = the build's BASE COURSE level, not the ground below
+#    (one too low double-bases crop shots); maxY = one ABOVE the tallest
+#    block (display panels clip otherwise).
 # 3. Render (CLI re-export with correct materials + Blender):
 python3 scripts/shots.py <shot-name>
 # 4. View renders/out/<shot>_iso.png, copy into src/.../images/, reference it.
