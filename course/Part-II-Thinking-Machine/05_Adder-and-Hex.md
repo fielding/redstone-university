@@ -211,7 +211,7 @@ The adder works.
 
 And the display goes blank.
 
-<div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/05_integration-bug_minecraft.png" alt="The integration bug in Minecraft" width="512px"/><br/><em>Figure: The moment it fails, in the world — `8` and `4` set on the input levers, the adder's carry lamp proving it computed `1100`, and the decimal display dark.</em></div><br/>
+<div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/05_integration-bug_minecraft.png" alt="The integration bug in Minecraft" width="512px"/><br/><em>Figure: The moment it fails, in the world — `8` and `4` on the input levers, the powered rails carrying the adder's `1100` into the decoder, and the display dark. Every subsystem did its job.</em></div><br/>
 
 <div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/05_4-bit-binary-to-display-abstract-1100_circuitverse.png" alt="The display system receiving 1100" width="512px"/><br/><em>Figure: The bug, exactly as the hardware sees it. The adder hands the display system `1100` — but the 4-to-10 decoder only knows the ten patterns for `0` through `9`. No output line fires, the ROM stays quiet, and the display shows nothing.</em></div><br/>
 
