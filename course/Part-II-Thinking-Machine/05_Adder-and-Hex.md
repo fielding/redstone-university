@@ -211,6 +211,8 @@ The adder works.
 
 And the display goes blank.
 
+<div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/05_integration-bug_minecraft.png" alt="The integration bug in Minecraft" width="512px"/><br/><em>Figure: The moment it fails, in the world — `8` and `4` set on the input levers, the adder's carry lamp proving it computed `1100`, and the decimal display dark.</em></div><br/>
+
 <div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/05_4-bit-binary-to-display-abstract-1100_circuitverse.png" alt="The display system receiving 1100" width="512px"/><br/><em>Figure: The bug, exactly as the hardware sees it. The adder hands the display system `1100` — but the 4-to-10 decoder only knows the ten patterns for `0` through `9`. No output line fires, the ROM stays quiet, and the display shows nothing.</em></div><br/>
 
 #### The diagnosis
@@ -313,6 +315,8 @@ A common 7-segment convention is:
 -   `E`: segments `a, d, e, f, g`
 -   `F`: segments `a, e, f, g`
 
+<div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/05_hex-letters-7seg_circuitverse.png" alt="The hex letters on a 7-segment display" width="512px"/><br/><em>Figure: The six letter patterns on the display — `A` through `F`, with `B` and `D` in their lowercase-looking forms.</em></div><br/>
+
 <div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/05_7-segment-hex-decoder-driver_circuitverse.png" alt="7-Segment Hex Decoder/Driver CircuitVerse Diagram" width="512px"/><br/><em>Figure: The extended decoder/driver ROM — all sixteen line inputs, one OR column per segment.</em></div><br/>
 
 <div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/05_hex-display-aerial_minecraft.png" alt="Hexadecimal Display System Aerial View" width="512px"/><br/><em>Figure: The upgraded display system from above — the 4-bit input bus enters at the right, the 4-to-16 decoder's sixteen lines run down into the diode-matrix ROM, and the seven segment lines exit to the display.</em></div><br/>
@@ -332,6 +336,10 @@ Now the system should behave like this:
 3.  The display lights up a bright, unmistakable `C`.
 
 Bug fixed. System upgraded. No rebuild required.
+
+<div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/05_rca-hex-display_circuitverse.png" alt="The payoff schematic" width="512px"/><br/><em>Figure: The whole system as one schematic — the ripple-carry adder feeding the upgraded display chain, computing `8 + 4` and driving a `C`.</em></div><br/>
+
+<div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/05_rca-hex-display_minecraft.png" alt="The payoff in Minecraft" width="512px"/><br/><em>Figure: The module artifact — the 4-bit adder wired to the hexadecimal display, computing `8 + 4` and showing `C`.</em></div><br/>
 
 <div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/05_hex-display_minecraft.png" alt="Hexadecimal Display System Minecraft Build" width="512px"/><br/><em>Figure: The complete upgraded display system in Minecraft — decoder, ROM, and 7-segment display.</em></div><br/>
 
