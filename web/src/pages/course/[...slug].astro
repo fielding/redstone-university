@@ -471,6 +471,11 @@ const nextPage =
   }
 
   /* ── Code blocks ── */
+  /* Wide listings break out of the 66ch prose measure instead of hiding
+     behind a horizontal scrollbar: a pre may grow to 57rem (≈110 mono
+     columns), centered on the prose column, capped to the middle grid cell
+     so it never reaches the sidebar or the TOC. overflow-x stays as the
+     fallback for anything wider still. */
   .prose :global(pre) {
     font-family: var(--font-mono);
     font-size: 0.85rem;
@@ -481,6 +486,26 @@ const nextPage =
     border: 1px solid var(--color-border);
     margin: var(--space-2xl) 0;
     overflow-x: auto;
+    /* cell = page shell − sidebar − toc − grid gaps − main padding */
+    width: min(57rem, calc(min(100vw, 1540px) - 280px - 220px - 2 * var(--space-xl) - 2 * var(--space-2xl)));
+    margin-left: 50%;
+    transform: translateX(-50%);
+  }
+
+  @media (max-width: 1200px) {
+    /* two-column layout (no TOC rail) */
+    .prose :global(pre) {
+      width: min(57rem, calc(100vw - 280px - var(--space-xl) - 2 * var(--space-2xl)));
+    }
+  }
+
+  @media (max-width: 900px) {
+    /* single column: the prose already spans the page */
+    .prose :global(pre) {
+      width: 100%;
+      margin-left: 0;
+      transform: none;
+    }
   }
 
   .prose :global(pre code) {
