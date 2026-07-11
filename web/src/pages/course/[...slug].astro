@@ -496,8 +496,9 @@ const nextPage =
 
   .prose :global(.code-copy) {
     position: absolute;
-    top: var(--space-sm);
-    right: var(--space-sm);
+    /* hangs over the box's top-right corner, straddling the border */
+    top: -11px;
+    right: -11px;
     font-family: var(--font-mono);
     font-size: 0.68rem;
     letter-spacing: 0.04em;
@@ -506,14 +507,15 @@ const nextPage =
     border: 1px solid var(--color-border);
     background: var(--color-bg);
     color: var(--color-text-secondary);
-    opacity: 0.65;
     cursor: pointer;
-    transition: opacity 150ms var(--ease-out), color 150ms var(--ease-out);
+    box-shadow: 0 1px 4px oklch(0% 0 0 / 0.12);
+    transition: color 150ms var(--ease-out), border-color 150ms var(--ease-out);
   }
 
-  .prose :global(.code-block:hover .code-copy),
+  .prose :global(.code-copy:hover),
   .prose :global(.code-copy:focus-visible) {
-    opacity: 1;
+    color: var(--color-text);
+    border-color: var(--color-text-secondary);
   }
 
   .prose :global(.code-copy.is-copied) {
