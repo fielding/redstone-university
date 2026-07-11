@@ -10,7 +10,8 @@
     "transparent": true,
     "height_tint": 0.9,
     "projection": "tele",
-    "ground": "remove"
+    "ground": "remove",
+    "hide": "oak_fence"
   },
   "00_icon-solid-block": {
     "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
@@ -595,12 +596,12 @@
   "05_full-adder": {
     "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
     "bounds": [
-      -348,
-      56,
-      -490,
-      -328,
-      61,
-      -464
+      -347,
+      57,
+      -489,
+      -330,
+      60,
+      -467
     ],
     "views": [
       "iso"
@@ -650,12 +651,12 @@
   "05_4-bit-rca": {
     "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
     "bounds": [
-      -419,
-      56,
-      -490,
-      -350,
-      62,
-      -464
+      -417,
+      57,
+      -489,
+      -352,
+      60,
+      -467
     ],
     "views": [
       "iso",

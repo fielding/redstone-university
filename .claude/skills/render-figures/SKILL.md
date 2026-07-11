@@ -71,9 +71,18 @@ for cairosvg (`~/Library/Fonts` + `fc-cache -f`).
 #    ~/apps/MiEx/log.txt  (minX minY minZ maxX maxY maxZ per export block).
 #    The GUI export renders black (MaterialX) — we only want its bounds.
 # 2. Add the shot to renders/shots.json with those bounds (see schema).
-#    Bounds rule: minY = the build's BASE COURSE level, not the ground below
-#    (one too low double-bases crop shots); maxY = one ABOVE the tallest
-#    block (display panels clip otherwise).
+#    Bounds rule (all mins inclusive, maxes exclusive): minY = the level the
+#    components/dust SIT AT — their support course gets cut and the crop
+#    pads stand in as the clean one-block floor (minY at the support course
+#    shows a doubled base). maxY = one ABOVE the tallest block (display
+#    panels clip otherwise). Trim x/z tight to the build: slack pulls in
+#    neighbor-plot geometry as stray cream arms. A FAWE selection maps as
+#    min corner verbatim, max corner +1 on each axis, minY = pos_y_min + 1
+#    when the selection includes the support course.
+#    Fielding marks corners in-world with a single OAK FENCE post — hidden
+#    from renders via _defaults "hide": "oak_fence" (glass is NOT hidden;
+#    future builds use it). Before exporting after in-world edits, flush
+#    chunks: bot connect -> /save-all flush (see minecraft-agents tools).
 # 3. Render (CLI re-export with correct materials + Blender):
 python3 scripts/shots.py <shot-name>
 # 4. View renders/out/<shot>_iso.png, copy into src/.../images/, reference it.
