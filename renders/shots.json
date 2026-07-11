@@ -14,7 +14,7 @@
     "hide": "oak_fence"
   },
   "00_icon-solid-block": {
-    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
     "bounds": [
       62,
       -64,
@@ -29,7 +29,7 @@
     "ground": "remove"
   },
   "00_icon-redstone-repeater": {
-    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
     "bounds": [
       70,
       -64,
@@ -45,7 +45,7 @@
     "hide": "white_wool,white_concrete,cobblestone,smooth_stone,lime_concrete"
   },
   "00_icon-redstone-comparator": {
-    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
     "bounds": [
       74,
       -64,
@@ -61,7 +61,7 @@
     "hide": "white_wool,white_concrete,cobblestone,smooth_stone,lime_concrete"
   },
   "00_icon-redstone-lamp": {
-    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
     "bounds": [
       78,
       -64,
@@ -77,7 +77,7 @@
     "hide": "white_wool,white_concrete,cobblestone,smooth_stone,lime_concrete,redstone_torch,redstone_block,redstone_wire"
   },
   "00_icon-lever": {
-    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
     "bounds": [
       82,
       -64,
@@ -92,7 +92,7 @@
     "ground": "remove"
   },
   "00_icon-redstone-torch": {
-    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
     "bounds": [
       86,
       -64,
@@ -108,7 +108,7 @@
     "hide": "white_wool,white_concrete,cobblestone,smooth_stone,lime_concrete"
   },
   "00_icon-redstone-dust": {
-    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
     "bounds": [
       90,
       -64,
@@ -123,7 +123,7 @@
     "ground": "remove"
   },
   "00_basic-circuit": {
-    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
     "bounds": [
       73,
       -64,
@@ -137,7 +137,7 @@
     }
   },
   "00_strongly-powered-block": {
-    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
     "bounds": [
       82,
       -64,
@@ -151,7 +151,7 @@
     }
   },
   "00_weakly-powered-block": {
-    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
     "bounds": [
       90,
       -64,
@@ -165,7 +165,7 @@
     }
   },
   "01_input": {
-    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
     "bounds": [
       85,
       -64,
@@ -179,7 +179,7 @@
     }
   },
   "02_AND-gate-composite": {
-    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
     "bounds": [
       50,
       -64,
@@ -193,7 +193,7 @@
     }
   },
   "02_NOT-gate": {
-    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
     "bounds": [
       74,
       -64,
@@ -207,7 +207,7 @@
     }
   },
   "02_OR_gate": {
-    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
     "bounds": [
       62,
       -64,
@@ -221,7 +221,7 @@
     }
   },
   "03_NAND-gate-composite": {
-    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
     "bounds": [
       -75,
       -64,
@@ -235,7 +235,7 @@
     }
   },
   "03_XNOR-gate-composite": {
-    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
     "bounds": [
       -62,
       -64,
@@ -249,7 +249,7 @@
     }
   },
   "03_XOR-gate-composite": {
-    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
     "bounds": [
       25,
       -64,
@@ -263,7 +263,7 @@
     }
   },
   "03b_AND-gate": {
-    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
     "bounds": [
       38,
       -64,
@@ -277,7 +277,7 @@
     }
   },
   "03b_AND-gate-composite": {
-    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
     "bounds": [
       15,
       -64,
@@ -291,7 +291,7 @@
     }
   },
   "03b_XOR-gate": {
-    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
     "bounds": [
       -22,
       -64,
@@ -305,7 +305,7 @@
     }
   },
   "04_10-to-7-encoder-L9": {
-    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
     "bounds": [
       -257,
       -64,
@@ -325,7 +325,7 @@
     }
   },
   "04_2-to-4-decoder-1": {
-    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
     "bounds": [
       30,
       -64,
@@ -339,7 +339,7 @@
     }
   },
   "04_2-to-4-decoder-2": {
-    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
     "bounds": [
       5,
       -64,
@@ -354,7 +354,7 @@
     }
   },
   "04_2-to-4-decoder-3": {
-    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
     "bounds": [
       -20,
       -64,
@@ -368,7 +368,7 @@
     }
   },
   "04_4-to-10-decoder-compact-1": {
-    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
     "bounds": [
       -95,
       -64,
@@ -382,7 +382,7 @@
     }
   },
   "04_4-to-10-decoder-compact-2": {
-    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
     "bounds": [
       -114,
       -64,
@@ -396,7 +396,7 @@
     }
   },
   "04_4-to-10-decoder-compact-3": {
-    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
     "bounds": [
       -134,
       -64,
@@ -410,7 +410,7 @@
     }
   },
   "04_4-to-10-decoder-compact-complete": {
-    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
     "bounds": [
       -173,
       -64,
@@ -430,7 +430,7 @@
     }
   },
   "7-segment-a": {
-    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
     "bounds": [
       86,
       -64,
@@ -444,7 +444,7 @@
     ]
   },
   "7-segment-b": {
-    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
     "bounds": [
       71,
       -64,
@@ -458,7 +458,7 @@
     ]
   },
   "7-segment-c": {
-    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
     "bounds": [
       55,
       -64,
@@ -472,7 +472,7 @@
     ]
   },
   "7-segment-d": {
-    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
     "bounds": [
       46,
       -64,
@@ -486,7 +486,7 @@
     ]
   },
   "04_10-to-7-encoder-1": {
-    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
     "bounds": [
       -197,
       -64,
@@ -500,7 +500,7 @@
     }
   },
   "04_10-to-7-encoder-2": {
-    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
     "bounds": [
       -229,
       -64,
@@ -514,7 +514,7 @@
     }
   },
   "04_10-to-7-encoder-complete": {
-    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
     "bounds": [
       -287,
       -64,
@@ -528,7 +528,7 @@
     }
   },
   "04_4-to-10-decoder-L3": {
-    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
     "bounds": [
       -153,
       -64,
@@ -542,7 +542,7 @@
     }
   },
   "04_4-to-10-decoder-L3-test": {
-    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
     "bounds": [
       -153,
       -64,
@@ -556,7 +556,7 @@
     }
   },
   "03_NOR-gate": {
-    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
     "bounds": [
       15,
       -64,
@@ -573,7 +573,7 @@
     }
   },
   "04_complete-digital-display": {
-    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
     "bounds": [
       -321,
       -64,
@@ -613,7 +613,7 @@
     }
   },
   "05_hex-display": {
-    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
     "bounds": [
       -48,
       55,
@@ -633,7 +633,7 @@
     }
   },
   "05_hex-display-digit": {
-    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
     "bounds": [
       -50,
       55,
@@ -671,7 +671,7 @@
     }
   },
   "03b_XOR-gate-composite": {
-    "world": "/Users/fielding/Library/Application Support/mcpelauncher/games/com.mojang/minecraftWorlds/S2J0TKoDxeE=",
+    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
     "bounds": [
       23,
       55,
