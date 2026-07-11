@@ -768,6 +768,21 @@ def _emit_texture(nodes, links, em, output):
     return True
 
 
+def _hue_band(rgb_disp, nlayers):
+    """
+    Per-layer tone band for a single legend hue (region height shading,
+    ru-6c9893): palest at the ground, full saturation at the top layer, so a
+    region keeps its identity color while vertical position still reads.
+    """
+    n = max(2, min(32, int(nlayers)))
+    band = []
+    for i in range(n):
+        t = i / (n - 1)
+        w = 0.55 * (1.0 - t)   # white admixture fades with height
+        band.append(_srgb_lin(tuple((1.0 - w) * c + w for c in rgb_disp[:3])))
+    return band
+
+
 def _srgb_lin(c):
     """sRGB(display) -> scene-linear, so authored palette colors render as the
     intended display tone under the Standard view transform (otherwise dark
@@ -870,7 +885,15 @@ def apply_technical(mode, height_tint=0.0, tints=None):
                         key=len, default=None)
             if match is not None:
                 em = nodes.new('ShaderNodeEmission')
-                _flat_fill(nodes, links, em, _srgb_lin(tints[match]))
+                if htint is not None:
+                    # region height shading: same layer math as structure,
+                    # but the band is tones of this family's own hue
+                    base_z, nlayers, strength, _band = htint
+                    _flat_fill(nodes, links, em, _srgb_lin(tints[match]),
+                               (base_z, nlayers, strength,
+                                _hue_band(tints[match], nlayers)))
+                else:
+                    _flat_fill(nodes, links, em, _srgb_lin(tints[match]))
                 links.new(em.outputs["Emission"], output.inputs["Surface"])
                 continue
 
@@ -1380,6 +1403,8 @@ def strip_ground(scene, mode, base_z):
 
     footprint = set()
     region_src = {}  # crop: cell -> (z, family) of the LOWEST build geometry above
+    lowest_z = {}    # crop: cell -> lowest kept-geometry z (any family)
+    open_below = {}  # crop: cell -> lowest down-facing face z (visible bottom)
     if mode == "crop":
         # every cell occupied by the build itself: any geometry above the
         # ground band, plus circuit geometry inside it (flat dust, wire
@@ -1397,6 +1422,7 @@ def strip_ground(scene, mode, base_z):
                 # one (the block under a lever is render noise, per Fielding)
                 continue
             mw = ob.matrix_world
+            rot = mw.to_3x3()
             me = ob.data
             for poly in me.polygons:
                 c = mw @ poly.center
@@ -1413,6 +1439,15 @@ def strip_ground(scene, mode, base_z):
                 cells = list(covered_cells([p.x for p in pts],
                                            [p.y for p in pts]))
                 footprint.update(cells)
+                for cell in cells:
+                    if cell not in lowest_z or c.z < lowest_z[cell]:
+                        lowest_z[cell] = c.z
+                if (rot @ poly.normal).z < -0.5:
+                    # an exported bottom face means the world had AIR below
+                    # (faces against solid blocks are culled at export)
+                    for cell in cells:
+                        if cell not in open_below or c.z < open_below[cell]:
+                            open_below[cell] = c.z
                 if not circuit:
                     for cell in cells:
                         if cell not in region_src or c.z < region_src[cell][0]:
@@ -1447,8 +1482,15 @@ def strip_ground(scene, mode, base_z):
         # falling back to the topmost face it replaced (a build's own base
         # course, which the band swallowed) — a legend tint can then color a
         # region's base the same as the region instead of cream.
+        # pads only REPLACE real support: if a cell's lowest geometry shows an
+        # exported bottom face, the world had air there — don't invent a block
+        # (lamps/levers hanging off wire runs stay floating, per Fielding)
+        floating = {cell for cell in footprint
+                    if open_below.get(cell, 1e9) <= lowest_z.get(cell, -1e9) + 0.6}
+        if floating:
+            print(f"crop: {len(floating)} floating cell(s) get no pad")
         fam_by_cell = {cell: region_src.get(cell, cell_src.get(cell, (0, "")))[1]
-                       for cell in footprint}
+                       for cell in footprint if cell not in floating}
         # a fully buried course block (repeater on top, solid flanks, ground
         # below) exports no faces at all, so its cell knows no family — adopt
         # the neighbors' region when they agree instead of leaving a cream

@@ -162,3 +162,19 @@ so lamps carry all the contrast, and set "height_tint": 0 on plain display faces
 forward. Multi-panel display figures are shot per-panel (own centered camera,
 no cross-frame parallax) and stitched with scripts/compose_7segment.py;
 all panels share ONE azimuth and use "projection": "ortho" — the tele lens foreshortens walls differently by depth, pure ortho keeps every panel plane-parallel. Rebuild: shots.py 7seg-wall 7seg-lit 7seg-closeup, then compose_7segment.py, place manually over 04/images/7-segment-display_minecraft.png.
+
+## M4 complete-digital-display — composition legend (2026-07-11)
+
+Same wool language as the M5 integration build, so the hues transfer 1:1
+and mean the same thing across figures:
+
+- `gray_wool` -> e4b0ab rose — the 10-to-7 encoder ROM (memory family)
+- `blue_wool` -> aecf9c sage — the 4-to-10 decoder
+- `cyan_wool` -> a8c4d6 dusty-blue — display driver stage
+- `black_concrete` -> f5f1ea paper — the 7-segment panel reads white
+- `white_wool` / `smooth_stone` / `cobblestone` -> f5f1ea paper — wiring + structure
+
+Flat fills (`height_tint: 0`), Fielding-approved. Optional REGION HEIGHT
+SHADING (`height_tint` > 0 with a tint map) steps each region palest at its
+base to full hue at its top (`_hue_band` in render_usd.py) — first tried on
+05_integration-bug at 0.85; keep/drop verdict per figure is Fielding's.
