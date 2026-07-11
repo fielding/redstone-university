@@ -653,6 +653,9 @@ _AO_ENABLED = True
 
 # top-view torch stroke weight, relative to the base linework (ru-6776a8)
 TORCH_STROKE_MULT = 2.5
+# lamp rim weight — lamps are full blocks, so a lighter rim reads right
+LAMP_STROKE_MULT = 1.33
+_STROKE_MULTS = {"torch-stroke": TORCH_STROKE_MULT, "lamp-stroke": LAMP_STROKE_MULT}
 
 # redstone components kept in real color against ghosted white structure
 COMPONENT_KW = ("torch", "lever", "repeater", "comparator", "lamp", "button",
@@ -751,14 +754,14 @@ def _flat_fill(nodes, links, em, rgb, htint=None):
     em.inputs["Strength"].default_value = 1.0
 
 
-def _emit_texture(nodes, links, em, output):
+def _emit_texture(nodes, links, em, output, strength=1.15):
     """Emit a component's own texture flatly (real colors, no lighting needed),
     preserving cutout alpha (torches, levers) via a transparent mix."""
     tex = next((n for n in nodes if n.type == 'TEX_IMAGE'), None)
     if tex is None:
         return False
     links.new(tex.outputs["Color"], em.inputs["Color"])
-    em.inputs["Strength"].default_value = 1.15
+    em.inputs["Strength"].default_value = strength
     transparent = nodes.new('ShaderNodeBsdfTransparent')
     mix = nodes.new('ShaderNodeMixShader')
     links.new(tex.outputs["Alpha"], mix.inputs["Fac"])
@@ -771,15 +774,21 @@ def _emit_texture(nodes, links, em, output):
 def _hue_band(rgb_disp, nlayers):
     """
     Per-layer tone band for a single legend hue (region height shading,
-    ru-6c9893): palest at the ground, full saturation at the top layer, so a
-    region keeps its identity color while vertical position still reads.
+    ru-6c9893). The legend hues are pastels, so a pastel->white ramp has no
+    visible range — the band runs from whitened (base) THROUGH the hue to a
+    darkened, saturated version (top): real contrast per layer.
     """
     n = max(2, min(32, int(nlayers)))
     band = []
     for i in range(n):
-        t = i / (n - 1)
-        w = 0.55 * (1.0 - t)   # white admixture fades with height
-        band.append(_srgb_lin(tuple((1.0 - w) * c + w for c in rgb_disp[:3])))
+        t = 1.0 - i / (n - 1)   # lighter with height (Fielding, 2026-07-11)
+        if t < 0.5:
+            w = 0.40 * (1.0 - 2.0 * t)          # base half: toward white
+            tone = tuple((1.0 - w) * c + w for c in rgb_disp[:3])
+        else:
+            k = 1.0 - 0.12 * (2.0 * t - 1.0)    # top half: darker + saturated
+            tone = tuple(c * k for c in rgb_disp[:3])
+        band.append(_srgb_lin(tone))
     return band
 
 
@@ -822,6 +831,24 @@ def apply_technical(mode, height_tint=0.0, tints=None):
                              for i in range(nlayers)]
             htint = (base_z, nlayers, height_tint, bands_lin)
             print(f"height tint: {nlayers} layers over {top_z - base_z:.0f} units")
+    # region height shading normalizes each tinted family to ITS OWN height —
+    # a 3-layer region runs pale->full across 3 tones, not the palest sliver
+    # of the whole build's ramp (Fielding: "only rendering two tints")
+    fam_range = {}
+    if htint is not None and tints:
+        for ob in bpy.data.objects:
+            if ob.type != 'MESH' or ob.hide_render:
+                continue
+            nm_f = ob.name.lower()
+            key_f = max((k for k in tints if k.lower() in nm_f),
+                        key=len, default=None)
+            if key_f is None:
+                continue
+            zs_f = [(ob.matrix_world @ Vector(c)).z for c in ob.bound_box]
+            lo_f, hi_f = min(zs_f), max(zs_f)
+            cur = fam_range.get(key_f)
+            fam_range[key_f] = ((min(lo_f, cur[0]), max(hi_f, cur[1]))
+                                if cur else (lo_f, hi_f))
     world = bpy.data.worlds.new("TechWorld")
     bpy.context.scene.world = world
     world.use_nodes = True
@@ -861,8 +888,9 @@ def apply_technical(mode, height_tint=0.0, tints=None):
                 if m is not None:
                     rgb = tints[m]
             if rgb is None:
-                pal = cfg.get("band_palette")
-                rgb = pal[1] if pal else cfg["fill"]
+                # neutral structure fill — NOT band_palette[1], whose warm
+                # cream reads as a random odd block inside tinted regions
+                rgb = cfg["fill"]
             em = nodes.new('ShaderNodeEmission')
             _flat_fill(nodes, links, em, _srgb_lin(rgb))
             links.new(em.outputs["Emission"], output.inputs["Surface"])
@@ -870,7 +898,10 @@ def apply_technical(mode, height_tint=0.0, tints=None):
 
         if schem and any(k in name for k in COMPONENT_KW):
             em = nodes.new('ShaderNodeEmission')
-            if _emit_texture(nodes, links, em, output):
+            # lit lamps glow brighter than the flat component emission so the
+            # ON state pops against tinted regions (off lamps get the rim)
+            _st = 1.6 if "lamp_on" in name else 1.15
+            if _emit_texture(nodes, links, em, output, _st):
                 continue
             # no texture: fall through to a colored fill so it still stands out
             _flat_fill(nodes, links, em, (0.6, 0.6, 0.62))
@@ -886,12 +917,18 @@ def apply_technical(mode, height_tint=0.0, tints=None):
             if match is not None:
                 em = nodes.new('ShaderNodeEmission')
                 if htint is not None:
-                    # region height shading: same layer math as structure,
-                    # but the band is tones of this family's own hue
-                    base_z, nlayers, strength, _band = htint
+                    # region height shading: tones of this family's own hue,
+                    # normalized to the FAMILY's height — a 3-layer region
+                    # runs pale->full over its 3 tones, not the palest sliver
+                    # of the whole build's ramp
+                    _bz, _nl, strength, _band = htint
+                    fr = fam_range.get(match)
+                    if fr is not None:
+                        _bz = fr[0]
+                        _nl = min(32, max(2, round((fr[1] - fr[0]) / 16.0)))
                     _flat_fill(nodes, links, em, _srgb_lin(tints[match]),
-                               (base_z, nlayers, strength,
-                                _hue_band(tints[match], nlayers)))
+                               (_bz, _nl, strength,
+                                _hue_band(tints[match], _nl)))
                 else:
                     _flat_fill(nodes, links, em, _srgb_lin(tints[match]))
                 links.new(em.outputs["Emission"], output.inputs["Surface"])
@@ -1426,6 +1463,19 @@ def strip_ground(scene, mode, base_z):
             me = ob.data
             for poly in me.polygons:
                 c = mw @ poly.center
+                pts = [mw @ me.vertices[v].co for v in poly.vertices]
+                cells = list(covered_cells([p.x for p in pts],
+                                           [p.y for p in pts]))
+                # air evidence runs on EVERY face — a wall standing over air
+                # has its bottom face exactly at the band boundary, which the
+                # skips below would eat. Bottom faces on the box floor are
+                # bounds artifacts, not air.
+                if (rot @ poly.normal).z < -0.5 and c.z > base_z + 0.5:
+                    # an exported bottom face means the world had AIR below
+                    # (faces against solid blocks are culled at export)
+                    for cell in cells:
+                        if cell not in open_below or c.z < open_below[cell]:
+                            open_below[cell] = c.z
                 if circuit:
                     # flat dust and components STANDING on the resting plane
                     # need a pad under them; a lever/torch hanging on the
@@ -1435,19 +1485,10 @@ def strip_ground(scene, mode, base_z):
                         continue
                 elif c.z <= band_top:
                     continue
-                pts = [mw @ me.vertices[v].co for v in poly.vertices]
-                cells = list(covered_cells([p.x for p in pts],
-                                           [p.y for p in pts]))
                 footprint.update(cells)
                 for cell in cells:
                     if cell not in lowest_z or c.z < lowest_z[cell]:
                         lowest_z[cell] = c.z
-                if (rot @ poly.normal).z < -0.5:
-                    # an exported bottom face means the world had AIR below
-                    # (faces against solid blocks are culled at export)
-                    for cell in cells:
-                        if cell not in open_below or c.z < open_below[cell]:
-                            open_below[cell] = c.z
                 if not circuit:
                     for cell in cells:
                         if cell not in region_src or c.z < region_src[cell][0]:
@@ -1498,13 +1539,23 @@ def strip_ground(scene, mode, base_z):
         for cell, fam in list(fam_by_cell.items()):
             if fam:
                 continue
+            # 8-neighborhood: isolated riser columns and region seams have
+            # too few 4-neighbors in the footprint to reach a majority
             nb = [fam_by_cell.get((cell[0] + dx, cell[1] + dy))
-                  for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1))]
+                  for dx in (-1, 0, 1) for dy in (-1, 0, 1)
+                  if (dx, dy) != (0, 0)]
             nb = [f for f in nb if f]
             if nb:
                 best = max(set(nb), key=nb.count)
-                if nb.count(best) >= 2:
+                if nb.count(best) >= 2 or len(set(nb)) == 1:
                     fam_by_cell[cell] = best
+        # no family even after the neighbor pass = no evidence anything was
+        # ever there — don't invent a neutral block (they read as random
+        # white specks inside colored regions)
+        dropped = sum(1 for f in fam_by_cell.values() if not f)
+        if dropped:
+            print(f"crop: {dropped} familyless cell(s) get no pad")
+        fam_by_cell = {c: f for c, f in fam_by_cell.items() if f}
         groups = {}
         for cell, fam in fam_by_cell.items():
             groups.setdefault(fam, []).append(cell)
@@ -1539,44 +1590,56 @@ def strip_ground(scene, mode, base_z):
     print(f"ground {mode}: removed {removed} faces (base z={base_z:.1f})")
 
 
-def outline_exclude_collection(stroke_torches=False):
+def outline_exclude_collection(stroke_torches=False, stroke_lamps=False):
     """
     Collection of glowing/colored objects (components + dust wires) to keep
     OUT of the Freestyle outline pass — a light outline haloing a lit lamp
     looks wrong; let components read by their own color/texture instead.
 
     stroke_torches: leave redstone torches IN the ink pass so their tiny
-    top-view dots get a dark rim (torch legibility, ru-6776a8). The
-    collection persists across views, so torches are actively unlinked
+    top-view dots get a dark rim (torch legibility, ru-6776a8).
+    stroke_lamps: same for lamps, every view — an off lamp's amber face
+    disappears against amber-tinted regions without a rim.
+    The collection persists across views, so members are actively unlinked
     here and re-linked when the next view calls without the flag.
     """
     coll = bpy.data.collections.get("RU_NoOutline")
     if coll is None:
         coll = bpy.data.collections.new("RU_NoOutline")
         bpy.context.scene.collection.children.link(coll)
-    stroke = bpy.data.collections.get("RU_TorchStroke")
-    if stroke is None:
-        stroke = bpy.data.collections.new("RU_TorchStroke")
-        bpy.context.scene.collection.children.link(stroke)
+    tstroke = bpy.data.collections.get("RU_TorchStroke")
+    if tstroke is None:
+        tstroke = bpy.data.collections.new("RU_TorchStroke")
+        bpy.context.scene.collection.children.link(tstroke)
+    lstroke = bpy.data.collections.get("RU_LampStroke")
+    if lstroke is None:
+        lstroke = bpy.data.collections.new("RU_LampStroke")
+        bpy.context.scene.collection.children.link(lstroke)
     stroked = 0
     for ob in bpy.data.objects:
         if ob.type != 'MESH':
             continue
         n = ob.name.lower()
         if ob.name == "RU_Wires" or any(k in n for k in COMPONENT_KW):
+            target = None
             if stroke_torches and "redstone_torch" in n:
+                target = tstroke
+            elif stroke_lamps and "lamp" in n:
+                target = lstroke
+            if target is not None:
                 if ob.name in coll.objects:
                     coll.objects.unlink(ob)
-                if ob.name not in stroke.objects:
-                    stroke.objects.link(ob)
+                if ob.name not in target.objects:
+                    target.objects.link(ob)
                 stroked += 1
                 continue
             if ob.name not in coll.objects:
                 coll.objects.link(ob)
-            if ob.name in stroke.objects:   # e.g. iso view after a stroked top
-                stroke.objects.unlink(ob)
-    if stroke_torches:
-        print(f"outline: {stroked} torch object(s) get the heavy stroke, "
+            for sc in (tstroke, lstroke):   # e.g. iso view after a stroked top
+                if ob.name in sc.objects:
+                    sc.objects.unlink(ob)
+    if stroked:
+        print(f"outline: {stroked} component object(s) get the heavy stroke, "
               f"{len(coll.objects)} object(s) excluded from ink")
     return coll
 
@@ -1624,20 +1687,23 @@ def setup_outlines(scene, mode, exclude=None):
         ls.collection_negation = 'EXCLUSIVE'   # outline everything NOT in it
     ls.linestyle.color = (0.08, 0.07, 0.07)
     ls.linestyle.thickness = width
-    # torch legibility (ru-6776a8): torches pulled out of the exclusion get
-    # their own heavier ink pass so the tiny top-view dots read clearly
-    tsc = bpy.data.collections.get("RU_TorchStroke")
-    if tsc is not None and len(tsc.objects):
-        tls = fs.linesets.new("torch-stroke")
+    # component legibility: torches/lamps pulled out of the exclusion get
+    # their own heavier ink passes (torch dots need more than lamp blocks)
+    for cname, lsname, mult in (("RU_TorchStroke", "torch-stroke", TORCH_STROKE_MULT),
+                                ("RU_LampStroke", "lamp-stroke", LAMP_STROKE_MULT)):
+        sc = bpy.data.collections.get(cname)
+        if sc is None or not len(sc.objects):
+            continue
+        tls = fs.linesets.new(lsname)
         tls.select_silhouette = True
         tls.select_border = True
         tls.select_crease = True
         tls.select_edge_mark = False
         tls.select_by_collection = True
-        tls.collection = tsc
+        tls.collection = sc
         tls.collection_negation = 'INCLUSIVE'
         tls.linestyle.color = (0.08, 0.07, 0.07)
-        tls.linestyle.thickness = width * TORCH_STROKE_MULT
+        tls.linestyle.thickness = width * mult
 
 
 def setup_render(scene, res, samples):
@@ -1814,7 +1880,8 @@ def main():
             glare = True
         setup_glare(scene, glare)
         tech_excl = outline_exclude_collection(
-            stroke_torches=(opts["torch_marks"] == "stroke" and topv)
+            stroke_torches=(opts["torch_marks"] == "stroke" and topv),
+            stroke_lamps=(opts["torch_marks"] == "stroke"),
         ) if (tech is not None and opts["technical"].startswith("schematic")) else None
         if (tech_excl is not None and opts["outline"] and opts["ground_no_outline"]
                 and opts["ground"] in ("keep", "crop")):
@@ -1824,8 +1891,7 @@ def main():
             for ls in bpy.context.view_layer.freestyle_settings.linesets:
                 if ls.linestyle:
                     ls.linestyle.color = _srgb_lin(tech["line"])
-                    ls.linestyle.thickness = tech["lw"] * (
-                        TORCH_STROKE_MULT if ls.name == "torch-stroke" else 1.0)
+                    ls.linestyle.thickness = tech["lw"] * _STROKE_MULTS.get(ls.name, 1.0)
         tele = (view == "iso" and opts["projection"] == "tele")
         margin = opts["margin"]
         if view == "top" and opts["top_margin"] is not None:
@@ -1839,17 +1905,18 @@ def main():
             w = max(0.5, min(1.6, 1.2 * ref / cam.data.ortho_scale))
             scene.render.line_thickness = w
             for ls in bpy.context.view_layer.freestyle_settings.linesets:
-                ls.linestyle.thickness = w * (
-                    TORCH_STROKE_MULT if ls.name == "torch-stroke" else 1.0)
+                ls.linestyle.thickness = w * _STROKE_MULTS.get(ls.name, 1.0)
         elif opts["outline"] and tele:
-            # perspective has no single ortho_scale to key off; the build is
-            # framed to fill, so a fixed weight matching the ortho cap keeps
-            # the schematic outline crisp at near-iso depth
-            w = 1.5
+            # perspective has no single ortho_scale to key off — scale by the
+            # framed extent instead, so large builds don't read blotchy where
+            # block seams cluster (1.5px suits a ~600-unit build)
+            ext = max(float(size), 1.0)
+            # sqrt scaling: halves the thinning slope — a 1000-unit build
+            # lands ~1.2px instead of ~0.9 (Fielding: linear went too faint)
+            w = max(0.6, min(1.6, 1.5 * (600.0 / ext) ** 0.5))
             scene.render.line_thickness = w
             for ls in bpy.context.view_layer.freestyle_settings.linesets:
-                ls.linestyle.thickness = w * (
-                    TORCH_STROKE_MULT if ls.name == "torch-stroke" else 1.0)
+                ls.linestyle.thickness = w * _STROKE_MULTS.get(ls.name, 1.0)
         out_path = os.path.join(opts["out"], f"{opts['name']}_{view}.png")
         scene.render.filepath = out_path
         bpy.ops.render.render(write_still=True)

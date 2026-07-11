@@ -178,3 +178,20 @@ Flat fills (`height_tint: 0`), Fielding-approved. Optional REGION HEIGHT
 SHADING (`height_tint` > 0 with a tint map) steps each region palest at its
 base to full hue at its top (`_hue_band` in render_usd.py) — first tried on
 05_integration-bug at 0.85; keep/drop verdict per figure is Fielding's.
+
+## Region height shading — the tone band (final, 2026-07-11)
+
+Legend-tinted families step through tones of their own hue by build layer,
+normalized to EACH FAMILY's own height (a 3-layer region uses 3 tones, not
+the palest sliver of the whole build's ramp). Direction: LIGHTER WITH
+HEIGHT — full hue at the region's base (grounded, matches its pads), paling
+upward; circuits read best against the paler upper tones. Band shape:
+whitened (+40% white) at top ... full hue mid ... 0.88x darkened at base,
+via _hue_band() in render_usd.py. Enable with height_tint > 0 on a tinted
+shot (0.85 standard); 0 keeps flat legend fills.
+
+Adopted on: 05_integration-bug (M5) and 04_complete-digital-display (M4,
+"toned" per Fielding). Component legibility partners: lamps rim at 1.33x
+linework + lit lamps emit 1.6x; torches rim 2.5x in top views. Crop pads
+are evidence-based: only where the world had support; familyless pads are
+dropped, levers/lamps over air float.
