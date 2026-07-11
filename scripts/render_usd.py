@@ -1386,15 +1386,23 @@ def strip_ground(scene, mode, base_z):
             me = ob.data
             for poly in me.polygons:
                 c = mw @ poly.center
-                if c.z > band_top or circuit:
-                    pts = [mw @ me.vertices[v].co for v in poly.vertices]
-                    cells = list(covered_cells([p.x for p in pts],
-                                               [p.y for p in pts]))
-                    footprint.update(cells)
-                    if not circuit and c.z > band_top:
-                        for cell in cells:
-                            if cell not in region_src or c.z < region_src[cell][0]:
-                                region_src[cell] = (c.z, nm)
+                if circuit:
+                    # flat dust and components STANDING on the resting plane
+                    # need a pad under them; a lever/torch hanging on the
+                    # side of a block sits below the plane and must not
+                    # invent a floor cell in front of its wall
+                    if not (-2.0 <= c.z - rest <= 4.0):
+                        continue
+                elif c.z <= band_top:
+                    continue
+                pts = [mw @ me.vertices[v].co for v in poly.vertices]
+                cells = list(covered_cells([p.x for p in pts],
+                                           [p.y for p in pts]))
+                footprint.update(cells)
+                if not circuit:
+                    for cell in cells:
+                        if cell not in region_src or c.z < region_src[cell][0]:
+                            region_src[cell] = (c.z, nm)
     removed = 0
     cell_src = {}   # crop: cell -> (z, block family) of the topmost deleted face
     for ob in list(scene.objects):
