@@ -38,8 +38,10 @@ CV="$HOME/Downloads/Redstone University.cv"
 # project (id from _defaults.cv_project), atomically, keeping a .bak:
 python3 scripts/pull_cv.py
 python3 scripts/cv_render.py "$CV" --list           # confirm the scope name exists
-# add/extend the entry in renders/diagrams.json, then:
-python3 scripts/cv_render.py "$CV" --batch renders/diagrams.json
+# add/extend the entry in renders/diagrams.json, then render WITH GATE
+# COLORS — every placed book diagram uses them; omitting the flag makes
+# ink-only gates that don't match the book (bit us on 2026-07-11):
+python3 scripts/cv_render.py "$CV" --batch renders/diagrams.json --gate-colors
 ```
 
 Then **view** `renders/cv-out/<name>.png`, copy into the module's images folder
