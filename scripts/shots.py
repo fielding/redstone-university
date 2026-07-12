@@ -146,7 +146,7 @@ def stamp_legend(png_path, legend):
     margin = sw
     font = ImageFont.truetype(
         os.path.expanduser("~/Library/Fonts/YoungSerif-Regular.ttf"),
-        round(sw * 0.80))
+        round(sw * 0.62))
     draw = ImageDraw.Draw(img)
 
     items, x = [], 0
@@ -166,11 +166,23 @@ def stamp_legend(png_path, legend):
                (w - margin - row_w, h - margin - row_h)]
     ox, oy = next((c for c in corners if corner_free(*c)), corners[0])
 
+    wline = max(2, sw // 14)
     for off, label, rgb in items:
         sx = ox + off
-        draw.rounded_rectangle([sx, oy, sx + sw, oy + sw], radius=sw * 0.22,
-                               fill=(*rgb, 255), outline=ink,
-                               width=max(2, sw // 14))
+        # flat iso block in the figures' own language: one hue, ink outline,
+        # inner edges drawn (top rhombus + front vertical) — a 2:1 dimetric
+        # cube sw wide and sw tall
+        a, b = sw / 2.0, sw / 4.0
+        cx = sx + a
+        T, UR = (cx, oy), (cx + a, oy + b)
+        LR, Bt = (cx + a, oy + 3 * b), (cx, oy + 4 * b)
+        LL, UL = (cx - a, oy + 3 * b), (cx - a, oy + b)
+        M = (cx, oy + 2 * b)
+        draw.polygon([T, UR, LR, Bt, LL, UL], fill=(*rgb, 255))
+        for p, q in ((UL, M), (M, UR), (M, Bt)):
+            draw.line([p, q], fill=ink, width=wline)
+        draw.line([T, UR, LR, Bt, LL, UL, T], fill=ink,
+                  width=wline, joint="curve")
         draw.text((sx + sw + gap, oy + sw / 2), label,
                   font=font, fill=ink, anchor="lm")
     img.save(png_path)

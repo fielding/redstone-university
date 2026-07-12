@@ -833,7 +833,10 @@ def apply_technical(mode, height_tint=0.0, tints=None):
             print(f"height tint: {nlayers} layers over {top_z - base_z:.0f} units")
     # region height shading normalizes each tinted family to ITS OWN height —
     # a 3-layer region runs pale->full across 3 tones, not the palest sliver
-    # of the whole build's ramp (Fielding: "only rendering two tints")
+    # of the whole build's ramp (Fielding: "only rendering two tints").
+    # Ranges are keyed by the LEGEND HUE, not the block family: families
+    # sharing a hue are one region, and two blocks at the same height must
+    # wear the same tone (yellow+orange concrete both -> adder yellow).
     fam_range = {}
     if htint is not None and tints:
         for ob in bpy.data.objects:
@@ -846,8 +849,9 @@ def apply_technical(mode, height_tint=0.0, tints=None):
                 continue
             zs_f = [(ob.matrix_world @ Vector(c)).z for c in ob.bound_box]
             lo_f, hi_f = min(zs_f), max(zs_f)
-            cur = fam_range.get(key_f)
-            fam_range[key_f] = ((min(lo_f, cur[0]), max(hi_f, cur[1]))
+            hue_f = tuple(tints[key_f])
+            cur = fam_range.get(hue_f)
+            fam_range[hue_f] = ((min(lo_f, cur[0]), max(hi_f, cur[1]))
                                 if cur else (lo_f, hi_f))
     world = bpy.data.worlds.new("TechWorld")
     bpy.context.scene.world = world
@@ -922,7 +926,7 @@ def apply_technical(mode, height_tint=0.0, tints=None):
                     # runs pale->full over its 3 tones, not the palest sliver
                     # of the whole build's ramp
                     _bz, _nl, strength, _band = htint
-                    fr = fam_range.get(match)
+                    fr = fam_range.get(tuple(tints[match]))
                     if fr is not None:
                         _bz = fr[0]
                         _nl = min(32, max(2, round((fr[1] - fr[0]) / 16.0)))

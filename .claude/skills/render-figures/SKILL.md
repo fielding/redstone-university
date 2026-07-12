@@ -71,14 +71,18 @@ for cairosvg (`~/Library/Fonts` + `fc-cache -f`).
 #    ~/apps/MiEx/log.txt  (minX minY minZ maxX maxY maxZ per export block).
 #    The GUI export renders black (MaterialX) — we only want its bounds.
 # 2. Add the shot to renders/shots.json with those bounds (see schema).
-#    Bounds rule (all mins inclusive, maxes exclusive): minY = the level the
-#    components/dust SIT AT — their support course gets cut and the crop
-#    pads stand in as the clean one-block floor (minY at the support course
-#    shows a doubled base). maxY = one ABOVE the tallest block (display
-#    panels clip otherwise). Trim x/z tight to the build: slack pulls in
-#    neighbor-plot geometry as stray cream arms. A FAWE selection maps as
-#    min corner verbatim, max corner +1 on each axis, minY = pos_y_min + 1
-#    when the selection includes the support course.
+#    Bounds rule (all mins inclusive, maxes exclusive): minY = the BUILD'S
+#    OWN BASE COURSE — the blocks the components sit ON. Cut only PLOT
+#    GROUND below it. Getting this wrong by one is the classic failure:
+#    minY at the component level amputates the base course (wool/structure
+#    vanishes, dust runs float — 2026-07-11); minY into the plot ground
+#    shows a doubled base. Distinguish course vs ground with a bot block
+#    census per y-level when unsure (build blocks match the footprint;
+#    ground spans the whole plot). maxY = one ABOVE the tallest block
+#    (display panels clip otherwise). Trim x/z tight to the build: slack
+#    pulls in neighbor-plot geometry as stray cream arms. A FAWE selection
+#    maps as min corner verbatim, max corner +1 on each axis; bump minY +1
+#    only if the selection includes plot ground.
 #    Fielding marks corners in-world with a single OAK FENCE post — hidden
 #    from renders via _defaults "hide": "oak_fence" (glass is NOT hidden;
 #    future builds use it). Before exporting after in-world edits, flush
