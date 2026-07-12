@@ -232,8 +232,8 @@ And the display goes blank.
 ![The integration bug in Minecraft](./images/integration-bug_minecraft.png)
 *Figure: The moment it fails, in the world: `8` and `4` on the input levers, the powered rails carrying the adder's `1100` into the decoder, and the display dark. Every subsystem did its job.*
 
-![The display system receiving 1100](./images/4-bit-binary-to-display-abstract-1100_circuitverse.png)
-*Figure: The bug, exactly as the hardware sees it. The adder hands the display system `1100`, but the 4-to-10 decoder only knows the ten patterns for `0` through `9`. No output line fires, the ROM stays quiet, and the display shows nothing.*
+![Inside the 4-to-10 decoder receiving 1100](./images/4-to-10-decoder-1100_circuitverse.png)
+*Figure: Inside the decoder at the moment of failure. `1100` lights the input rails, and every one of the ten line-detectors, each built to recognize one pattern from `0` through `9`, finds something wrong with it. No line fires.*
 
 #### The diagnosis
 
@@ -458,7 +458,7 @@ That clever software trick is just a looped version of the same arithmetic logic
 -   **Adder**: A digital circuit that performs binary addition.
 -   **Binary-Coded Decimal (BCD)**: A representation in which each decimal digit `0` through `9` is stored as its own 4-bit binary pattern.
 -   **Carry bit**: A bit that is generated when a column of addition exceeds what can be represented in that column and must spill into the next one.
--   **Full adder**: A 1-bit arithmetic circuit that adds $A$, $B$, and `CarryIn`, producing `Sum` and `CarryOut`.
+-   **Full adder**: A 1-bit arithmetic circuit that adds `A`, `B`, and `CarryIn`, producing `Sum` and `CarryOut`.
 -   **Hexadecimal**: A base-16 number system that maps perfectly onto 4-bit binary values.
 -   **Nibble**: A group of 4 bits.
 -   **Ripple-carry adder**: A multi-bit adder made by chaining full adders so the carry propagates from stage to stage.

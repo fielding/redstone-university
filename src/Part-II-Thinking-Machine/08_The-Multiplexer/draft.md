@@ -41,9 +41,9 @@ A MUX is the digital version of a selector knob or railway switch. It chooses on
 
 A **2-to-1 MUX** has:
 
--   two data inputs: $A$ and $B$
--   one select input: $S$
--   one output: $Y$
+-   two data inputs: `A` and `B`
+-   one select input: `S`
+-   one output: `Y`
 
 Its behavior is:
 
@@ -95,12 +95,12 @@ So a MUX is really a very disciplined way of opening exactly one path while clos
 ![1-Bit MUX CircuitVerse Diagram](./images/1-bit-mux-circuitverse.png)
 *Figure: A 1-bit 2-to-1 MUX. The select line and its inverse control which of the two data paths is allowed through.*
 
-1.  Create three input levers labeled $A$, $B$, and $S$.
+1.  Create three input levers labeled `A`, `B`, and `S`.
 2.  Build a NOT gate on the select line to generate $\neg S$.
 3.  Build the first AND gate for $A \land \neg S$.
 4.  Build the second AND gate for $B \land S$.
 5.  Feed both AND outputs into a final OR gate.
-6.  Connect the OR output to a lamp labeled $Y$.
+6.  Connect the OR output to a lamp labeled `Y`.
 
 #### The experiment
 

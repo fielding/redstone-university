@@ -57,7 +57,7 @@ This is the key to professional-looking diagrams. We need to arrange the input a
 1.  **Navigate to the Original Circuit Tab.** You must edit the layout from the source. The easiest way to do this is to simply **double-click** the subcircuit block you just placed on your canvas. This will jump you to the correct tab.
 2.  **Open the Layout Editor.** With nothing selected on the original circuit's canvas, look at the **Properties Panel** on the right side of the screen. Find and click the **Edit Layout** button.
 3.  **Arrange the Pins.** A new editor window will pop up showing the black box version of your circuit. You can now **click and drag** the input and output pins to new positions on the border of the block.
-    > **Pro Tip:** For our 4-to-10 decoder, a clean layout is to place the inputs ($B3$ to $B0$) in order on the bottom edge, and the outputs ($L0$ to $L9$) in order on the left edge. This will align perfectly with the inputs of our encoder in the final assembly.
+    > **Pro Tip:** For our 4-to-10 decoder, a clean layout is to place the inputs (`B3` to `B0`) in order on the bottom edge, and the outputs (`L0` to `L9`) in order on the left edge. This will align perfectly with the inputs of our encoder in the final assembly.
 4.  **Adjust and Save.** Use the **LAYOUT** panel on the right to adjust the block's **Width** and **Height**. Once you are happy with the layout, click **Save**.
 
 ![Organized Subcircuit Layout](./images/subcircuit-layout-after.png)
