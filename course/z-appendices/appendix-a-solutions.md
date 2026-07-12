@@ -472,7 +472,7 @@ This points to a catastrophic failure in the "programming" of the `L2` line in y
 ---
 
 
-### Practice Problem 5.6.1: Knowledge Check
+### Practice Problem 5.7.1: Knowledge Check
 
 1.  What is the difference between the `Sum` output and the `CarryOut` output of a full adder?
 2.  What is the hexadecimal symbol for binary `1110`?
@@ -488,7 +488,7 @@ This points to a catastrophic failure in the "programming" of the `L2` line in y
 ---
 
 
-### Practice Problem 5.6.2: Debug challenge
+### Practice Problem 5.7.2: Debug challenge
 
 Your 4-bit adder works for `2 + 1`, `3 + 1`, and `4 + 1`, but `7 + 1` incorrectly produces `0000` instead of `1000`.
 

@@ -6,7 +6,7 @@
 -   **Learning Goals:**
     -   Understand how binary addition produces both a **sum** bit and a **carry** bit.
     -   Build a reusable 1-bit **full adder** and chain four of them into a 4-bit ripple-carry adder.
-    -   Diagnose a system-level bug that appears only after the adder is connected to the display.
+    -   Diagnose your first system-level integration bug.
     -   Learn why **hexadecimal** is a natural shorthand for 4-bit values.
     -   Upgrade the decoder and ROM from Module 4 without rebuilding the whole display from scratch.
 -   **Lesson Overview:**
@@ -15,6 +15,7 @@
     -   Lesson 5.3: The integration test & the first bug
     -   Lesson 5.4: The programmer's solution – Speaking hexadecimal
     -   Lesson 5.5: The lab – The hexadecimal upgrade
+    -   Lesson 5.6: The payoff
 -   **Minecraft Artifact:** A working 4-bit ripple-carry adder connected to a hexadecimal display.
 -   **The Payoff:** The calculation `8 + 4`, which originally broke our display, will now appear correctly as `C`.
 
@@ -28,12 +29,7 @@ In this module, that changes.
 
 We are going to build the mathematical heart of the processor: the **adder**. This is the first circuit in the course that feels unmistakably like computation. It takes two numbers, transforms them, and produces a new one.
 
-But this module is also our first taste of what real engineering feels like. You can build two perfect subsystems, connect them together, and still discover a bug. That is exactly what will happen here. Our adder will work. Our display will work. And the combined system will still fail in a fascinating way.
-
-That failure will teach us two big ideas at once:
-
-1.  **Integration reveals truths that isolated testing cannot.**
-2.  **A modular design makes future upgrades much easier.**
+But this module is also our first taste of what real engineering feels like. You can build two perfect subsystems, connect them together, and still discover a bug. Keep that in the back of your mind as you build.
 
 Let’s begin by learning the grammar of binary arithmetic.
 
@@ -213,6 +209,8 @@ A quick word before you place a single block: this step is small. You are not re
 
 That should work beautifully.
 
+<div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/05_rca-bcd-display_circuitverse.png" alt="The composed system computing 4 + 3" width="512px"/><br/><em>Figure: The composed system passing its first test: `0100 + 0011` ripples through the adder, the decoder recognizes `0111` and fires its line, and the display draws a `7`. Every stage is doing its job.</em></div><br/>
+
 Now try this:
 
 -   $8 + 4$
@@ -238,7 +236,12 @@ The problem is that our display decoder from Module 4 is a **BCD decoder**. It o
 
 We asked a correct subsystem to interpret a value that lies outside its vocabulary.
 
-That is a deeply realistic engineering lesson. Hardware is only as capable as the assumptions built into it.
+Two lessons fall out of this failure:
+
+1.  **Integration reveals truths that isolated testing cannot.** Every test we ran on the adder passed. Every test we ran on the display passed. The bug lived in the wiring between two green test suites.
+2.  **Hardware is only as capable as the assumptions built into it.** The decoder is not broken. It was built for a world where every answer fits in one decimal digit, and our adder just left that world.
+
+So the fix has to start somewhere unusual: not in the circuit, but in the way we write numbers down.
 
 ---
 
@@ -250,7 +253,7 @@ We now have a choice.
 
 We could build a more complicated decimal display system that shows numbers like `12` using two separate digits.
 
-That is possible, and later in the course we *will* explore it.
+That is possible, and it is real hardware. Humans buy calculators, not hex displays, so real machines pay this cost all the time: a whole converter circuit standing between the arithmetic and the screen. We build exactly that machine in Module 13, at the far end of the course.
 
 But there is a much more elegant move available right now: meet the machine halfway.
 
@@ -282,6 +285,37 @@ Hexadecimal is base-16, so it gives us exactly one symbol for each possible 4-bi
 
 So when the adder outputs `1100`, we do not need to think “the display failed.”
 We can think “the machine just said `C`.”
+
+#### Why sixteen works and ten never will
+
+Sixteen is not an arbitrary choice. Sixteen is $2^4$, and that one fact does all the work: each hex digit covers exactly one **nibble**, a 4-bit group, no more and no less. Ten has no such relationship with binary, and that mismatch is the entire reason our decimal decoder ran out of vocabulary at `1010`.
+
+The nibble alignment makes conversion mechanical. To read binary as hex, split it into nibbles and name each one from the table:
+
+$$
+\underbrace{1100}_{\text{C}}\;\;\underbrace{0011}_{\text{3}} \quad\rightarrow\quad \text{C3}
+$$
+
+No long division, no arithmetic. And it scales: an 8-bit value is two hex digits, a 16-bit value is four, and a 64-bit memory address is sixteen. The reading trick you just learned on our little display works on every machine you will ever touch.
+
+One convention before we move on: programmers write hex with a `0x` prefix, so `0xC` means “`C`, the number” rather than “`C`, the letter.” You will see that prefix for the rest of the course.
+
+#### Try it
+
+Read these in hex, one nibble at a time:
+
+1.  `0110`
+2.  `1111`
+3.  `10100101` (split it into two nibbles first)
+
+<details>
+<summary><strong>Show Solution</strong></summary>
+
+1.  `0110` is `0x6`.
+2.  `1111` is `0xF`.
+3.  `1010` is `A` and `0101` is `5`, so `0xA5`.
+
+</details>
 
 That is why hexadecimal is everywhere in low-level programming, debugging, and computer architecture. It lines up perfectly with the machine’s natural word sizes.
 
@@ -320,16 +354,16 @@ This is one of the most satisfying moments in the course. We are about to benefi
 2.  Program the segment patterns for `A` through `F`.
 3.  Test each new letter one at a time before reconnecting the full system.
 
-A common 7-segment convention is:
+A common 7-segment convention, with `b` and `d` drawn lowercase for a practical reason: an uppercase `B` on seven segments is identical to `8`, and an uppercase `D` is identical to `0`.
 
--   `A`: segments `a, b, c, e, f, g`
--   `B`: segments `c, d, e, f, g`  
-    *(Many 7-segment displays render this as a lowercase-looking `b`.)*
--   `C`: segments `a, d, e, f`
--   `D`: segments `b, c, d, e, g`  
-    *(Often rendered like a lowercase-looking `d`.)*
--   `E`: segments `a, d, e, f, g`
--   `F`: segments `a, e, f, g`
+| Letter | Segments |
+| :---: | :--- |
+| `A` | `a, b, c, e, f, g` |
+| `b` | `c, d, e, f, g` |
+| `C` | `a, d, e, f` |
+| `d` | `b, c, d, e, g` |
+| `E` | `a, d, e, f, g` |
+| `F` | `a, e, f, g` |
 
 <div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/05_hex-letters-7seg_circuitverse.png" alt="The hex letters on a 7-segment display" width="512px"/><br/><em>Figure: The six letter patterns on the display: `A` through `F`, with `B` and `D` in their lowercase-looking forms.</em></div><br/>
 
@@ -341,7 +375,11 @@ A common 7-segment convention is:
 
 <div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/05_hex-display-aerial_minecraft.png" alt="Hexadecimal Display System Aerial View" width="512px"/><br/><em>Figure: The upgraded display system from above, set to `1100`: the bus enters the decoder along the top, its sixteen lines drop into the ROM below, and the collected segment lines exit into the panel. The deeper shades mark everything that was added for hex.</em></div><br/>
 
-#### The payoff test
+---
+
+### Lesson 5.6: The payoff
+
+> **Key Takeaway:** The test that broke your system is the test that proves your fix. Always re-run your failures.
 
 Repeat the test that failed earlier:
 
@@ -377,7 +415,7 @@ Our machine can now add numbers and display every possible 4-bit result. In the 
 
 ### Module 5 Checkpoint
 
-#### Practice Problem 5.6.1: Knowledge Check
+#### Practice Problem 5.7.1: Knowledge Check
 
 1.  What is the difference between the `Sum` output and the `CarryOut` output of a full adder?
 2.  What is the hexadecimal symbol for binary `1110`?
@@ -392,7 +430,7 @@ Our machine can now add numbers and display every possible 4-bit result. In the 
 
 </details>
 
-#### Practice Problem 5.6.2: Debug challenge
+#### Practice Problem 5.7.2: Debug challenge
 
 Your 4-bit adder works for `2 + 1`, `3 + 1`, and `4 + 1`, but `7 + 1` incorrectly produces `0000` instead of `1000`.
 
