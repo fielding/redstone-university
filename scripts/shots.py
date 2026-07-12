@@ -128,6 +128,54 @@ def export_usd(name, shot, packs):
     return usd_path
 
 
+def stamp_legend(png_path, legend):
+    """
+    Stamp a small swatch+label legend onto a rendered figure. Config: a
+    per-shot "legend" object mapping label -> region hex, in display order
+    (the flat legend hue — the anchor of the region's tone band). Placement
+    prefers the bottom-left corner and walks the other corners if the build
+    reaches into it.
+    """
+    from PIL import Image, ImageDraw, ImageFont
+
+    ink = (48, 35, 30, 255)  # STYLE.md outline ink 30231e
+    img = Image.open(png_path).convert("RGBA")
+    w, h = img.size
+    sw = max(30, round(w * 0.023))
+    gap, pad = round(sw * 0.45), round(sw * 0.55)
+    margin = sw
+    font = ImageFont.truetype(
+        os.path.expanduser("~/Library/Fonts/YoungSerif-Regular.ttf"),
+        round(sw * 0.80))
+    draw = ImageDraw.Draw(img)
+
+    items, x = [], 0
+    for label, hexcol in legend.items():
+        rgb = tuple(int(hexcol[i:i + 2], 16) for i in (0, 2, 4))
+        items.append((x, label, rgb))
+        x += sw + gap + draw.textlength(label, font=font) + pad * 2
+    row_w, row_h = x - pad * 2, sw
+
+    def corner_free(rx, ry):
+        box = img.crop((int(rx), int(ry),
+                        int(min(w, rx + row_w)), int(min(h, ry + row_h))))
+        return box.getchannel("A").getbbox() is None
+
+    corners = [(margin, h - margin - row_h), (margin, margin),
+               (w - margin - row_w, margin),
+               (w - margin - row_w, h - margin - row_h)]
+    ox, oy = next((c for c in corners if corner_free(*c)), corners[0])
+
+    for off, label, rgb in items:
+        sx = ox + off
+        draw.rounded_rectangle([sx, oy, sx + sw, oy + sw], radius=sw * 0.22,
+                               fill=(*rgb, 255), outline=ink,
+                               width=max(2, sw // 14))
+        draw.text((sx + sw + gap, oy + sw / 2), label,
+                  font=font, fill=ink, anchor="lm")
+    img.save(png_path)
+
+
 def render(name, shot, usd_path, out_dir, azimuth, views):
     args = ["blender", "-b", "-P", RENDER_SCRIPT, "--", usd_path,
             "--out", out_dir, "--name", name,
@@ -152,6 +200,10 @@ def render(name, shot, usd_path, out_dir, azimuth, views):
     if not wrote:
         print(result.stdout[-2000:])
         sys.exit(f"[{name}] render produced no output")
+    if shot.get("legend"):
+        for line in wrote:
+            stamp_legend(line[len("wrote "):].strip(), shot["legend"])
+        print(f"[{name}] legend stamped on {len(wrote)} file(s)")
 
 
 def adopt(name):

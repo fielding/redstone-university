@@ -105,6 +105,15 @@ Key per-shot knobs (inherit `_defaults`):
   ink (2.5× linework) so torches read against dust; `off` disables. Iso views
   are never marked. Related: crop pads are never synthesized under levers —
   levers render as floating inputs.
+- `legend: {"Adder": "f2d489", …}` — stamp an in-image swatch+label legend
+  (Young Serif, ink outline) onto every view of the shot, bottom-left corner
+  (auto-dodges to another corner if the build reaches into it). Use on
+  composed/tinted figures; labels+hues must match the region semantics in
+  `renders/STYLE.md`. Post-pass in shots.py — re-render to re-stamp.
+- **A build renders all-cream when its block families are missing from the
+  shot's `tint` map** (schematic mode ghosts unmapped structure by design).
+  Module builds in the adder language need
+  `yellow_concrete=f2d489,orange_concrete=f2d489,smooth_stone=f5f1ea,cobblestone=f5f1ea`.
 
 Commands: `--all` (everything), `<names>` (subset), `--render-only` (reuse cached
 USD), `--export-only`, `--adopt <name>` (make an entry from the last export).

@@ -139,6 +139,24 @@ wool by major component, e.g.
 "tint": "blue_concrete=a8c4d6,pink_concrete=e0b6c4,red_concrete=c47a72"
 ```
 
+Gotcha: in `technical` modes, structure families **not** in the tint map are
+ghosted to the neutral fill by design — a colored build with no tint map
+renders uniformly cream. Standalone module shots whose build speaks the color
+language need their families mapped (see `renders/STYLE.md`).
+
+### `legend` — in-image swatch+label chips
+
+A per-shot `"legend"` object stamps a legend row onto every rendered view
+(post-pass in `shots.py`, not Blender): rounded swatch per region + Young
+Serif label in ink `30231e`, bottom-left corner, auto-dodging to another
+corner if the build occupies it. Keys are display labels, values the flat
+region hue (the tone band's anchor); order is display order.
+
+```json
+"legend": {"Adder": "f2d489", "Decoder": "aecf9c", "ROM": "e4b0ab"}
+```
+
+Re-render to re-stamp — the stamp bakes into `renders/out/<shot>_<view>.png`.
 
 ## `shots.py` CLI
 

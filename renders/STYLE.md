@@ -195,3 +195,24 @@ Adopted on: 05_integration-bug (M5) and 04_complete-digital-display (M4,
 linework + lit lamps emit 1.6x; torches rim 2.5x in top views. Crop pads
 are evidence-based: only where the world had support; familyless pads are
 dropped, levers/lamps over air float.
+
+## In-image legend chips (2026-07-11, Fielding request)
+
+Composed figures that carry region tints get a small legend stamped into the
+PNG: one rounded swatch per region (the flat legend hue — the anchor of the
+region's tone band) + label in Young Serif, outlined and set in ink 30231e.
+Bottom-left corner, auto-dodging to another corner if the build reaches in.
+Implementation: `stamp_legend()` in scripts/shots.py, driven by a per-shot
+`"legend": {"Adder": "f2d489", ...}` object (order = display order).
+Labels use the region names, not block names: Adder / Decoder / ROM /
+Display driver. Adopted on 05_integration-bug; roll onto other composed
+shots (M4 complete display, hex display, payoff) as they come up for render.
+
+## Standalone module shots wear their region color (2026-07-11)
+
+A module figure rendered alone (full adder, 4-bit RCA) is not "composed",
+but its build already speaks the color language (yellow/orange concrete
+structure). Give it the same tint map + height tones so it renders as a
+tinted region rather than ghost-cream: schematic mode deliberately ghosts
+any family not in the tint map, so an unmapped colored build flattens to
+cream (the "everything is cream" failure).
