@@ -321,10 +321,10 @@ This is one of the most satisfying moments in the course. We are about to benefi
 *Figure: The full 4-to-16 binary decoder. Sixteen output lines, one per 4-bit pattern; here the input `1111` activates line `LF`.*
 
 ![4-to-16 Decoder Minecraft Build](./images/4-to-16-decoder_minecraft.png)
-*Figure: The upgraded decoder in the world, built standalone before wiring it in: the same tap language as Module 4, extended to cover every 4-bit pattern, one output lamp per line.*
+*Figure: The upgraded decoder in the world, built standalone before wiring it in. The original 4-to-10 decoder keeps its Module 4 color; the six new hex lines carry the deeper shade.*
 
 ![4-to-16 Decoder (plan view)](./images/4-to-16-decoder-aerial_minecraft.png)
-*Figure: The decoder matrix from above: the input bus rails crossing every line column.*
+*Figure: The decoder from above: the 4-bit bus rails crossing every line column, with the hex extension standing out in the deeper shade.*
 
 #### Lab Part B: Upgrade the ROM
 
@@ -350,13 +350,13 @@ A common 7-segment convention is:
 *Figure: The extended decoder/driver ROM: all sixteen line inputs, one OR column per segment.*
 
 ![Extended ROM Minecraft Build](./images/hex-rom_minecraft.png)
-*Figure: The extended ROM in the world, built standalone. The tap pattern is the programming, the same language as Module 4, now covering letters as well as digits.*
+*Figure: The extended ROM in the world, built standalone. The tap pattern is the programming: the original digit lines keep their Module 4 color, and the six new letter lines carry the deeper shade.*
 
 ![Extended ROM (plan view)](./images/hex-rom-aerial_minecraft.png)
-*Figure: The ROM from above: every tap along the rails is one stored bit of the segment patterns.*
+*Figure: The ROM from above: every tap is one stored bit, and the deeper-shaded lines are the letters `A` through `F` being added.*
 
 ![Hexadecimal Display System Aerial View](./images/hex-display-aerial_minecraft.png)
-*Figure: The upgraded display system from above, set to `1100`: the 4-bit input bus runs along the top, fans out across all sixteen line columns, and the collected segment lines exit at the right into the panel.*
+*Figure: The upgraded display system from above, set to `1100`: the bus enters the decoder along the top, its sixteen lines drop into the ROM below, and the collected segment lines exit into the panel. The deeper shades mark everything that was added for hex.*
 
 #### The payoff test
 
