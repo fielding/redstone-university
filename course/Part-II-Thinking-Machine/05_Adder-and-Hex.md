@@ -81,8 +81,8 @@ So the result is `1000`, which is `8`.
 
 In real hardware, each column after the first must add **three** inputs:
 
--   $A$
--   $B$
+-   `A`
+-   `B`
 -   `CarryIn`
 
 And it must produce **two** outputs:
@@ -120,7 +120,7 @@ That is exactly what we need the hardware to do.
 
 A full adder has:
 
--   inputs: $A$, $B$, `CarryIn`
+-   inputs: `A`, `B`, `CarryIn`
 -   outputs: `Sum`, `CarryOut`
 
 A standard implementation uses:
@@ -135,7 +135,7 @@ Build that once, test it thoroughly, and then repeat it.
 
 #### Lab Part A: Build a 1-bit full adder module
 
-1.  Lay out three labeled inputs: $A$, $B$, and `CarryIn`.
+1.  Lay out three labeled inputs: `A`, `B`, and `CarryIn`.
 2.  Build the XOR path for the **Sum** output:
     -   First compute $A \oplus B$.
     -   Then XOR that result with `CarryIn`.
@@ -203,7 +203,7 @@ Now for the fun part. Let’s connect our new adder to the display system from M
 
 A quick word before you place a single block: this step is small. You are not rebuilding anything you see in the figures. The adder exists. The display exists. The only new construction is the connection between them: four redstone lines, one bit each, from the adder’s four `Sum` outputs to the decoder’s four inputs.
 
-<div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/05_integration-bug-aerial_minecraft.png" alt="The adder wired to the display, from above" width="512px"/><br/><em>Figure: The whole integration from above, adder on the right, display system on the left. Everything here is something you already built except the four wires carrying the Sum bits across the gap into the decoder.</em></div><br/>
+<div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/05_integration-bug-aerial_minecraft.png" alt="The adder wired to the display, from above" width="512px"/><br/><em>Figure: The whole integration from above, the four adder slices along the bottom and the display system at the top. Everything here is something you already built except the four wires carrying the Sum bits up the middle into the decoder.</em></div><br/>
 
 1.  Wire the adder’s 4-bit `Sum` bus into the input of your display decoder.
 2.  Try a case that stays inside the decimal range we already support:
