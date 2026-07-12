@@ -1,41 +1,39 @@
 ## Part I: The Foundations – Laying the Groundwork
 
-Welcome to Part I of our journey to build a working computer from scratch! Every masterpiece starts with a strong foundation. In this part, we’re going to master the fundamental tools, concepts, and components that will allow us to communicate with our digital creation.
-
-By the end of Part I, our computer won’t be thinking on its own yet, but we will have a complete input and output system. You’ll be able to give it a number in its native language, and it will translate that number back into a format you can instantly understand. This is where the magic begins!
+Part I builds the two things every computer needs before it can do anything interesting: a way for you to talk to it, and a way for it to talk back. By the end, you'll set a number on levers in binary and watch a display you wired yourself answer in a digit you can actually read. The machine won't think yet. It will just listen and answer, and getting that far feels better than it has any right to.
 
 **Edition parity**
 All builds in Part I are cross‑edition (**Bedrock + Java**) as written.
 
 ### Our Mission for Part I
 
-To build this foundation, we'll progress through five modules and two optional interludes. This structured path combines essential theory with practical labs, culminating in a single, fully-functional system:
+Five modules and two optional interludes, each ending in something that works:
 
 -   **Module 0 (Optional Prelude): The Redstone Toolkit**
-    Learn the absolute essentials of Redstone. We'll cover the core components and the rules of power that govern every circuit we'll ever build.
+    The essentials: the components we'll use constantly and the rules of power that govern every circuit in this course.
 
 -   **Module 1: The 4-Bit Input Interface**
-    Build a manual input interface, a simple set of levers to input numbers in binary, the machine’s native language.
+    Build a manual input interface, a simple set of levers to input numbers in binary, the machine's native language.
 
 -   **Module 2: The Grammar of Circuits – Foundational Logic Gates**
-    Take the first crucial step into theory by building the three "verbs" of logic: NOT, OR, and AND.
+    Our first step into theory: build the three "verbs" of logic, NOT, OR, and AND.
 
 -   **Module 3: The Art of Logic – Simplification and Special Gates**
-    Level up from a builder to an architect. Learn to optimize circuits with the laws of logic and expand your toolkit with advanced gates like XOR, NAND, and NOR.
+    Simplify circuits with the laws of logic and round out the toolkit with XOR, NAND, and NOR.
 
 -   **Interlude I (Optional): The Art of Compact Design**
-    Bridge the gap between building for clarity and building for efficiency with a short but powerful lesson on Redstone engineering best practices.
+    A short lesson on building small without losing readability, or your mind.
 
 -   **Module 4: Decoders and Digital Displays**
-    Apply your new skills to a major challenge: creating a two-stage translator that converts binary into human-readable numbers on a stunning 7-segment display.
+    The first real engineering project: a two-stage translator that turns binary into a digit on a 7-segment display.
 
 -   **Interlude II (Optional): The Power of Abstraction in Practice**
-    Learn how to package complex circuits into simple "black boxes" using the subcircuit feature in CircuitVerse, a key skill for managing large-scale designs.
+    Package complex circuits into simple "black boxes" in CircuitVerse. This is how the big builds later stay manageable.
 
-This part is crafted to deliver a thrilling payoff. You’ll start with basic switches and end with a device that feels alive. These concepts are the bedrock (pun intended) for everything to come.
+You start with a handful of levers and end with a device that answers you. These concepts are the bedrock (pun intended) for everything to come.
 
 ### Why This Progression?
 
-I’ve designed this course to build confidence step-by-step. It's frustrating to try and build something complex if you don't first understand the tools (Module 0) or the language (Module 1). The faster you see something working, the more driven you’ll be to push forward. Part I is all about giving you that tangible progress and a powerful sense of accomplishment as you complete your first fully-functional system.
+Because nothing kills momentum like building something complex on tools you don't understand yet. Module 0 hands you the tools, Module 1 the language, and from there every module ends with a working circuit you can flip a lever on. The faster you see something do its job, the more you'll want to build the next one.
 
-The first step on this journey is to master our tools. Let's begin in the Redstone Toolkit.
+First, the tools. Let's begin in the Redstone Toolkit.
