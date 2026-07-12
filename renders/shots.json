@@ -1,908 +1,913 @@
 {
-  "_defaults": {
-    "views": [
-      "iso",
-      "top"
-    ],
-    "azimuth": 135,
-    "swap": "white_wool=white_concrete",
-    "technical": "schematic",
-    "transparent": true,
-    "height_tint": 0.9,
-    "projection": "tele",
-    "ground": "remove",
-    "hide": "oak_fence,oak_planks"
-  },
-  "00_icon-solid-block": {
-    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
-    "bounds": [
-      62,
-      -64,
-      -459,
-      64,
-      320,
-      -458
-    ],
-    "views": [
-      "iso"
-    ],
-    "ground": "remove"
-  },
-  "00_icon-redstone-repeater": {
-    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
-    "bounds": [
-      70,
-      -64,
-      -459,
-      72,
-      320,
-      -458
-    ],
-    "views": [
-      "iso"
-    ],
-    "ground": "keep",
-    "hide": "white_wool,white_concrete,cobblestone,smooth_stone,lime_concrete"
-  },
-  "00_icon-redstone-comparator": {
-    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
-    "bounds": [
-      74,
-      -64,
-      -459,
-      76,
-      320,
-      -458
-    ],
-    "views": [
-      "iso"
-    ],
-    "ground": "keep",
-    "hide": "white_wool,white_concrete,cobblestone,smooth_stone,lime_concrete"
-  },
-  "00_icon-redstone-lamp": {
-    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
-    "bounds": [
-      78,
-      -64,
-      -459,
-      80,
-      320,
-      -458
-    ],
-    "views": [
-      "iso"
-    ],
-    "ground": "keep",
-    "hide": "white_wool,white_concrete,cobblestone,smooth_stone,lime_concrete,redstone_torch,redstone_block,redstone_wire"
-  },
-  "00_icon-lever": {
-    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
-    "bounds": [
-      82,
-      -64,
-      -459,
-      84,
-      320,
-      -458
-    ],
-    "views": [
-      "iso"
-    ],
-    "ground": "remove"
-  },
-  "00_icon-redstone-torch": {
-    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
-    "bounds": [
-      86,
-      -64,
-      -459,
-      88,
-      320,
-      -458
-    ],
-    "views": [
-      "iso"
-    ],
-    "ground": "keep",
-    "hide": "white_wool,white_concrete,cobblestone,smooth_stone,lime_concrete"
-  },
-  "00_icon-redstone-dust": {
-    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
-    "bounds": [
-      90,
-      -64,
-      -459,
-      92,
-      320,
-      -458
-    ],
-    "views": [
-      "iso"
-    ],
-    "ground": "remove"
-  },
-  "00_basic-circuit": {
-    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
-    "bounds": [
-      73,
-      -64,
-      -450,
-      73,
-      320,
-      -444
-    ],
-    "place": {
-      "iso": "src/Part-I--Foundations/00_Prelude-The-Redstone-Toolkit/images/basic-circuit_minecraft.png"
-    }
-  },
-  "00_strongly-powered-block": {
-    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
-    "bounds": [
-      82,
-      -64,
-      -449,
-      84,
-      320,
-      -447
-    ],
-    "place": {
-      "iso": "src/Part-I--Foundations/00_Prelude-The-Redstone-Toolkit/images/strongly-powered-block_minecraft.png"
-    }
-  },
-  "00_weakly-powered-block": {
-    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
-    "bounds": [
-      90,
-      -64,
-      -449,
-      92,
-      320,
-      -446
-    ],
-    "place": {
-      "iso": "src/Part-I--Foundations/00_Prelude-The-Redstone-Toolkit/images/weakly-powered-block_minecraft.png"
-    }
-  },
-  "01_input": {
-    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
-    "bounds": [
-      85,
-      -64,
-      -490,
-      91,
-      320,
-      -487
-    ],
-    "place": {
-      "iso": "src/Part-I--Foundations/01_Input-Register/images/input_minecraft.png"
-    }
-  },
-  "02_AND-gate-composite": {
-    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
-    "bounds": [
-      50,
-      -64,
-      -490,
-      52,
-      320,
-      -483
-    ],
-    "place": {
-      "iso": "src/Part-I--Foundations/02_The-Grammar-of-Circuits/images/AND-gate-composite_minecraft.png"
-    }
-  },
-  "02_NOT-gate": {
-    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
-    "bounds": [
-      74,
-      -64,
-      -490,
-      74,
-      320,
-      -482
-    ],
-    "place": {
-      "iso": "src/Part-I--Foundations/02_The-Grammar-of-Circuits/images/NOT-gate_minecraft.png"
-    }
-  },
-  "02_OR_gate": {
-    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
-    "bounds": [
-      62,
-      -64,
-      -490,
-      64,
-      320,
-      -482
-    ],
-    "place": {
-      "iso": "src/Part-I--Foundations/02_The-Grammar-of-Circuits/images/OR_gate_minecraft.png"
-    }
-  },
-  "03_NAND-gate-composite": {
-    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
-    "bounds": [
-      -75,
-      -64,
-      -491,
-      -73,
-      320,
-      -484
-    ],
-    "place": {
-      "iso": "src/Part-I--Foundations/03_The-Art-of-Logic/images/NAND-gate-composite_minecraft.png"
-    }
-  },
-  "03_XNOR-gate-composite": {
-    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
-    "bounds": [
-      -62,
-      -64,
-      -492,
-      -56,
-      320,
-      -477
-    ],
-    "place": {
-      "iso": "src/Part-I--Foundations/03_The-Art-of-Logic/images/XNOR-gate-composite_minecraft.png"
-    }
-  },
-  "03_XOR-gate-composite": {
-    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
-    "bounds": [
-      25,
-      -64,
-      -490,
-      31,
-      320,
-      -476
-    ],
-    "place": {
-      "iso": "src/Part-I--Foundations/03_The-Art-of-Logic/images/XOR-gate-composite_minecraft.png"
-    }
-  },
-  "03b_AND-gate": {
-    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
-    "bounds": [
-      38,
-      -64,
-      -490,
-      40,
-      320,
-      -485
-    ],
-    "place": {
-      "iso": "src/Part-I--Foundations/03b_Interlude-Compact-Design-final/images/AND-gate_minecraft.png"
-    }
-  },
-  "03b_AND-gate-composite": {
-    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
-    "bounds": [
-      15,
-      -64,
-      -490,
-      17,
-      320,
-      -482
-    ],
-    "place": {
-      "iso": "src/Part-I--Foundations/03b_Interlude-Compact-Design-final/images/AND-gate-composite_minecraft.png"
-    }
-  },
-  "03b_XOR-gate": {
-    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
-    "bounds": [
-      -22,
-      -64,
-      -490,
-      -20,
-      320,
-      -481
-    ],
-    "place": {
-      "iso": "src/Part-I--Foundations/03b_Interlude-Compact-Design-final/images/XOR-gate_minecraft.png"
-    }
-  },
-  "04_10-to-7-rom-L9": {
-    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
-    "bounds": [
-      -257,
-      -64,
-      -480,
-      -240,
-      320,
-      -479
-    ],
-    "views": [
-      "iso",
-      "top"
-    ],
-    "projection": "tele",
-    "azimuth": 150,
-    "place": {
-      "iso": "src/Part-I--Foundations/04_Decoders-and-Displays/images/10-to-7-rom-L9_minecraft.png"
-    }
-  },
-  "04_2-to-4-decoder-1": {
-    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
-    "bounds": [
-      30,
-      -64,
-      -471,
-      36,
-      320,
-      -462
-    ],
-    "place": {
-      "iso": "src/Part-I--Foundations/04_Decoders-and-Displays/images/2-to-4-decoder-1_minecraft.png"
-    }
-  },
-  "04_2-to-4-decoder-2": {
-    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
-    "bounds": [
-      5,
-      -64,
-      -471,
-      19,
-      320,
-      -462
-    ],
-    "place": {
-      "top": "src/Part-I--Foundations/04_Decoders-and-Displays/images/2-to-4-decoder-2-aerial_minecraft.png",
-      "iso": "src/Part-I--Foundations/04_Decoders-and-Displays/images/2-to-4-decoder-2_minecraft.png"
-    }
-  },
-  "04_2-to-4-decoder-3": {
-    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
-    "bounds": [
-      -20,
-      -64,
-      -471,
-      -6,
-      320,
-      -451
-    ],
-    "place": {
-      "iso": "src/Part-I--Foundations/04_Decoders-and-Displays/images/2-to-4-decoder-3_minecraft.png",
-      "top": "src/Part-I--Foundations/04_Decoders-and-Displays/images/2-to-4-decoder-3-aerial_minecraft.png"
-    }
-  },
-  "04_4-to-10-decoder-compact-1": {
-    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
-    "bounds": [
-      -95,
-      -64,
-      -478,
-      -86,
-      320,
-      -460
-    ],
-    "place": {
-      "iso": "src/Part-I--Foundations/04_Decoders-and-Displays/images/4-to-10-decoder-compact-1_minecraft.png"
-    }
-  },
-  "04_4-to-10-decoder-compact-2": {
-    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
-    "bounds": [
-      -114,
-      -64,
-      -488,
-      -105,
-      320,
-      -459
-    ],
-    "place": {
-      "iso": "src/Part-I--Foundations/04_Decoders-and-Displays/images/4-to-10-decoder-compact-2_minecraft.png"
-    }
-  },
-  "04_4-to-10-decoder-compact-3": {
-    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
-    "bounds": [
-      -134,
-      -64,
-      -488,
-      -125,
-      320,
-      -459
-    ],
-    "place": {
-      "iso": "src/Part-I--Foundations/04_Decoders-and-Displays/images/4-to-10-decoder-compact-3_minecraft.png"
-    }
-  },
-  "04_4-to-10-decoder-compact-complete": {
-    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
-    "bounds": [
-      -173,
-      -64,
-      -489,
-      -164,
-      320,
-      -459
-    ],
-    "views": [
-      "iso",
-      "top"
-    ],
-    "projection": "tele",
-    "azimuth": 150,
-    "place": {
-      "iso": "src/Part-I--Foundations/04_Decoders-and-Displays/images/4-to-10-decoder-compact-complete_minecraft.png",
-      "top": "src/Part-I--Foundations/04_Decoders-and-Displays/images/4-to-10-decoder-compact-complete-aerial_minecraft.png"
-    }
-  },
-  "7-segment-a": {
-    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
-    "bounds": [
-      86,
-      -64,
-      -471,
-      90,
-      320,
-      -471
-    ],
-    "views": [
-      "iso"
-    ]
-  },
-  "7-segment-b": {
-    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
-    "bounds": [
-      71,
-      -64,
-      -471,
-      77,
-      320,
-      -471
-    ],
-    "views": [
-      "iso"
-    ]
-  },
-  "7-segment-c": {
-    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
-    "bounds": [
-      55,
-      -64,
-      -474,
-      61,
-      320,
-      -471
-    ],
-    "views": [
-      "iso"
-    ]
-  },
-  "7-segment-d": {
-    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
-    "bounds": [
-      46,
-      -64,
-      -474,
-      46,
-      320,
-      -471
-    ],
-    "views": [
-      "iso"
-    ]
-  },
-  "04_10-to-7-rom-1": {
-    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
-    "bounds": [
-      -197,
-      -64,
-      -480,
-      -185,
-      320,
-      -460
-    ],
-    "place": {
-      "iso": "src/Part-I--Foundations/04_Decoders-and-Displays/images/10-to-7-rom-1_minecraft.png"
-    }
-  },
-  "04_10-to-7-rom-2": {
-    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
-    "bounds": [
-      -229,
-      -64,
-      -480,
-      -212,
-      320,
-      -460
-    ],
-    "place": {
-      "iso": "src/Part-I--Foundations/04_Decoders-and-Displays/images/10-to-7-rom-2_minecraft.png"
-    }
-  },
-  "04_10-to-7-rom-complete": {
-    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
-    "bounds": [
-      -287,
-      -64,
-      -480,
-      -269,
-      320,
-      -460
-    ],
-    "place": {
-      "iso": "src/Part-I--Foundations/04_Decoders-and-Displays/images/10-to-7-rom-complete_minecraft.png",
-      "top": "src/Part-I--Foundations/04_Decoders-and-Displays/images/10-to-7-rom-complete-aerial_minecraft.png"
-    }
-  },
-  "04_4-to-10-decoder-L3": {
-    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
-    "bounds": [
-      -153,
-      -64,
-      -459,
-      -144,
-      320,
-      -457
-    ],
-    "place": {
-      "iso": "src/Part-I--Foundations/04_Decoders-and-Displays/images/4-to-10-decoder-L3_minecraft.png"
-    }
-  },
-  "04_4-to-10-decoder-L3-test": {
-    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
-    "bounds": [
-      -153,
-      -64,
-      -475,
-      -144,
-      320,
-      -472
-    ],
-    "place": {
-      "iso": "src/Part-I--Foundations/04_Decoders-and-Displays/images/4-to-10-decoder-L3-test_minecraft.png"
-    }
-  },
-  "03_NOR-gate": {
-    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
-    "bounds": [
-      15,
-      -64,
-      -490,
-      17,
-      320,
-      -482
-    ],
-    "views": [
-      "iso"
-    ],
-    "place": {
-      "iso": "src/Part-I--Foundations/03_The-Art-of-Logic/images/NOR-gate_minecraft.png"
-    }
-  },
-  "04_complete-digital-display": {
-    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
-    "bounds": [
-      -321,
-      -64,
-      -489,
-      -296,
-      320,
-      -459
-    ],
-    "views": [
-      "iso",
-      "top"
-    ],
-    "projection": "tele",
-    "azimuth": 150,
-    "place": {
-      "top": "src/Part-I--Foundations/04_Decoders-and-Displays/images/complete-digital-display-aerial_minecraft.png",
-      "iso": "src/Part-I--Foundations/04_Decoders-and-Displays/images/complete-digital-display_minecraft.png"
-    },
-    "tint": "blue_wool=aecf9c,gray_wool=e4b0ab,cyan_wool=a8c4d6,black_concrete=f5f1ea,white_wool=f5f1ea,smooth_stone=f5f1ea,cobblestone=f5f1ea",
-    "height_tint": 0.85
-  },
-  "05_full-adder": {
-    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
-    "bounds": [
-      -347,
-      56,
-      -489,
-      -330,
-      60,
-      -467
-    ],
-    "views": [
-      "iso",
-      "top"
-    ],
-    "ground": "keep",
-    "azimuth": 135,
-    "top_azimuth": 180,
-    "place": {
-      "iso": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/full-adder_minecraft.png",
-      "top": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/full-adder-aerial_minecraft.png"
-    },
-    "band_offset": 1
-  },
-  "05_hex-display": {
-    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
-    "bounds": [
-      -403,
-      56,
-      -546,
-      -377,
-      69,
-      -501
-    ],
-    "views": [
-      "iso",
-      "top"
-    ],
-    "ground": "crop",
-    "place": {
-      "top": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/hex-display-aerial_minecraft.png",
-      "iso": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/hex-display_minecraft.png"
-    },
-    "height_tint": 0.85,
-    "tint": "light_blue_wool=7fb264,light_blue_concrete=7fb264,blue_wool=aecf9c,blue_concrete=aecf9c,light_gray_wool=c47a72,light_gray_concrete=c47a72,gray_wool=e4b0ab,gray_concrete=e4b0ab,cyan_wool=a8c4d6,black_concrete=f5f1ea,white_wool=f5f1ea",
-    "swap": "",
-    "legend": {
-      "Decoder": "aecf9c",
-      "Decoder extension": "7fb264",
-      "ROM": "e4b0ab",
-      "ROM extension": "c47a72",
-      "Driver": "a8c4d6"
-    }
-  },
-  "05_hex-display-digit": {
-    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
-    "bounds": [
-      -50,
-      55,
-      -136,
-      -12,
-      72,
-      -100
-    ],
-    "views": [
-      "iso"
-    ],
-    "ground": "crop",
-    "azimuth": 315
-  },
-  "05_4-bit-rca": {
-    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
-    "bounds": [
-      -417,
-      56,
-      -489,
-      -352,
-      60,
-      -467
-    ],
-    "views": [
-      "iso",
-      "top"
-    ],
-    "ground": "crop",
-    "azimuth": 315,
-    "top_azimuth": 180,
-    "res": "3600x1310",
-    "height_tint": 0.85,
-    "tint": "yellow_wool=f2d489,orange_wool=f2d489,white_wool=f2d489,yellow_concrete=c7c0b6,orange_concrete=c7c0b6,white_concrete=c7c0b6,smooth_stone=f5f1ea,cobblestone=f5f1ea",
-    "swap": "",
-    "place": {
-      "top": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/4-bit-rca-aerial_minecraft.png"
-    },
-    "legend": {
-      "Full adder": "f2d489",
-      "Repeated slice": "c7c0b6"
-    }
-  },
-  "03b_XOR-gate-composite": {
-    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
-    "bounds": [
-      23,
-      55,
-      -490,
-      33,
-      61,
-      -474
-    ],
-    "views": [
-      "iso"
-    ],
-    "ground": "crop",
-    "place": {
-      "iso": "src/Part-I--Foundations/03b_Interlude-Compact-Design-final/images/XOR-gate-composite_minecraft.png"
-    }
-  },
-  "7seg-8": {
-    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
-    "bounds": [
-      124,
-      56,
-      -480,
-      146,
-      74,
-      -476
-    ],
-    "views": [
-      "iso"
-    ],
-    "ground": "remove",
-    "tint": "black_concrete=f5f1ea"
-  },
-  "7seg-wall": {
-    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
-    "bounds": [
-      124,
-      55,
-      -473,
-      146,
-      74,
-      -469
-    ],
-    "views": [
-      "iso"
-    ],
-    "ground": "remove",
-    "tint": "black_concrete=f5f1ea,pink=f5f1ea,orange=f5f1ea,terracotta=f5f1ea,magenta=f5f1ea",
-    "height_tint": 0,
-    "azimuth": 315,
-    "projection": "ortho"
-  },
-  "7seg-lit": {
-    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
-    "bounds": [
-      124,
-      56,
-      -467,
-      140,
-      74,
-      -461
-    ],
-    "views": [
-      "iso"
-    ],
-    "ground": "remove",
-    "tint": "light_blue_wool=ccdbe5,lime_wool=d1e3c7,black_concrete=f5f1ea",
-    "azimuth": 315,
-    "projection": "ortho",
-    "height_tint": 0
-  },
-  "7seg-closeup": {
-    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
-    "bounds": [
-      139,
-      55,
-      -464,
-      144,
-      62,
-      -457
-    ],
-    "views": [
-      "iso"
-    ],
-    "ground": "remove",
-    "tint": "light_blue_wool=ccdbe5,lime_wool=d1e3c7,black_concrete=f5f1ea",
-    "azimuth": 315,
-    "projection": "ortho",
-    "height_tint": 0
-  },
-  "05_integration-bug": {
-    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
-    "bounds": [
-      -405,
-      56,
-      -457,
-      -342,
-      68,
-      -390
-    ],
-    "views": [
-      "iso",
-      "top"
-    ],
-    "ground": "crop",
-    "azimuth": 225,
-    "place": {
-      "iso": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/integration-bug_minecraft.png",
-      "top": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/integration-bug-aerial_minecraft.png"
-    },
-    "height_tint": 0.85,
-    "tint": "yellow_concrete=f2d489,orange_concrete=f2d489,white_concrete=f2d489,blue_wool=aecf9c,gray_wool=e4b0ab,cyan_wool=a8c4d6,black_concrete=f5f1ea,white_wool=f5f1ea,smooth_stone=f5f1ea,cobblestone=f5f1ea",
-    "swap": "",
-    "legend": {
-      "Adder": "f2d489",
-      "Decoder": "aecf9c",
-      "ROM": "e4b0ab",
-      "Display driver": "a8c4d6"
-    },
-    "top_azimuth": 180,
-    "top_res": "1620x1900"
-  },
-  "05_4-to-16-decoder": {
-    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
-    "bounds": [
-      -366,
-      56,
-      -547,
-      -357,
-      61,
-      -501
-    ],
-    "views": [
-      "iso",
-      "top"
-    ],
-    "ground": "crop",
-    "height_tint": 0.85,
-    "top_res": "3600x800",
-    "tint": "light_blue_wool=7fb264,light_blue_concrete=7fb264,blue_wool=aecf9c,blue_concrete=aecf9c,white_wool=f5f1ea",
-    "swap": "",
-    "legend": {
-      "Original decoder": "aecf9c",
-      "Hex extension": "7fb264"
-    },
-    "place": {
-      "iso": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/4-to-16-decoder_minecraft.png",
-      "top": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/4-to-16-decoder-aerial_minecraft.png"
-    }
-  },
-  "05_hex-rom": {
-    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
-    "bounds": [
-      -349,
-      56,
-      -547,
-      -332,
-      63,
-      -512
-    ],
-    "views": [
-      "iso",
-      "top"
-    ],
-    "ground": "crop",
-    "height_tint": 0.85,
-    "tint": "light_gray_wool=c47a72,light_gray_concrete=c47a72,gray_wool=e4b0ab,gray_concrete=e4b0ab,white_wool=f5f1ea",
-    "swap": "",
-    "legend": {
-      "Original ROM": "e4b0ab",
-      "Hex extension": "c47a72"
-    },
-    "place": {
-      "iso": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/hex-rom_minecraft.png",
-      "top": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/hex-rom-aerial_minecraft.png"
-    }
-  },
-  "05_rca-hex-display": {
-    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
-    "bounds": [
-      -478,
-      56,
-      -457,
-      -415,
-      68,
-      -374
-    ],
-    "views": [
-      "iso",
-      "top"
-    ],
-    "ground": "crop",
-    "height_tint": 0.85,
-    "tint": "yellow_concrete=f2d489,orange_concrete=f2d489,white_concrete=f2d489,light_blue_wool=7fb264,light_blue_concrete=7fb264,blue_wool=aecf9c,blue_concrete=aecf9c,light_gray_wool=c47a72,light_gray_concrete=c47a72,gray_wool=e4b0ab,gray_concrete=e4b0ab,cyan_wool=a8c4d6,black_concrete=f5f1ea,white_wool=f5f1ea",
-    "swap": "",
-    "legend": {
-      "Adder": "f2d489",
-      "Decoder": "aecf9c",
-      "Decoder extension": "7fb264",
-      "ROM": "e4b0ab",
-      "ROM extension": "c47a72",
-      "Driver": "a8c4d6"
-    },
-    "place": {
-      "iso": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/rca-hex-display_minecraft.png",
-      "top": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/rca-hex-display-aerial_minecraft.png"
-    }
+ "_defaults": {
+  "views": [
+   "iso",
+   "top"
+  ],
+  "azimuth": 135,
+  "swap": "white_wool=white_concrete",
+  "technical": "schematic",
+  "transparent": true,
+  "height_tint": 0.9,
+  "projection": "tele",
+  "ground": "remove",
+  "hide": "oak_fence,oak_planks"
+ },
+ "00_icon-solid-block": {
+  "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+  "bounds": [
+   62,
+   -64,
+   -459,
+   64,
+   320,
+   -458
+  ],
+  "views": [
+   "iso"
+  ],
+  "ground": "remove"
+ },
+ "00_icon-redstone-repeater": {
+  "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+  "bounds": [
+   70,
+   -64,
+   -459,
+   72,
+   320,
+   -458
+  ],
+  "views": [
+   "iso"
+  ],
+  "ground": "keep",
+  "hide": "white_wool,white_concrete,cobblestone,smooth_stone,lime_concrete"
+ },
+ "00_icon-redstone-comparator": {
+  "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+  "bounds": [
+   74,
+   -64,
+   -459,
+   76,
+   320,
+   -458
+  ],
+  "views": [
+   "iso"
+  ],
+  "ground": "keep",
+  "hide": "white_wool,white_concrete,cobblestone,smooth_stone,lime_concrete"
+ },
+ "00_icon-redstone-lamp": {
+  "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+  "bounds": [
+   78,
+   -64,
+   -459,
+   80,
+   320,
+   -458
+  ],
+  "views": [
+   "iso"
+  ],
+  "ground": "keep",
+  "hide": "white_wool,white_concrete,cobblestone,smooth_stone,lime_concrete,redstone_torch,redstone_block,redstone_wire"
+ },
+ "00_icon-lever": {
+  "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+  "bounds": [
+   82,
+   -64,
+   -459,
+   84,
+   320,
+   -458
+  ],
+  "views": [
+   "iso"
+  ],
+  "ground": "remove"
+ },
+ "00_icon-redstone-torch": {
+  "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+  "bounds": [
+   86,
+   -64,
+   -459,
+   88,
+   320,
+   -458
+  ],
+  "views": [
+   "iso"
+  ],
+  "ground": "keep",
+  "hide": "white_wool,white_concrete,cobblestone,smooth_stone,lime_concrete"
+ },
+ "00_icon-redstone-dust": {
+  "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+  "bounds": [
+   90,
+   -64,
+   -459,
+   92,
+   320,
+   -458
+  ],
+  "views": [
+   "iso"
+  ],
+  "ground": "remove"
+ },
+ "00_basic-circuit": {
+  "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+  "bounds": [
+   73,
+   -64,
+   -450,
+   73,
+   320,
+   -444
+  ],
+  "place": {
+   "iso": "src/Part-I--Foundations/00_Prelude-The-Redstone-Toolkit/images/basic-circuit_minecraft.png"
   }
+ },
+ "00_strongly-powered-block": {
+  "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+  "bounds": [
+   82,
+   -64,
+   -449,
+   84,
+   320,
+   -447
+  ],
+  "place": {
+   "iso": "src/Part-I--Foundations/00_Prelude-The-Redstone-Toolkit/images/strongly-powered-block_minecraft.png"
+  }
+ },
+ "00_weakly-powered-block": {
+  "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+  "bounds": [
+   90,
+   -64,
+   -449,
+   92,
+   320,
+   -446
+  ],
+  "place": {
+   "iso": "src/Part-I--Foundations/00_Prelude-The-Redstone-Toolkit/images/weakly-powered-block_minecraft.png"
+  }
+ },
+ "01_input": {
+  "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+  "bounds": [
+   85,
+   -64,
+   -490,
+   91,
+   320,
+   -487
+  ],
+  "place": {
+   "iso": "src/Part-I--Foundations/01_Input-Register/images/input_minecraft.png"
+  }
+ },
+ "02_AND-gate-composite": {
+  "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+  "bounds": [
+   50,
+   -64,
+   -490,
+   52,
+   320,
+   -483
+  ],
+  "place": {
+   "iso": "src/Part-I--Foundations/02_The-Grammar-of-Circuits/images/AND-gate-composite_minecraft.png"
+  }
+ },
+ "02_NOT-gate": {
+  "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+  "bounds": [
+   74,
+   -64,
+   -490,
+   74,
+   320,
+   -482
+  ],
+  "place": {
+   "iso": "src/Part-I--Foundations/02_The-Grammar-of-Circuits/images/NOT-gate_minecraft.png"
+  }
+ },
+ "02_OR_gate": {
+  "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+  "bounds": [
+   62,
+   -64,
+   -490,
+   64,
+   320,
+   -482
+  ],
+  "place": {
+   "iso": "src/Part-I--Foundations/02_The-Grammar-of-Circuits/images/OR_gate_minecraft.png"
+  }
+ },
+ "03_NAND-gate-composite": {
+  "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+  "bounds": [
+   -75,
+   -64,
+   -491,
+   -73,
+   320,
+   -484
+  ],
+  "place": {
+   "iso": "src/Part-I--Foundations/03_The-Art-of-Logic/images/NAND-gate-composite_minecraft.png"
+  }
+ },
+ "03_XNOR-gate-composite": {
+  "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+  "bounds": [
+   -62,
+   -64,
+   -492,
+   -56,
+   320,
+   -477
+  ],
+  "place": {
+   "iso": "src/Part-I--Foundations/03_The-Art-of-Logic/images/XNOR-gate-composite_minecraft.png"
+  }
+ },
+ "03_XOR-gate-composite": {
+  "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+  "bounds": [
+   25,
+   -64,
+   -490,
+   31,
+   320,
+   -476
+  ],
+  "place": {
+   "iso": "src/Part-I--Foundations/03_The-Art-of-Logic/images/XOR-gate-composite_minecraft.png"
+  }
+ },
+ "03b_AND-gate": {
+  "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+  "bounds": [
+   38,
+   -64,
+   -490,
+   40,
+   320,
+   -485
+  ],
+  "place": {
+   "iso": "src/Part-I--Foundations/03b_Interlude-Compact-Design-final/images/AND-gate_minecraft.png"
+  }
+ },
+ "03b_AND-gate-composite": {
+  "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+  "bounds": [
+   15,
+   -64,
+   -490,
+   17,
+   320,
+   -482
+  ],
+  "place": {
+   "iso": "src/Part-I--Foundations/03b_Interlude-Compact-Design-final/images/AND-gate-composite_minecraft.png"
+  }
+ },
+ "03b_XOR-gate": {
+  "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+  "bounds": [
+   -22,
+   -64,
+   -490,
+   -20,
+   320,
+   -481
+  ],
+  "place": {
+   "iso": "src/Part-I--Foundations/03b_Interlude-Compact-Design-final/images/XOR-gate_minecraft.png"
+  }
+ },
+ "04_10-to-7-rom-L9": {
+  "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+  "bounds": [
+   -257,
+   -64,
+   -480,
+   -240,
+   320,
+   -479
+  ],
+  "views": [
+   "iso",
+   "top"
+  ],
+  "projection": "tele",
+  "azimuth": 150,
+  "place": {
+   "iso": "src/Part-I--Foundations/04_Decoders-and-Displays/images/10-to-7-rom-L9_minecraft.png"
+  }
+ },
+ "04_2-to-4-decoder-1": {
+  "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+  "bounds": [
+   30,
+   -64,
+   -471,
+   36,
+   320,
+   -462
+  ],
+  "place": {
+   "iso": "src/Part-I--Foundations/04_Decoders-and-Displays/images/2-to-4-decoder-1_minecraft.png"
+  }
+ },
+ "04_2-to-4-decoder-2": {
+  "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+  "bounds": [
+   5,
+   -64,
+   -471,
+   19,
+   320,
+   -462
+  ],
+  "place": {
+   "top": "src/Part-I--Foundations/04_Decoders-and-Displays/images/2-to-4-decoder-2-aerial_minecraft.png",
+   "iso": "src/Part-I--Foundations/04_Decoders-and-Displays/images/2-to-4-decoder-2_minecraft.png"
+  }
+ },
+ "04_2-to-4-decoder-3": {
+  "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+  "bounds": [
+   -20,
+   -64,
+   -471,
+   -6,
+   320,
+   -451
+  ],
+  "place": {
+   "iso": "src/Part-I--Foundations/04_Decoders-and-Displays/images/2-to-4-decoder-3_minecraft.png",
+   "top": "src/Part-I--Foundations/04_Decoders-and-Displays/images/2-to-4-decoder-3-aerial_minecraft.png"
+  }
+ },
+ "04_4-to-10-decoder-compact-1": {
+  "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+  "bounds": [
+   -95,
+   -64,
+   -478,
+   -86,
+   320,
+   -460
+  ],
+  "place": {
+   "iso": "src/Part-I--Foundations/04_Decoders-and-Displays/images/4-to-10-decoder-compact-1_minecraft.png"
+  }
+ },
+ "04_4-to-10-decoder-compact-2": {
+  "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+  "bounds": [
+   -114,
+   -64,
+   -488,
+   -105,
+   320,
+   -459
+  ],
+  "place": {
+   "iso": "src/Part-I--Foundations/04_Decoders-and-Displays/images/4-to-10-decoder-compact-2_minecraft.png"
+  }
+ },
+ "04_4-to-10-decoder-compact-3": {
+  "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+  "bounds": [
+   -134,
+   -64,
+   -488,
+   -125,
+   320,
+   -459
+  ],
+  "place": {
+   "iso": "src/Part-I--Foundations/04_Decoders-and-Displays/images/4-to-10-decoder-compact-3_minecraft.png"
+  }
+ },
+ "04_4-to-10-decoder-compact-complete": {
+  "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+  "bounds": [
+   -173,
+   -64,
+   -489,
+   -164,
+   320,
+   -459
+  ],
+  "views": [
+   "iso",
+   "top"
+  ],
+  "projection": "tele",
+  "azimuth": 150,
+  "place": {
+   "iso": "src/Part-I--Foundations/04_Decoders-and-Displays/images/4-to-10-decoder-compact-complete_minecraft.png",
+   "top": "src/Part-I--Foundations/04_Decoders-and-Displays/images/4-to-10-decoder-compact-complete-aerial_minecraft.png"
+  }
+ },
+ "7-segment-a": {
+  "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+  "bounds": [
+   86,
+   -64,
+   -471,
+   90,
+   320,
+   -471
+  ],
+  "views": [
+   "iso"
+  ]
+ },
+ "7-segment-b": {
+  "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+  "bounds": [
+   71,
+   -64,
+   -471,
+   77,
+   320,
+   -471
+  ],
+  "views": [
+   "iso"
+  ]
+ },
+ "7-segment-c": {
+  "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+  "bounds": [
+   55,
+   -64,
+   -474,
+   61,
+   320,
+   -471
+  ],
+  "views": [
+   "iso"
+  ]
+ },
+ "7-segment-d": {
+  "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+  "bounds": [
+   46,
+   -64,
+   -474,
+   46,
+   320,
+   -471
+  ],
+  "views": [
+   "iso"
+  ]
+ },
+ "04_10-to-7-rom-1": {
+  "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+  "bounds": [
+   -197,
+   -64,
+   -480,
+   -185,
+   320,
+   -460
+  ],
+  "place": {
+   "iso": "src/Part-I--Foundations/04_Decoders-and-Displays/images/10-to-7-rom-1_minecraft.png"
+  }
+ },
+ "04_10-to-7-rom-2": {
+  "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+  "bounds": [
+   -229,
+   -64,
+   -480,
+   -212,
+   320,
+   -460
+  ],
+  "place": {
+   "iso": "src/Part-I--Foundations/04_Decoders-and-Displays/images/10-to-7-rom-2_minecraft.png"
+  }
+ },
+ "04_10-to-7-rom-complete": {
+  "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+  "bounds": [
+   -287,
+   -64,
+   -480,
+   -269,
+   320,
+   -460
+  ],
+  "place": {
+   "iso": "src/Part-I--Foundations/04_Decoders-and-Displays/images/10-to-7-rom-complete_minecraft.png",
+   "top": "src/Part-I--Foundations/04_Decoders-and-Displays/images/10-to-7-rom-complete-aerial_minecraft.png"
+  }
+ },
+ "04_4-to-10-decoder-L3": {
+  "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+  "bounds": [
+   -153,
+   -64,
+   -459,
+   -144,
+   320,
+   -457
+  ],
+  "place": {
+   "iso": "src/Part-I--Foundations/04_Decoders-and-Displays/images/4-to-10-decoder-L3_minecraft.png"
+  }
+ },
+ "04_4-to-10-decoder-L3-test": {
+  "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+  "bounds": [
+   -153,
+   -64,
+   -475,
+   -144,
+   320,
+   -472
+  ],
+  "place": {
+   "iso": "src/Part-I--Foundations/04_Decoders-and-Displays/images/4-to-10-decoder-L3-test_minecraft.png"
+  }
+ },
+ "03_NOR-gate": {
+  "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+  "bounds": [
+   15,
+   -64,
+   -490,
+   17,
+   320,
+   -482
+  ],
+  "views": [
+   "iso"
+  ],
+  "place": {
+   "iso": "src/Part-I--Foundations/03_The-Art-of-Logic/images/NOR-gate_minecraft.png"
+  }
+ },
+ "04_complete-digital-display": {
+  "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+  "bounds": [
+   -321,
+   -64,
+   -489,
+   -296,
+   320,
+   -459
+  ],
+  "views": [
+   "iso",
+   "top"
+  ],
+  "projection": "tele",
+  "azimuth": 150,
+  "place": {
+   "top": "src/Part-I--Foundations/04_Decoders-and-Displays/images/complete-digital-display-aerial_minecraft.png",
+   "iso": "src/Part-I--Foundations/04_Decoders-and-Displays/images/complete-digital-display_minecraft.png"
+  },
+  "tint": "blue_wool=aecf9c,gray_wool=e4b0ab,cyan_wool=a8c4d6,black_concrete=f5f1ea,white_wool=f5f1ea,smooth_stone=f5f1ea,cobblestone=f5f1ea",
+  "height_tint": 0.85,
+  "legend": {
+   "Decoder": "aecf9c",
+   "ROM": "e4b0ab",
+   "Driver": "a8c4d6"
+  }
+ },
+ "05_full-adder": {
+  "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+  "bounds": [
+   -347,
+   56,
+   -489,
+   -330,
+   60,
+   -467
+  ],
+  "views": [
+   "iso",
+   "top"
+  ],
+  "ground": "keep",
+  "azimuth": 135,
+  "top_azimuth": 180,
+  "place": {
+   "iso": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/full-adder_minecraft.png",
+   "top": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/full-adder-aerial_minecraft.png"
+  },
+  "band_offset": 1
+ },
+ "05_hex-display": {
+  "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+  "bounds": [
+   -403,
+   56,
+   -546,
+   -377,
+   69,
+   -501
+  ],
+  "views": [
+   "iso",
+   "top"
+  ],
+  "ground": "crop",
+  "place": {
+   "top": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/hex-display-aerial_minecraft.png",
+   "iso": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/hex-display_minecraft.png"
+  },
+  "height_tint": 0.85,
+  "tint": "light_blue_wool=7fb264,light_blue_concrete=7fb264,blue_wool=aecf9c,blue_concrete=aecf9c,light_gray_wool=c47a72,light_gray_concrete=c47a72,gray_wool=e4b0ab,gray_concrete=e4b0ab,cyan_wool=a8c4d6,black_concrete=f5f1ea,white_wool=f5f1ea",
+  "swap": "",
+  "legend": {
+   "Decoder": "aecf9c",
+   "Decoder extension": "7fb264",
+   "ROM": "e4b0ab",
+   "ROM extension": "c47a72",
+   "Driver": "a8c4d6"
+  }
+ },
+ "05_hex-display-digit": {
+  "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+  "bounds": [
+   -50,
+   55,
+   -136,
+   -12,
+   72,
+   -100
+  ],
+  "views": [
+   "iso"
+  ],
+  "ground": "crop",
+  "azimuth": 315
+ },
+ "05_4-bit-rca": {
+  "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+  "bounds": [
+   -417,
+   56,
+   -489,
+   -352,
+   60,
+   -467
+  ],
+  "views": [
+   "iso",
+   "top"
+  ],
+  "ground": "crop",
+  "azimuth": 315,
+  "top_azimuth": 180,
+  "res": "3600x1310",
+  "height_tint": 0.85,
+  "tint": "yellow_wool=f2d489,orange_wool=f2d489,white_wool=f2d489,yellow_concrete=c7c0b6,orange_concrete=c7c0b6,white_concrete=c7c0b6,smooth_stone=f5f1ea,cobblestone=f5f1ea",
+  "swap": "",
+  "place": {
+   "top": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/4-bit-rca-aerial_minecraft.png"
+  },
+  "legend": {
+   "Full adder": "f2d489",
+   "Repeated slice": "c7c0b6"
+  }
+ },
+ "03b_XOR-gate-composite": {
+  "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+  "bounds": [
+   23,
+   55,
+   -490,
+   33,
+   61,
+   -474
+  ],
+  "views": [
+   "iso"
+  ],
+  "ground": "crop",
+  "place": {
+   "iso": "src/Part-I--Foundations/03b_Interlude-Compact-Design-final/images/XOR-gate-composite_minecraft.png"
+  }
+ },
+ "7seg-8": {
+  "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+  "bounds": [
+   124,
+   56,
+   -480,
+   146,
+   74,
+   -476
+  ],
+  "views": [
+   "iso"
+  ],
+  "ground": "remove",
+  "tint": "black_concrete=f5f1ea"
+ },
+ "7seg-wall": {
+  "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+  "bounds": [
+   124,
+   55,
+   -473,
+   146,
+   74,
+   -469
+  ],
+  "views": [
+   "iso"
+  ],
+  "ground": "remove",
+  "tint": "black_concrete=f5f1ea,pink=f5f1ea,orange=f5f1ea,terracotta=f5f1ea,magenta=f5f1ea",
+  "height_tint": 0,
+  "azimuth": 315,
+  "projection": "ortho"
+ },
+ "7seg-lit": {
+  "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+  "bounds": [
+   124,
+   56,
+   -467,
+   140,
+   74,
+   -461
+  ],
+  "views": [
+   "iso"
+  ],
+  "ground": "remove",
+  "tint": "light_blue_wool=ccdbe5,lime_wool=d1e3c7,black_concrete=f5f1ea",
+  "azimuth": 315,
+  "projection": "ortho",
+  "height_tint": 0
+ },
+ "7seg-closeup": {
+  "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+  "bounds": [
+   139,
+   55,
+   -464,
+   144,
+   62,
+   -457
+  ],
+  "views": [
+   "iso"
+  ],
+  "ground": "remove",
+  "tint": "light_blue_wool=ccdbe5,lime_wool=d1e3c7,black_concrete=f5f1ea",
+  "azimuth": 315,
+  "projection": "ortho",
+  "height_tint": 0
+ },
+ "05_integration-bug": {
+  "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+  "bounds": [
+   -405,
+   56,
+   -457,
+   -342,
+   68,
+   -390
+  ],
+  "views": [
+   "iso",
+   "top"
+  ],
+  "ground": "crop",
+  "azimuth": 225,
+  "place": {
+   "iso": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/integration-bug_minecraft.png",
+   "top": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/integration-bug-aerial_minecraft.png"
+  },
+  "height_tint": 0.85,
+  "tint": "yellow_concrete=f2d489,orange_concrete=f2d489,white_concrete=f2d489,blue_wool=aecf9c,gray_wool=e4b0ab,cyan_wool=a8c4d6,black_concrete=f5f1ea,white_wool=f5f1ea,smooth_stone=f5f1ea,cobblestone=f5f1ea",
+  "swap": "",
+  "legend": {
+   "Adder": "f2d489",
+   "Decoder": "aecf9c",
+   "ROM": "e4b0ab",
+   "Display driver": "a8c4d6"
+  },
+  "top_azimuth": 180,
+  "top_res": "1620x1900"
+ },
+ "05_4-to-16-decoder": {
+  "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+  "bounds": [
+   -366,
+   56,
+   -547,
+   -357,
+   61,
+   -501
+  ],
+  "views": [
+   "iso",
+   "top"
+  ],
+  "ground": "crop",
+  "height_tint": 0.85,
+  "top_res": "3600x800",
+  "tint": "light_blue_wool=7fb264,light_blue_concrete=7fb264,blue_wool=aecf9c,blue_concrete=aecf9c,white_wool=f5f1ea",
+  "swap": "",
+  "legend": {
+   "Original decoder": "aecf9c",
+   "Hex extension": "7fb264"
+  },
+  "place": {
+   "iso": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/4-to-16-decoder_minecraft.png",
+   "top": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/4-to-16-decoder-aerial_minecraft.png"
+  }
+ },
+ "05_hex-rom": {
+  "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+  "bounds": [
+   -349,
+   56,
+   -547,
+   -332,
+   63,
+   -512
+  ],
+  "views": [
+   "iso",
+   "top"
+  ],
+  "ground": "crop",
+  "height_tint": 0.85,
+  "tint": "light_gray_wool=c47a72,light_gray_concrete=c47a72,gray_wool=e4b0ab,gray_concrete=e4b0ab,white_wool=f5f1ea",
+  "swap": "",
+  "legend": {
+   "Original ROM": "e4b0ab",
+   "Hex extension": "c47a72"
+  },
+  "place": {
+   "iso": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/hex-rom_minecraft.png",
+   "top": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/hex-rom-aerial_minecraft.png"
+  }
+ },
+ "05_rca-hex-display": {
+  "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+  "bounds": [
+   -478,
+   56,
+   -457,
+   -415,
+   68,
+   -374
+  ],
+  "views": [
+   "iso",
+   "top"
+  ],
+  "ground": "crop",
+  "height_tint": 0.85,
+  "tint": "yellow_concrete=f2d489,orange_concrete=f2d489,white_concrete=f2d489,light_blue_wool=7fb264,light_blue_concrete=7fb264,blue_wool=aecf9c,blue_concrete=aecf9c,light_gray_wool=c47a72,light_gray_concrete=c47a72,gray_wool=e4b0ab,gray_concrete=e4b0ab,cyan_wool=a8c4d6,black_concrete=f5f1ea,white_wool=f5f1ea",
+  "swap": "",
+  "legend": {
+   "Adder": "f2d489",
+   "Decoder": "aecf9c",
+   "Decoder extension": "7fb264",
+   "ROM": "e4b0ab",
+   "ROM extension": "c47a72",
+   "Driver": "a8c4d6"
+  },
+  "place": {
+   "iso": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/rca-hex-display_minecraft.png",
+   "top": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/rca-hex-display-aerial_minecraft.png"
+  }
+ }
 }
