@@ -21,7 +21,7 @@ Welcome back to Redstone University!
 
 In our last module, we built an interface to speak to our computer in its native language: binary. But sending signals is only half the story. To make our machine *think*, we need to teach it how to understand those signals. We need to give it a grammar.
 
-This module is our first deep dive into the theory that powers every digital device ever made. We will learn about **Boolean Algebra**, the elegant mathematics of True and False. Then, we will immediately bring that theory to life by building the three most fundamental "verbs" of logic: the **NOT**, **OR**, and **AND** gates.
+This module is our first real look at the theory that powers every digital device ever made. We will learn about **Boolean Algebra**, the mathematics of True and False. Then, we will immediately bring that theory to life by building the three most fundamental "verbs" of logic: the **NOT**, **OR**, and **AND** gates.
 
 By the end of this module, you won't just have a collection of circuits; you'll understand the foundational principles that allow simple on/off signals to become the building blocks of complex decisions.
 
@@ -201,7 +201,7 @@ Given the Boolean expression $A \text{ OR } (\text{NOT } B)$ : $A \lor (\neg B)$
 ![AND Gate in CircuitVerse](./images/AND-gate_circuitverse.png)
 *Figure: The abstract symbol for the AND gate (left) and its function. The output $Y$ is active only if both $A$ and $B$ are active.*
 
-Now we reach a pivotal moment. Minecraft doesn't give us a single block that performs the AND operation. We must build it ourselves from the parts we already have. This is the essence of digital engineering: creating complex functions from simple components.
+Minecraft doesn't give us a single block that performs the AND operation. We must build it ourselves from the parts we already have. This is the essence of digital engineering: creating complex functions from simple components.
 
 To connect the abstract concept of a gate to our physical build, we will use a consistent visual format. Each composite gate will be introduced with its standard, abstract symbol, which is how engineers represent it in high-level diagrams. This will be followed by a detailed composite diagram showing how to construct it from our primitive NOT and OR gates. In these diagrams, a dashed outline will enclose the group of primitives, visually demonstrating how they work together to become equivalent to the single, abstract gate.
 
@@ -341,6 +341,6 @@ Now bring Practice Problem 2.4.2 to life. Build the home security system in Mine
 
 ### Module 2 Conclusion
 
-Excellent work. You've successfully taken your first steps into the world of digital logic. You started with the abstract idea of Boolean Algebra and ended by building physical, working circuits that obey its laws. You now understand the three foundational gates, NOT, OR, and AND, and have experienced the core engineering principle of building complex components from simpler ones.
+You started with the abstract idea of Boolean Algebra and ended by building physical, working circuits that obey its laws. You now have the three foundational gates, NOT, OR, and AND, and you've used the core engineering move of this whole course: building a component you don't have out of components you do.
 
-You have built the essential "verbs" of our computer's language. In the next module, **The Art of Logic**, we will expand our vocabulary with more specialized gates and learn the powerful techniques of simplification that allow engineers to design circuits that are not only correct, but also elegant and efficient.
+These are the essential "verbs" of our computer's language. In the next module, **The Art of Logic**, we will expand our vocabulary with more specialized gates and learn the techniques of simplification that let engineers design circuits that are not just correct, but efficient.
