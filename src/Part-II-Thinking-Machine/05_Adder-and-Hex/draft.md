@@ -23,7 +23,7 @@
 
 ### Module 5 Introduction
 
-Part I gave us an input system and an output system. We can now speak to the machine and the machine can answer back. That is a huge milestone, but so far our computer is still passive. It can only *translate*.
+Part I gave us an input system and an output system. We can now speak to the machine and the machine can answer back. But so far our computer is still passive. It can only *translate*.
 
 In this module, that changes.
 
@@ -208,7 +208,7 @@ If a result is off by exactly `2`, `4`, or `8`, the most likely problem is a bro
 
 > **Key Takeaway:** A bug can exist at the boundary between two correct subsystems. Integration testing is where you discover whether your design assumptions were actually true.
 
-Now for the fun part. Let’s connect our new adder to the display system from Module 4.
+Let’s connect our new adder to the display system from Module 4.
 
 #### The test
 
@@ -223,7 +223,7 @@ A quick word before you place a single block: this step is small. You are not re
     -   binary: `0100 + 0011 = 0111`
     -   expected display: `7`
 
-That should work beautifully.
+That should work.
 
 ![The composed system computing 4 + 3](./images/rca-bcd-display_circuitverse.png)
 *Figure: The composed system passing its first test: `0100 + 0011` ripples through the adder, the decoder recognizes `0111` and fires its line, and the display draws a `7`. Every stage is doing its job.*
@@ -356,7 +356,7 @@ That is why hexadecimal is everywhere in low-level programming, debugging, and c
 
 > **Key Takeaway:** Because our display was built as two clean stages, we can upgrade it surgically instead of rebuilding it from scratch.
 
-This is one of the most satisfying moments in the course. We are about to benefit directly from the modular architecture we chose in Module 4.
+We are about to benefit directly from the modular architecture we chose in Module 4.
 
 ![The upgraded hexadecimal display system](./images/hex-display_minecraft.png)
 *Figure: Where this lab ends: the display system rebuilt for hex, showing `C`. Everything in the deeper shades is what you are about to add; everything else is your Module 4 build, untouched.*
@@ -435,7 +435,7 @@ Now the system should behave like this:
 
 1.  The decoder recognizes `1100` and activates line `LC`.
 2.  The ROM maps `LC` to the segment pattern for `C`.
-3.  The display lights up a bright, unmistakable `C`.
+3.  The display lights up a `C`.
 
 Bug fixed. System upgraded. No rebuild required.
 
@@ -555,8 +555,6 @@ That clever software trick is the same arithmetic your hardware adder performs b
 ---
 
 ### Module 5 Conclusion
-
-This module marks a turning point.
 
 You built the first true arithmetic engine in the course. More importantly, you experienced the full engineering loop: design, build, integrate, fail, diagnose, and improve. That is not a detour from real computer engineering. That *is* real computer engineering.
 
