@@ -498,12 +498,15 @@ The most likely fault is that the **carry from the third stage is not reaching t
 
 `7 + 1` is:
 
-```text
-0111
-0001
-----
-1000
-```
+$$
+\begin{array}{cccccl}
+  & \scriptstyle\textcolor{gray}{1} & \scriptstyle\textcolor{gray}{1} & \scriptstyle\textcolor{gray}{1} & & \\
+  & 0 & 1 & 1 & 1 & \quad(7) \\
++ & 0 & 0 & 0 & 1 & \quad(1) \\
+\hline
+  & 1 & 0 & 0 & 0 & \quad(8)
+\end{array}
+$$
 
 This result depends on the carry rippling through multiple stages. If one carry link is broken, the highest stage never receives the signal it needs to produce the leading `1`.
 
