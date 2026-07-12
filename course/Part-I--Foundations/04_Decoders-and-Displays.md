@@ -33,7 +33,7 @@ In the previous modules, you learned how to speak to your computer in binary and
 > -   You can use a smaller, more efficient version from Interlude I.
 > -   You can design your own!
 >
-> As long as your component functions according to its truth table, it is a valid build. This freedom is a major step in your journey from student to engineer. The preceding **Interlude I: The Art of Compact Design**, gives you the foundation for making these choices.
+> As long as your component functions according to its truth table, it is a valid build. The preceding **Interlude I: The Art of Compact Design**, gives you the foundation for making these choices.
 >
 > If you are ever unsure, the verbose builds from the previous modules are guaranteed to work.
 
@@ -158,7 +158,7 @@ Now, cycle through all four possible inputs with your levers:
 -   `` `10` `` → Only the `L2` lamp should be ON.
 -   `` `11` `` → Only the `L3` lamp should be ON.
 
-Excellent work! You've built a working decoder.
+If all four checks pass, you've built a working decoder.
 
 <div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/04_2-to-4-decoder-3_minecraft.png" alt="2-to-4 Decoder Step 3" width="512px"/><br/><em>Figure: Final working 2-to-4 decoder, with the input set to `` `11` ``, so only the `L3` lamp is ON.</em></div><br/>
 
@@ -189,7 +189,7 @@ Technically, the entire structure for each output line is a **Multi-Input NOR Ga
 
 ##### Two Types of Taps: The Key to the Design
 
-We use two different methods to tap the bus. This clever approach allows a single bus line (e.g., `B1`) to do the work of the two separate `B1` and `!B1` lines we needed in the brute-force build, cutting our bus width in half.
+We use two different methods to tap the bus. This allows a single bus line (e.g., `B1`) to do the work of the two separate `B1` and `!B1` lines we needed in the brute-force build, cutting our bus width in half.
 
 To be precise about what "activates" means here: each tap sits between a bus line above and an output wire below, and when a tap activates, it **powers the output wire underneath it**. A powered output wire means "mismatch detected," which turns that line's lamp OFF.
 
@@ -377,7 +377,7 @@ Now, add the input layer to complete the Diode Matrix grid. Eventually these lin
 
 <div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/04_10-to-7-rom-2_minecraft.png" alt="ROM Two-Layer Structure" width="512px"/><br/><em>Figure: The two-layer Diode Matrix structure, with 7 segment output lines on the ground and 10 input lines (`L9`–`L0`) above, lamps showing input activity.</em></div><br/>
 
-This two-layer grid is your ROM’s framework. The lamps are optional but give a nice visual for what is happening. When a lamp is ON, its line is LOW (active). Take a moment to admire the clean, perpendicular layout as it is the key to programming the segment patterns efficiently.
+This two-layer grid is your ROM’s framework. The lamps are optional but give a nice visual for what is happening. When a lamp is ON, its line is LOW (active). The clean, perpendicular layout is the key to programming the segment patterns efficiently.
 
 ##### 3. Programming the Matrix: Placing the Torch Taps
 
@@ -401,7 +401,7 @@ This zoomed-in view shows exactly where to place the torch taps for `L9`. Each t
 Repeat this process for all 10 lines (`L0`–`L9`), using the lookup table to place torches for each digit’s segment pattern. Work methodically to avoid mistakes. This is like programming a game cartridge, where every torch is a bit of stored data. Precision is key to ensure each line activates the correct segments.
 
 > ##### Engineering Note: The Self-Isolating Design
-> You might wonder if we need repeaters to isolate the segment lines from each other like we did in our basic OR gate. In this specific design, we don’t! The Redstone Torches we use as taps are naturally **one-way devices**. They send power *out* to the segment line, but power from another torch cannot flow *backwards* through them. The torches act as the diodes in our “Diode Matrix,” making the design incredibly elegant and efficient.
+> You might wonder if we need repeaters to isolate the segment lines from each other like we did in our basic OR gate. In this specific design, we don’t! The Redstone Torches we use as taps are naturally **one-way devices**. They send power *out* to the segment line, but power from another torch cannot flow *backwards* through them. The torches act as the diodes in our “Diode Matrix.”
 
 ##### 4. Test Your Work
 
@@ -415,7 +415,7 @@ This is your finished ROM, with every line programmed to map decoder inputs to s
 
 #### Real-World Connection: BIOS and Game Cartridges
 
-The "Diode Matrix" you've just built is a simple but powerful form of **Read-Only Memory (ROM)**. The "program" is physically burned into the circuit's layout by the placement of the torches. This exact principle was fundamental to early computing. A computer's **BIOS chip**, which tells it how to boot up, is a form of ROM. Old video game cartridges were also ROMs, with the entire game's data permanently stored in the hardware's structure. You've built the same technology!
+The "Diode Matrix" you've just built is a simple form of **Read-Only Memory (ROM)**. The "program" is physically burned into the circuit's layout by the placement of the torches. This exact principle was fundamental to early computing. A computer's **BIOS chip**, which tells it how to boot up, is a form of ROM. Old video game cartridges were also ROMs, with the entire game's data permanently stored in the hardware's structure. You've built the same technology!
 
 #### Software Connection: Substitution Boxes in Cryptography
 
@@ -484,7 +484,7 @@ If a segment that should be ON is OFF, it means it is not receiving power. The m
 
 > **Key Takeaway**: Connecting individual, tested modules into a complete, working system is the final and most rewarding step of any engineering project.
 
-The moment of truth has arrived. You’ve built and tested the decoder to identify numbers, the ROM to map them to segment patterns, and the 7-segment display to show the results. Now, it’s time to connect these modules and watch your digital display come to life, transforming binary inputs into human-readable digits. Taking modular pieces and creating a cohesive system, this is engineering at its finest!
+The moment of truth has arrived. You’ve built and tested the decoder to identify numbers, the ROM to map them to segment patterns, and the 7-segment display to show the results. Now, it’s time to connect these modules and watch your digital display come to life, transforming binary inputs into human-readable digits.
 
 ---
 
@@ -499,7 +499,7 @@ Here’s what your fully connected system should look like, with the input set t
 
 <div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/04_complete-digital-display_minecraft.png" alt="Complete Digital Display Isometric" width="512px"/><br/><em>Figure: The complete digital display system in action, with input `0011` activating the `L3` line and lighting segments `a, b, c, d, g` to form a glowing “3”.</em></div><br/>
 
-Take a moment to admire this masterpiece! Your modular design has paid off, making this complex system manageable and functional.
+Your modular design has paid off: every stage was built and tested on its own, so the final assembly is just wiring.
 
 ##### Let’s Trace the Signal: `3` (`0011`)
 
@@ -515,15 +515,15 @@ From above, you can see how compactly your system fits together:
 
 <div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/04_complete-digital-display-aerial_minecraft.png" alt="Complete Digital Display Aerial" width="512px"/><br/><em>Figure: Aerial view of the compact digital display system, with input `0011` producing a “3”. The modular layout connects the decoder, ROM, and display efficiently.</em></div><br/>
 
-This top-down view highlights the elegance of your modular design. The decoder’s input bus, the ROM’s torch matrix, and the display’s segments are tightly packed yet clearly organized. While the torches in the ROM grid are less visible from this angle, refer to the Lesson 4.5 lookup table to confirm their placements.
+The decoder’s input bus, the ROM’s torch matrix, and the display’s segments are tightly packed yet clearly organized. While the torches in the ROM grid are less visible from this angle, refer to the Lesson 4.5 lookup table to confirm their placements.
 
 Here is the full schematic in CircuitVerse without subcircuit abstractions, showing the detailed wiring from 4-bit input through decoder and ROM to the 7-segment display. The layout and implementation align with our Minecraft build, and the input is currently set to `0011`, making the instructions above directly applicable.
 
 <div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/04_complete-digital-display_circuitverse.png" alt="Full System in CircuitVerse" width="512px"/><br/><em>Figure: The end-to-end binary-to-display system in CircuitVerse, integrating all components from this module and displaying '3' for input `0011`.</em></div><br/>
 
-Cycle through inputs `0000` to `1001` and watch the display light up each digit perfectly.
+Cycle through inputs `0000` to `1001` and watch the display light up each digit.
 
-Congratulations! You’ve engineered a complete system that translates 4-bit binary into human-readable digits. This is a massive milestone in digital electronics, and you should be proud of your work. Your ability to break down a complex problem into modular components and wire them together is a hallmark of great engineering.
+Stop and take stock of what this machine actually does: you flip four levers, and a shape you can read appears on a wall of lamps. Every step of that translation, decoder, ROM, display, is something you built and tested on its own before connecting it. That decomposition is the reason a build this size worked on the first full test, or was fixable when it didn't.
 
 ---
 
@@ -618,10 +618,10 @@ This points to a catastrophic failure in the "programming" of the `L2` line in y
 
 ### Module 4 Conclusion
 
-This was a massive milestone. You didn't just build a circuit; you engineered a complete system. By breaking a complex problem down into distinct, logical stages, you built something complex in a way that was manageable, testable, and understandable. You have now mastered the concepts of binary-to-decimal decoding and using a hardware ROM to drive an output, two fundamental building blocks of digital electronics.
+You didn't just build a circuit; you engineered a complete system, and by breaking it into distinct, logical stages, you kept it manageable, testable, and understandable. You now know binary-to-decimal decoding and how a hardware ROM drives an output, two fundamental building blocks of digital electronics.
 
 **What’s Next?**
 
-You have successfully completed **Part I** of this course! You possess a complete input and output system, and you are fluent in the language of logic.
+That completes **Part I** of this course. You possess a complete input and output system, and you are fluent in the language of logic.
 
-In **Part II: The Thinking Machine**, we will take our first steps into building the brain of our computer. We'll start in **Module 5**, where we will construct a 4-bit adder to perform our first real mathematical calculation. But as you'll soon discover, making our display show the answer will present a fascinating new bug to solve, leading us to our first major system upgrade.
+In **Part II: The Thinking Machine**, we will take our first steps into building the brain of our computer. We'll start in **Module 5**, where we will construct a 4-bit adder to perform our first real mathematical calculation. But as you'll soon discover, making our display show the answer will present a new bug to solve, leading us to our first major system upgrade.

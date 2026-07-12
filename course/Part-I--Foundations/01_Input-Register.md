@@ -19,11 +19,9 @@
 
 Welcome to your first day at Redstone University!
 
-Our grand adventure is to build a complete, working computer from scratch. But like any great journey, we need to start with the basics. The very first thing we need is a way to talk to our machine. We need a way to give it information.
+Our goal is to build a complete, working computer from scratch, and the very first thing we need is a way to talk to our machine, a way to give it information.
 
 In this module, we’re going to build a **4-bit input interface**, a simple set of switches that lets us speak the computer’s native language: **binary**. In Minecraft, levers hold their state, making them perfect for this job. By flipping them, we can set a 4-bit binary number (any value from `0` to `15`) and see it in action. This isn’t a true register (a storage device we’ll build later), but it’s a hands-on way to input binary data and understand how computers start processing information. As we move forward, you’ll see how this simple setup connects to the bigger picture.
-
-Let’s get started!
 
 ---
 
@@ -68,7 +66,7 @@ So, the value is $8 + 4 + 1 = 13$. We've just translated from the computer's lan
 
 ### Lesson 1.2: The Lab – Building and Using Our 4-Bit Input Interface
 
-It’s time to stop talking and start building! Our **4-bit input interface** will act as a simple “keyboard,” letting us manually input any number from `0` to `15` in binary. Using levers, we will set the bits by flipping them up for `1` and down for `0`. A simple setup that will enable us to create binary numbers we can see and use.
+It’s time to stop talking and start building! Our **4-bit input interface** will act as a simple “keyboard,” letting us manually input any number from `0` to `15` in binary. Using levers, we will set the bits by flipping them up for `1` and down for `0`.
 
 #### Materials Needed
 
@@ -114,10 +112,6 @@ Don't worry, we will be building more interesting circuits very soon.
 ### Lesson 1.3: Drills & Games – Strengthening Your Binary Intuition
 
 Let's get a feel for our new device. Binary feels weird at first, but it will become second nature with just a little practice.
-
-#### Takeaway
-
-Practicing will make binary numbers feel as natural as decimal. The more you practice, the faster you'll get!
 
 #### Drill 1: Binary to Decimal
 
@@ -170,7 +164,7 @@ Here’s how it connects: once an input device sends binary data, the computer s
 
 How does a programmer "look at" the individual bits you just set with your levers? They use bitwise operations! This is a sneak peek of what we'll learn in the next modules, but it's too cool not to share.
 
-A classic LeetCode problem is **"Number of 1 Bits"**: count how many `1`s are in a number's binary representation. Programmers solve this by checking each bit of the number one by one. It also gives a sneak peek at the concept of bitwise operations, which are essential for low-level programming and optimization.
+A classic LeetCode problem is **"Number of 1 Bits"**: count how many `1`s are in a number's binary representation. Programmers solve this by checking each bit of the number one by one.
 
 ```python
 def countSetBits(n):
@@ -201,8 +195,6 @@ print(countSetBits(13)) # Output: 3
 
 ### Module 1 Conclusion
 
-Fantastic work! You've now mastered the most fundamental concept in all of computing: how information is physically represented in a binary system. You have a working input device, and you've seen how this physical concept directly connects to both real-world hardware and clever software algorithms.
+You now have a working input device: four levers that can hold any number from `0` to `15` in the same representation your real computer uses, and you've seen how that physical idea connects to both hardware registers and software algorithms.
 
-Your input bus is ready to carry these binary signals to the next stage where logic gates will turn them into calculations and decisions. Now that you’ve built your input interface and practiced working with binary, you’re ready to learn how to manipulate these binary signals in Module 2: The Grammar of Circuits. There, we will build our first logic gates, which will process the inputs you’ve set here into meaningful outputs.
-
-The basic building blocks of our computer are about to take shape. Get ready for the world of logic gates and circuits!
+What you don't have yet is anything that can react to those signals. That's Module 2: The Grammar of Circuits, where we build our first logic gates, the circuits that will process the inputs you've set here into meaningful outputs.

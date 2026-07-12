@@ -4,11 +4,11 @@
 
 ### A Note from the Instructor
 
-Fantastic work completing the first logic modules. You have mastered the theoretical foundation of our computer by building all seven fundamental logic gates.
+With all seven fundamental logic gates built, you have the complete theoretical foundation of our computer.
 
 Before we begin our next major project in Module 4, we have this special, optional section. Think of it as an engineering deep dive. The goal of **Module 2** and **Module 3** was to build for **clarity**, making our gates large so the logic was easy to trace. This Interlude introduces the art of building for **efficiency**.
 
-We will analyze some common, space-saving designs used by the Redstone community. Understanding them is not required for the rest of the course, but it will empower you to make your own builds smaller and faster. This is your first step from being a student of logic to becoming a true Redstone engineer.
+We will analyze some common, space-saving designs used by the Redstone community. Understanding them is not required for the rest of the course, but it will let you make your own builds smaller and faster.
 
 ### The Engineering Trade-Off: Size, Speed, and Readability
 
@@ -43,7 +43,7 @@ Now, observe a classic compact AND gate. It performs the exact same function wit
 
 #### Logical Deconstruction
 
-This compact build is a brilliant physical implementation of the same logic.
+This compact build implements exactly the same logic.
 -   The two torches on the sides of the input blocks are your first **NOT** gates, creating the signals for $\neg A$ and $\neg B$.
 -   The central Redstone dust is the **OR** gate. It gets powered if *either* of the side torches turns off.
 -   The torch on the front of the central block is the final **NOT** gate, inverting the signal from the dust.
@@ -61,7 +61,7 @@ The community has created many compact XOR designs. Here is one of the most comm
 
 #### Logical Deconstruction
 
-This design is a masterclass in efficiency. It cleverly uses torch burnout and block power states to create the two conditions for an XOR, $A \text{ AND } (\text{NOT } B)$ or $(\text{NOT } A) \text{ AND } B$ : $ (A \land \neg B) \lor (\neg A \land B) $, and merges their outputs. While tracing the exact path is advanced, the key takeaway is that it perfectly matches the XOR truth table in a minimal amount of space, which is critical when you need to build dozens of them for an arithmetic unit.
+This design uses torch burnout and block power states to create the two conditions for an XOR, $A \text{ AND } (\text{NOT } B)$ or $(\text{NOT } A) \text{ AND } B$ : $ (A \land \neg B) \lor (\neg A \land B) $, and merges their outputs. While tracing the exact path is advanced, the key takeaway is that it perfectly matches the XOR truth table in a minimal amount of space, which is critical when you need to build dozens of them for an arithmetic unit.
 
 ---
 
