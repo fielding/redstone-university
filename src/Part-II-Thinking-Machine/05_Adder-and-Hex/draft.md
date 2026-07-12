@@ -358,6 +358,9 @@ A common 7-segment convention is:
 ![Hexadecimal Display System Aerial View](./images/hex-display-aerial_minecraft.png)
 *Figure: The upgraded display system from above, set to `1100`: the bus enters the decoder along the top, its sixteen lines drop into the ROM below, and the collected segment lines exit into the panel. The deeper shades mark everything that was added for hex.*
 
+![Hexadecimal Display System Minecraft Build](./images/hex-display_minecraft.png)
+*Figure: The complete upgraded display system in Minecraft: decoder, ROM, and 7-segment display, set to `1100` and showing `C`.*
+
 #### The payoff test
 
 Repeat the test that failed earlier:
@@ -379,9 +382,6 @@ Bug fixed. System upgraded. No rebuild required.
 
 ![The payoff in Minecraft](./images/rca-hex-display_minecraft.png)
 *Figure: The module artifact: the 4-bit adder wired to the hexadecimal display, computing `8 + 4` and showing `C`.*
-
-![Hexadecimal Display System Minecraft Build](./images/hex-display_minecraft.png)
-*Figure: The complete upgraded display system in Minecraft: decoder, ROM, and 7-segment display, set to `1100` and showing `C`.*
 
 ---
 
