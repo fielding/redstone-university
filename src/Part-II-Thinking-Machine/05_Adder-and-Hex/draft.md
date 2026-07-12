@@ -301,8 +301,8 @@ That is why hexadecimal is everywhere in low-level programming, debugging, and c
 
 This is one of the most satisfying moments in the course. We are about to benefit directly from the modular architecture we chose in Module 4.
 
-![Hexadecimal Display System Abstract Diagram](./images/4-bit-binary-to-hexadecimal-display-abstract_circuitverse.png)
-*Figure: The upgraded display system as two clean stages, a 4-to-16 decoder feeding a hex decoder/driver. Shown reading `0101` and displaying `5`.*
+![The upgraded hexadecimal display system](./images/hex-display_minecraft.png)
+*Figure: Where this lab ends: the display system rebuilt for hex, showing `C`. Everything in the deeper shades is what you are about to add; everything else is your Module 4 build, untouched.*
 
 #### Lab Part A: Upgrade the decoder
 
@@ -357,9 +357,6 @@ A common 7-segment convention is:
 
 ![Hexadecimal Display System Aerial View](./images/hex-display-aerial_minecraft.png)
 *Figure: The upgraded display system from above, set to `1100`: the bus enters the decoder along the top, its sixteen lines drop into the ROM below, and the collected segment lines exit into the panel. The deeper shades mark everything that was added for hex.*
-
-![Hexadecimal Display System Minecraft Build](./images/hex-display_minecraft.png)
-*Figure: The complete upgraded display system in Minecraft: decoder, ROM, and 7-segment display, set to `1100` and showing `C`.*
 
 #### The payoff test
 

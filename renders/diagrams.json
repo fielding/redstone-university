@@ -155,11 +155,6 @@
     "name": "7-segment-hex-decoder-driver",
     "place": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/7-segment-hex-decoder-driver"
   },
-  "4-bit-binary-to-hexadecimal-display-abstract": {
-    "circuit": "4-bit binary to hexadecimal display (abstract)",
-    "name": "4-bit-binary-to-hexadecimal-display-abstract",
-    "place": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/4-bit-binary-to-hexadecimal-display-abstract"
-  },
   "_generated": {
     "AND-gate_circuitverse": "src/Part-I--Foundations/02_The-Grammar-of-Circuits/images/AND-gate_circuitverse",
     "NOT-gate_circuitverse": "src/Part-I--Foundations/02_The-Grammar-of-Circuits/images/NOT-gate_circuitverse",
@@ -180,5 +175,21 @@
       0
     ],
     "place": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/4-to-10-decoder-1100"
+  },
+  "rca-hex-display": {
+    "circuit": "4-bit RCA with hex display",
+    "name": "rca-hex-display",
+    "inputs": [
+      1,
+      0,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "place": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/rca-hex-display"
   }
 }

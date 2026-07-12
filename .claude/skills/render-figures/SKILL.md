@@ -33,7 +33,10 @@ A figure is "in the book" only after **all** of:
 
 ```bash
 CV="$HOME/Downloads/Redstone University.cv"
-python3 scripts/pull_cv.py                          # refresh from circuitverse.org first
+# STEP 0, NEVER SKIP: the Downloads .cv is a stale cache until you pull.
+# Scopes Fielding "just added" are NOT in it — pull_cv fetches the live
+# project (id from _defaults.cv_project), atomically, keeping a .bak:
+python3 scripts/pull_cv.py
 python3 scripts/cv_render.py "$CV" --list           # confirm the scope name exists
 # add/extend the entry in renders/diagrams.json, then:
 python3 scripts/cv_render.py "$CV" --batch renders/diagrams.json
@@ -143,8 +146,10 @@ with Pillow — crop each to `getbbox()` and paste on a transparent canvas.
 
 ## Known limits (don't fight these silently — surface them)
 
-- The CV simulator does not trace through `SubCircuit` black boxes, so a display
-  fed by a subcircuit renders unlit (fine for structural diagrams).
+- The CV simulator DOES trace through `SubCircuit` boxes now (verified on the
+  RCA+hex payoff figure: forced `inputs` light the display end-to-end). The
+  old "renders unlit behind subcircuits" note is dead; force `inputs` freely
+  on composed scopes. Input order = Input elements sorted left-to-right by x.
 - MiEx can't export signs (block entities) — no render is possible.
 - Fixed-size gate glyphs: a >2-input gate's outer pins poke past the body. The
   fix (scale glyph height to fan-in) is a known, unimplemented improvement.

@@ -873,5 +873,36 @@
       "iso": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/hex-rom_minecraft.png",
       "top": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/hex-rom-aerial_minecraft.png"
     }
+  },
+  "05_rca-hex-display": {
+    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+    "bounds": [
+      -478,
+      56,
+      -457,
+      -415,
+      68,
+      -374
+    ],
+    "views": [
+      "iso",
+      "top"
+    ],
+    "ground": "crop",
+    "height_tint": 0.85,
+    "tint": "yellow_concrete=f2d489,orange_concrete=f2d489,white_concrete=f2d489,light_blue_wool=7fb264,light_blue_concrete=7fb264,blue_wool=aecf9c,blue_concrete=aecf9c,light_gray_wool=c47a72,light_gray_concrete=c47a72,gray_wool=e4b0ab,gray_concrete=e4b0ab,cyan_wool=a8c4d6,black_concrete=f5f1ea,white_wool=f5f1ea",
+    "swap": "",
+    "legend": {
+      "Adder": "f2d489",
+      "Decoder": "aecf9c",
+      "Decoder extension": "7fb264",
+      "ROM": "e4b0ab",
+      "ROM extension": "c47a72",
+      "Driver": "a8c4d6"
+    },
+    "place": {
+      "iso": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/rca-hex-display_minecraft.png",
+      "top": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/rca-hex-display-aerial_minecraft.png"
+    }
   }
 }
