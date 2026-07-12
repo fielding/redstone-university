@@ -421,18 +421,6 @@ Bug fixed. System upgraded. No rebuild required.
 
 ---
 
-### Module 5 Conclusion
-
-This module marks a turning point.
-
-You built the first true arithmetic engine in the course. More importantly, you experienced the full engineering loop: design, build, integrate, fail, diagnose, and improve. That is not a detour from real computer engineering. That *is* real computer engineering.
-
-You also saw the reward of modular design. Because the decoder and ROM were cleanly separated, expanding the system was an upgrade, not a restart.
-
-Our machine can now add numbers and display every possible 4-bit result. In the next module, we are going to push that arithmetic system even harder, right up against the limits of a 4-bit machine, and discover what happens when the answer no longer fits.
-
----
-
 ### Module 5 Checkpoint
 
 #### Practice Problem 5.7.1: Knowledge Check
@@ -510,3 +498,16 @@ That clever software trick is just a looped version of the same arithmetic logic
 -   **Hexadecimal**: A base-16 number system that maps perfectly onto 4-bit binary values.
 -   **Nibble**: A group of 4 bits.
 -   **Ripple-carry adder**: A multi-bit adder made by chaining full adders so the carry propagates from stage to stage.
+
+---
+
+### Module 5 Conclusion
+
+This module marks a turning point.
+
+You built the first true arithmetic engine in the course. More importantly, you experienced the full engineering loop: design, build, integrate, fail, diagnose, and improve. That is not a detour from real computer engineering. That *is* real computer engineering.
+
+You also saw the reward of modular design. Because the decoder and ROM were cleanly separated, expanding the system was an upgrade, not a restart.
+
+Our machine can now add numbers and display every possible 4-bit result. In the next module, we are going to push that arithmetic system even harder, right up against the limits of a 4-bit machine, and discover what happens when the answer no longer fits.
+
