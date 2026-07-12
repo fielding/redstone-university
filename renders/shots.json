@@ -304,7 +304,7 @@
       "iso": "src/Part-I--Foundations/03b_Interlude-Compact-Design-final/images/XOR-gate_minecraft.png"
     }
   },
-  "04_10-to-7-encoder-L9": {
+  "04_10-to-7-rom-L9": {
     "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
     "bounds": [
       -257,
@@ -321,7 +321,7 @@
     "projection": "tele",
     "azimuth": 150,
     "place": {
-      "iso": "src/Part-I--Foundations/04_Decoders-and-Displays/images/10-to-7-encoder-L9_minecraft.png"
+      "iso": "src/Part-I--Foundations/04_Decoders-and-Displays/images/10-to-7-rom-L9_minecraft.png"
     }
   },
   "04_2-to-4-decoder-1": {
@@ -487,7 +487,7 @@
       "iso"
     ]
   },
-  "04_10-to-7-encoder-1": {
+  "04_10-to-7-rom-1": {
     "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
     "bounds": [
       -197,
@@ -498,10 +498,10 @@
       -460
     ],
     "place": {
-      "iso": "src/Part-I--Foundations/04_Decoders-and-Displays/images/10-to-7-encoder-1_minecraft.png"
+      "iso": "src/Part-I--Foundations/04_Decoders-and-Displays/images/10-to-7-rom-1_minecraft.png"
     }
   },
-  "04_10-to-7-encoder-2": {
+  "04_10-to-7-rom-2": {
     "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
     "bounds": [
       -229,
@@ -512,10 +512,10 @@
       -460
     ],
     "place": {
-      "iso": "src/Part-I--Foundations/04_Decoders-and-Displays/images/10-to-7-encoder-2_minecraft.png"
+      "iso": "src/Part-I--Foundations/04_Decoders-and-Displays/images/10-to-7-rom-2_minecraft.png"
     }
   },
-  "04_10-to-7-encoder-complete": {
+  "04_10-to-7-rom-complete": {
     "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
     "bounds": [
       -287,
@@ -526,8 +526,8 @@
       -460
     ],
     "place": {
-      "iso": "src/Part-I--Foundations/04_Decoders-and-Displays/images/10-to-7-encoder-complete_minecraft.png",
-      "top": "src/Part-I--Foundations/04_Decoders-and-Displays/images/10-to-7-encoder-complete-aerial_minecraft.png"
+      "iso": "src/Part-I--Foundations/04_Decoders-and-Displays/images/10-to-7-rom-complete_minecraft.png",
+      "top": "src/Part-I--Foundations/04_Decoders-and-Displays/images/10-to-7-rom-complete-aerial_minecraft.png"
     }
   },
   "04_4-to-10-decoder-L3": {

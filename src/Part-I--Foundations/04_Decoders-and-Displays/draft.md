@@ -4,7 +4,7 @@
 
 -   **Narrative Beat**: We've learned the computer's language. Now, let's build a translator so it can talk back to us. This is our first major engineering project, where we'll turn abstract binary signals into a number we can actually read.
 -   **Learning Goals**:
-    -   Understand the distinct roles of a decoder and an encoder.
+    -   Understand the distinct roles of a decoder and a ROM.
     -   Grasp the engineering trade-offs between a "brute-force" design and an elegant, compact design.
     -   Master "active-low" logic and its practical application in Redstone.
     -   Build a functional Diode Matrix and understand its role as a form of Read-Only Memory (ROM).
@@ -13,9 +13,9 @@
     -   Lesson 4.2: The Master Plan: A Two-Stage Translation
     -   Lesson 4.3: The Decoder Lab: A Simple "Brute-Force" Build
     -   Lesson 4.4: The Decoder Lab, Part 2: An Elegant, Compact Solution
-    -   Lesson 4.5: The Encoder: Programming a "Diode Matrix" ROM
+    -   Lesson 4.5: The ROM: Programming the "Diode Matrix"
     -   Lesson 4.6: The Grand Payoff: System Integration
--   **Minecraft Artifact**: A working two-stage translator: a 4-to-10 BCD decoder and a 7-segment display encoder, forming a complete digital display system.
+-   **Minecraft Artifact**: A working two-stage translator: a 4-to-10 BCD decoder and a 7-segment pattern ROM, forming a complete digital display system.
 
 ---
 
@@ -68,7 +68,7 @@ Let’s start by building the physical canvas for our numbers.
 ![7 Segment Display in Minecraft](./images/7-segment-display_minecraft.png)
 *Figure: The display's construction stages. From left to right: the basic lamp layout, the layout isolated with concrete, powering the middle lamps of each segment, and a close-up of the repeater and lever used to control a single segment.*
 
-#### Practice Lab: Becoming a Human Encoder
+#### Practice Lab: Becoming a Human ROM
 
 Before we build the complex logic to control this display automatically, let's get a feel for it ourselves. Use the levers you just installed to "draw" the following digits. This exercise will build your intuition for exactly what our machine needs to accomplish.
 
@@ -83,22 +83,22 @@ Before we build the complex logic to control this display automatically, let's g
 
 ### Lesson 4.2: The Master Plan: A Two-Stage Translation
 
-> **Key Takeaway**: Complex engineering problems are best solved by breaking them down into smaller, simpler, manageable stages. The "plan" for our encoder is essentially a lookup table.
+> **Key Takeaway**: Complex engineering problems are best solved by breaking them down into smaller, simpler, manageable stages. The "plan" for our ROM is essentially a lookup table.
 
 Now that we have our display, how do we control it? Our computer thinks in 4-bit binary, but our display needs 7 separate signals. Connecting the 4-bit input directly to the 7 segments would be a nightmare.
 
 Instead, let’s think like engineers and break the problem into two much simpler, more manageable stages:
 
 1.  **Decoder**: This first stage will act as an "identifier". Its only job is to look at the 4-bit binary input and determine *which* number (`` `0` ``-`` `9` ``) it represents. It will then activate a single, unique output line corresponding to that number. Because it recognizes decimal digits stored as 4-bit binary patterns, this kind of circuit is called a **BCD (Binary-Coded Decimal) decoder**. Remember that name; it will matter in Part II.
-2.  **Encoder**: This second stage will act as the "mapper". It receives the simple signal from the decoder (e.g., "the number is `` `3` ``!") and "maps" the signal to the correct combination of the 7 segments.
+2.  **ROM**: This second stage will act as the "mapper". It receives the simple signal from the decoder (e.g., "the number is `` `3` ``!") and looks up the correct combination of the 7 segments in permanently stored wiring. A quick word on naming: a stage like this sometimes gets loosely called an *encoder*, but strictly speaking an encoder is the inverse of a decoder. We will name this stage for what we actually build: a **ROM**, a Read-Only Memory whose contents *are* the mapping.
 
 This modular, two-stage approach is the heart of good engineering. It's easier to build, easier to test, and far easier to fix if something goes wrong.
 
 **Our Signal Flow**:
-`[4-bit Input] → [**Decoder**] → [1 of 10 Lines] → [**Encoder/ROM**] → [7 Segment Signals] → [Display]`
+`[4-bit Input] → [**Decoder**] → [1 of 10 Lines] → [**ROM**] → [7 Segment Signals] → [Display]`
 
 ![Digital Display Subcircuit Abstractions](./images/digital-display-subcircuit-abstractions_circuitverse.png)
-*Figure: The overall system in CircuitVerse, using subcircuit abstractions for the decoder, encoder, and display to show the high-level signal flow.*
+*Figure: The overall system in CircuitVerse, using subcircuit abstractions for the decoder, ROM, and display to show the high-level signal flow.*
 
 ---
 
@@ -332,14 +332,14 @@ The tap for `B0` on the `L8` line is supposed to detect this mismatch and power 
 
 ---
 
-### Lesson 4.5: The Encoder: Programming a "Diode Matrix" ROM
+### Lesson 4.5: The ROM: Programming the "Diode Matrix"
 
-> **Key Takeaway**: An encoder can be built as a physical Read-Only Memory (ROM) using a "diode matrix," where the layout of the wiring permanently stores the data for how to draw each number.
+> **Key Takeaway**: Our mapper stage is a physical Read-Only Memory (ROM), built as a "diode matrix" where the layout of the wiring permanently stores the data for how to draw each number.
 
-We now have a working decoder that gives us a single **unpowered** (active-low) line for any given number. The next step is to build our "mapper," the encoder that will take this single signal and draw the correct digit on our display.
+We now have a working decoder that gives us a single **unpowered** (active-low) line for any given number. The next step is to build our "mapper": the ROM that takes this single signal and draws the correct digit on our display. This job is so common that the classic real-world chip for it, the 7447, is sold as a "BCD-to-seven-segment decoder/driver". Same machine, different names. We build ours as memory.
 
-![10-to-7 Encoder in CircuitVerse](./images/10-to-7-encoder_circuitverse.png)
-*Figure: The 10-to-7 encoder in CircuitVerse, using a diode matrix structure to map the active input line to the correct segment pattern.*
+![10-to-7 ROM in CircuitVerse](./images/10-to-7-rom_circuitverse.png)
+*Figure: The 10-to-7 ROM in CircuitVerse, using a diode matrix structure to map the active input line to the correct segment pattern.*
 
 #### The Concept: A Physical Lookup Table
 
@@ -383,10 +383,10 @@ Start by building the foundation for your Diode Matrix: the output lines that wi
 
 -   **Segment Output Layer (Ground Level)**: Lay out 7 parallel lines of Redstone dust, one for each segment (`a` through `g`). These will carry signals to the display. Leave a 1-block gap between each line to prevent interference. Add Redstone Repeaters every `15` blocks to keep the signals strong, as these lines may need to travel to your display.
 
-![Encoder Output Layer](./images/10-to-7-encoder-1_minecraft.png)
+![ROM Output Layer](./images/10-to-7-rom-1_minecraft.png)
 *Figure: The 7 parallel segment output lines (`a` through `g`) on the ground, with repeaters for signal strength.*
 
-This ground layer is the backbone of your encoder, carrying the signals that will light up the display segments. Double-check that each line is isolated to avoid crossed signals.
+This ground layer is the backbone of your ROM, carrying the signals that will light up the display segments. Double-check that each line is isolated to avoid crossed signals.
 
 ##### 2. The Grid: Adding the Input Layer
 
@@ -394,7 +394,7 @@ Now, add the input layer to complete the Diode Matrix grid. Eventually these lin
 
 -   **Decoder Input Layer (Floating)**: Build a platform of solid blocks one level directly above the ground layer (no air gap). On this platform, run 10 horizontal lines of Redstone dust for the decoder outputs (`L9` down to `L0`), perpendicular to the 7 segment lines below. Place a Redstone Lamp at the end of each input line to visualize which line is active (LOW).
 
-![Encoder Two-Layer Structure](./images/10-to-7-encoder-2_minecraft.png)
+![ROM Two-Layer Structure](./images/10-to-7-rom-2_minecraft.png)
 *Figure: The two-layer Diode Matrix structure, with 7 segment output lines on the ground and 10 input lines (`L9`–`L0`) above, lamps showing input activity.*
 
 This two-layer grid is your ROM’s framework. The lamps are optional but give a nice visual for what is happening. When a lamp is ON, its line is LOW (active). Take a moment to admire the clean, perpendicular layout as it is the key to programming the segment patterns efficiently.
@@ -412,7 +412,7 @@ Let’s program the `L9` line (digit `9`) as an example. According to the lookup
 
 Here’s a close-up of the `L9` line with its taps in place:
 
-![Encoder L9 Taps Close-Up](./images/10-to-7-encoder-L9_minecraft.png)
+![ROM L9 Taps Close-Up](./images/10-to-7-rom-L9_minecraft.png)
 *Figure: Close-up of the `L9` line with six torch taps programming segments `a, b, c, d, f, g` for digit 9.*
 
 This zoomed-in view shows exactly where to place the torch taps for `L9`. Each torch is attached to the side of the block supporting the `L9` line, powering the segment lines below (`a, b, c, d, f, g`). These torches are your ROM’s “data” by each representing a specific segment that lights up when `L9` goes LOW. To test it, place a lever at the start of the `L9` line and set all other lines to ON (using levers). When you turn the `L9` lever OFF (simulating the decoder’s active-low signal), the `L9` lamp should light up, and the segment lines `a, b, c, d, f, g` should activate. You can place temporary redstone lamps at the segment line ends to verify. If any segment doesn’t light, double-check your torch placements against the lookup table.
@@ -426,12 +426,12 @@ Repeat this process for all 10 lines (`L0`–`L9`), using the lookup table to pl
 
 ##### 4. Test Your Work
 
-Before connecting the encoder to the decoder, test all lines (`L0`–`L9`) independently, as you did for `L9`. Place a lever at the start of each line, set all others to ON, and turn the tested line OFF. Verify that the segment patterns match the lookup table (e.g., `L3` should light `a, b, c, d, g` for digit `3`). Here’s what the fully programmed Diode Matrix looks like:
+Before connecting the ROM to the decoder, test all lines (`L0`–`L9`) independently, as you did for `L9`. Place a lever at the start of each line, set all others to ON, and turn the tested line OFF. Verify that the segment patterns match the lookup table (e.g., `L3` should light `a, b, c, d, g` for digit `3`). Here’s what the fully programmed Diode Matrix looks like:
 
-![Complete 10-to-7 Encoder](./images/10-to-7-encoder-complete_minecraft.png)
-*Figure: The complete 10-to-7 encoder with all torch taps placed, showing the `L3` line active (input `0011`) and segments `a, b, c, d, g` powered for digit 3.*
+![Complete 10-to-7 ROM](./images/10-to-7-rom-complete_minecraft.png)
+*Figure: The complete 10-to-7 ROM with all torch taps placed, showing the `L3` line active (input `0011`) and segments `a, b, c, d, g` powered for digit 3.*
 
-![Complete 10-to-7 Encoder (top-down)](./images/10-to-7-encoder-complete-aerial_minecraft.png)
+![Complete 10-to-7 ROM (top-down)](./images/10-to-7-rom-complete-aerial_minecraft.png)
 *Figure: The programmed diode matrix from above: ten input columns crossing seven segment rows; every rimmed torch tap is one stored bit.*
 
 This is your finished ROM, with every line programmed to map decoder inputs to segment outputs. The `L3` line is active here (LOW), lighting up the correct segments for a `3`. Cycle through inputs `L0`–`L9` to confirm each digit’s pattern. If any segments don’t light as expected, revisit your torch placements using the lookup table. You’ve just built a physical memory that “stores” the display patterns for all 10 digits!
@@ -492,7 +492,7 @@ The digit `2` uses segments **`a`, `b`, `d`, `e`, and `g`**. Therefore, you woul
 
 #### Practice Problem 4.5.2: Debug Challenge
 
-When you test your encoder by providing a LOW signal to the `L4` line, you expect to see the digit `4` (segments `b, c, f, g`). Instead, the display shows `b, c, f` but **segment `g` remains dark**. What is the most likely cause of this error?
+When you test your ROM by providing a LOW signal to the `L4` line, you expect to see the digit `4` (segments `b, c, f, g`). Instead, the display shows `b, c, f` but **segment `g` remains dark**. What is the most likely cause of this error?
 
 <details>
 <summary><strong>Show Solution</strong></summary>
@@ -507,7 +507,7 @@ If a segment that should be ON is OFF, it means it is not receiving power. The m
 
 > **Key Takeaway**: Connecting individual, tested modules into a complete, working system is the final and most rewarding step of any engineering project.
 
-The moment of truth has arrived. You’ve built and tested the decoder to identify numbers, the encoder to map them to segment patterns, and the 7-segment display to show the results. Now, it’s time to connect these modules and watch your digital display come to life, transforming binary inputs into human-readable digits. Taking modular pieces and creating a cohesive system, this is engineering at its finest!
+The moment of truth has arrived. You’ve built and tested the decoder to identify numbers, the ROM to map them to segment patterns, and the 7-segment display to show the results. Now, it’s time to connect these modules and watch your digital display come to life, transforming binary inputs into human-readable digits. Taking modular pieces and creating a cohesive system, this is engineering at its finest!
 
 ---
 
@@ -515,8 +515,8 @@ The moment of truth has arrived. You’ve built and tested the decoder to identi
 
 This final step is all about making the connections between all of the components from this module. The wiring may get a bit messy, but as long as the signals flow correctly, you are good to go!
 
-1. **Connect Decoder to Encoder**: Carefully connect the `10` active-low output lines from your **Decoder** (`L0`–`L9`) to the `10` horizontal input lines of your **Encoder/ROM**. Use Redstone Repeaters as needed to ensure the signals remain strong over long distances. Label your lines to avoid mix-ups.
-2. **Connect Encoder to Display**: Connect the `7` output lines from your **Encoder/ROM** (`a`–`g`) to the control inputs of the **7-segment Display** you built in Lesson 4.1. This may require creative wiring to route signals to the display’s repeaters, but ensure each segment line connects to its corresponding input (e.g., `a` to the `a` segment). Test each connection with a temporary lever to confirm the segment lights up.
+1. **Connect Decoder to ROM**: Carefully connect the `10` active-low output lines from your **Decoder** (`L0`–`L9`) to the `10` horizontal input lines of your **ROM**. Use Redstone Repeaters as needed to ensure the signals remain strong over long distances. Label your lines to avoid mix-ups.
+2. **Connect ROM to Display**: Connect the `7` output lines from your **ROM** (`a`–`g`) to the control inputs of the **7-segment Display** you built in Lesson 4.1. This may require creative wiring to route signals to the display’s repeaters, but ensure each segment line connects to its corresponding input (e.g., `a` to the `a` segment). Test each connection with a temporary lever to confirm the segment lights up.
 
 Here’s what your fully connected system should look like, with the input set to `0011` to display a `3`:
 
@@ -531,18 +531,18 @@ To solidify your understanding, let’s trace the signal through the entire syst
 
 1. You flip the input levers to `0011` (`B3=0`, `B2=0`, `B1=1`, `B0=1`).
 2. **In the Decoder**: The mismatch detector for the `L3` line (identity `0011`) finds a perfect match. All its taps (Repeaters on `B3`, `B2`; Torches on `B1`, `B0`) are OFF, so the `L3` wire becomes **unpowered (LOW)**. Every other line (`L0`–`L2`, `L4`–`L9`) has at least one tap activated, powering their wires HIGH.
-3. **In the Encoder**: The HIGH lines keep their torches off. The `L3` line, being LOW, turns ON the torches at its intersections with segments `a, b, c, d, g` (per the Lesson 4.5 lookup table).
+3. **In the ROM**: The HIGH lines keep their torches off. The `L3` line, being LOW, turns ON the torches at its intersections with segments `a, b, c, d, g` (per the Lesson 4.5 lookup table).
 4. Those five torches send power down their respective segment lines.
 5. **At the Display**: The signals reach the 7-segment display, lighting up segments `a, b, c, d, g` to form a perfect `3`.
 
 From above, you can see how compactly your system fits together:
 
 ![Complete Digital Display Aerial](./images/complete-digital-display-aerial_minecraft.png)
-*Figure: Aerial view of the compact digital display system, with input `0011` producing a “3”. The modular layout connects the decoder, encoder, and display efficiently.*
+*Figure: Aerial view of the compact digital display system, with input `0011` producing a “3”. The modular layout connects the decoder, ROM, and display efficiently.*
 
-This top-down view highlights the elegance of your modular design. The decoder’s input bus, the encoder’s torch matrix, and the display’s segments are tightly packed yet clearly organized. While the torches in the encoder grid are less visible from this angle, refer to the Lesson 4.5 lookup table to confirm their placements.
+This top-down view highlights the elegance of your modular design. The decoder’s input bus, the ROM’s torch matrix, and the display’s segments are tightly packed yet clearly organized. While the torches in the ROM grid are less visible from this angle, refer to the Lesson 4.5 lookup table to confirm their placements.
 
-Here is the full schematic in CircuitVerse without subcircuit abstractions, showing the detailed wiring from 4-bit input through decoder and encoder to the 7-segment display. The layout and implementation align with our Minecraft build, and the input is currently set to `0011`, making the instructions above directly applicable.
+Here is the full schematic in CircuitVerse without subcircuit abstractions, showing the detailed wiring from 4-bit input through decoder and ROM to the 7-segment display. The layout and implementation align with our Minecraft build, and the input is currently set to `0011`, making the instructions above directly applicable.
 
 ![Full System in CircuitVerse](./images/complete-digital-display_circuitverse.png)
 
@@ -558,7 +558,7 @@ Congratulations! You’ve engineered a complete system that translates 4-bit bin
 
 #### Practice Problem 4.7.1: Knowledge Check
 
-1.  Why is a two-stage (Decoder → Encoder) design generally better than a single, complex circuit?
+1.  Why is a two-stage (Decoder → ROM) design generally better than a single, complex circuit?
 2.  What is the purpose of the **Repeater Tap** in our compact decoder? Why can't we just use Redstone dust?
 3.  In our Diode Matrix ROM, what does placing a **Torch Tap** at an intersection physically represent?
 
@@ -582,7 +582,7 @@ You want the lamp to be ON only when `B0` is `0`. Our active-low system turns th
 
 </details>
 
-#### Practice Problem 4.7.3: Encoder Design
+#### Practice Problem 4.7.3: ROM Design
 
 The letter 'A' can be made with segments `a, b, c, e, f, g`. According to the design of our ROM, which segment line is the *only one* that would **not** have a torch tap placed on it from the `LA` input line?
 
@@ -612,7 +612,7 @@ In the world download for this module, you will find a section labeled "Module 4
   - The digit `2` should be `a, b, g, e, d`.
   - The digit `6` is `a, c, d, e, f, g`.
 
-What is the single most likely point of failure in the system that would cause this specific error? (Hint: The problem is in the Encoder/ROM).
+What is the single most likely point of failure in the system that would cause this specific error? (Hint: The problem is in the ROM).
 
 <details>
 <summary><strong>Show Solution</strong></summary>
@@ -635,7 +635,7 @@ This points to a catastrophic failure in the "programming" of the `L2` line in y
 - **BCD (Binary-Coded Decimal)**: A method of representing the decimal digits `0`–`9` using a 4-bit binary code.
 - **Decoder**: A circuit that takes a multi-bit binary input and activates a single, corresponding output line. Our decoder acts as an **Identifier**.
 - **Diode Matrix**: A grid of input and output lines where components (like our taps) are placed at intersections to create a programmable logic device, often used as a ROM.
-- **Encoder**: A circuit that takes a single active input line and translates it into a multi-bit coded output. Our encoder acts as a **Mapper**.
+- **Encoder**: In standard usage, the inverse of a decoder: it takes one active line among many and produces a compact binary code. We do not build one in this course. Mapper stages like our ROM are sometimes loosely called encoders, but the name properly belongs to the binary-code producer.
 - **Modularity**: The engineering practice of designing a system in independent, interchangeable components. This makes the system easier to design, test, and upgrade.
 - **ROM (Read-Only Memory)**: A type of storage where data is permanently programmed into the hardware's structure.
 - **Tap (Repeater/Torch)**: Our term for a connection that reads a signal from a bus line to control another wire.
