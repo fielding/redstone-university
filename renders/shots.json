@@ -641,11 +641,14 @@
       "iso": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/hex-display_minecraft.png"
     },
     "height_tint": 0.85,
-    "tint": "red_concrete=aecf9c,pink_concrete=aecf9c,blue_concrete=e4b0ab,black_concrete=f5f1ea,white_wool=f5f1ea",
+    "tint": "light_blue_wool=7fb264,light_blue_concrete=7fb264,blue_wool=aecf9c,blue_concrete=aecf9c,light_gray_wool=c47a72,light_gray_concrete=c47a72,gray_wool=e4b0ab,gray_concrete=e4b0ab,cyan_wool=a8c4d6,black_concrete=f5f1ea,white_wool=f5f1ea",
     "swap": "",
     "legend": {
       "Decoder": "aecf9c",
-      "ROM": "e4b0ab"
+      "Decoder extension": "7fb264",
+      "ROM": "e4b0ab",
+      "ROM extension": "c47a72",
+      "Driver": "a8c4d6"
     }
   },
   "05_hex-display-digit": {
@@ -819,29 +822,6 @@
   "05_4-to-16-decoder": {
     "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
     "bounds": [
-      -349,
-      56,
-      -547,
-      -332,
-      63,
-      -512
-    ],
-    "views": [
-      "iso",
-      "top"
-    ],
-    "ground": "crop",
-    "height_tint": 0.85,
-    "tint": "red_concrete=aecf9c,pink_concrete=aecf9c,white_wool=f5f1ea",
-    "swap": "",
-    "place": {
-      "iso": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/4-to-16-decoder_minecraft.png",
-      "top": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/4-to-16-decoder-aerial_minecraft.png"
-    }
-  },
-  "05_hex-rom": {
-    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
-    "bounds": [
       -366,
       56,
       -547,
@@ -855,12 +835,43 @@
     ],
     "ground": "crop",
     "height_tint": 0.85,
-    "tint": "blue_concrete=e4b0ab,white_wool=f5f1ea",
+    "top_res": "3600x800",
+    "tint": "light_blue_wool=7fb264,light_blue_concrete=7fb264,blue_wool=aecf9c,blue_concrete=aecf9c,white_wool=f5f1ea",
     "swap": "",
+    "legend": {
+      "Original decoder": "aecf9c",
+      "Hex extension": "7fb264"
+    },
+    "place": {
+      "iso": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/4-to-16-decoder_minecraft.png",
+      "top": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/4-to-16-decoder-aerial_minecraft.png"
+    }
+  },
+  "05_hex-rom": {
+    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+    "bounds": [
+      -349,
+      56,
+      -547,
+      -332,
+      63,
+      -512
+    ],
+    "views": [
+      "iso",
+      "top"
+    ],
+    "ground": "crop",
+    "height_tint": 0.85,
+    "tint": "light_gray_wool=c47a72,light_gray_concrete=c47a72,gray_wool=e4b0ab,gray_concrete=e4b0ab,white_wool=f5f1ea",
+    "swap": "",
+    "legend": {
+      "Original ROM": "e4b0ab",
+      "Hex extension": "c47a72"
+    },
     "place": {
       "iso": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/hex-rom_minecraft.png",
       "top": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/hex-rom-aerial_minecraft.png"
-    },
-    "top_res": "3600x800"
+    }
   }
 }
