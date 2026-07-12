@@ -4,13 +4,13 @@
 
 ### A Note from the Instructor
 
-Welcome back, engineer! You just completed **Module 4**, our first large-scale, multi-part system. You connected a decoder to an encoder to a display, and you saw how breaking a big problem into smaller modules was the key to success.
+Welcome back, engineer! You just completed **Module 4**, our first large-scale, multi-part system. You connected a decoder to a ROM to a display, and you saw how breaking a big problem into smaller modules was the key to success.
 
 In the introduction to that module, we talked about the **Power of Abstraction**. Now, it's time to see what that looks like in practice, not just in Minecraft, but in the tools real engineers use. In **Lesson 4.2**, you saw this image:
 
 <div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/04b_digital-display-subcircuit-abstractions_circuitverse.png" alt="Digital Display Subcircuit Abstractions" width="512px"/><br/><em>Figure: The digital display system represented with subcircuits in CircuitVerse.</em></div><br/>
 
-You probably noticed that the decoder and encoder were shown as simple gray boxes, or **"black boxes,"** instead of the complex web of gates we built. This isn't just to make the diagram look clean; it's a fundamental technique in digital logic design.
+You probably noticed that the decoder and ROM were shown as simple gray boxes, or **"black boxes,"** instead of the complex web of gates we built. This isn't just to make the diagram look clean; it's a fundamental technique in digital logic design.
 
 In this short, optional interlude, we'll pull back the curtain on how this is done in CircuitVerse. Mastering this skill will make your designs cleaner, easier to manage, and will prepare you for the even more complex circuits we'll build in Part II.
 
@@ -55,7 +55,7 @@ This is the key to professional-looking diagrams. We need to arrange the input a
 1.  **Navigate to the Original Circuit Tab.** You must edit the layout from the source. The easiest way to do this is to simply **double-click** the subcircuit block you just placed on your canvas. This will jump you to the correct tab.
 2.  **Open the Layout Editor.** With nothing selected on the original circuit's canvas, look at the **Properties Panel** on the right side of the screen. Find and click the **Edit Layout** button.
 3.  **Arrange the Pins.** A new editor window will pop up showing the black box version of your circuit. You can now **click and drag** the input and output pins to new positions on the border of the block.
-    > **Pro Tip:** For our 4-to-10 decoder, a clean layout is to place the inputs (`B3` to `B0`) in order on the bottom edge, and the outputs (`L0` to `L9`) in order on the left edge. This will align perfectly with the inputs of our encoder in the final assembly.
+    > **Pro Tip:** For our 4-to-10 decoder, a clean layout is to place the inputs (`B3` to `B0`) in order on the bottom edge, and the outputs (`L0` to `L9`) in order on the left edge. This will align perfectly with the inputs of our ROM in the final assembly.
 4.  **Adjust and Save.** Use the **LAYOUT** panel on the right to adjust the block's **Width** and **Height**. Once you are happy with the layout, click **Save**.
 
 <div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/04b_subcircuit-layout-after.png" alt="Organized Subcircuit Layout" width="512px"/><br/><em>Figure: The edited layout with input and output pins neatly organized for clean wiring.</em></div><br/>
@@ -63,7 +63,7 @@ This is the key to professional-looking diagrams. We need to arrange the input a
 > **CRITICAL ENGINEERING TIP:**
 > As the CircuitVerse documentation advises, you must finalize your circuit layout **before** you start connecting wires to it. If you change the pin layout after wiring, CircuitVerse may break the connections. Do your layout work first!
 
-Now, your subcircuit is not only functional but also a clean, professional component that's easy to integrate. If you repeat this process for your 10-to-7 Encoder, you can recreate the exact "black box" diagram we saw at the beginning of this interlude.
+Now, your subcircuit is not only functional but also a clean, professional component that's easy to integrate. If you repeat this process for your 10-to-7 ROM, you can recreate the exact "black box" diagram we saw at the beginning of this interlude.
 
 ---
 

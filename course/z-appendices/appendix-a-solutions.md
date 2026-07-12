@@ -385,7 +385,7 @@ The digit `2` uses segments **`a`, `b`, `d`, `e`, and `g`**. Therefore, you woul
 
 ### Practice Problem 4.5.2: Debug Challenge
 
-When you test your encoder by providing a LOW signal to the `L4` line, you expect to see the digit `4` (segments `b, c, f, g`). Instead, the display shows `b, c, f` but **segment `g` remains dark**. What is the most likely cause of this error?
+When you test your ROM by providing a LOW signal to the `L4` line, you expect to see the digit `4` (segments `b, c, f, g`). Instead, the display shows `b, c, f` but **segment `g` remains dark**. What is the most likely cause of this error?
 
 **Answer:**
 
@@ -397,7 +397,7 @@ If a segment that should be ON is OFF, it means it is not receiving power. The m
 
 ### Practice Problem 4.7.1: Knowledge Check
 
-1.  Why is a two-stage (Decoder → Encoder) design generally better than a single, complex circuit?
+1.  Why is a two-stage (Decoder → ROM) design generally better than a single, complex circuit?
 2.  What is the purpose of the **Repeater Tap** in our compact decoder? Why can't we just use Redstone dust?
 3.  In our Diode Matrix ROM, what does placing a **Torch Tap** at an intersection physically represent?
 
@@ -423,7 +423,7 @@ You want the lamp to be ON only when `B0` is `0`. Our active-low system turns th
 ---
 
 
-### Practice Problem 4.7.3: Encoder Design
+### Practice Problem 4.7.3: ROM Design
 
 The letter 'A' can be made with segments `a, b, c, e, f, g`. According to the design of our ROM, which segment line is the *only one* that would **not** have a torch tap placed on it from the `LA` input line?
 
@@ -455,7 +455,7 @@ In the world download for this module, you will find a section labeled "Module 4
   - The digit `2` should be `a, b, g, e, d`.
   - The digit `6` is `a, c, d, e, f, g`.
 
-What is the single most likely point of failure in the system that would cause this specific error? (Hint: The problem is in the Encoder/ROM).
+What is the single most likely point of failure in the system that would cause this specific error? (Hint: The problem is in the ROM).
 
 **Answer:**
 

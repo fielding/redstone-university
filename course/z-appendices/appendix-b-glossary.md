@@ -111,7 +111,7 @@ This glossary compiles key terms from the Redstone University curriculum, organi
 : A classic shift-and-add-3 algorithm for converting binary numbers into BCD. [13]
 
 **Encoder**
-: A circuit that takes a single active input line and translates it into a multi-bit coded output. Our encoder acts as a **Mapper**. [4]
+: In standard usage, the inverse of a decoder: it takes one active line among many and produces a compact binary code. We do not build one in this course. Mapper stages like our ROM are sometimes loosely called encoders, but the name properly belongs to the binary-code producer. [4]
 
 **Equality comparator**
 : A comparator whose output is `1` only when two inputs are identical. [7]

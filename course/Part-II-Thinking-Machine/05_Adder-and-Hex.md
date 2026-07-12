@@ -374,7 +374,7 @@ Four steps is genuinely all it takes, and that is the point: you already know th
 
 #### Lab Part B: Upgrade the ROM
 
-1.  Extend the encoder/ROM so it now accepts all sixteen decoder lines.
+1.  Extend the ROM so it now accepts all sixteen decoder lines.
 2.  Program the segment patterns for `A` through `F`.
 3.  Test each new letter one at a time before reconnecting the full system.
 
