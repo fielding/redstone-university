@@ -253,16 +253,16 @@ This is the moment where the machine starts to feel truly processor-like. It can
 
 Back in Interlude I, we made you a promise: compact designs would matter "when
 you need to build dozens of them for an arithmetic unit." You have now built
-that arithmetic unit — and you built it wide, flat, and readable, exactly as
+that arithmetic unit, and you built it wide, flat, and readable, exactly as
 you should have. This lesson keeps the promise. We are going to take one bit
 of your ALU, compress it, and then show you the scaling trick that real
-machines — in Minecraft and in silicon — use to grow from 4 bits to 8, 16, or
+machines, in Minecraft and in silicon, use to grow from 4 bits to 8, 16, or
 64 without redesigning anything: **the bit-slice**.
 
 #### The key observation
 
 Look at your four calculation lanes. Bit 2's hardware is *identical* to bit
-1's. The only thing that differs between bits is which wires they connect to —
+1's. The only thing that differs between bits is which wires they connect to:
 their inputs, and the carry passing between neighbors. A machine like ours
 isn't really "a 4-bit ALU"; it is **one 1-bit ALU, stamped four times**. That
 repeating unit is called a bit-slice, and once you can build one slice, the
@@ -273,33 +273,33 @@ machine's width is just a number.
 So far, this course has been almost perfectly flat. Every circuit you have
 built lives on one floor, because flat circuits are readable circuits. But
 stacking slices means sending signals **up**, and vertical Redstone has its
-own small vocabulary — three tools and one warning:
+own small vocabulary. Three tools and one warning:
 
 -   **The dust staircase.** Dust climbs one block per step, diagonally. It is
     the vertical wire.
 -   **Transparent blocks (glass, slabs).** Dust sits on them and climbs over
-    them, but they refuse to pass power *through* themselves — which makes
+    them, but they refuse to pass power *through* themselves, which makes
     them perfect insulation between floors. A signal can climb past a floor
     it isn't allowed to touch.
 -   **Reading through the floor.** Dust weakly powers the solid block beneath
     it, and a repeater can read that block from the other side. This is how a
-    signal on one floor drops *into* the floor below without a staircase —
+    signal on one floor drops *into* the floor below without a staircase,
     the trick that makes 2-block-tall slices possible at all.
 -   **The warning:** a solid block directly above dust cuts its diagonal
     climb. When floors are packed this tightly, every ceiling block is part
     of the circuit, whether you meant it to be or not.
 
 *Figure placeholder: the three vertical idioms, rendered as a labeled
-iso — staircase, glass tower, through-floor read.*
+iso (staircase, glass tower, through-floor read).*
 
 #### Signal strength as data
 
 One more idea, and it is the deepest one in this lesson. Until now we have
 treated Redstone power as binary: powered or not. But you know from Module 0
-that power is really a number from 0 to 15 — and compact designs exploit
+that power is really a number from 0 to 15, and compact designs exploit
 that. A comparator in subtract mode doesn't just gate a signal; it does
 *arithmetic on signal strengths*. Two comparators pointed at each other's
-inputs compute |A − B| — which, for binary inputs, **is XOR**. One block,
+inputs compute |A − B|, which, for binary inputs, **is XOR**. One block,
 where our verbose XOR needed a dozen.
 
 This is why compact builds lean so heavily on the comparators you met in
@@ -318,7 +318,7 @@ in-world build; figure placeholders below.*
     carry. You built it in Lesson 9.2; now draw its truth table one more time.
 2.  **Build the compact slice from the layer map.** Two layers: a *rail
     layer* (inputs, first XOR, output lamp) and a *logic layer* (second XOR
-    and carry). You are not designing this circuit — you are reading someone
+    and carry). You are not designing this circuit; you are reading someone
     else's schematic and building it faithfully, which is itself an
     engineering skill. Verify it against the same truth table.
 3.  **Stack four slices.** The carry climbs a dedicated column from each
@@ -329,7 +329,7 @@ in-world build; figure placeholders below.*
 *Figure placeholder: legible slice and compact slice side by side, same
 tint on the matching subcircuits.*
 *Figure placeholder: the 4-stack, exploded view, carry column highlighted.*
-*Figure placeholder: top-down view of one slice — note that this single
+*Figure placeholder: top-down view of one slice; note that this single
 image documents the entire machine.*
 
 #### Why we still built it flat first
@@ -338,7 +338,7 @@ You could not have debugged the compact slice as your first adder. When your
 flat adder misbehaved, you could *see* the stuck carry. In the compact stack,
 that same bug lives inside a sandwich of floors, encoded as a signal
 strength. Engineers everywhere work this way: design readable, then compress
-with confidence, because the truth table — not the layout — is the circuit.
+with confidence, because the truth table, not the layout, is the circuit.
 From here on, when a module's final build grows to machine scale, we will
 offer both shapes: the flat build you can trace, and the sliced build you
 can stack.

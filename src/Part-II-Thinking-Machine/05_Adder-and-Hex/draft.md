@@ -56,13 +56,17 @@ Here are the four possible outcomes for adding two bits:
 
 That last row is the important one. When both inputs are `1`, the result cannot fit in a single bit. So we write `0` in the current column and carry `1` to the next column.
 
-Let’s work through `5 + 3`:
+Let’s work through `5 + 3`, writing the carries above the columns the way you would on paper:
 
-```text
-  0101   (5)
-+ 0011   (3)
-------
-```
+$$
+\begin{array}{cccccl}
+  & \scriptstyle\textcolor{gray}{1} & \scriptstyle\textcolor{gray}{1} & \scriptstyle\textcolor{gray}{1} & & \scriptstyle\textcolor{gray}{\text{carries}} \\
+  & 0 & 1 & 0 & 1 & \quad(5) \\
++ & 0 & 0 & 1 & 1 & \quad(3) \\
+\hline
+  & 1 & 0 & 0 & 0 & \quad(8)
+\end{array}
+$$
 
 We add from right to left:
 
@@ -88,10 +92,10 @@ And it must produce **two** outputs:
 
 That little 3-input, 2-output circuit is called a **full adder**. It is the LEGO brick of arithmetic.
 
-Its logic is:
+Its logic is, in the dual notation from Module 3:
 
--   **Sum:** $A \oplus B \oplus CarryIn$
--   **Carry-Out:** $(A \land B) \lor (CarryIn \land (A \oplus B))$
+-   **Sum:** $A \text{ XOR } B \text{ XOR } CarryIn$ : $A \oplus B \oplus CarryIn$
+-   **Carry-Out:** $(A \text{ AND } B) \text{ OR } (CarryIn \text{ AND } (A \text{ XOR } B))$ : $(A \land B) \lor (CarryIn \land (A \oplus B))$
 
 There is a nice intuition hiding here:
 
@@ -155,7 +159,10 @@ A quick test plan:
 | `1` | `1` | `1` | `1` | `1` |
 
 ![1-Bit Full Adder Minecraft Build](./images/full-adder_minecraft.png)
-*Figure: The 1-bit full adder module in Minecraft, set to the same `1 + 1 + 0` as the diagram above — both input lamps lit, the Sum lamp dark, and the Carry-Out lamp glowing.*
+*Figure: The 1-bit full adder module in Minecraft, set to the same `1 + 1 + 0` as the diagram above: both input lamps lit, the Sum lamp dark, and the Carry-Out lamp glowing.*
+
+![1-Bit Full Adder (plan view)](./images/full-adder-aerial_minecraft.png)
+*Figure: The same `1 + 1 + 0` from directly above: the `A` and `B` levers at the bottom both on, the Carry-In lever at the right off, and the same verdict as the iso, Sum dark and Carry-Out lit.*
 
 #### Lab Part B: Assemble the 4-bit ripple-carry adder
 
@@ -174,7 +181,7 @@ A quick test plan:
 6.  Keep the final `CarryOut` wire accessible. We are going to need it in the next module.
 
 ![4-Bit Ripple-Carry Adder Minecraft Build](./images/4-bit-rca-aerial_minecraft.png)
-*Figure: The full 4-bit ripple-carry adder in Minecraft, seen from above and computing the same `5 + 3` as the diagram — four copies of the same full-adder module in a row, the carry rippling from the least-significant stage on the right toward the most-significant on the left, and only the leftmost Sum lamp lit: `1000`.*
+*Figure: The full 4-bit ripple-carry adder in Minecraft, seen from above and computing the same `5 + 3` as the diagram. Four copies of the same full-adder module in a row, the carry rippling from the least-significant stage on the right toward the most-significant on the left, and only the leftmost Sum lamp lit: `1000`.*
 
 #### The experiment
 
@@ -197,6 +204,11 @@ Now for the fun part. Let’s connect our new adder to the display system from M
 
 #### The test
 
+A quick word before you place a single block: this step is small. You are not rebuilding anything you see in the figures. The adder exists. The display exists. The only new construction is the connection between them: four redstone lines, one bit each, from the adder’s four `Sum` outputs to the decoder’s four inputs.
+
+![The adder wired to the display, from above](./images/integration-bug-aerial_minecraft.png)
+*Figure: The whole integration from above, adder on the right, display system on the left. Everything here is something you already built except the four wires carrying the Sum bits across the gap into the decoder.*
+
 1.  Wire the adder’s 4-bit `Sum` bus into the input of your display decoder.
 2.  Try a case that stays inside the decimal range we already support:
     -   $4 + 3$
@@ -216,10 +228,10 @@ The adder works.
 And the display goes blank.
 
 ![The integration bug in Minecraft](./images/integration-bug_minecraft.png)
-*Figure: The moment it fails, in the world — `8` and `4` on the input levers, the powered rails carrying the adder's `1100` into the decoder, and the display dark. Every subsystem did its job.*
+*Figure: The moment it fails, in the world: `8` and `4` on the input levers, the powered rails carrying the adder's `1100` into the decoder, and the display dark. Every subsystem did its job.*
 
 ![The display system receiving 1100](./images/4-bit-binary-to-display-abstract-1100_circuitverse.png)
-*Figure: The bug, exactly as the hardware sees it. The adder hands the display system `1100` — but the 4-to-10 decoder only knows the ten patterns for `0` through `9`. No output line fires, the ROM stays quiet, and the display shows nothing.*
+*Figure: The bug, exactly as the hardware sees it. The adder hands the display system `1100`, but the 4-to-10 decoder only knows the ten patterns for `0` through `9`. No output line fires, the ROM stays quiet, and the display shows nothing.*
 
 #### The diagnosis
 
@@ -288,7 +300,7 @@ That is why hexadecimal is everywhere in low-level programming, debugging, and c
 This is one of the most satisfying moments in the course. We are about to benefit directly from the modular architecture we chose in Module 4.
 
 ![Hexadecimal Display System Abstract Diagram](./images/4-bit-binary-to-hexadecimal-display-abstract_circuitverse.png)
-*Figure: The upgraded display system as two clean stages — a 4-to-16 decoder feeding a hex decoder/driver. Shown reading `0101` and displaying `5`.*
+*Figure: The upgraded display system as two clean stages, a 4-to-16 decoder feeding a hex decoder/driver. Shown reading `0101` and displaying `5`.*
 
 #### Lab Part A: Upgrade the decoder
 
@@ -304,7 +316,7 @@ This is one of the most satisfying moments in the course. We are about to benefi
 4.  Use the same tap logic from Module 4. Each new line simply recognizes one more identity pattern.
 
 ![4-to-16 Decoder CircuitVerse Diagram](./images/4-to-16-decoder_circuitverse.png)
-*Figure: The full 4-to-16 binary decoder. Sixteen output lines, one per 4-bit pattern — here the input `1111` activates line `LF`.*
+*Figure: The full 4-to-16 binary decoder. Sixteen output lines, one per 4-bit pattern; here the input `1111` activates line `LF`.*
 
 #### Lab Part B: Upgrade the ROM
 
@@ -324,13 +336,13 @@ A common 7-segment convention is:
 -   `F`: segments `a, e, f, g`
 
 ![The hex letters on a 7-segment display](./images/hex-letters-7seg_circuitverse.png)
-*Figure: The six letter patterns on the display — `A` through `F`, with `B` and `D` in their lowercase-looking forms.*
+*Figure: The six letter patterns on the display: `A` through `F`, with `B` and `D` in their lowercase-looking forms.*
 
 ![7-Segment Hex Decoder/Driver CircuitVerse Diagram](./images/7-segment-hex-decoder-driver_circuitverse.png)
-*Figure: The extended decoder/driver ROM — all sixteen line inputs, one OR column per segment.*
+*Figure: The extended decoder/driver ROM: all sixteen line inputs, one OR column per segment.*
 
 ![Hexadecimal Display System Aerial View](./images/hex-display-aerial_minecraft.png)
-*Figure: The upgraded display system from above — the 4-bit input bus enters at the right, the 4-to-16 decoder's sixteen lines run down into the diode-matrix ROM, and the seven segment lines exit to the display.*
+*Figure: The upgraded display system from above. The 4-bit input bus enters at the right, the 4-to-16 decoder's sixteen lines run down into the diode-matrix ROM, and the seven segment lines exit to the display.*
 
 #### The payoff test
 
@@ -349,13 +361,13 @@ Now the system should behave like this:
 Bug fixed. System upgraded. No rebuild required.
 
 ![The payoff schematic](./images/rca-hex-display_circuitverse.png)
-*Figure: The whole system as one schematic — the ripple-carry adder feeding the upgraded display chain, computing `8 + 4` and driving a `C`.*
+*Figure: The whole system as one schematic: the ripple-carry adder feeding the upgraded display chain, computing `8 + 4` and driving a `C`.*
 
 ![The payoff in Minecraft](./images/rca-hex-display_minecraft.png)
-*Figure: The module artifact — the 4-bit adder wired to the hexadecimal display, computing `8 + 4` and showing `C`.*
+*Figure: The module artifact: the 4-bit adder wired to the hexadecimal display, computing `8 + 4` and showing `C`.*
 
 ![Hexadecimal Display System Minecraft Build](./images/hex-display_minecraft.png)
-*Figure: The complete upgraded display system in Minecraft — decoder, ROM, and 7-segment display.*
+*Figure: The complete upgraded display system in Minecraft: decoder, ROM, and 7-segment display.*
 
 ---
 
@@ -401,12 +413,15 @@ The most likely fault is that the **carry from the third stage is not reaching t
 
 `7 + 1` is:
 
-```text
-0111
-0001
-----
-1000
-```
+$$
+\begin{array}{cccccl}
+  & \scriptstyle\textcolor{gray}{1} & \scriptstyle\textcolor{gray}{1} & \scriptstyle\textcolor{gray}{1} & & \\
+  & 0 & 1 & 1 & 1 & \quad(7) \\
++ & 0 & 0 & 0 & 1 & \quad(1) \\
+\hline
+  & 1 & 0 & 0 & 0 & \quad(8)
+\end{array}
+$$
 
 This result depends on the carry rippling through multiple stages. If one carry link is broken, the highest stage never receives the signal it needs to produce the leading `1`.
 
