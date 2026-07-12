@@ -31,19 +31,26 @@ def extract_solutions_from_file(md_content: str, file_path: str):
     - 12b.5.2
     """
     solutions = []
+    # title is single-line; the question body between the heading and the
+    # <details> block is captured separately (the old greedy title capture
+    # swallowed the question list into the H3, and markdown then renumbered
+    # the adjacent answers list 4, 5, 6)
     pattern = re.compile(
-        r"^####\s+Practice Problem\s+([\dA-Za-z\.]+):\s*(.*?)\s*\n(<details>.*?</details>)",
+        r"^####\s+Practice Problem\s+([\dA-Za-z\.]+):\s*([^\n]*)\n(.*?)(<details>.*?</details>)",
         re.MULTILINE | re.DOTALL,
     )
 
     for match in pattern.finditer(md_content):
-        problem_id, problem_title, details_block = match.groups()
+        problem_id, problem_title, question_body, details_block = match.groups()
         problem_title = problem_title.strip()
+        question_body = question_body.strip()
 
-        inner_content_match = re.search(r"<summary>.*?</summary>(.*)", details_block, re.DOTALL)
+        # bounded capture: the closing </details> tag stays out of the output
+        inner_content_match = re.search(
+            r"<summary>.*?</summary>(.*?)</details>", details_block, re.DOTALL)
         inner_content = inner_content_match.group(1).strip() if inner_content_match else ""
 
-        solutions.append((problem_id, problem_title, inner_content))
+        solutions.append((problem_id, problem_title, question_body, inner_content))
         print(f"  - Extracted solution for Problem {problem_id} from {file_path}")
 
     return solutions
@@ -75,9 +82,14 @@ def main():
     ]
 
     solution_count = 0
-    for problem_id, problem_title, inner_content in all_solutions:
+    for problem_id, problem_title, question_body, inner_content in all_solutions:
         solution_count += 1
         appendix_content.append(f"### Practice Problem {problem_id}: {problem_title}\n")
+        if question_body:
+            appendix_content.append(question_body + "\n")
+        # a non-list paragraph between the question list and the answer list,
+        # so renderers don't merge them into one renumbered list
+        appendix_content.append("**Answer:**\n")
         appendix_content.append(inner_content)
         appendix_content.append("\n\n---\n\n")
 

@@ -57,11 +57,16 @@ def extract_key_terms_from_md(md_content, file_path, module_num=None):
     Extract key terms and definitions from '#### Key Terms' sections.
     Returns a list of (term, definition, module_num) tuples.
     """
+    # continuation lines stop at list items AND at headings — without the
+    # heading guard, the last term's definition swallows whatever section
+    # follows the Key Terms block (e.g. a module conclusion with no ---
+    # separator, which is how Module 1's conclusion ended up inside the
+    # glossary's R entries)
     pattern = re.compile(
-        r"^####\s*Key Terms\s*\n((?:-\s*\*\*[^*]+\*\*:[^\n]*(?:\n+(?!\s*-)[^\n]*)*\n*)+)",
+        r"^####\s*Key Terms\s*\n((?:-\s*\*\*[^*]+\*\*:[^\n]*(?:\n+(?!\s*[-#])[^\n]*)*\n*)+)",
         re.MULTILINE | re.DOTALL,
     )
-    term_pattern = re.compile(r"-\s*\*\*([^*]+?)\*\*:\s*((?:[^\n]*(?:\n+(?!\s*-)[^\n]*)*))(?=\s*(?:-|\n|$))", re.DOTALL)
+    term_pattern = re.compile(r"-\s*\*\*([^*]+?)\*\*:\s*((?:[^\n]*(?:\n+(?!\s*[-#])[^\n]*)*))(?=\s*(?:-|\n|$))", re.DOTALL)
     all_terms = []
 
     matches = pattern.finditer(md_content)
@@ -139,13 +144,19 @@ def main():
         "organized alphabetically. Each term’s definition is followed by a footnote "
         "indicating the module where it is introduced.\n"
     ]
+    # dedupe by token-set signature, not exact string: "BCD (Binary-Coded
+    # Decimal)" and "Binary-Coded Decimal (BCD)" are the same glossary entry
+    def term_signature(t: str) -> str:
+        return " ".join(sorted(re.findall(r"[a-z0-9]+", t.lower())))
+
     seen_terms = set()
     unique_terms = []
     for term, definition, module in sorted_terms:
-        if term in seen_terms:
+        sig = term_signature(term)
+        if sig in seen_terms:
             print(f"⚠️ Warning: Duplicate term '{term}' in Module {module}. Keeping first definition.")
             continue
-        seen_terms.add(term)
+        seen_terms.add(sig)
         unique_terms.append((term, definition, module))
         appendix_content.append(f"**{term}**\n: {definition} [{module}]\n")
 
