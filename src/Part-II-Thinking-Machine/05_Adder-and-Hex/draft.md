@@ -320,6 +320,12 @@ This is one of the most satisfying moments in the course. We are about to benefi
 ![4-to-16 Decoder CircuitVerse Diagram](./images/4-to-16-decoder_circuitverse.png)
 *Figure: The full 4-to-16 binary decoder. Sixteen output lines, one per 4-bit pattern; here the input `1111` activates line `LF`.*
 
+![4-to-16 Decoder Minecraft Build](./images/4-to-16-decoder_minecraft.png)
+*Figure: The upgraded decoder in the world, built standalone before wiring it in: the same tap language as Module 4, extended to cover every 4-bit pattern, one output lamp per line.*
+
+![4-to-16 Decoder (plan view)](./images/4-to-16-decoder-aerial_minecraft.png)
+*Figure: The decoder matrix from above: the input bus rails crossing every line column.*
+
 #### Lab Part B: Upgrade the ROM
 
 1.  Extend the encoder/ROM so it now accepts all sixteen decoder lines.
@@ -343,8 +349,14 @@ A common 7-segment convention is:
 ![7-Segment Hex Decoder/Driver CircuitVerse Diagram](./images/7-segment-hex-decoder-driver_circuitverse.png)
 *Figure: The extended decoder/driver ROM: all sixteen line inputs, one OR column per segment.*
 
+![Extended ROM Minecraft Build](./images/hex-rom_minecraft.png)
+*Figure: The extended ROM in the world, built standalone. The tap pattern is the programming, the same language as Module 4, now covering letters as well as digits.*
+
+![Extended ROM (plan view)](./images/hex-rom-aerial_minecraft.png)
+*Figure: The ROM from above: every tap along the rails is one stored bit of the segment patterns.*
+
 ![Hexadecimal Display System Aerial View](./images/hex-display-aerial_minecraft.png)
-*Figure: The upgraded display system from above. The 4-bit input bus enters at the right, the 4-to-16 decoder's sixteen lines run down into the diode-matrix ROM, and the seven segment lines exit to the display.*
+*Figure: The upgraded display system from above, set to `1100`: the 4-bit input bus runs along the top, fans out across all sixteen line columns, and the collected segment lines exit at the right into the panel.*
 
 #### The payoff test
 
@@ -369,7 +381,7 @@ Bug fixed. System upgraded. No rebuild required.
 *Figure: The module artifact: the 4-bit adder wired to the hexadecimal display, computing `8 + 4` and showing `C`.*
 
 ![Hexadecimal Display System Minecraft Build](./images/hex-display_minecraft.png)
-*Figure: The complete upgraded display system in Minecraft: decoder, ROM, and 7-segment display.*
+*Figure: The complete upgraded display system in Minecraft: decoder, ROM, and 7-segment display, set to `1100` and showing `C`.*
 
 ---
 

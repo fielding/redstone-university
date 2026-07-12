@@ -624,12 +624,12 @@
   "05_hex-display": {
     "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
     "bounds": [
-      -48,
-      55,
-      -136,
-      -12,
-      72,
-      -65
+      -403,
+      56,
+      -546,
+      -377,
+      69,
+      -501
     ],
     "views": [
       "iso",
@@ -639,6 +639,13 @@
     "place": {
       "top": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/hex-display-aerial_minecraft.png",
       "iso": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/hex-display_minecraft.png"
+    },
+    "height_tint": 0.85,
+    "tint": "red_concrete=aecf9c,pink_concrete=aecf9c,blue_concrete=e4b0ab,black_concrete=f5f1ea,white_wool=f5f1ea",
+    "swap": "",
+    "legend": {
+      "Decoder": "aecf9c",
+      "ROM": "e4b0ab"
     }
   },
   "05_hex-display-digit": {
@@ -808,5 +815,52 @@
     },
     "top_azimuth": 180,
     "top_res": "1620x1900"
+  },
+  "05_4-to-16-decoder": {
+    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+    "bounds": [
+      -349,
+      56,
+      -547,
+      -332,
+      63,
+      -512
+    ],
+    "views": [
+      "iso",
+      "top"
+    ],
+    "ground": "crop",
+    "height_tint": 0.85,
+    "tint": "red_concrete=aecf9c,pink_concrete=aecf9c,white_wool=f5f1ea",
+    "swap": "",
+    "place": {
+      "iso": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/4-to-16-decoder_minecraft.png",
+      "top": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/4-to-16-decoder-aerial_minecraft.png"
+    }
+  },
+  "05_hex-rom": {
+    "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
+    "bounds": [
+      -366,
+      56,
+      -547,
+      -357,
+      61,
+      -501
+    ],
+    "views": [
+      "iso",
+      "top"
+    ],
+    "ground": "crop",
+    "height_tint": 0.85,
+    "tint": "blue_concrete=e4b0ab,white_wool=f5f1ea",
+    "swap": "",
+    "place": {
+      "iso": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/hex-rom_minecraft.png",
+      "top": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/hex-rom-aerial_minecraft.png"
+    },
+    "top_res": "3600x800"
   }
 }
