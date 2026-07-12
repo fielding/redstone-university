@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { LIVE_PARTS } from '../utils/gating';
+import { hasLiveContent } from '../utils/gating';
 
 const parts = [
 	{
@@ -35,7 +35,7 @@ const parts = [
 		meta: 'Advanced track',
 		advanced: true,
 	},
-].map((p) => ({ ...p, live: LIVE_PARTS.has(p.dir) }));
+].map((p) => ({ ...p, live: hasLiveContent(p.dir) }));
 ---
 
 <Layout title="Redstone University">
