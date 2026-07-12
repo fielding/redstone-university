@@ -45,7 +45,7 @@ These are the pieces you’ll see over and over. They are the alphabet we will u
 | **Redstone Lamp** | ![Redstone Lamp Icon](./images/icon_redstone-lamp.png) | **Output Indicator:** Lets us see the result of a calculation. | A block that lights up when powered. We use it to visualize the state of our circuits. |
 | **Redstone Repeater** | ![Redstone Repeater Icon](./images/icon_redstone-repeater.png) | **Signal Booster & Diode:** Essential for complex builds. | Extends a Redstone signal back to full strength (`15`) and acts as a one-way **diode** to prevent signals from flowing backward. |
 | **Solid Block** | ![Solid Block Icon](./images/icon_solid-block.png) | **Conductor & Insulator:** The physical structure of our machine. | A non-transparent block like Stone or Wool. It can be powered by Redstone components and transmit that power to adjacent components. |
-| **Redstone Comparator** | ![Redstone Comparator Icon](./images/icon_redstone-comparator.png) | **Advanced Tool (Future Exploration)** | This is a powerful Redstone component with special comparison and subtraction modes. We will not need it for the core builds right away, but it is useful to know it exists. |
+| **Redstone Comparator** | ![Redstone Comparator Icon](./images/icon_redstone-comparator.png) | **Advanced Tool (Future Exploration)** | A Redstone component with special comparison and subtraction modes. We will not need it for the core builds right away, but it is useful to know it exists. |
 
 ---
 
@@ -63,7 +63,7 @@ A Redstone signal has a "strength" from `15` (full power) down to `0` (off).
 
 #### Rule 2: Strong vs. Weak Powering
 
-This is a critical concept. Blocks can be powered in two ways, and what they can do depends on how they are powered.
+Blocks can be powered in two ways, and what they can do depends on how they are powered.
 
 | | **Strong Power** | **Weak Power** |
 | :--- | :--- | :--- |
