@@ -100,6 +100,10 @@ There is a nice intuition hiding here:
 -   The **Sum** bit is `1` when an **odd number** of the three inputs are `1`.
 -   The **Carry-Out** bit is `1` when **at least two** of the three inputs are `1`.
 
+Test both rules on the heaviest column you will ever meet, `1 + 1 + 1`: an odd count of ones makes Sum `1`, and at least two ones raise the carry, so the column answers `1` and carries `1`.
+
+Builders usually give the shared piece of that logic a name. Call $P = A \oplus B$, with P for *propagate*, and the two rules compress to $Sum = P \oplus CarryIn$ and $CarryOut = (A \land B) \lor (P \land CarryIn)$. The carry side is doing two jobs: $A \land B$ *generates* a brand-new carry, and $P \land CarryIn$ *propagates* one that arrived from the column to the right. Keep those two words; they make the wiring much easier to remember.
+
 That is exactly what we need the hardware to do.
 
 ---
@@ -110,7 +114,7 @@ That is exactly what we need the hardware to do.
 
 > **A note for the curious: why skip the half adder?**
 >
-> Many digital logic courses introduce the **half adder** first. That is a valid teaching path, but in this course I want to bias toward reusable parts. A half adder is only useful when there is no carry coming in. A **full adder** works everywhere. Once you understand it, you can build the whole adder out of one repeated module.
+> Many digital logic courses introduce the **half adder** first. That is a valid teaching path, but in this course I want to bias toward reusable parts. A half adder is only useful when there is no carry coming in. A **full adder** works everywhere. Once you understand it, you can build the whole adder out of one repeated module. For the vocabulary's sake: the first XOR and AND pair inside a full adder *is* a half adder. We just never package it as its own build.
 
 #### The concept: the 1-bit full adder
 
@@ -118,6 +122,21 @@ A full adder has:
 
 -   inputs: `A`, `B`, `CarryIn`
 -   outputs: `Sum`, `CarryOut`
+
+Its complete definition is the truth table, all eight input combinations:
+
+| A | B | CarryIn | Sum | CarryOut |
+| :---: | :---: | :---: | :---: | :---: |
+| `0` | `0` | `0` | `0` | `0` |
+| `0` | `0` | `1` | `1` | `0` |
+| `0` | `1` | `0` | `1` | `0` |
+| `0` | `1` | `1` | `0` | `1` |
+| `1` | `0` | `0` | `1` | `0` |
+| `1` | `0` | `1` | `0` | `1` |
+| `1` | `1` | `0` | `0` | `1` |
+| `1` | `1` | `1` | `1` | `1` |
+
+Check Lesson 5.1's two rules against any row: Sum is `1` in exactly the odd-count rows, and CarryOut in every row with at least two ones. The table is also your test plan; when the build is done, you will walk all eight rows.
 
 A standard implementation uses:
 
@@ -140,20 +159,7 @@ Build that once, test it thoroughly, and then repeat it.
     -   A second AND gate computes $CarryIn \land (A \oplus B)$.
     -   OR those two results together to produce `CarryOut`.
 4.  Label the two outputs clearly.
-5.  Test all eight input combinations.
-
-A quick test plan:
-
-| A | B | CarryIn | Expected Sum | Expected CarryOut |
-| :---: | :---: | :---: | :---: | :---: |
-| `0` | `0` | `0` | `0` | `0` |
-| `0` | `0` | `1` | `1` | `0` |
-| `0` | `1` | `0` | `1` | `0` |
-| `0` | `1` | `1` | `0` | `1` |
-| `1` | `0` | `0` | `1` | `0` |
-| `1` | `0` | `1` | `0` | `1` |
-| `1` | `1` | `0` | `0` | `1` |
-| `1` | `1` | `1` | `1` | `1` |
+5.  Test all eight rows of the truth table above. Every row that passes is a row you never have to doubt again.
 
 <div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/05_full-adder_minecraft.png" alt="1-Bit Full Adder Minecraft Build" width="512px"/><br/><em>Figure: The 1-bit full adder module in Minecraft, set to the same `1 + 1 + 0` as the diagram above: both input lamps lit, the Sum lamp dark, and the Carry-Out lamp glowing.</em></div><br/>
 
@@ -163,11 +169,13 @@ A quick test plan:
 
 <div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/05_4-bit-rca_circuitverse.png" alt="4-Bit Ripple-Carry Adder CircuitVerse Diagram" width="512px"/><br/><em>Figure: Four full-adder modules chained into a 4-bit ripple-carry adder. Each stage's Carry-Out feeds the next stage's Carry-In. Shown computing `0101 + 0011` (the `5 + 3` from Lesson 5.1): the carry ripples through every stage and the result reads `1000`.</em></div><br/>
 
-1.  Create two 4-bit input buses: **Input A** and **Input B**.
-2.  Place four copies of your full adder in a row, one for each bit position.
-3.  Wire the least-significant stage:
+> **Orientation check:** the least-significant stage goes on the RIGHT. The carry is born there and ripples left, exactly like the columns in Lesson 5.1.
+
+1.  Duplicate your Module 1 input panel so you have two independent 4-bit inputs. Label the first `A3 A2 A1 A0` and the second `B3 B2 B1 B0`.
+2.  Place four copies of your full adder in a row, one for each bit position, and label the stages `FA0` through `FA3`, starting from the right.
+3.  Wire `FA0`, the least-significant stage:
     -   Connect $A_0$ and $B_0$.
-    -   Tie its `CarryIn` to `0`.
+    -   Give its `CarryIn` a labeled terminal, `CIN`, and set it to `0`. It looks pointless today. Module 6 will drive it on purpose.
 4.  Wire the next three stages:
     -   Connect $A_1$/$B_1$, then $A_2$/$B_2$, then $A_3$/$B_3$.
     -   Connect each stage’s `CarryOut` to the next stage’s `CarryIn`.
@@ -178,14 +186,16 @@ A quick test plan:
 
 #### The experiment
 
-Run these test cases before moving on:
+Run these cases before moving on. The carry columns are the debugging gold: `C1` is `FA0`'s CarryOut, `C2` is `FA1`'s, and so on, with `C4` the final CarryOut. If a result is wrong, check the carries and you will know exactly which stage to blame.
 
--   `0001 + 0001 = 0010`
--   `0011 + 0010 = 0101`
--   `0101 + 0011 = 1000`
--   `0111 + 0001 = 1000`
+| Test | Result | C1 | C2 | C3 | C4 |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| `0001 + 0001` | `0010` | `1` | `0` | `0` | `0` |
+| `0011 + 0010` | `0101` | `0` | `1` | `0` | `0` |
+| `0101 + 0011` | `1000` | `1` | `1` | `1` | `0` |
+| `0111 + 0001` | `1000` | `1` | `1` | `1` | `0` |
 
-If a result is off by exactly `2`, `4`, or `8`, the most likely problem is that one stage’s `CarryOut` is not reaching the next stage’s `CarryIn`.
+If a result is off by exactly `2`, `4`, or `8`, the most likely problem is a broken carry link into that stage.
 
 ---
 
@@ -238,8 +248,16 @@ We asked a correct subsystem to interpret a value that lies outside its vocabula
 
 Two lessons fall out of this failure:
 
-1.  **Integration reveals truths that isolated testing cannot.** Every test we ran on the adder passed. Every test we ran on the display passed. The bug lived in the wiring between two green test suites.
+1.  **Integration reveals truths that isolated testing cannot.** Every test we ran on the adder passed. Every test we ran on the display passed. The bug lived in the space between them, where no test was looking.
 2.  **Hardware is only as capable as the assumptions built into it.** The decoder is not broken. It was built for a world where every answer fits in one decimal digit, and our adder just left that world.
+
+There is a precise name for what broke: the **interface contract**. Each subsystem keeps its own promise, and the promises do not line up.
+
+| Subsystem | Its contract |
+| :--- | :--- |
+| Adder `Sum` bus | may output any pattern from `0000` to `1111` |
+| BCD decoder | defines behavior only for `0000` to `1001` |
+| The gap | six legal patterns, `1010` to `1111`, that nobody owns |
 
 So the fix has to start somewhere unusual: not in the circuit, but in the way we write numbers down.
 
@@ -247,7 +265,7 @@ So the fix has to start somewhere unusual: not in the circuit, but in the way we
 
 ### Lesson 5.4: The programmer's solution – Speaking hexadecimal
 
-> **Key Takeaway:** Hexadecimal is not a strange extra number system. It is simply the most compact human-readable way to write a 4-bit binary value.
+> **Key Takeaway:** Hexadecimal is not a strange extra number system. It is the standard human-readable shorthand for 4-bit binary values: one symbol per nibble, no conversion arithmetic.
 
 We now have a choice.
 
@@ -286,7 +304,11 @@ Hexadecimal is base-16, so it gives us exactly one symbol for each possible 4-bi
 So when the adder outputs `1100`, we do not need to think “the display failed.”
 We can think “the machine just said `C`.”
 
-#### Why sixteen works and ten never will
+> **Two different limits, one fixed today**
+> Hexadecimal gives us a symbol for all sixteen patterns the adder's four `Sum` wires can carry. That is the limit we are fixing in this module.
+> Some additions overflow into a fifth bit on `CarryOut`, and no notation can make a fifth bit fit in four. That is a different limit, and it is Module 6's whole opening act.
+
+#### Why sixteen lines up and ten never will
 
 Sixteen is not an arbitrary choice. Sixteen is $2^4$, and that one fact does all the work: each hex digit covers exactly one **nibble**, a 4-bit group, no more and no less. Ten has no such relationship with binary, and that mismatch is the entire reason our decimal decoder ran out of vocabulary at `1010`.
 
@@ -298,7 +320,7 @@ $$
 
 No long division, no arithmetic. And it scales: an 8-bit value is two hex digits, a 16-bit value is four, and a 64-bit memory address is sixteen. The reading trick you just learned on our little display works on every machine you will ever touch.
 
-One convention before we move on: programmers write hex with a `0x` prefix, so `0xC` means “`C`, the number” rather than “`C`, the letter.” You will see that prefix for the rest of the course.
+One convention before we move on: in most programming languages, and everywhere in this course, hexadecimal wears a `0x` prefix, so `0xC` means “`C`, the number” rather than “`C`, the letter.” You will see that prefix for the rest of the course.
 
 #### Try it
 
@@ -399,6 +421,16 @@ Now the system should behave like this:
 
 Bug fixed. System upgraded. No rebuild required.
 
+One test is not a regression suite, though. Run the spread:
+
+| Test | Display | Why it matters |
+| :--- | :---: | :--- |
+| `4 + 3` | `7` | the old decimal range still works |
+| `8 + 2` | `A` | the first pattern the old display could never say |
+| `8 + 4` | `C` | the original failure, now the acceptance test |
+| `8 + 7` | `F` | the very top of the 4-bit range |
+| `F + 1` | `0` | the Sum wires wrap around to `0000` and `CarryOut` raises its hand. Hold that thought for Module 6 |
+
 <div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/05_rca-hex-display_circuitverse.png" alt="The payoff schematic" width="512px"/><br/><em>Figure: The whole system as one schematic: the ripple-carry adder feeding the upgraded display chain, computing `8 + 4` and driving a `C`.</em></div><br/>
 
 <div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/05_rca-hex-display_minecraft.png" alt="The payoff in Minecraft" width="512px"/><br/><em>Figure: The module artifact: the 4-bit adder wired to the hexadecimal display, computing `8 + 4` and showing `C`.</em></div><br/>
@@ -431,7 +463,7 @@ What is the single most likely fault in the adder?
 <details>
 <summary><strong>Show Solution</strong></summary>
 
-The most likely fault is that the **carry from the third stage is not reaching the fourth stage**.
+The most likely fault is that the **`FA2` CarryOut is not reaching `FA3` CarryIn**.
 
 `7 + 1` is:
 
@@ -449,6 +481,21 @@ This result depends on the carry rippling through multiple stages. If one carry 
 
 </details>
 
+#### Practice Problem 5.7.3: The upgrade, on paper
+
+1.  Which decoder taps recognize `1011` (line `LB`)? Use Module 4's convention: torch taps for `1`s, repeater taps for `0`s.
+2.  Which segments does the ROM light for `0xE`?
+3.  Your upgraded system shows `8 + 4 = C` correctly, but `8 + 2` gives a blank display. Which single decoder line is the prime suspect?
+
+<details>
+<summary><strong>Show Solution</strong></summary>
+
+1.  Torch taps on `B3`, `B1`, and `B0`, and a repeater tap on `B2`, because `1011` has ones in the eights, twos, and ones places.
+2.  `a, d, e, f, g`.
+3.  The `LA` line, which should recognize `1010`. If it never fires, the ROM never hears about `A`, and the display stays dark, exactly like the original bug but for one value instead of six.
+
+</details>
+
 #### Real-world connection: Nibbles, hex dumps, and addresses
 
 Hexadecimal is used everywhere because it compresses binary into chunks humans can actually read. One hex digit represents exactly one **nibble** (4 bits). Two hex digits represent a byte. That is why memory addresses, machine instructions, color values, and debug output are so often written in hex. When a programmer sees `0xC`, they are really seeing the 4-bit pattern `1100` wearing a friendlier face.
@@ -463,16 +510,17 @@ A classic programming puzzle asks: how can you add two integers if the `+` opera
 -   Repeat until there is no carry left.
 
 ```python
-def get_sum(a: int, b: int) -> int:
-    mask = 0xFFFFFFFF
+def add_nonnegative(a: int, b: int) -> int:
     while b != 0:
-        carry = (a & b) << 1
-        a = (a ^ b) & mask
-        b = carry & mask
-    return a if a <= 0x7FFFFFFF else ~(a ^ mask)
+        partial_sum = a ^ b        # sum bits, carries ignored
+        carry = (a & b) << 1       # carry bits, moved one column left
+        a, b = partial_sum, carry
+    return a
 ```
 
-That clever software trick is just a looped version of the same arithmetic logic your hardware adder performs all at once.
+This version assumes nonnegative integers. After Module 6 teaches fixed-width Two's Complement, the masked version that also handles negatives will make sense too.
+
+That clever software trick is the same arithmetic your hardware adder performs by rippling the carry through a chain of gates. The software repeats it as loop passes; the hardware repeats it in space.
 
 #### Key Terms
 -   **Adder**: A digital circuit that performs binary addition.
@@ -480,6 +528,7 @@ That clever software trick is just a looped version of the same arithmetic logic
 -   **Carry bit**: A bit that is generated when a column of addition exceeds what can be represented in that column and must spill into the next one.
 -   **Full adder**: A 1-bit arithmetic circuit that adds `A`, `B`, and `CarryIn`, producing `Sum` and `CarryOut`.
 -   **Hexadecimal**: A base-16 number system that maps perfectly onto 4-bit binary values.
+-   **Interface contract**: The set of values and behaviors a subsystem promises to accept or produce. Integration bugs live where two correct contracts fail to line up.
 -   **Nibble**: A group of 4 bits.
 -   **Ripple-carry adder**: A multi-bit adder made by chaining full adders so the carry propagates from stage to stage.
 
@@ -493,5 +542,5 @@ You built the first true arithmetic engine in the course. More importantly, you 
 
 You also saw the reward of modular design. Because the decoder and ROM were cleanly separated, expanding the system was an upgrade, not a restart.
 
-Our machine can now add numbers and display every possible 4-bit result. In the next module, we are going to push that arithmetic system even harder, right up against the limits of a 4-bit machine, and discover what happens when the answer no longer fits.
+Our machine can now add, and it can display every possible 4-bit result, `0x0` through `0xF`. In the next module, we are going to push that arithmetic system even harder, right up against the limits of a 4-bit machine, and discover what happens when the answer no longer fits.
 

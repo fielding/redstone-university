@@ -35,12 +35,6 @@ This glossary compiles key terms from the Redstone University curriculum, organi
 **Binary**
 : A base-2 number system that uses only two symbols, `0` and `1`, to represent information. It is the fundamental language of all digital computers. [1]
 
-**Binary Coded Decimal (BCD)**
-: A representation in which each decimal digit is stored as its own 4-bit binary value. [13]
-
-**Binary-Coded Decimal (BCD)**
-: A representation in which each decimal digit `0` through `9` is stored as its own 4-bit binary pattern. [5]
-
 **Binary-to-BCD conversion**
 : The process of translating a binary number into separate decimal digits encoded in BCD. [13]
 
@@ -173,6 +167,9 @@ This glossary compiles key terms from the Redstone University curriculum, organi
 **Interface (Input Interface)**
 : A device that allows a user or system to provide information to a machine. Our 4-lever setup is a manual input interface. [1]
 
+**Interface contract**
+: The set of values and behaviors a subsystem promises to accept or produce. Integration bugs live where two correct contracts fail to line up. [5]
+
 **Inverter (NOT Gate)**
 : A circuit or component that flips a signal from ON to OFF, or OFF to ON. The Redstone Torch is our primitive inverter. [0]
 
@@ -243,16 +240,7 @@ This glossary compiles key terms from the Redstone University curriculum, organi
 : The circuitry that places the contents of the selected memory location onto the output bus. [11]
 
 **Register**
-: A small, extremely fast storage location inside a computer's central processing unit (CPU) that holds data for immediate use.
-
-
-### Module 1 Conclusion
-
-Fantastic work! You've now mastered the most fundamental concept in all of computing: how information is physically represented in a binary system. You have a working input device, and you've seen how this physical concept directly connects to both real-world hardware and clever software algorithms.
-
-Your input bus is ready to carry these binary signals to the next stage where logic gates will turn them into calculations and decisions. Now that you’ve built your input interface and practiced working with binary, you’re ready to learn how to manipulate these binary signals in Module 2: The Grammar of Circuits. There, we will build our first logic gates, which will process the inputs you’ve set here into meaningful outputs.
-
-The basic building blocks of our computer are about to take shape. Get ready for the world of logic gates and circuits! [1]
+: A small, extremely fast storage location inside a computer's central processing unit (CPU) that holds data for immediate use. [1]
 
 **Register B**
 : The register that holds the ALU's second operand and drives Bus B. [12a]
