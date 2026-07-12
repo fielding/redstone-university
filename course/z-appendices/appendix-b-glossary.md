@@ -144,7 +144,7 @@ This glossary compiles key terms from the Redstone University curriculum, organi
 : The human interface used to program, reset, halt, and step the computer. [12a]
 
 **Full adder**
-: A 1-bit arithmetic circuit that adds $A$, $B$, and `CarryIn`, producing `Sum` and `CarryOut`. [5]
+: A 1-bit arithmetic circuit that adds `A`, `B`, and `CarryIn`, producing `Sum` and `CarryOut`. [5]
 
 **Functionally Complete**
 : A property of a set of logic gates (or a single gate like NAND/NOR) from which any possible Boolean function can be constructed. [3]
