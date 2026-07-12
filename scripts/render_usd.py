@@ -1902,7 +1902,9 @@ def main():
             # constant pixel width reads heavy on large builds: scale the line
             # width with zoom so outlines weigh the same relative to a block
             ref = 370.0  # ortho_scale where 1.2px looks right (the XOR shot)
-            w = max(0.5, min(1.6, 1.2 * ref / cam.data.ortho_scale))
+            # sqrt scaling with a legibility floor: plan views ARE the
+            # schematic read — seams must never wash out on pale fields
+            w = max(0.8, min(1.6, 1.2 * (ref / cam.data.ortho_scale) ** 0.5))
             scene.render.line_thickness = w
             for ls in bpy.context.view_layer.freestyle_settings.linesets:
                 ls.linestyle.thickness = w * _STROKE_MULTS.get(ls.name, 1.0)
