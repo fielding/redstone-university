@@ -271,18 +271,6 @@ That exact idea will matter a lot in the next module, when we teach the machine 
 
 ---
 
-### Module 6 Conclusion
-
-You have just crossed a major conceptual bridge.
-
-You learned that arithmetic hardware is always bounded by word size, and that a machine must somehow signal when a result spills beyond those bounds. You also learned one of the most elegant tricks in all of digital design: subtraction does not require a completely separate kind of circuit. It can emerge from addition with just a little cleverness.
-
-That is a recurring theme in computer architecture. The most powerful designs are often not the ones with the most parts, but the ones that reuse the same parts in smart ways.
-
-In the next module, we are going to give our machine a new kind of power. It will no longer just produce numbers. It will produce information *about* those numbers, letting it tell us whether a result was zero or negative. That is the first step from calculation toward decision-making.
-
----
-
 ### Module 6 Checkpoint
 
 #### Practice Problem 6.5.1: Knowledge Check
@@ -360,3 +348,16 @@ That code is just the software spelling of the hardware you built:
 -   **Sign bit**: In a signed binary representation, the most significant bit that indicates the sign of the value.
 -   **Two's Complement**: The standard binary representation for signed integers in which negation is performed by inverting the bits and adding `1`.
 -   **Word size**: The natural width, in bits, of the values a machine processes at once.
+
+---
+
+### Module 6 Conclusion
+
+You have just crossed a major conceptual bridge.
+
+You learned that arithmetic hardware is always bounded by word size, and that a machine must somehow signal when a result spills beyond those bounds. You also learned one of the most elegant tricks in all of digital design: subtraction does not require a completely separate kind of circuit. It can emerge from addition with just a little cleverness.
+
+That is a recurring theme in computer architecture. The most powerful designs are often not the ones with the most parts, but the ones that reuse the same parts in smart ways.
+
+In the next module, we are going to give our machine a new kind of power. It will no longer just produce numbers. It will produce information *about* those numbers, letting it tell us whether a result was zero or negative. That is the first step from calculation toward decision-making.
+

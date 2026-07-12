@@ -345,18 +345,6 @@ can stack.
 
 ---
 
-### Module 9 Conclusion
-
-You have now built the brain of your computer.
-
-A real, structured ALU with parallel lanes, explicit control signals, selected output, and status reporting.
-
-This is the point where the project begins to transform from “a collection of neat Redstone circuits” into “an actual computer architecture.” We now have a component that can meaningfully process data.
-
-In Part III, we will surround that brain with memory and control. We will give it places to store values, places to fetch instructions from, and eventually a clocked rhythm that lets it run without your hands on every lever.
-
----
-
 ### Module 9 Checkpoint
 
 #### Practice Problem 9.6.1: Knowledge Check
@@ -437,3 +425,16 @@ you are asking the processor for exactly the kinds of bitwise results your ALU n
 -   **Lane**: One parallel operation path inside the ALU.
 -   **Opcode**: A code that specifies which operation a processor should perform.
 -   **Result bus**: The final output bus carrying the ALU’s selected result.
+
+---
+
+### Module 9 Conclusion
+
+You have now built the brain of your computer.
+
+A real, structured ALU with parallel lanes, explicit control signals, selected output, and status reporting.
+
+This is the point where the project begins to transform from “a collection of neat Redstone circuits” into “an actual computer architecture.” We now have a component that can meaningfully process data.
+
+In Part III, we will surround that brain with memory and control. We will give it places to store values, places to fetch instructions from, and eventually a clocked rhythm that lets it run without your hands on every lever.
+
