@@ -199,20 +199,29 @@ dropped, levers/lamps over air float.
 ## In-image legend chips (2026-07-11, Fielding request)
 
 Composed figures that carry region tints get a small legend stamped into the
-PNG: one rounded swatch per region (the flat legend hue — the anchor of the
-region's tone band) + label in Young Serif, outlined and set in ink 30231e.
-Bottom-left corner, auto-dodging to another corner if the build reaches in.
-Implementation: `stamp_legend()` in scripts/shots.py, driven by a per-shot
-`"legend": {"Adder": "f2d489", ...}` object (order = display order).
-Labels use the region names, not block names: Adder / Decoder / ROM /
-Display driver. Adopted on 05_integration-bug; roll onto other composed
-shots (M4 complete display, hex display, payoff) as they come up for render.
+PNG: one chip block per region + label in Young Serif ink 30231e. Chips are
+REAL Blender renders (scripts/legend_chip.py) — same iso camera, flat
+emission fill, and Freestyle ink as the figures — a single block floating
+on transparency, cached per hue in renders/out/chips/. Bottom-left corner,
+auto-dodging to another corner if the build reaches in. Implementation:
+`ensure_chips()` + `stamp_legend()` in scripts/shots.py, driven by a
+per-shot `"legend": {"Adder": "f2d489", ...}` object (order = display
+order). Labels use region names, not block names. Adopted on
+05_integration-bug (Adder/Decoder/ROM/Display driver) and 05_4-bit-rca
+(Full adder / Repeated slice); roll onto other composed shots (M4 complete
+display, hex display, payoff) as they come up for render.
 
-## Standalone module shots wear their region color (2026-07-11)
+## Module figures: neutral alone, colored in composition (2026-07-11)
 
-A module figure rendered alone (full adder, 4-bit RCA) is not "composed",
-but its build already speaks the color language (yellow/orange concrete
-structure). Give it the same tint map + height tones so it renders as a
-tinted region rather than ghost-cream: schematic mode deliberately ghosts
-any family not in the tint map, so an unmapped colored build flattens to
-cream (the "everything is cream" failure).
+A module rendered ALONE (the 1-bit full adder) uses the small-build scheme:
+neutral structure, height bands only, no section colors (Fielding). Color
+arrives when the figure carries COMPOSITION semantics: the 4-bit RCA aerial
+tints slice 0 yellow (wool families, f2d489 = "the module you built")
+against gray repeats (concrete families, c7c0b6), and the integration/legend
+shots tint by region. Corollary: schematic mode ghosts any family not in a
+tint map, so a colored build with NO tint map flattens to cream — that is
+the "everything is cream" failure. Related renderer honesty rules: the
+resting-plane detection is median-based over circuit vertices (min() let a
+single sunken dust decal keep the real course AND generate pads under it —
+the doubled-base failure); a plan view can carry its own canvas via
+`top_res` (tall builds want portrait; page width is the only hard limit).
