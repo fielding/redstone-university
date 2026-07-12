@@ -191,5 +191,21 @@
       0
     ],
     "place": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/rca-hex-display"
+  },
+  "rca-bcd-display": {
+    "circuit": "4-bit rca with BCD",
+    "name": "rca-bcd-display",
+    "inputs": [
+      0,
+      0,
+      1,
+      0,
+      0,
+      1,
+      0,
+      1,
+      0
+    ],
+    "place": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/rca-bcd-display"
   }
 }
