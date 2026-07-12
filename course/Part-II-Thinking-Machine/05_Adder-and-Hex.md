@@ -310,9 +310,9 @@ This is one of the most satisfying moments in the course. We are about to benefi
 
 <div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/05_4-to-16-decoder_circuitverse.png" alt="4-to-16 Decoder CircuitVerse Diagram" width="512px"/><br/><em>Figure: The full 4-to-16 binary decoder. Sixteen output lines, one per 4-bit pattern; here the input `1111` activates line `LF`.</em></div><br/>
 
-<div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/05_4-to-16-decoder_minecraft.png" alt="4-to-16 Decoder Minecraft Build" width="512px"/><br/><em>Figure: The upgraded decoder in the world, built standalone before wiring it in: the same tap language as Module 4, extended to cover every 4-bit pattern, one output lamp per line.</em></div><br/>
+<div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/05_4-to-16-decoder_minecraft.png" alt="4-to-16 Decoder Minecraft Build" width="512px"/><br/><em>Figure: The upgraded decoder in the world, built standalone before wiring it in. The original 4-to-10 decoder keeps its Module 4 color; the six new hex lines carry the deeper shade.</em></div><br/>
 
-<div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/05_4-to-16-decoder-aerial_minecraft.png" alt="4-to-16 Decoder (plan view)" width="512px"/><br/><em>Figure: The decoder matrix from above: the input bus rails crossing every line column.</em></div><br/>
+<div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/05_4-to-16-decoder-aerial_minecraft.png" alt="4-to-16 Decoder (plan view)" width="512px"/><br/><em>Figure: The decoder from above: the 4-bit bus rails crossing every line column, with the hex extension standing out in the deeper shade.</em></div><br/>
 
 #### Lab Part B: Upgrade the ROM
 
@@ -335,11 +335,11 @@ A common 7-segment convention is:
 
 <div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/05_7-segment-hex-decoder-driver_circuitverse.png" alt="7-Segment Hex Decoder/Driver CircuitVerse Diagram" width="512px"/><br/><em>Figure: The extended decoder/driver ROM: all sixteen line inputs, one OR column per segment.</em></div><br/>
 
-<div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/05_hex-rom_minecraft.png" alt="Extended ROM Minecraft Build" width="512px"/><br/><em>Figure: The extended ROM in the world, built standalone. The tap pattern is the programming, the same language as Module 4, now covering letters as well as digits.</em></div><br/>
+<div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/05_hex-rom_minecraft.png" alt="Extended ROM Minecraft Build" width="512px"/><br/><em>Figure: The extended ROM in the world, built standalone. The tap pattern is the programming: the original digit lines keep their Module 4 color, and the six new letter lines carry the deeper shade.</em></div><br/>
 
-<div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/05_hex-rom-aerial_minecraft.png" alt="Extended ROM (plan view)" width="512px"/><br/><em>Figure: The ROM from above: every tap along the rails is one stored bit of the segment patterns.</em></div><br/>
+<div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/05_hex-rom-aerial_minecraft.png" alt="Extended ROM (plan view)" width="512px"/><br/><em>Figure: The ROM from above: every tap is one stored bit, and the deeper-shaded lines are the letters `A` through `F` being added.</em></div><br/>
 
-<div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/05_hex-display-aerial_minecraft.png" alt="Hexadecimal Display System Aerial View" width="512px"/><br/><em>Figure: The upgraded display system from above, set to `1100`: the 4-bit input bus runs along the top, fans out across all sixteen line columns, and the collected segment lines exit at the right into the panel.</em></div><br/>
+<div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/05_hex-display-aerial_minecraft.png" alt="Hexadecimal Display System Aerial View" width="512px"/><br/><em>Figure: The upgraded display system from above, set to `1100`: the bus enters the decoder along the top, its sixteen lines drop into the ROM below, and the collected segment lines exit into the panel. The deeper shades mark everything that was added for hex.</em></div><br/>
 
 #### The payoff test
 
