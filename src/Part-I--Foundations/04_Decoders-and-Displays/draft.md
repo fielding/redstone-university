@@ -106,7 +106,7 @@ This modular, two-stage approach is the heart of good engineering. It's easier t
 
 > **Key Takeaway**: A decoder can be built by assigning one AND gate to recognize each unique binary input. This "brute-force" method is clear but does not scale well.
 
-Before we tackle our full 4-bit to 10-line decoder, let's build a smaller, simpler version to prove the concept. We are going to build a **2-bit to 4-line decoder**. This circuit will take a 2-bit binary input (`00`, `01`, `10`, `11`) and light up one of four corresponding output lamps ($L0$, $L1$, $L2$, $L3$) representing those values in decimal (`0`, `1`, `2`, `3`).
+Before we tackle our full 4-bit to 10-line decoder, let's build a smaller, simpler version to prove the concept. We are going to build a **2-bit to 4-line decoder**. This circuit will take a 2-bit binary input (`00`, `01`, `10`, `11`) and light up one of four corresponding output lamps (`L0`, `L1`, `L2`, `L3`) representing those values in decimal (`0`, `1`, `2`, `3`).
 
 By scaling down the problem, we can focus on the core logic without getting overwhelmed. This is a common engineering practice: start small, prove the concept, then scale up. I'm calling this a "brute-force" method because we will build a separate AND gate for each output, rather than using a more elegant design, which we will learn in the next lesson.
 
@@ -115,8 +115,8 @@ By scaling down the problem, we can focus on the core logic without getting over
 
 #### The Logic on Paper
 
--   **Inputs**: $B1$ (the "`2`s" place), $B0$ (the "`1`s" place)
--   **Outputs**: $L0$, $L1$, $L2$, $L3$
+-   **Inputs**: `B1` (the "`2`s" place), `B0` (the "`1`s" place)
+-   **Outputs**: `L0`, `L1`, `L2`, `L3`
 -   **Logic Gates**: We need one 2-input AND gate for each output.
     -   $L0$ (for `00` or `0`) = $\text{NOT } B1 \text{ AND } \text{NOT } B0$ : $\neg B1 \land \neg B0$
     -   $L1$ (for `01` or `1`) = $\text{NOT } B1 \text{ AND } B0$ : $\neg B1 \land B0$
@@ -129,46 +129,46 @@ By scaling down the problem, we can focus on the core logic without getting over
 
 **Step 1: The 2-Bit Bus**
 
-1.  Set up two standard inputs using a Redstone Lamp with a lever on one side. Label them $B1$ and $B0$.
-2.  From these levers, create a **4-line bus**. For each input, run one line of Redstone dust from the back of the lamp (for the true signal, e.g., $B1$) and another line into a NOT gate (for the inverted signal, e.g., $\neg B1$).
-3.  You now have four parallel lines carrying the signals $B1$, $\neg B1$, $B0$, and $\neg B0$. Use colored wool to keep them organized.
+1.  Set up two standard inputs using a Redstone Lamp with a lever on one side. Label them `B1` and `B0`.
+2.  From these levers, create a **4-line bus**. For each input, run one line of Redstone dust from the back of the lamp (for the true signal, e.g., `B1`) and another line into a NOT gate (for the inverted signal, e.g., $\neg B1$).
+3.  You now have four parallel lines carrying the signals `B1`, $\neg B1$, `B0`, and $\neg B0$. Use colored wool to keep them organized.
 
 ![2-to-4 Decoder Step 1](./images/2-to-4-decoder-1_minecraft.png)
-*Figure: 4-line bus with inputs $B1$ and $B0$ and their inversions.*
+*Figure: 4-line bus with inputs `B1` and `B0` and their inversions.*
 
-**Step 2: Build and Test the First Gate ($L0$)**
+**Step 2: Build and Test the First Gate (`L0`)**
 
 1.  Choose your favorite 2-input AND gate design from **Module 2** or **Interlude I** and build it.
 2.  Connect the gate's two inputs to the $\neg B1$ line and the $\neg B0$ line on your bus. Be careful with your wiring!
-3.  Place a Redstone Lamp at the output of the AND gate. This is your $L0$ output.
-4.  **Test it!** Set your input levers to `` `00` `` ($B1$=OFF, $B0$=OFF). The $L0$ lamp should turn ON. Now, flip either lever. The lamp should turn OFF. This proves your first gate is wired correctly.
+3.  Place a Redstone Lamp at the output of the AND gate. This is your `L0` output.
+4.  **Test it!** Set your input levers to `` `00` `` (`B1`=OFF, `B0`=OFF). The `L0` lamp should turn ON. Now, flip either lever. The lamp should turn OFF. This proves your first gate is wired correctly.
 
 ![2-to-4 Decoder Step 2, isometric](./images/2-to-4-decoder-2_minecraft.png)
 ![2-to-4 Decoder Step 2, aerial](./images/2-to-4-decoder-2-aerial_minecraft.png)
-*Figure: Single AND gate connected to the $\neg B1$ and $\neg B0$ lines of the bus. The input is set to `` `11` ``, so the $L0$ lamp is OFF. It would be on if the input were `` `00` ``.*
+*Figure: Single AND gate connected to the $\neg B1$ and $\neg B0$ lines of the bus. The input is set to `` `11` ``, so the `L0` lamp is OFF. It would be on if the input were `` `00` ``.*
 
 **Step 3: Build the Remaining Gates**
 
 1.  Build three more identical 2-input AND gates next to the first one.
 2.  Wire them according to the logic table:
-    -   **Gate for $L1$**: Connect its inputs to the $\neg B1$ and $B0$ bus lines.
-    -   **Gate for $L2$**: Connect its inputs to the $B1$ and $\neg B0$ bus lines.
-    -   **Gate for $L3$**: Connect its inputs to the $B1$ and $B0$ bus lines.
+    -   **Gate for `L1`**: Connect its inputs to the $\neg B1$ and `B0` bus lines.
+    -   **Gate for `L2`**: Connect its inputs to the `B1` and $\neg B0$ bus lines.
+    -   **Gate for `L3`**: Connect its inputs to the `B1` and `B0` bus lines.
 3.  Place a Redstone Lamp on the output of each gate.
 
 **Step 4: The Grand Test**
 
 Now, cycle through all four possible inputs with your levers:
 
--   `` `00` `` → Only the $L0$ lamp should be ON.
--   `` `01` `` → Only the $L1$ lamp should be ON.
--   `` `10` `` → Only the $L2$ lamp should be ON.
--   `` `11` `` → Only the $L3$ lamp should be ON.
+-   `` `00` `` → Only the `L0` lamp should be ON.
+-   `` `01` `` → Only the `L1` lamp should be ON.
+-   `` `10` `` → Only the `L2` lamp should be ON.
+-   `` `11` `` → Only the `L3` lamp should be ON.
 
 Excellent work! You've built a working decoder.
 
 ![2-to-4 Decoder Step 3](./images/2-to-4-decoder-3_minecraft.png)
-*Figure: Final working 2-to-4 decoder, with the input set to `` `11` ``, so only the $L3$ lamp is ON.*
+*Figure: Final working 2-to-4 decoder, with the input set to `` `11` ``, so only the `L3` lamp is ON.*
 
 <!-- TODO(fielding): first plan view in the book: add the one-line intro of
      the top-down convention here (suggested wording in tix). -->

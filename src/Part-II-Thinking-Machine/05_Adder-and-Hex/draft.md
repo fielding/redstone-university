@@ -458,7 +458,7 @@ That clever software trick is just a looped version of the same arithmetic logic
 -   **Adder**: A digital circuit that performs binary addition.
 -   **Binary-Coded Decimal (BCD)**: A representation in which each decimal digit `0` through `9` is stored as its own 4-bit binary pattern.
 -   **Carry bit**: A bit that is generated when a column of addition exceeds what can be represented in that column and must spill into the next one.
--   **Full adder**: A 1-bit arithmetic circuit that adds $A$, $B$, and `CarryIn`, producing `Sum` and `CarryOut`.
+-   **Full adder**: A 1-bit arithmetic circuit that adds `A`, `B`, and `CarryIn`, producing `Sum` and `CarryOut`.
 -   **Hexadecimal**: A base-16 number system that maps perfectly onto 4-bit binary values.
 -   **Nibble**: A group of 4 bits.
 -   **Ripple-carry adder**: A multi-bit adder made by chaining full adders so the carry propagates from stage to stage.
