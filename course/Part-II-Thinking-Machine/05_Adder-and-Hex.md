@@ -341,6 +341,8 @@ A common 7-segment convention is:
 
 <div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/05_hex-display-aerial_minecraft.png" alt="Hexadecimal Display System Aerial View" width="512px"/><br/><em>Figure: The upgraded display system from above, set to `1100`: the bus enters the decoder along the top, its sixteen lines drop into the ROM below, and the collected segment lines exit into the panel. The deeper shades mark everything that was added for hex.</em></div><br/>
 
+<div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/05_hex-display_minecraft.png" alt="Hexadecimal Display System Minecraft Build" width="512px"/><br/><em>Figure: The complete upgraded display system in Minecraft: decoder, ROM, and 7-segment display, set to `1100` and showing `C`.</em></div><br/>
+
 #### The payoff test
 
 Repeat the test that failed earlier:
@@ -360,8 +362,6 @@ Bug fixed. System upgraded. No rebuild required.
 <div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/05_rca-hex-display_circuitverse.png" alt="The payoff schematic" width="512px"/><br/><em>Figure: The whole system as one schematic: the ripple-carry adder feeding the upgraded display chain, computing `8 + 4` and driving a `C`.</em></div><br/>
 
 <div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/05_rca-hex-display_minecraft.png" alt="The payoff in Minecraft" width="512px"/><br/><em>Figure: The module artifact: the 4-bit adder wired to the hexadecimal display, computing `8 + 4` and showing `C`.</em></div><br/>
-
-<div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/05_hex-display_minecraft.png" alt="Hexadecimal Display System Minecraft Build" width="512px"/><br/><em>Figure: The complete upgraded display system in Minecraft: decoder, ROM, and 7-segment display, set to `1100` and showing `C`.</em></div><br/>
 
 ---
 
