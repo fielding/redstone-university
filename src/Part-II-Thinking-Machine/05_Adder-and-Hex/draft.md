@@ -159,7 +159,7 @@ A quick test plan:
 ![1-Bit Full Adder Minecraft Build](./images/full-adder_minecraft.png)
 *Figure: The 1-bit full adder module in Minecraft, set to the same `1 + 1 + 0` as the diagram above: both input lamps lit, the Sum lamp dark, and the Carry-Out lamp glowing.*
 
-![1-Bit Full Adder (plan view)](./images/full-adder-aerial_minecraft.png)
+![1-Bit Full Adder (top-down)](./images/full-adder-aerial_minecraft.png)
 *Figure: The same `1 + 1 + 0` from directly above: the `A` and `B` levers at the bottom both on, the Carry-In lever at the right off, and the same verdict as the iso, Sum dark and Carry-Out lit.*
 
 #### Lab Part B: Assemble the 4-bit ripple-carry adder
@@ -352,7 +352,7 @@ This is one of the most satisfying moments in the course. We are about to benefi
     -   `LF` for `1111`
 4.  Use the same tap logic from Module 4. Each new line simply recognizes one more identity pattern.
 
-Four steps is genuinely all it takes, and that is the point: you already know this technique. You spent half of Module 4 learning it. The figures below are your references, each with its own job: the schematic shows the logic, the build shows the result, and the plan view is the one to build from, because every torch and repeater position on the new lines is readable straight off it.
+Four steps is genuinely all it takes, and that is the point: you already know this technique. You spent half of Module 4 learning it. The figures below are your references, each with its own job: the schematic shows the logic, the build shows the result, and the top-down view is the one to build from, because every torch and repeater position on the new lines is readable straight off it.
 
 ![4-to-16 Decoder CircuitVerse Diagram](./images/4-to-16-decoder_circuitverse.png)
 *Figure: The full 4-to-16 binary decoder. Sixteen output lines, one per 4-bit pattern; here the input `1111` activates line `LF`.*
@@ -360,7 +360,7 @@ Four steps is genuinely all it takes, and that is the point: you already know th
 ![4-to-16 Decoder Minecraft Build](./images/4-to-16-decoder_minecraft.png)
 *Figure: The upgraded decoder in the world, built standalone before wiring it in. The original 4-to-10 decoder keeps its Module 4 color; the six new hex lines carry the deeper shade.*
 
-![4-to-16 Decoder (plan view)](./images/4-to-16-decoder-aerial_minecraft.png)
+![4-to-16 Decoder (top-down)](./images/4-to-16-decoder-aerial_minecraft.png)
 *Figure: The decoder from above: the 4-bit bus rails crossing every line column, with the hex extension standing out in the deeper shade.*
 
 #### Lab Part B: Upgrade the ROM
@@ -383,7 +383,7 @@ A common 7-segment convention, with `b` and `d` drawn lowercase for a practical 
 ![The hex letters on a 7-segment display](./images/hex-letters-7seg_circuitverse.png)
 *Figure: The six letter patterns on the display: `A` through `F`, with `B` and `D` in their lowercase-looking forms.*
 
-Same drill as the decoder: the plan view below carries the exact tap positions for the six new lines.
+Same drill as the decoder: the top-down view below carries the exact tap positions for the six new lines.
 
 ![7-Segment Hex Decoder/Driver CircuitVerse Diagram](./images/7-segment-hex-decoder-driver_circuitverse.png)
 *Figure: The extended decoder/driver ROM: all sixteen line inputs, one OR column per segment.*
@@ -391,7 +391,7 @@ Same drill as the decoder: the plan view below carries the exact tap positions f
 ![Extended ROM Minecraft Build](./images/hex-rom_minecraft.png)
 *Figure: The extended ROM in the world, built standalone. The tap pattern is the programming: the original digit lines keep their Module 4 color, and the six new letter lines carry the deeper shade.*
 
-![Extended ROM (plan view)](./images/hex-rom-aerial_minecraft.png)
+![Extended ROM (top-down)](./images/hex-rom-aerial_minecraft.png)
 *Figure: The ROM from above: every tap is one stored bit, and the deeper-shaded lines are the letters `A` through `F` being added.*
 
 ![Hexadecimal Display System Aerial View](./images/hex-display-aerial_minecraft.png)
