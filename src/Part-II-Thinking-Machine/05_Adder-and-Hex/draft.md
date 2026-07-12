@@ -183,7 +183,7 @@ A quick test plan:
 6.  Keep the final `CarryOut` wire accessible. We are going to need it in the next module.
 
 ![4-Bit Ripple-Carry Adder Minecraft Build](./images/4-bit-rca-aerial_minecraft.png)
-*Figure: The full 4-bit ripple-carry adder in Minecraft, seen from above and computing the same `5 + 3` as the diagram. Four copies of the same full-adder module in a row, the carry rippling from the least-significant stage on the right toward the most-significant on the left, and only the leftmost Sum lamp lit: `1000`.*
+*Figure: The full 4-bit ripple-carry adder in Minecraft, seen from above and computing the same `5 + 3` as the diagram. The least-significant stage on the right keeps the full adder's yellow; its three repeats are grayed to show they are copies, not new designs. The carry ripples right to left, and only the leftmost Sum lamp is lit: `1000`.*
 
 #### The experiment
 

@@ -678,10 +678,14 @@
     "top_azimuth": 180,
     "res": "3600x1310",
     "height_tint": 0.85,
-    "tint": "yellow_concrete=f2d489,orange_concrete=f2d489,white_wool=f5f1ea,smooth_stone=f5f1ea,cobblestone=f5f1ea",
+    "tint": "yellow_wool=f2d489,orange_wool=f2d489,white_wool=f5f1ea,yellow_concrete=c7c0b6,orange_concrete=c7c0b6,white_concrete=c7c0b6,smooth_stone=f5f1ea,cobblestone=f5f1ea",
     "swap": "",
     "place": {
       "top": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/4-bit-rca-aerial_minecraft.png"
+    },
+    "legend": {
+      "Full adder": "f2d489",
+      "Repeated slice": "c7c0b6"
     }
   },
   "03b_XOR-gate-composite": {
