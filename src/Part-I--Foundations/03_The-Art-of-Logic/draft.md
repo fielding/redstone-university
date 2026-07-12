@@ -19,13 +19,11 @@
 
 ### Module 3 Introduction
 
-You've mastered the foundational logic gates, the basic "verbs" of our computer's language. But a true engineer doesn't just build circuits that function; they build them with **efficiency** and **elegance**.
+You know the foundational logic gates, the basic "verbs" of our computer's language. But an engineer doesn't just build circuits that function; they build them so they can afford to build the next hundred.
 
 Welcome to the art of logic.
 
-In this module, we move from simple sentences to poetry. First, you'll learn the powerful laws of Boolean algebra that allow us to simplify complex expressions, transforming a bulky, slow circuit into one that is small, fast, and optimized. Then, we'll expand our logical toolkit with more advanced gates: from the versatile **comparison gates**, XOR and XNOR, to the powerful **universal gates**, NAND and NOR, which unlock completely new ways of solving problems.
-
-This is where you transition from being a builder to being an **architect**. Let's learn to build not just correctly, but with foresight and efficiency.
+In this module, we move from simple sentences to poetry. First, you'll learn the laws of Boolean algebra that allow us to simplify complex expressions, transforming a bulky, slow circuit into a small, fast one. Then, we'll expand our toolkit with the **comparison gates**, XOR and XNOR, and the **universal gates**, NAND and NOR.
 
 ---
 
@@ -79,7 +77,7 @@ This looks like it would require two AND gates and one OR gate. Let's simplify i
 4.  **Apply the Identity Law:** We know that any input AND'd with $1$ is just itself.
     *   The final expression is: $Y = A$
 
-**Lab Takeaway:** We have just proven that this entire three-gate circuit can be replaced by a single wire connected to input $A$. This is the power of simplification in action. It saves resources, space, and makes our designs more elegant.
+**Lab Takeaway:** We have just proven that this entire three-gate circuit can be replaced by a single wire connected to input $A$. That is simplification in action: three gates' worth of torches, dust, and delay, gone.
 
 ![Circuit Before and After Simplification](./images/simplification_circuitverse.png)
 *Figure: The circuit for $Y = (A \land B) \lor (A \land \neg B)$ before simplification (left) is logically equivalent (≡) to the circuit for $Y = A$ (right).*
@@ -200,13 +198,13 @@ Design a Minecraft circuit for a two-switch light system where flipping either s
 
 ### Lesson 3.3: Software Superpowers – The XOR Trick for Programmers
 
-> **Key Takeaway:** XOR is a “secret weapon” in programming. Its reversible, self-canceling property allows for incredibly efficient solutions to common algorithmic problems.
+> **Key Takeaway:** XOR is a “secret weapon” in programming. Its reversible, self-canceling property allows for very efficient solutions to common algorithmic problems.
 
-The XOR gate has two magical properties that programmers exploit constantly, based on the laws of Boolean algebra:
+The XOR gate has two properties that programmers exploit constantly, both straight from the laws of Boolean algebra:
 1.  Any number XORed with itself is zero: $x \oplus x = 0$.
 2.  Any number XORed with zero is itself: $x \oplus 0 = x$.
 
-This allows for brilliant solutions to problems that seem complex at first glance. This is where our hardware knowledge directly translates into writing efficient software.
+This is where our hardware knowledge directly translates into writing efficient software.
 
 **Example Problem: The "Single Number"**
 
@@ -275,11 +273,11 @@ def missingNumber(nums):
 
 To round out our logical toolkit, we will now build the three "negated" composite gates: **NOR** (Not-OR), **NAND** (Not-AND), and **XNOR** (Not-XOR). Each one performs a familiar operation and then immediately inverts the result.
 
-While they may seem like simple variations, two of these gates possess an incredibly powerful property that is a cornerstone of modern electronics.
+While they may seem like simple variations, two of these gates have a property that is a cornerstone of modern electronics.
 
 #### The Power of Universal Gates (Functional Completeness)
 
-The idea that you can build *everything* from just NAND gates or just NOR gates is called **Functional Completeness**. For real-world chip designers, this is a revolutionary concept. Manufacturing a computer chip is a complex process. Instead of needing separate, specialized machinery to produce AND, OR, and NOT gates, a factory can be optimized to produce just **one** type of gate (like a NAND gate) in massive quantities with extreme reliability and low cost.
+The idea that you can build *everything* from just NAND gates or just NOR gates is called **Functional Completeness**. This is why chip designers care: instead of needing separate, specialized machinery to produce AND, OR, and NOT gates, a factory can be optimized to produce just **one** type of gate (like a NAND gate) in massive quantities with extreme reliability and low cost.
 
 Engineers then use the patterns from the table below to wire those identical simple gates together to create all the complex logic they need.
 
@@ -550,11 +548,11 @@ def singleNumber_threes(nums):
 
 ### Module 3 Conclusion
 
-**You have now leveled up from a builder to an architect.** You've moved beyond simply knowing the vocabulary of logic and have begun to master its art. Where before you could construct a circuit, now you can use the laws of Boolean algebra to analyze and refine it, transforming a functional design into one that is truly **elegant and efficient**.
+Where before you could construct a circuit, now you can use the laws of Boolean algebra to analyze and refine it, and sometimes, as in Lab 2, delete most of it.
 
-You have also expanded your toolkit with a powerful set of specialized gates. With the complete set of seven fundamental logic gates at your command, you possess the same foundational tools used to design every digital device in existence.
+You also now have the complete set of seven fundamental logic gates, the same set used to design every digital device in existence.
 
-With this full toolkit, you are ready to tackle our first major engineering challenge. In the next module, we will apply everything you've learned to build a complete system: a translator that takes a 4-bit binary number from our input and displays it as a human-readable digit on a stunning 7-segment display.
+With this full toolkit, you are ready for our first major engineering challenge. In the next module, we will apply everything you've learned to build a complete system: a translator that takes a 4-bit binary number from our input and displays it as a human-readable digit on a 7-segment display.
 
 #### Logic Gates Summary Table
 
