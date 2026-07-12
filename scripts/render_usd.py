@@ -106,6 +106,7 @@ def parse_args():
         "projection": "ortho",
         "top_azimuth": None,
         "top_res": None,
+        "band_offset": 0,
         "max_layer": None,
         "explode": None,
         "clip": None,
@@ -175,6 +176,9 @@ def parse_args():
             i += 1
             w, h = args[i].lower().split("x")
             opts["top_res"] = (int(w), int(h))
+        elif a == "--band-offset":
+            i += 1
+            opts["band_offset"] = int(args[i])
         elif a == "--ground":
             i += 1
             opts["ground"] = args[i].lower()   # keep | remove | crop
@@ -805,7 +809,7 @@ def _srgb_lin(c):
                  for v in c[:3])
 
 
-def apply_technical(mode, height_tint=0.0, tints=None):
+def apply_technical(mode, height_tint=0.0, tints=None, band_offset=0):
     """
     Reskin the scene as a technical drawing with full per-block outlines.
     blueprint/cad: everything flat-filled in one palette.
@@ -827,8 +831,12 @@ def apply_technical(mode, height_tint=0.0, tints=None):
             # padding an export to full region files) crash past it
             nlayers = min(32, max(2, round((top_z - base_z) / 16.0)))
             if "band_palette" in cfg:
+                # band 0 (white) is the PLOT GROUND color; a build whose own
+                # base course is the box floor starts at band 1 (cream, the
+                # Part I build-bottom color) via --band-offset 1
                 pal = cfg["band_palette"]
-                bands_lin = [_srgb_lin(pal[i % len(pal)]) for i in range(nlayers)]
+                bands_lin = [_srgb_lin(pal[(i + band_offset) % len(pal)])
+                             for i in range(nlayers)]
             else:
                 lo, hi = cfg["band_lo"], cfg["band_hi"]
                 bands_lin = [_srgb_lin(tuple(lo[c] + (hi[c] - lo[c]) * (i / (nlayers - 1))
@@ -1836,7 +1844,8 @@ def main():
     tech = None
     if opts["technical"] != "off":
         ht = opts["height_tint"] if opts["technical"].startswith("schematic") else 0.0
-        tech = apply_technical(opts["technical"], ht, tints=opts["tint"])
+        tech = apply_technical(opts["technical"], ht, tints=opts["tint"],
+                               band_offset=opts["band_offset"])
         if not opts["_outline_set"]:
             opts["outline"] = "full"   # per-block linework is the default schematic look
         opts["grid"] = False       # outlines carry the seams; grid muddies fills

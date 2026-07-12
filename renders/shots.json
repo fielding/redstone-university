@@ -618,7 +618,8 @@
     "place": {
       "iso": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/full-adder_minecraft.png",
       "top": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/full-adder-aerial_minecraft.png"
-    }
+    },
+    "band_offset": 1
   },
   "05_hex-display": {
     "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",

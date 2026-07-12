@@ -212,7 +212,7 @@ def render(name, shot, usd_path, out_dir, azimuth, views):
         args += ["--transparent"]
     for opt in ("margin", "elevation", "outline", "dust", "toon",
                 "projection", "technical", "height-tint", "top-azimuth", "ground", "hide",
-                "tint", "clip", "res", "top-res", "torch-marks"):
+                "tint", "clip", "res", "top-res", "band-offset", "torch-marks"):
         key = opt.replace("-", "_")
         if key in shot:
             args += [f"--{opt}", str(shot[key])]
