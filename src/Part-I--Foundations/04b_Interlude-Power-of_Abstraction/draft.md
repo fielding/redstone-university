@@ -27,7 +27,7 @@ By turning our complex 4-to-10 Decoder into a single subcircuit block, we can hi
 
 **Why is this so important?**
 
--   **Clarity**: It makes high-level diagrams incredibly easy to read and understand.
+-   **Clarity**: It makes high-level diagrams easy to read and understand.
 -   **Reusability**: Build a component once (like a 1-bit full adder) and you can reuse it dozens of times without rebuilding it from scratch.
 -   **Focus**: It allows you to work on one part of your system without being visually overwhelmed by the others.
 
@@ -72,6 +72,6 @@ Now, your subcircuit is not only functional but also a clean, professional compo
 
 ### Conclusion: Your Engineering Toolkit Grows
 
-You now have a powerful new technique for managing complexity. The ability to create, abstract away, and reuse components is what allows engineers to build incredibly complex systems like a modern CPU, which contains billions of transistors.
+You now have a new technique for managing complexity. The ability to create, abstract away, and reuse components is what allows engineers to build systems like a modern CPU, which contains billions of transistors.
 
-As we move into Part II and begin building our Arithmetic Unit, I encourage you to use this subcircuit feature in CircuitVerse to keep your designs organized. While it's an optional skill, mastering it will greatly enhance your ability to design and troubleshoot complex designs.
+As we move into Part II and begin building our Arithmetic Unit, I encourage you to use this subcircuit feature in CircuitVerse to keep your designs organized. While it's an optional skill, it will make your larger circuits much easier to design and troubleshoot.
