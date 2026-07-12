@@ -178,7 +178,7 @@ A quick test plan:
 5.  Collect the four `Sum` outputs into a 4-bit result bus.
 6.  Keep the final `CarryOut` wire accessible. We are going to need it in the next module.
 
-<div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/05_4-bit-rca-aerial_minecraft.png" alt="4-Bit Ripple-Carry Adder Minecraft Build" width="512px"/><br/><em>Figure: The full 4-bit ripple-carry adder in Minecraft, seen from above and computing the same `5 + 3` as the diagram. Four copies of the same full-adder module in a row, the carry rippling from the least-significant stage on the right toward the most-significant on the left, and only the leftmost Sum lamp lit: `1000`.</em></div><br/>
+<div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/05_4-bit-rca-aerial_minecraft.png" alt="4-Bit Ripple-Carry Adder Minecraft Build" width="512px"/><br/><em>Figure: The full 4-bit ripple-carry adder in Minecraft, seen from above and computing the same `5 + 3` as the diagram. The least-significant stage on the right keeps the full adder's yellow; its three repeats are grayed to show they are copies, not new designs. The carry ripples right to left, and only the leftmost Sum lamp is lit: `1000`.</em></div><br/>
 
 #### The experiment
 
