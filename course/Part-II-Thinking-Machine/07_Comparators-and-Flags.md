@@ -225,18 +225,6 @@ For now, this is a **live status circuit** rather than a stored register. It ref
 
 ---
 
-### Module 7 Conclusion
-
-This is one of the most important conceptual modules in the whole course.
-
-You did not just add a few more lights to the machine. You built the hardware basis of decision-making. The computer can now say more than “here is the answer.” It can also say “the answer was zero” or “the answer was negative.”
-
-That tiny bit of metadata is what lets software branch, loop, and react.
-
-In the next module, we will build one more crucial control component: the **multiplexer**, the digital switch that lets the machine choose which of several data paths it wants to use. After that, we will finally assemble the complete ALU.
-
----
-
 ### Module 7 Checkpoint
 
 #### Practice Problem 7.5.1: Knowledge Check
@@ -311,3 +299,16 @@ That is exactly why status flags matter. They are one of the key places where so
 -   **Negative Flag (`N`)**: A flag that copies the most-significant bit of the result in a Two's Complement interpretation.
 -   **Status register**: The conceptual collection of flag bits describing the outcome of the latest operation.
 -   **Zero Flag (`Z`)**: A flag that is `1` exactly when the result bus is all zeros.
+
+---
+
+### Module 7 Conclusion
+
+This is one of the most important conceptual modules in the whole course.
+
+You did not just add a few more lights to the machine. You built the hardware basis of decision-making. The computer can now say more than “here is the answer.” It can also say “the answer was zero” or “the answer was negative.”
+
+That tiny bit of metadata is what lets software branch, loop, and react.
+
+In the next module, we will build one more crucial control component: the **multiplexer**, the digital switch that lets the machine choose which of several data paths it wants to use. After that, we will finally assemble the complete ALU.
+

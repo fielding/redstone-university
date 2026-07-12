@@ -177,18 +177,6 @@ That is a huge job for such a small-looking component.
 
 ---
 
-### Module 8 Conclusion
-
-You have now built one of the essential routing elements of digital design.
-
-A multiplexer does not perform arithmetic. It does not store memory. It does something just as important: it creates **choice**. It lets a tiny control signal decide which much larger data signal is allowed to continue.
-
-That is one of the central themes of computer architecture: small control, large effect.
-
-In the next module, we will put that idea to work by assembling the ALU itself. Several different calculation lanes will run in parallel, and your new multiplexer will choose which result becomes the processor’s official answer.
-
----
-
 ### Module 8 Checkpoint
 
 #### Practice Problem 8.4.1: Knowledge Check
@@ -262,3 +250,16 @@ That is conceptually the same as a 2-to-1 multiplexer:
 -   **Demultiplexer (DEMUX)**: A circuit that routes one input to one of several possible outputs.
 -   **Multiplexer (MUX)**: A circuit that selects one of several inputs and forwards it to a single output.
 -   **Select line**: The control signal that tells a multiplexer which input to choose.
+
+---
+
+### Module 8 Conclusion
+
+You have now built one of the essential routing elements of digital design.
+
+A multiplexer does not perform arithmetic. It does not store memory. It does something just as important: it creates **choice**. It lets a tiny control signal decide which much larger data signal is allowed to continue.
+
+That is one of the central themes of computer architecture: small control, large effect.
+
+In the next module, we will put that idea to work by assembling the ALU itself. Several different calculation lanes will run in parallel, and your new multiplexer will choose which result becomes the processor’s official answer.
+
