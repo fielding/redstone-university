@@ -293,7 +293,7 @@ That is why hexadecimal is everywhere in low-level programming, debugging, and c
 
 This is one of the most satisfying moments in the course. We are about to benefit directly from the modular architecture we chose in Module 4.
 
-<div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/05_4-bit-binary-to-hexadecimal-display-abstract_circuitverse.png" alt="Hexadecimal Display System Abstract Diagram" width="512px"/><br/><em>Figure: The upgraded display system as two clean stages, a 4-to-16 decoder feeding a hex decoder/driver. Shown reading `0101` and displaying `5`.</em></div><br/>
+<div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/05_hex-display_minecraft.png" alt="The upgraded hexadecimal display system" width="512px"/><br/><em>Figure: Where this lab ends: the display system rebuilt for hex, showing `C`. Everything in the deeper shades is what you are about to add; everything else is your Module 4 build, untouched.</em></div><br/>
 
 #### Lab Part A: Upgrade the decoder
 
@@ -340,8 +340,6 @@ A common 7-segment convention is:
 <div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/05_hex-rom-aerial_minecraft.png" alt="Extended ROM (plan view)" width="512px"/><br/><em>Figure: The ROM from above: every tap is one stored bit, and the deeper-shaded lines are the letters `A` through `F` being added.</em></div><br/>
 
 <div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/05_hex-display-aerial_minecraft.png" alt="Hexadecimal Display System Aerial View" width="512px"/><br/><em>Figure: The upgraded display system from above, set to `1100`: the bus enters the decoder along the top, its sixteen lines drop into the ROM below, and the collected segment lines exit into the panel. The deeper shades mark everything that was added for hex.</em></div><br/>
-
-<div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/05_hex-display_minecraft.png" alt="Hexadecimal Display System Minecraft Build" width="512px"/><br/><em>Figure: The complete upgraded display system in Minecraft: decoder, ROM, and 7-segment display, set to `1100` and showing `C`.</em></div><br/>
 
 #### The payoff test
 
