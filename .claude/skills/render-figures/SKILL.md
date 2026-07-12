@@ -50,7 +50,8 @@ Entry knobs (see circuitverse-diagrams.md for the schema):
 
 Special generators (write to `--out` dir): `--heroes` (7 gate symbols),
 `--gate-intros` (7 hero+example), `--layout-demo` (subcircuit before/after),
-`--seg-labeled` (7-segment naming reference).
+`--seg-labeled` (7-segment naming reference), `--seg-strip "A=abcefg,…"`
+(row of lit 7-seg panels with labels — the hex-letters strip).
 
 After touching the router/wire code, assert the no-false-junction invariant
 (wires of different nets only meet as perpendicular crossings):
