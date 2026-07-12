@@ -162,9 +162,9 @@ Excellent work! You've built a working decoder.
 
 <div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/04_2-to-4-decoder-3_minecraft.png" alt="2-to-4 Decoder Step 3" width="512px"/><br/><em>Figure: Final working 2-to-4 decoder, with the input set to `` `11` ``, so only the `L3` lamp is ON.</em></div><br/>
 
-<!-- TODO(fielding): first plan view in the book: add the one-line intro of
+<!-- TODO(fielding): first top-down figure in the book: add the one-line intro of
      the top-down convention here (suggested wording in tix). -->
-<div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/04_2-to-4-decoder-3-aerial_minecraft.png" alt="2-to-4 Decoder (plan view)" width="512px"/><br/><em>Figure: The same decoder from directly above: the full wiring path from the two input lines to the four output lamps.</em></div><br/>
+<div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/04_2-to-4-decoder-3-aerial_minecraft.png" alt="2-to-4 Decoder (top-down)" width="512px"/><br/><em>Figure: The same decoder from directly above: the full wiring path from the two input lines to the four output lamps.</em></div><br/>
 
 #### Lesson Summary: The Problem of Scale
 
@@ -267,7 +267,7 @@ Apply the rule and build methods to the remaining `9` lines. Use the chart below
 
 <div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/04_4-to-10-decoder-compact-complete_minecraft.png" alt="Compact 4-to-10 Decoder" width="512px"/><br/><em>Figure: The complete 4-to-10 compact decoder in action, with input `0011` lighting only the `L3` lamp.</em></div><br/>
 
-<div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/04_4-to-10-decoder-compact-complete-aerial_minecraft.png" alt="Compact 4-to-10 Decoder (plan view)" width="512px"/><br/><em>Figure: The compact decoder from above: the four input lines crossing all ten output columns.</em></div><br/>
+<div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/04_4-to-10-decoder-compact-complete-aerial_minecraft.png" alt="Compact 4-to-10 Decoder (top-down)" width="512px"/><br/><em>Figure: The compact decoder from above: the four input lines crossing all ten output columns.</em></div><br/>
 
 ##### Test Your Work!
 
@@ -409,7 +409,7 @@ Before connecting the encoder to the decoder, test all lines (`L0`–`L9`) indep
 
 <div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/04_10-to-7-encoder-complete_minecraft.png" alt="Complete 10-to-7 Encoder" width="512px"/><br/><em>Figure: The complete 10-to-7 encoder with all torch taps placed, showing the `L3` line active (input `0011`) and segments `a, b, c, d, g` powered for digit 3.</em></div><br/>
 
-<div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/04_10-to-7-encoder-complete-aerial_minecraft.png" alt="Complete 10-to-7 Encoder (plan view)" width="512px"/><br/><em>Figure: The programmed diode matrix from above: ten input columns crossing seven segment rows; every rimmed torch tap is one stored bit.</em></div><br/>
+<div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/04_10-to-7-encoder-complete-aerial_minecraft.png" alt="Complete 10-to-7 Encoder (top-down)" width="512px"/><br/><em>Figure: The programmed diode matrix from above: ten input columns crossing seven segment rows; every rimmed torch tap is one stored bit.</em></div><br/>
 
 This is your finished ROM, with every line programmed to map decoder inputs to segment outputs. The `L3` line is active here (LOW), lighting up the correct segments for a `3`. Cycle through inputs `L0`–`L9` to confirm each digit’s pattern. If any segments don’t light as expected, revisit your torch placements using the lookup table. You’ve just built a physical memory that “stores” the display patterns for all 10 digits!
 
