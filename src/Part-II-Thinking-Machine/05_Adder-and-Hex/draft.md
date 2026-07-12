@@ -352,6 +352,8 @@ This is one of the most satisfying moments in the course. We are about to benefi
     -   `LF` for `1111`
 4.  Use the same tap logic from Module 4. Each new line simply recognizes one more identity pattern.
 
+Four steps is genuinely all it takes, and that is the point: you already know this technique. You spent half of Module 4 learning it. The figures below are your references, each with its own job: the schematic shows the logic, the build shows the result, and the plan view is the one to build from, because every torch and repeater position on the new lines is readable straight off it.
+
 ![4-to-16 Decoder CircuitVerse Diagram](./images/4-to-16-decoder_circuitverse.png)
 *Figure: The full 4-to-16 binary decoder. Sixteen output lines, one per 4-bit pattern; here the input `1111` activates line `LF`.*
 
@@ -380,6 +382,8 @@ A common 7-segment convention, with `b` and `d` drawn lowercase for a practical 
 
 ![The hex letters on a 7-segment display](./images/hex-letters-7seg_circuitverse.png)
 *Figure: The six letter patterns on the display: `A` through `F`, with `B` and `D` in their lowercase-looking forms.*
+
+Same drill as the decoder: the plan view below carries the exact tap positions for the six new lines.
 
 ![7-Segment Hex Decoder/Driver CircuitVerse Diagram](./images/7-segment-hex-decoder-driver_circuitverse.png)
 *Figure: The extended decoder/driver ROM: all sixteen line inputs, one OR column per segment.*
