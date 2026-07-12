@@ -92,10 +92,12 @@ And it must produce **two** outputs:
 
 That little 3-input, 2-output circuit is called a **full adder**. It is the LEGO brick of arithmetic.
 
-Its logic is, in the dual notation from Module 3:
+Its logic is, in the two notations from Module 3:
 
--   **Sum:** $A \text{ XOR } B \text{ XOR } CarryIn$ : $A \oplus B \oplus CarryIn$
--   **Carry-Out:** $(A \text{ AND } B) \text{ OR } (CarryIn \text{ AND } (A \text{ XOR } B))$ : $(A \land B) \lor (CarryIn \land (A \oplus B))$
+| Output | In words | In symbols |
+| :--- | :--- | :--- |
+| **Sum** | $A \text{ XOR } B \text{ XOR } CarryIn$ | $A \oplus B \oplus CarryIn$ |
+| **Carry-Out** | $(A \text{ AND } B) \text{ OR } (CarryIn \text{ AND } (A \text{ XOR } B))$ | $(A \land B) \lor (CarryIn \land (A \oplus B))$ |
 
 There is a nice intuition hiding here:
 
