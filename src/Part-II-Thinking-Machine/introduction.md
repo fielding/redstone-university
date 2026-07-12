@@ -1,25 +1,25 @@
 ## Part II: The Thinking Machine – Building the Processor
 
-Excellent work completing Part I. Take a moment to appreciate what you have accomplished. You have learned the language of binary, mastered the grammar of Boolean logic, and engineered a complete input and output system from scratch. You have built the entire human interface for our computer.
+Part I left you with something real: a machine you can talk to in binary, and a display that answers in digits. That is the entire human interface of a computer, and you built every block of it.
 
-Now, we build the part that thinks.
+Now we build the part that thinks.
 
-Welcome to Part II. The goal of this next phase of our journey is to construct the mathematical and logical brain of our computer: the **Arithmetic Logic Unit (ALU)**. The ALU is the true processor core, a single, powerful component that can perform a wide range of calculations and make logical decisions. We will build it piece by piece, module by module, culminating in our most complex and rewarding creation yet.
+Part II has one goal: the **Arithmetic Logic Unit**, the ALU. It's the part of a processor that actually computes. When a CPU adds, subtracts, compares, or decides anything at all, the ALU is doing the work. We'll build ours piece by piece across five modules, and every piece is a working machine on its own before it joins the whole.
 
 ### Our Mission for Part II
 
-This Part is a deep dive into the art of digital engineering. We will build each component of the processor, solve the problems that arise, and then forge them all into a single, unified brain.
+The path there runs through real engineering problems, not around them:
 
--   **In Module 5 (The Adder & The Hexadecimal Upgrade),** we will take our first step into computer mathematics by building a 4-bit adder, only to discover a critical bug in our display that forces us to upgrade our entire system to speak Hexadecimal.
+-   **Module 5 (The Adder & The Hexadecimal Upgrade):** a 4-bit adder, our first real arithmetic, and an integration bug that ends with the whole display system learning to speak hexadecimal.
 
--   **In Module 6 (Advanced Arithmetic),** we will push our adder to its limits, learning how to detect and handle overflow errors. Then, using a brilliant mathematical trick, we will teach our adder how to subtract.
+-   **Module 6 (Advanced Arithmetic):** push the adder to its limits, learn what overflow actually is, and teach the machine to subtract using two's complement.
 
--   **In Module 7 (Comparators and Status Flags),** we will give our machine the gift of awareness. We'll build the hardware that allows it to ask questions about its calculations, creating the status flags that are the foundation of all programming logic.
+-   **Module 7 (Comparators and Status Flags):** the hardware that lets the machine report on its own results. Status flags look small. All of programming stands on them.
 
--   **In Module 8 (The Multiplexer),** we will construct the processor's "steering wheel", a digital switch that allows us to select which operation our ALU should perform.
+-   **Module 8 (The Multiplexer):** the processor's "steering wheel", a digital switch that selects which operation's answer counts.
 
--   **In Module 9 (The ALU – The Grand Assembly),** we will undertake the capstone project of this Part. We will assemble all the components from the previous modules into our final, multi-functional, and controllable Arithmetic Logic Unit.
+-   **Module 9 (The ALU – The Grand Assembly):** the capstone. Everything from Modules 5 through 8, assembled into one controllable unit.
 
-By the end of this Part, the brain of our computer will be complete. We will have built the single most important component in any CPU, setting the stage for the final act: bringing it to life.
+By the end of Part II the computing core is done, and everything after it is about bringing that core to life.
 
 Let's begin by teaching our machine how to do math.
