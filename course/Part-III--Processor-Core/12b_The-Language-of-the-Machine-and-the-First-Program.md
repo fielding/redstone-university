@@ -90,6 +90,8 @@ For this version of the machine, the **Flag Register** is updated by the instruc
 
 That keeps the flag semantics simple and predictable.
 
+One deliberate omission is worth stating plainly: **the carry lamp is not a flag.** The adder's final carry-out stays a live diagnostic light — never latched, never consumed by any instruction. Plenty of real machines do latch carry and branch on it (a carry flag after subtraction doubles as an unsigned "greater or equal"), and adding one to this machine is a genuinely good extension exercise: one more Module 10 bit next to `Z` and `N`, one more line into the decoder. We leave it out so the Flag Register stays a two-bit story and `JIZ` stays the only conditional — one flag consumed by one instruction is the cleanest possible introduction to branching.
+
 ---
 
 ### Lesson 12b.2: The decoder – Turning opcodes into control signals
@@ -121,6 +123,8 @@ The decoder must be able to drive:
 -   RAM write pulse
 -   Program Counter load signal
 -   Halt control
+
+Notice what is *not* on the list: the ALU's function-select lines. The integrated machine pins the ALU to its arithmetic lane permanently — the decoder drives only the `SUB` line to choose between add and subtract. Module 9's function levers belonged to the standalone ALU build; here they retire, the way a part's test harness retires when the part is installed. (The AND/OR/XOR lanes are still physically there and still observable — the ISA just never selects them. Room to grow.)
 
 At a high level:
 
@@ -161,6 +165,15 @@ Here is the execute-phase meaning of a few instructions:
 -   **`JIZ [addr]`**
     -   if `FlagZ = 1`, Program Counter input selector chooses `AR` and PC receives a load pulse
     -   if `FlagZ = 0`, the PC simply continues its normal fetch-driven increment behavior
+-   **`HLT`**
+    -   the decoder's halt line sets a **latch** — one more Module 10-style storage bit
+    -   the latch's output is the third input of the clock-enable AND from Lesson 12a.1
+
+#### How HLT stops time — and how you get it back
+
+`HLT` cannot simply hold its decode line high the way other control signals do: the machine is multiphase, and the moment the next fetch began, the decode line would drop and the machine would lurch back to life. So the halt signal is **latched** — a momentary pulse at `T2` sets a bit that stays set, and that bit gates the clock.
+
+This is also the complete answer to "how do I resume?": you don't, except through **RESET**. RESET clears the halt latch along with zeroing the PC and the sequencer, so a halted program always restarts from the top. There is deliberately no "un-halt" toggle — a machine that halted did so because its program said it was finished, and the only meaningful next act is to run a program from the beginning. Flip to Program mode to change memory if you want, RESET, and run.
 
 #### How to build the decoder physically
 
@@ -208,7 +221,7 @@ That order starts with the most local register-loading behaviors and gradually e
 -   `STA [addr]` should write Register A into the selected RAM location
 -   `JMP [addr]` should load the PC with the new address
 -   `JIZ [addr]` should jump only when the latched Zero Flag is `1`
--   `HLT` should stop the clock cleanly
+-   `HLT` should stop the clock cleanly — and *stay* stopped: verify the halt latch holds after the decode line drops, and that only RESET releases it
 
 #### The instruction most likely to be timing-sensitive
 
