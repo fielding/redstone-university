@@ -182,15 +182,28 @@ def stamp_legend(png_path, legend):
         x += cw + gap + draw.textlength(label, font=font) + pad * 2
     row_w, row_h = x - pad * 2, sw
 
+    # a corner only qualifies if the legend row plus a padding ring is empty,
+    # so chips never sit flush against the build
+    pad = round(sw * 0.75)
     def corner_free(rx, ry):
-        box = img.crop((int(rx), int(ry),
-                        int(min(w, rx + row_w)), int(min(h, ry + row_h))))
+        box = img.crop((int(max(0, rx - pad)), int(max(0, ry - pad)),
+                        int(min(w, rx + row_w + pad)),
+                        int(min(h, ry + row_h + pad))))
         return box.getchannel("A").getbbox() is None
 
     corners = [(margin, h - margin - row_h), (margin, margin),
                (w - margin - row_w, margin),
                (w - margin - row_w, h - margin - row_h)]
-    ox, oy = next((c for c in corners if corner_free(*c)), corners[0])
+    spot = next((c for c in corners if corner_free(*c)), None)
+    if spot is None:
+        # tight canvas (wide strips): grow it downward with transparent rows
+        # so the legend gets real air instead of hugging the build
+        grown = Image.new("RGBA", (w, h + pad + row_h + margin), (0, 0, 0, 0))
+        grown.paste(img, (0, 0))
+        img = grown
+        draw = ImageDraw.Draw(img)
+        spot = (margin, h + pad)
+    ox, oy = spot
 
     for off, label, chip in items:
         sx = int(ox + off)
