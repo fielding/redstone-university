@@ -105,6 +105,7 @@ def parse_args():
         "_outline_set": False,   # True once --outline is given explicitly
         "projection": "ortho",
         "top_azimuth": None,
+        "top_res": None,
         "max_layer": None,
         "explode": None,
         "clip": None,
@@ -170,6 +171,10 @@ def parse_args():
         elif a == "--top-azimuth":
             i += 1
             opts["top_azimuth"] = float(args[i])
+        elif a == "--top-res":
+            i += 1
+            w, h = args[i].lower().split("x")
+            opts["top_res"] = (int(w), int(h))
         elif a == "--ground":
             i += 1
             opts["ground"] = args[i].lower()   # keep | remove | crop
@@ -1427,8 +1432,16 @@ def strip_ground(scene, mode, base_z):
                   for ob in scene.objects
                   if ob.type == 'MESH' and not ob.hide_render and is_circuit(ob)
                   for v in ob.data.vertices]
-        rest = _math.floor((min(circ_z) - base_z) / BLOCK) * BLOCK + base_z \
-            if circ_z else base_z + BLOCK
+        # MEDIAN, not min: dust decals can sink a hair below the course top,
+        # and a single sunken vertex would drop the resting plane a whole
+        # block — the band then keeps the real course AND generates pads
+        # under it (the doubled-base failure, 2026-07-11)
+        if circ_z:
+            circ_z.sort()
+            med = circ_z[len(circ_z) // 2]
+            rest = _math.floor((med - base_z) / BLOCK + 0.03) * BLOCK + base_z
+        else:
+            rest = base_z + BLOCK
         rest = max(base_z, min(rest, base_z + BLOCK))
         band_top = rest + 1.0
 
@@ -1854,6 +1867,11 @@ def main():
             continue
         elevation, azimuth, ortho, lighting, glare = VIEWS[view]
         topv = (view == "top")
+        # a rotated/tall plan can want its own canvas aspect (--top-res);
+        # restore the base res for other views in the same run
+        scene.render.resolution_x, scene.render.resolution_y = (
+            opts["top_res"] if (topv and opts["top_res"] is not None)
+            else opts["res"])
         if view == "top":
             # plan view keeps the build squared to the frame — it does NOT
             # inherit the iso azimuth; override with --top-azimuth if needed.

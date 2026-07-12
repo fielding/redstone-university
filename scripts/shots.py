@@ -128,13 +128,35 @@ def export_usd(name, shot, packs):
     return usd_path
 
 
+CHIPS_DIR = os.path.join(DEFAULT_OUT, "chips")
+
+
+def ensure_chips(hexes):
+    """Render any missing legend chip blocks (one Blender call for the batch).
+    Chips are real renders — same iso, fill, and ink as the figures — cached
+    by hex under renders/out/chips/."""
+    missing = [hx for hx in dict.fromkeys(h.lower() for h in hexes)
+               if not os.path.exists(os.path.join(CHIPS_DIR, f"{hx}.png"))]
+    if not missing:
+        return
+    script = os.path.join(REPO, "scripts", "legend_chip.py")
+    r = subprocess.run(["blender", "-b", "-P", script, "--",
+                        "--out", CHIPS_DIR, *missing],
+                       capture_output=True, text=True, timeout=300)
+    made = [l for l in r.stdout.splitlines() if l.startswith("wrote ")]
+    if len(made) != len(missing):
+        print(r.stdout[-1500:])
+        sys.exit(f"legend chips: expected {len(missing)}, wrote {len(made)}")
+    print(f"legend chips: rendered {len(made)} new ({', '.join(missing)})")
+
+
 def stamp_legend(png_path, legend):
     """
-    Stamp a small swatch+label legend onto a rendered figure. Config: a
-    per-shot "legend" object mapping label -> region hex, in display order
-    (the flat legend hue — the anchor of the region's tone band). Placement
-    prefers the bottom-left corner and walks the other corners if the build
-    reaches into it.
+    Stamp a legend row onto a rendered figure: real rendered chip blocks
+    (ensure_chips) + Young Serif labels in ink. Config: a per-shot "legend"
+    object mapping label -> region hex, in display order (the flat legend
+    hue — the anchor of the region's tone band). Placement prefers the
+    bottom-left corner and walks the other corners if the build reaches in.
     """
     from PIL import Image, ImageDraw, ImageFont
 
@@ -151,9 +173,13 @@ def stamp_legend(png_path, legend):
 
     items, x = [], 0
     for label, hexcol in legend.items():
-        rgb = tuple(int(hexcol[i:i + 2], 16) for i in (0, 2, 4))
-        items.append((x, label, rgb))
-        x += sw + gap + draw.textlength(label, font=font) + pad * 2
+        chip = Image.open(
+            os.path.join(CHIPS_DIR, f"{hexcol.lower()}.png")).convert("RGBA")
+        chip = chip.crop(chip.getchannel("A").getbbox())
+        cw = round(chip.width * (sw / chip.height))
+        chip = chip.resize((cw, sw), Image.LANCZOS)
+        items.append((x, label, chip))
+        x += cw + gap + draw.textlength(label, font=font) + pad * 2
     row_w, row_h = x - pad * 2, sw
 
     def corner_free(rx, ry):
@@ -166,24 +192,10 @@ def stamp_legend(png_path, legend):
                (w - margin - row_w, h - margin - row_h)]
     ox, oy = next((c for c in corners if corner_free(*c)), corners[0])
 
-    wline = max(2, sw // 14)
-    for off, label, rgb in items:
-        sx = ox + off
-        # flat iso block in the figures' own language: one hue, ink outline,
-        # inner edges drawn (top rhombus + front vertical) — a 2:1 dimetric
-        # cube sw wide and sw tall
-        a, b = sw / 2.0, sw / 4.0
-        cx = sx + a
-        T, UR = (cx, oy), (cx + a, oy + b)
-        LR, Bt = (cx + a, oy + 3 * b), (cx, oy + 4 * b)
-        LL, UL = (cx - a, oy + 3 * b), (cx - a, oy + b)
-        M = (cx, oy + 2 * b)
-        draw.polygon([T, UR, LR, Bt, LL, UL], fill=(*rgb, 255))
-        for p, q in ((UL, M), (M, UR), (M, Bt)):
-            draw.line([p, q], fill=ink, width=wline)
-        draw.line([T, UR, LR, Bt, LL, UL, T], fill=ink,
-                  width=wline, joint="curve")
-        draw.text((sx + sw + gap, oy + sw / 2), label,
+    for off, label, chip in items:
+        sx = int(ox + off)
+        img.alpha_composite(chip, (sx, int(oy)))
+        draw.text((sx + chip.width + gap, oy + sw / 2), label,
                   font=font, fill=ink, anchor="lm")
     img.save(png_path)
 
@@ -200,7 +212,7 @@ def render(name, shot, usd_path, out_dir, azimuth, views):
         args += ["--transparent"]
     for opt in ("margin", "elevation", "outline", "dust", "toon",
                 "projection", "technical", "height-tint", "top-azimuth", "ground", "hide",
-                "tint", "clip", "res", "torch-marks"):
+                "tint", "clip", "res", "top-res", "torch-marks"):
         key = opt.replace("-", "_")
         if key in shot:
             args += [f"--{opt}", str(shot[key])]
@@ -213,6 +225,7 @@ def render(name, shot, usd_path, out_dir, azimuth, views):
         print(result.stdout[-2000:])
         sys.exit(f"[{name}] render produced no output")
     if shot.get("legend"):
+        ensure_chips(shot["legend"].values())
         for line in wrote:
             stamp_legend(line[len("wrote "):].strip(), shot["legend"])
         print(f"[{name}] legend stamped on {len(wrote)} file(s)")

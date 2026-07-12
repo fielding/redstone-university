@@ -11,7 +11,7 @@
     "height_tint": 0.9,
     "projection": "tele",
     "ground": "remove",
-    "hide": "oak_fence"
+    "hide": "oak_fence,oak_planks"
   },
   "00_icon-solid-block": {
     "world": "/Users/fielding/src/hack/minecraft-agents/server/world-redstone-university",
@@ -612,12 +612,9 @@
       "iso",
       "top"
     ],
-    "ground": "crop",
+    "ground": "keep",
     "azimuth": 135,
     "top_azimuth": 180,
-    "height_tint": 0.85,
-    "tint": "yellow_concrete=f2d489,orange_concrete=f2d489,white_wool=f5f1ea,smooth_stone=f5f1ea,cobblestone=f5f1ea",
-    "swap": "",
     "place": {
       "iso": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/full-adder_minecraft.png",
       "top": "src/Part-II-Thinking-Machine/05_Adder-and-Hex/images/full-adder-aerial_minecraft.png"
@@ -808,6 +805,7 @@
       "ROM": "e4b0ab",
       "Display driver": "a8c4d6"
     },
-    "top_azimuth": 180
+    "top_azimuth": 180,
+    "top_res": "1620x1900"
   }
 }
