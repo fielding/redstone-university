@@ -1015,6 +1015,35 @@ def render_seg_labeled(scale=2.0):
             + "\n".join(parts) + "\n</svg>\n")
 
 
+def render_seg_strip(patterns, scale=2.0):
+    """A row of 7-segment panels, each lit with a given pattern and labeled
+    beneath — the hex-letters reference strip (A-F with lowercase b/d).
+    patterns: ordered (label, segs) pairs, segs an 'abcefg'-style string.
+    Panels speak the live SevenSegDisplay language: lit segments signal-red,
+    unlit ghosted FAINT, paper panel with ink frame."""
+    PW, PH, GAP, LBL = 64, 116, 26, 36
+    parts = []
+    for i, (label, segs) in enumerate(patterns):
+        ox = i * (PW + GAP) + PW / 2
+        g = [f'<rect x="-32" y="-58" width="64" height="116" fill="{PAPER}" '
+             f'stroke="{INK}" stroke-width="{GW}"/>']
+        for seg, d in SEG_PATH.items():
+            g.append(f'<path d="{d}" stroke="{ON if seg in segs else FAINT}" '
+                     f'stroke-width="6" stroke-linecap="round"/>')
+        parts.append(f'<g transform="translate({ox:.0f},{PH/2:.0f})">'
+                     + "".join(g) + "</g>")
+        parts.append(f'<text x="{ox:.0f}" y="{PH + LBL - 10:.0f}" '
+                     f'font-family="Young Serif, Georgia, serif" font-size="26" '
+                     f'text-anchor="middle" fill="{INK}">{esc(label)}</text>')
+    M = 10
+    W = len(patterns) * PW + (len(patterns) - 1) * GAP
+    H = PH + LBL
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{(W+2*M)*scale:.0f}" '
+            f'height="{(H+2*M)*scale:.0f}" '
+            f'viewBox="{-M} {-M} {W+2*M} {H+2*M}">\n'
+            + "\n".join(parts) + "\n</svg>\n")
+
+
 def render_subcircuit_box(label, left=(), right=(), top=(), bottom=(),
                           bw=150, bh=280, scale=2.0):
     """A single labeled subcircuit black-box with pins on chosen edges (dots
@@ -1092,7 +1121,24 @@ def main():
                    help="render the subcircuit default-vs-organized layout pair to --out dir")
     p.add_argument("--seg-labeled", action="store_true",
                    help="render the labeled 7-segment naming reference to --out")
+    p.add_argument("--seg-strip",
+                   help="render a row of 7-seg panels from 'Label=segs,...' "
+                        "(e.g. 'A=abcefg,b=cdefg'); writes seg-strip.svg/.png to --out")
     a = p.parse_args()
+
+    if a.seg_strip:
+        pats = []
+        for part in a.seg_strip.split(","):
+            label, segs = part.split("=")
+            pats.append((label.strip(), segs.strip().lower()))
+        svg = render_seg_strip(pats, a.scale)
+        out = a.out if a.out.endswith(".svg") else os.path.join(a.out, "seg-strip.svg")
+        os.makedirs(os.path.dirname(out) or ".", exist_ok=True)
+        with open(out, "w") as f:
+            f.write(svg)
+        to_png(out, out[:-4] + ".png")
+        print(f"wrote {out} + .png")
+        return
 
     if a.seg_labeled:
         svg = render_seg_labeled(1.6 if a.scale == 2.0 else a.scale)
