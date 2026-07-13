@@ -17,13 +17,11 @@
 
 ### Module 2 Introduction
 
-Welcome back to Redstone University!
+In our last module, we built an interface to speak to our computer in its native language: binary. But sending signals is only half the story. To make our machine *think*, it has to understand what those signals mean. We need to give it a grammar.
 
-In our last module, we built an interface to speak to our computer in its native language: binary. But sending signals is only half the story. To make our machine *think*, we need to teach it how to understand those signals. We need to give it a grammar.
+This module is our first real look at the theory that powers every digital device ever made: **Boolean Algebra**, the mathematics of True and False. Then we bring that theory to life by building the three most fundamental "verbs" of logic: the **NOT**, **OR**, and **AND** gates.
 
-This module is our first real look at the theory that powers every digital device ever made. We will learn about **Boolean Algebra**, the mathematics of True and False. Then, we will immediately bring that theory to life by building the three most fundamental "verbs" of logic: the **NOT**, **OR**, and **AND** gates.
-
-By the end of this module, you won't just have a collection of circuits; you'll understand the foundational principles that allow simple on/off signals to become the building blocks of complex decisions.
+By the end of this module you will have all three gates built and working in Minecraft, and a solid sense of how simple on/off signals combine into real decisions.
 
 ---
 
@@ -33,24 +31,24 @@ By the end of this module, you won't just have a collection of circuits; you'll 
 
 In the mid-1800s, a mathematician named George Boole developed a new kind of algebra. Unlike the algebra you're used to, where variables like $x$ and $y$ can be any number, Boole's variables were much simpler. They could only have two possible values: **True** or **False**.
 
-This system, now called **Boolean Algebra**, was initially a mathematical curiosity. But a century later, when engineers started building the first electronic computers with on/off switches, they realized Boole had already invented the perfect system to describe them. In the abstract world of math, these values are the constants $1$ (True) and $0$ (False). In the physical world of our circuits, they are the literal signals `1` (ON) and `0` (OFF).
+This system, now called **Boolean Algebra**, spent about a century as a mathematical curiosity. Then engineers started building the first electronic computers out of on/off switches and realized Boole had already done their math for them, a hundred years early. In the abstract world of math, these values are the constants $1$ (True) and $0$ (False). In the physical world of our circuits, they're the literal signals `1` (ON) and `0` (OFF).
 
--   **The Core Idea:** We will treat our Redstone signals as Boolean variables, like $A$ or $B$.
+-   **The Core Idea:** We treat our Redstone signals as Boolean variables, like $A$ or $B$.
 -   A powered Redstone line has the physical value **True** (`1`).
 -   An unpowered Redstone line has the physical value **False** (`0`).
 
-Boolean algebra gives us a set of rules and operators to manipulate these variables. When we build those operators physically, we call them **logic gates**, and they are the bedrock of all computation.
+Boolean algebra gives us a set of rules and operators to manipulate these variables. When we build those operators physically, we call them **logic gates**, and they're what the rest of this course is built from.
 
 ---
 
 ### Lesson 2.2: The Primitives – Building NOT and OR Gates
 
-Every complex machine is built from simple, fundamental parts. In digital logic, these parts are called **primitive gates**. In the world of computer science, you can build any logic gate from a small set of these primitives. For this course, our primitives are dictated by the very mechanics of Minecraft itself, giving us two logical operations right out of the box:
+Every complex machine is built from simple, fundamental parts. In digital logic, those parts are called **primitive gates**, and from a small set of them you can build any other gate. Our set is dictated by the mechanics of Minecraft itself, which gives us two logical operations right out of the box:
 
 1.  **NOT:** A Redstone Torch naturally inverts a signal. This is our primitive NOT gate.
 2.  **OR:** Redstone Dust naturally merges signals. If any line powering a central wire is ON, the whole wire becomes ON. This is our primitive OR gate.
 
-From these two building blocks, **NOT** and **OR**, we will construct every other logic gate in our computer. This approach shows you how even the most complex digital machines can be built from the simplest possible parts. While real-world electronics often use gates like NAND or NOR as universal primitives for manufacturing efficiency, we will stick with NOT and OR because they are so intuitive and map directly to the Redstone system.
+From these two building blocks, **NOT** and **OR**, we will build every other logic gate in our computer. Real-world electronics usually pick NAND or NOR as their universal primitive for manufacturing efficiency, but we'll stick with NOT and OR because they're intuitive and map directly onto Redstone.
 
 Now, let's build them.
 
@@ -58,12 +56,12 @@ Now, let's build them.
 
 #### How We Describe Each Gate
 
-To ensure a complete understanding, every logic gate in this course is introduced using a consistent structure. Think of this as the blueprint for each of our investigations.
+Each gate below follows the same format:
 
 **Visual Introduction:**
 
 -   **Abstract Symbol & Function:** We begin with an image showing the gate's standard engineering symbol alongside a simple circuit demonstrating its basic function.
--   **Composite Diagram (For Composite Gates Only):** For gates built from our primitives, we then show a detailed CircuitVerse diagram of how they are constructed using only NOT and OR gates.
+-   **Composite Diagram (For Composite Gates Only):** For gates built from our primitives, we then show a detailed CircuitVerse diagram of how they're constructed using only NOT and OR gates.
 -   **Minecraft Build:** Finally, we show a screenshot of the gate built in Minecraft, reflecting our "primitives-only" design philosophy.
 
 **Formal Definition & Rules:**
@@ -163,7 +161,7 @@ NOT logic is everywhere. It's used to create the oscillating signal in a compute
     >
     > In our OR gate, if we merge the dust lines directly, a signal from input $A$ could travel backwards up the other wire and power input $B$'s lamp, even if $B$'s lever is off. This is called "back-powering."
     >
-    > The **Redstone Repeater** is a perfect, purpose-built diode in Minecraft. Notice the small arrow on top of it; it will only allow a signal to pass in that direction. By placing a repeater on each input line, we ensure the signal can flow *out* towards the final lamp, but cannot flow *backwards* to interfere with the other input.
+    > The **Redstone Repeater** is a perfect, purpose-built diode in Minecraft. Notice the small arrow on top of it; it will only allow a signal to pass in that direction. By placing a repeater on each input line, the signal can flow *out* towards the final lamp, but can't flow *backwards* to interfere with the other input.
 
 
 2.  **Test the circuit:** Verify all four combinations from the truth table (`00`, `01`, `10`, `11`) and confirm the output lamp behaves as expected.
@@ -196,20 +194,20 @@ Given the Boolean expression $A \text{ OR } (\text{NOT } B)$ : $A \lor (\neg B)$
 
 ### Lesson 2.3: The First Composite Gate – Building an AND Gate
 
-> **Key Takeaway:** An AND gate outputs a `1` only if **all** of its inputs are a `1`. We will construct this new function by cleverly combining our primitive NOT and OR gates.
+> **Key Takeaway:** An AND gate outputs a `1` only if **all** of its inputs are a `1`. We will build it by combining our primitive NOT and OR gates.
 
 ![AND Gate in CircuitVerse](./images/AND-gate_circuitverse.png)
 *Figure: The abstract symbol for the AND gate (left) and its function. The output $Y$ is active only if both $A$ and $B$ are active.*
 
-Minecraft doesn't give us a single block that performs the AND operation. We must build it ourselves from the parts we already have. This is the essence of digital engineering: creating complex functions from simple components.
+Minecraft doesn't give us a single block that performs the AND operation, known formally as Conjunction (of Junction fame, with the same function the song promised: hooking things up). This is the first gate we have to earn, built from the parts we already have.
 
-To connect the abstract concept of a gate to our physical build, we will use a consistent visual format. Each composite gate will be introduced with its standard, abstract symbol, which is how engineers represent it in high-level diagrams. This will be followed by a detailed composite diagram showing how to construct it from our primitive NOT and OR gates. In these diagrams, a dashed outline will enclose the group of primitives, visually demonstrating how they work together to become equivalent to the single, abstract gate.
+To connect the abstract concept of a gate to our physical build, we use a consistent visual format. Each composite gate is introduced with its standard, abstract symbol, which is how engineers represent it in high-level diagrams, followed by a detailed composite diagram showing how to construct it from our primitive NOT and OR gates. In these diagrams, a dashed outline encloses the group of primitives, showing how they work together to become equivalent to the single, abstract gate.
 
 ![AND Gate Composite in CircuitVerse](./images/AND-gate-composite_circuitverse.png)
 *Figure: The AND gate constructed from our primitives. This diagram shows how two NOT gates and one OR gate are combined to create the AND function.*
 
 
--   **Formal Definition:** The AND gate performs logical **Conjunction**. It is the strict gate; its output is True only if *all* inputs are True.
+-   **Formal Definition:** The AND gate performs logical **Conjunction**. It's the strict gate; its output is True only if *all* inputs are True.
 -   **Symbols:**
     -   **Logical Notations:**
         -   *Text-based:* $A \text{ AND } B$
@@ -244,11 +242,11 @@ To connect the abstract concept of a gate to our physical build, we will use a c
     4.  Run this merged dust line into a solid block.
     5.  Attach one final Redstone Torch to the front of that block. This is your final **NOT** gate, which inverts the entire expression.
     6.  Connect this final torch to an output lamp for $Y$.
-2.  **Test the circuit:** Cycle through all four input combinations. You will find the output lamp turns on only when both lever $A$ AND lever $B$ are ON.
+2.  **Test the circuit:** Cycle through all four input combinations. The output lamp turns on only when both lever $A$ AND lever $B$ are ON.
 
 #### Real-World & Software Connection
 
-AND logic is essential for safety and precision. A missile might require `TurnKey1` is true AND `PressButton` is true to launch. In programming, the `&&` operator is used to ensure multiple conditions are met before executing a critical piece of code.
+AND logic is essential for safety and precision. A missile might require `TurnKey1` is true AND `PressButton` is true to launch. In programming, the `&&` operator checks that multiple conditions are met before executing a critical piece of code.
 
 #### Practice Problem 2.3.1: Logic Gate Design Challenge
 
@@ -343,4 +341,4 @@ Now bring Practice Problem 2.4.2 to life. Build the home security system in Mine
 
 You started with the abstract idea of Boolean Algebra and ended by building physical, working circuits that obey its laws. You now have the three foundational gates, NOT, OR, and AND, and you've used the core engineering move of this whole course: building a component you don't have out of components you do.
 
-These are the essential "verbs" of our computer's language. In the next module, **The Art of Logic**, we will expand our vocabulary with more specialized gates and learn the techniques of simplification that let engineers design circuits that are not just correct, but efficient.
+These are the essential "verbs" of our computer's language. In the next module, **The Art of Logic**, we'll expand our vocabulary with more specialized gates and learn the simplification techniques engineers use to make correct circuits efficient.
