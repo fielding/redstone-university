@@ -1,4 +1,4 @@
-## Part III: The Automated Computer – Memory and Control
+## Part III: The Processor Core – Memory and Control
 
 Incredible work completing Part II. Take a moment to step back and appreciate what you have built. You have forged the complete brain of our computer: a powerful and versatile Arithmetic Logic Unit that can perform arithmetic, execute logic, and report on the status of its own calculations. You have built a genuine, manually operated processor core.
 
