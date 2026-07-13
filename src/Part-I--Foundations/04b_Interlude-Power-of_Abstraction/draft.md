@@ -4,32 +4,32 @@
 
 ### A Note from the Instructor
 
-Welcome back, engineer! You just completed **Module 4**, our first large-scale, multi-part system. You connected a decoder to a ROM to a display, and you saw how breaking a big problem into smaller modules was the key to success.
+You just finished **Module 4**, our first large-scale, multi-part system. You connected a decoder to a ROM to a display, and you saw how breaking a big problem into smaller modules made the whole thing manageable.
 
-In the introduction to that module, we talked about the **Power of Abstraction**. Now, it's time to see what that looks like in practice, not just in Minecraft, but in the tools real engineers use. In **Lesson 4.2**, you saw this image:
+In the introduction to that module, we talked about the **Power of Abstraction**. Now it's time to see what that looks like in practice, both in Minecraft and in the tools real engineers use. In **Lesson 4.2**, you saw this image:
 
 ![Digital Display Subcircuit Abstractions](./images/digital-display-subcircuit-abstractions_circuitverse.png)
 *Figure: The digital display system represented with subcircuits in CircuitVerse.*
 
-You probably noticed that the decoder and ROM were shown as simple gray boxes, or **"black boxes,"** instead of the complex web of gates we built. This isn't just to make the diagram look clean; it's a fundamental technique in digital logic design.
+You probably noticed that the decoder and ROM were shown as simple gray boxes, or **"black boxes,"** instead of the web of gates we actually built. That does make the diagram easier to read, but readability is the side benefit. Hiding a finished component's guts is a fundamental technique in digital logic design.
 
-In this short, optional interlude, we'll pull back the curtain on how this is done in CircuitVerse. Mastering this skill will make your designs cleaner, easier to manage, and will prepare you for the even more complex circuits we'll build in Part II.
+This short, optional interlude walks through how to do it in CircuitVerse. It will make your designs cleaner and easier to manage, and it sets you up for the bigger circuits coming in Part II.
 
 ---
 
 ### What is a Subcircuit? The "Black Box" Principle
 
-A **subcircuit** is a self-contained circuit that you can package up and treat as a single component. It's the ultimate application of the "black box" principle:
+A **subcircuit** is a self-contained circuit that you can package up and treat as a single component. It's a direct application of the "black box" principle:
 
 > Once a component is built and tested, you no longer need to worry about *how* it works internally. You only need to know what its inputs and outputs are.
 
+The payoff is bigger than a tidy diagram. Back in the compact-design interlude you saw the same logic built two ways, spread out for clarity or folded tight for space. A black box is what lets that choice stay private: seal the decoder up, and you could rebuild its insides in the compact style tomorrow without touching a single wire outside it, because nothing outside was ever looking in. The box owes the rest of the system a behavior, not a particular pile of torches.
+
+None of this is new, and none of it is mine. A classic computer science text, *Structure and Interpretation of Computer Programs* (SICP), built a whole section on the same idea decades before this course existed, in software instead of redstone: "A user should not need to know how the procedure is implemented in order to use it." Swap the word *procedure* for *subcircuit* and that's the rule we're following.
+
 By turning our complex 4-to-10 Decoder into a single subcircuit block, we can hide its internal complexity and focus on how it connects to the rest of the system.
 
-**Why is this so important?**
-
--   **Clarity**: It makes high-level diagrams easy to read and understand.
--   **Reusability**: Build a component once (like a 1-bit full adder) and you can reuse it dozens of times without rebuilding it from scratch.
--   **Focus**: It allows you to work on one part of your system without being visually overwhelmed by the others.
+This buys you a few things. High-level diagrams stay readable. A component you've built and tested once, like a 1-bit full adder, can be dropped in dozens of times without rebuilding it from scratch. And you can work on one part of your system without being visually overwhelmed by the rest of it.
 
 ---
 
@@ -45,20 +45,20 @@ Let's assume you've built your 4-to-10 Decoder in its own circuit tab.
 2.  On your new canvas, right-click and select **Insert SubCircuit**. A pop-up containing all of your other circuit tabs will appear.
 3.  Select your "4-to-10-Decoder" from the list and click the **Insert SubCircuit** button.
 
-You will now see your entire decoder collapsed into a single gray block. While functional, the default pin layout is often disorganized, making clean wiring difficult. Let's fix that!
+Your entire decoder is now collapsed into a single gray block. It works, but the default pin layout is often disorganized, which makes clean wiring difficult. We'll fix that next.
 
 ![Default Subcircuit Layout](./images/subcircuit-layout-before.png)
 *Figure: The default, disorganized pin layout after inserting a circuit as a subcircuit.*
 
 #### Step 2: Edit the Layout for Clarity
 
-This is the key to professional-looking diagrams. We need to arrange the input and output pins logically on the subcircuit block itself.
+To get a clean diagram, we need to arrange the input and output pins logically on the subcircuit block itself.
 
 1.  **Navigate to the Original Circuit Tab.** You must edit the layout from the source. The easiest way to do this is to simply **double-click** the subcircuit block you just placed on your canvas. This will jump you to the correct tab.
 2.  **Open the Layout Editor.** With nothing selected on the original circuit's canvas, look at the **Properties Panel** on the right side of the screen. Find and click the **Edit Layout** button.
 3.  **Arrange the Pins.** A new editor window will pop up showing the black box version of your circuit. You can now **click and drag** the input and output pins to new positions on the border of the block.
     > **Pro Tip:** For our 4-to-10 decoder, a clean layout is to place the inputs (`B3` to `B0`) in order on the bottom edge, and the outputs (`L0` to `L9`) in order on the left edge. This will align perfectly with the inputs of our ROM in the final assembly.
-4.  **Adjust and Save.** Use the **LAYOUT** panel on the right to adjust the block's **Width** and **Height**. Once you are happy with the layout, click **Save**.
+4.  **Adjust and Save.** Use the **LAYOUT** panel on the right to adjust the block's **Width** and **Height**. Once you're happy with the layout, click **Save**.
 
 ![Organized Subcircuit Layout](./images/subcircuit-layout-after.png)
 *Figure: The edited layout with input and output pins neatly organized for clean wiring.*
@@ -66,12 +66,12 @@ This is the key to professional-looking diagrams. We need to arrange the input a
 > **CRITICAL ENGINEERING TIP:**
 > As the CircuitVerse documentation advises, you must finalize your circuit layout **before** you start connecting wires to it. If you change the pin layout after wiring, CircuitVerse may break the connections. Do your layout work first!
 
-Now, your subcircuit is not only functional but also a clean, professional component that's easy to integrate. If you repeat this process for your 10-to-7 ROM, you can recreate the exact "black box" diagram we saw at the beginning of this interlude.
+Your subcircuit is now a clean, tidy component that's easy to integrate. If you repeat this process for your 10-to-7 ROM, you can recreate the exact "black box" diagram we saw at the beginning of this interlude.
 
 ---
 
 ### Conclusion: Your Engineering Toolkit Grows
 
-You now have a new technique for managing complexity. The ability to create, abstract away, and reuse components is what allows engineers to build systems like a modern CPU, which contains billions of transistors.
+You now have a new technique for managing complexity, and it's the real one. Building a component, testing it, and then sealing it up is how engineers get systems far too big for any one person to hold in their head: hold the boxes, trust the seals.
 
-As we move into Part II and begin building our Arithmetic Unit, I encourage you to use this subcircuit feature in CircuitVerse to keep your designs organized. While it's an optional skill, it will make your larger circuits much easier to design and troubleshoot.
+As we move into Part II and start building our Arithmetic Unit, I encourage you to use this subcircuit feature in CircuitVerse to keep your designs organized. It's optional, strictly speaking, but it will make your larger circuits much easier to design and troubleshoot.
