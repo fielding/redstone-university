@@ -108,7 +108,7 @@ This modular, two-stage approach is the heart of good engineering. It's easier t
 
 Before we tackle our full 4-bit to 10-line decoder, let's build a smaller, simpler version to prove the concept. We're going to build a **2-bit to 4-line decoder**. This circuit will take a 2-bit binary input (`00`, `01`, `10`, `11`) and light up one of four corresponding output lamps (`L0`, `L1`, `L2`, `L3`) representing those values in decimal (`0`, `1`, `2`, `3`).
 
-By scaling down the problem, we can focus on the core logic without getting overwhelmed. This is a common engineering practice: start small, prove the concept, then scale up. I'm calling this a "brute-force" method because we will build a separate AND gate for each output, rather than using a more elegant design, which we'll learn in the next lesson.
+By scaling down the problem, we can focus on the core logic without getting overwhelmed. This is a common engineering practice: start small, prove the concept, then scale up. I'm calling this a "brute-force" method because we'll build a separate AND gate for each output, rather than using a more elegant design, which we'll learn in the next lesson.
 
 ![2-to-4 Decoder in CircuitVerse](./images/2-to-4-decder_circuitverse.png)
 *Figure: The brute-force 2-to-4 decoder in CircuitVerse, using AND gates to recognize each binary pattern.*
@@ -343,7 +343,7 @@ We now have a working decoder that gives us a single **unpowered** (active-low) 
 
 #### The Concept: A Physical Lookup Table
 
-This stage is effectively a physical **Read-Only Memory (ROM)**. The "address" is the active-low line from the decoder, and the "data" that it looks up is the pattern of segments for that number. We will build this using a structure called a **Diode Matrix**.
+This stage is effectively a physical **Read-Only Memory (ROM)**. The "address" is the active-low line from the decoder, and the "data" that it looks up is the pattern of segments for that number. We'll build this using a structure called a **Diode Matrix**.
 
 First, let's create the plan on paper. This lookup table is the blueprint for our build.
 
@@ -447,6 +447,12 @@ Software leans on the same trick: a precomputed lookup table that never changes,
 Here's the S-box as a Python lookup table, trimmed to the first row:
 
 ```python
+# The AES S-box: a fixed 256-entry lookup table (first 16 entries shown)
+sbox = [
+    0x63, 0x7c, 0x77, 0x7b, 0xf2, 0x6b, 0x6f, 0xc5, 0x30, 0x01, 0x67, 0x2b, 0xfe, 0xd7, 0xab, 0x76,
+    # ... 240 more entries
+]
+
 def aes_sbox_substitute(byte):
     return sbox[byte]
 
