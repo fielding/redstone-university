@@ -70,12 +70,12 @@ Let’s start by building the physical canvas for our numbers.
 
 #### Practice Lab: Becoming a Human ROM
 
-Before we build the complex logic to control this display automatically, let's get a feel for it ourselves. Use the levers you just installed to "draw" the following digits. This exercise will build your intuition for exactly what our machine needs to accomplish.
+Before we build the logic to control this display automatically, let's do the job by hand to get a feel for how it works. Consider yourself the Mechanical Turk of this build: the human hidden inside the cabinet, working the levers so the machine appears to run itself. Use the levers you just installed to "draw" the following digits. By the end you will know exactly what our machine has to pull off once it takes over.
 
 > **Note**: The levers are on the back of the display, so keep that in mind when flipping specific segments. It might help to label the segments with a sign by the lever that controls it for this exercise.
 
 1.  Flip the levers for segments **`b`** and **`c`**. You should see the digit **`1`**.
-2.  Now, try to display the digit **`7`**. (You'll need segments `a`, `b`, and `c`).
+2.  Now, try to display the digit **`7`**. (You will need segments `a`, `b`, and `c`).
 3.  Next, create the digit **`4`**. (This requires segments `f`, `g`, `b`, and `c`).
 4.  **Challenge**: Try to form the digit **`8`**. What do you notice? Now try to form the digit **`2`**.
 
@@ -87,9 +87,9 @@ Before we build the complex logic to control this display automatically, let's g
 
 Now that we have our display, how do we control it? Our computer thinks in 4-bit binary, but our display needs 7 separate signals. Connecting the 4-bit input directly to the 7 segments would be a nightmare.
 
-Instead, let’s think like engineers and break the problem into two much simpler, more manageable stages:
+Instead, let’s do what engineers do with every problem this hairy and break it into two much simpler stages:
 
-1.  **Decoder**: This first stage will act as an "identifier". Its only job is to look at the 4-bit binary input and determine *which* number (`` `0` ``-`` `9` ``) it represents. It will then activate a single, unique output line corresponding to that number. Because it recognizes decimal digits stored as 4-bit binary patterns, this kind of circuit is called a **BCD (Binary-Coded Decimal) decoder**. Remember that name. It'll matter in Part II.
+1.  **Decoder**: This first stage will act as an "identifier". Its only job is to look at the 4-bit binary input and determine *which* number (`` `0` ``-`` `9` ``) it represents. It will then activate a single, unique output line corresponding to that number. Because it recognizes decimal digits stored as 4-bit binary patterns, this kind of circuit is called a **BCD (Binary-Coded Decimal) decoder**. Remember that name. It will matter in Part II.
 2.  **ROM**: This second stage will act as the "mapper". It receives the simple signal from the decoder (e.g., "the number is `` `3` ``!") and looks up the correct combination of the 7 segments in permanently stored wiring. A quick word on naming: a stage like this sometimes gets loosely called an *encoder*, but strictly speaking an encoder is the inverse of a decoder. We'll name this stage for what we actually build: a **ROM**, a Read-Only Memory whose contents *are* the mapping.
 
 This modular, two-stage approach is the heart of good engineering. It's easier to build, easier to test, and far easier to fix if something goes wrong.
@@ -179,14 +179,14 @@ If all four checks pass, you've built a working decoder.
 
 Take a look at the space your 2-to-4 decoder occupies. Now, imagine our real goal: a 4-to-10 decoder. We would need **ten** 4-input AND gates, which are much larger than the simple gates we just used. The brute-force method works, but it doesn't scale well. It creates a massive, resource-hungry machine.
 
-In the next lesson, we'll learn a far more elegant and compact solution.
+In the next lesson, we build the same decoder at a fraction of the size.
 
 ---
 
 ### Lesson 4.4: The Decoder Lab, Part 2: An Elegant, Compact Solution
 > **Key Takeaway**: By using an "active-low" design and two clever types of "taps" (Repeater and Torch), we can build a decoder that is vastly smaller and more efficient.
 
-Instead of an "active-high" design, we'll build an **active-low** design where the correct line turns **OFF**.
+Instead of an "active-high" design, we'll build an **active-low** design where the correct line turns **OFF** while every other line stays powered. Hunting for the one dark wire sounds backwards. It's also the choice the whole compact design hangs on, and it hands the ROM in the next lesson exactly the kind of signal it wants.
 
 ![4-to-10 Decoder in CircuitVerse](./images/4-to-10-decoder_circuitverse.png)
 *Figure: The compact 4-to-10 decoder in CircuitVerse, mirroring the Minecraft build with dual buses and NOR-like logic for efficiency.*
@@ -237,7 +237,7 @@ Now we'll place our taps to connect the input and output layers, “programming�
 -   **How to Build a Torch Tap**: At the correct intersection, place a Redstone torch on the side of the block that the input bus line rests on, directly above the output wire below. This tap activates (powers the output wire) when the bus line is OFF (`0`).
 -   **How to Build a Repeater Tap**: This requires specific placement to achieve strong power. At the correct intersection, one block *before* the output wire, break the input bus line. On the ground level, place a solid block and put a Repeater on top of it, facing in the direction of signal flow. This "snaking" path is essential. The Repeater itself doesn't power the output wire directly. It powers the block it runs into, which then becomes strongly powered and can power the output wire.
 
-Let’s apply this to one line to see it in action, then you’ll program the rest using the reference chart.
+Let’s apply this to one line to see it in action, then you can program the rest using the reference chart.
 
 ##### Programming Example: Line `L3` (Identity: `0011`)
 
@@ -399,7 +399,7 @@ The lamps are optional, but they give a nice visual for what's happening: when a
 
 ##### 3. Programming the Matrix: Placing the Torch Taps
 
-Now, you’ll “burn” the lookup table into the hardware by placing torch taps at the correct intersections.
+Now, “burn” the lookup table into the hardware by placing torch taps at the correct intersections. “Burn” is the industry’s actual verb for this, and it started out literal: programming an early PROM chip meant blowing microscopic fuses inside it with a jolt of current. Ours just takes torches.
 
 -   **The Rule**: For each number line `LN`, consult the lookup table. For every segment that should be **ON** for that number, place a torch tap.
 -   **How to Build the Tap**: At the correct intersection, place a **Redstone Torch on the side of the block** that the horizontal input line (`LN`) rests on. Position the torch to power the segment line on the ground below.
@@ -629,4 +629,4 @@ You engineered a complete system in this module, and by breaking it into distinc
 
 That completes **Part I** of this course. You have a complete input and output system, and you're fluent in the language of logic.
 
-In **Part II: The Thinking Machine**, we'll take our first steps into building the brain of our computer. We'll start in **Module 5**, where we'll construct a 4-bit adder to perform our first real mathematical calculation. But as you'll soon discover, making our display show the answer will present a new bug to solve, leading us to our first major system upgrade.
+In **Part II: The Thinking Machine**, we take our first steps into building the brain of our computer, starting in **Module 5** with a 4-bit adder and our first real calculation. Keep the display handy. The moment we ask it to show an answer we didn't choose ourselves, a new bug surfaces, and chasing it down leads to our first major system upgrade.
