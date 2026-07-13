@@ -19,20 +19,20 @@
 
 Welcome to Redstone University’s Orientation Day!
 
-Before we start building logic gates and registers, we need to make sure you know how to handle the tools of the trade. Think of this as our lab safety and equipment tour. Only here, the "equipment" is a mix of Redstone Dust, torches, and levers.
+Before we start building logic gates and registers, we need to make sure you can handle the tools of the trade. Think of this as the lab safety and equipment tour, and since most things in Redstone don't explodes unless you deliberately wire it to TNT (don't), we can skip straight to the equipment.
 
-This isn't a full Minecraft tutorial. We’re here to cover only what you need for the rest of the course: the minimum viable knowledge to confidently follow along, experiment on your own, and troubleshoot when something doesn't work.
+This isn't a full Minecraft tutorial. We’re covering only what the rest of the course needs: enough to follow along, experiment on your own, and troubleshoot when a build refuses to cooperate.
 
-If you’ve built with Redstone before, you can likely skim this. But if you’ve never placed a Redstone Torch or aren’t sure why a signal dies after 15 blocks, this short module will save you a lot of confusion later.
+If you’ve built with Redstone before, skim this and move on. But if you’ve never placed a Redstone Torch or aren’t sure why a signal dies after 15 blocks, this short module will save you a lot of confusion later.
 
 > #### A Note on Controls & Game Setup
-> This course assumes you know the basic Minecraft controls for placing and breaking blocks. You'll get the most out of this if you play in **Creative Mode** on a **Superflat** world, which gives you unlimited resources and space to build.
+> This course assumes you know the basic Minecraft controls for placing and breaking blocks. You will get the most out of this if you play in **Creative Mode** on a **Superflat** world, which gives you unlimited resources and space to build.
 
 ---
 
 ### Lesson 0.1: The Engineer's Toolkit
 
-These are the pieces you’ll see over and over. They're the alphabet we'll use to build our computer.
+These pieces show up in every build from here on. They're the alphabet we use to build our computer.
 
 > #### Note on Texture Packs:
 > For clarity, I use a texture pack that enhances Redstone visibility (e.g., showing dust lines clearly). I highly recommend you find a similar one for your version of the game (such as "Vanilla Tweaks" or others). It makes debugging much easier.
@@ -51,7 +51,7 @@ These are the pieces you’ll see over and over. They're the alphabet we'll use 
 
 ### Lesson 0.2: How Redstone Thinks: The Rules of Power
 
-Understanding how power travels is the single most important skill for a Redstone engineer. It can be non-intuitive, so let's establish the core rules.
+How power travels is the single most important thing to understand in Redstone, and it isn't always intuitive. Two rules cover everything we need.
 
 #### Rule 1: Signal Strength & Range
 
@@ -77,7 +77,7 @@ This difference matters later in the course, when we build compact vertical circ
 
 ### Lesson 0.3: Lab: The Fundamental Circuit
 
-Let’s combine these concepts to build a simple input to process to output circuit. This is the core pattern of every device we’ll make, from simple gates to a full CPU.
+Time to put the pieces together and build the simplest possible circuit: input to process to output.
 
 ![Basic circuit in Minecraft](./images/basic-circuit_minecraft.png)
 *Figure: A Redstone Lamp with a lever (input) connected to a Redstone Lamp (output) through Redstone Dust (wire).*
@@ -91,7 +91,7 @@ Let’s combine these concepts to build a simple input to process to output circ
     -   **Invert the signal:** Insert a **Redstone Torch** somewhere in the path. How does the lamp's behavior change? (Hint: The torch acts as a NOT gate).
     -   **Extend the signal:** Make your Redstone Dust wire `20` blocks long. The signal won't reach. Now, place a **Repeater** after block `14`. Observe how it refreshes the signal.
 
-You’ve just built your first working circuit and verified the core rules of Redstone. Every single build in this course is just a more complex version of this fundamental pattern.
+You’ve just built your first working circuit and verified the core rules for yourself. Every build in this course, from a single gate to the full CPU, is a more complicated version of this exact pattern.
 
 ---
 
