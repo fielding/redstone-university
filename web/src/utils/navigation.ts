@@ -7,6 +7,8 @@ export type CourseNode = {
     order: number;
     /** True when the node belongs to an unpublished part (see utils/gating). */
     gated?: boolean;
+    /** Roadmap badge text ("Coming soon", etc.) for gated nodes; see utils/gating. */
+    status?: string;
 };
 
 export function buildCourseHierarchy(entries: CollectionEntry<'course'>[]): CourseNode[] {

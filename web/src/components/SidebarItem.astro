@@ -24,7 +24,7 @@ const isCurrent = node.slug === currentSlug;
   ) : node.gated && hasChildren ? (
     <span class="nav-section nav-section--gated">
       {node.title}
-      <span class="nav-badge">in build</span>
+      <span class="nav-badge">{node.status ?? 'in build'}</span>
     </span>
   ) : node.gated ? (
     <span class="nav-link is-gated">{node.title}</span>

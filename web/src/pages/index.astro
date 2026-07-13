@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { hasLiveContent } from '../utils/gating';
+import { hasLiveContent, PART_STATUS } from '../utils/gating';
 
 const parts = [
 	{
@@ -35,7 +35,7 @@ const parts = [
 		meta: 'Advanced track',
 		advanced: true,
 	},
-].map((p) => ({ ...p, live: hasLiveContent(p.dir) }));
+].map((p) => ({ ...p, live: hasLiveContent(p.dir), status: PART_STATUS[p.dir] }));
 ---
 
 <Layout title="Redstone University">
@@ -87,7 +87,7 @@ const parts = [
 							>
 								<span class="part-numeral">{p.numeral}</span>
 								<div class="part-body">
-									<h3 class="part-title">{p.title}</h3>
+									<h3 class="part-title">{p.title}{p.status && <span class="part-status">{p.status}</span>}</h3>
 									<p class="part-desc">{p.desc}</p>
 									<span class="part-meta">{p.meta}</span>
 								</div>
@@ -100,7 +100,7 @@ const parts = [
 								<div class="part-body">
 									<h3 class="part-title">
 										{p.title}
-										<span class="part-status">in build</span>
+										<span class="part-status">{p.status}</span>
 									</h3>
 									<p class="part-desc">{p.desc}</p>
 									<span class="part-meta">{p.meta}</span>

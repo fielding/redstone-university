@@ -3,7 +3,7 @@ import type { CourseNode } from './navigation';
 
 /**
  * Parts whose bodies are published on the site. Everything else stays visible
- * as titles in the sidebar and on the landing page ("in build"), but gets no
+ * as titles in the sidebar and on the landing page (with a status badge), but gets no
  * routes generated — the drafts remain readable in the GitHub repo.
  *
  * To publish a whole part, add its slug directory here.
@@ -20,6 +20,17 @@ export const LIVE_PARTS = new Set(['part-i--foundations']);
 export const LIVE_MODULES = new Set([
     'part-ii-thinking-machine/05_adder-and-hex',
 ]);
+
+/**
+ * Roadmap badge shown on a part, on the landing page and in the sidebar,
+ * keyed by part directory slug. A part with no entry here (e.g. a finished,
+ * fully live part) shows no badge.
+ */
+export const PART_STATUS: Record<string, string> = {
+    'part-ii-thinking-machine': 'In progress',
+    'part-iii--processor-core': 'Coming soon',
+    'part-iv--post-graduate': 'Planned',
+};
 
 // Local preview of unreleased parts: PREVIEW_ALL_PARTS=true npm run dev
 // (never set in CI/production — the gate stays closed for real builds)
@@ -57,17 +68,26 @@ export function liveEntries(
 /**
  * Mark gated subtrees in the sidebar hierarchy: their nodes lose their slugs
  * (so nothing links to an unbuilt route) and gain `gated: true` so the
- * sidebar can render them as unlinked "in build" titles. Recurses so a
+ * sidebar can render them as unlinked titles with a status badge. Recurses so a
  * partially-released part keeps its live modules linked while its unreleased
  * siblings render as titles.
  */
 export function applyGating(nodes: CourseNode[]): CourseNode[] {
-    const strip = (n: CourseNode): CourseNode => ({
-        ...n,
-        slug: undefined,
-        gated: true,
-        children: n.children.map(strip),
-    });
+    const statusFor = (slug?: string): string | undefined => {
+        const head = slug?.split('/')[0];
+        return head ? PART_STATUS[head] : undefined;
+    };
+
+    const strip = (n: CourseNode, inherited?: string): CourseNode => {
+        const status = statusFor(n.slug) ?? inherited;
+        return {
+            ...n,
+            slug: undefined,
+            gated: true,
+            status,
+            children: n.children.map((c) => strip(c, status)),
+        };
+    };
 
     const anyLive = (n: CourseNode): boolean =>
         (n.slug ? isLiveSlug(n.slug) : false) || n.children.some(anyLive);
@@ -79,6 +99,7 @@ export function applyGating(nodes: CourseNode[]): CourseNode[] {
             ...n,
             slug: gatedSelf ? undefined : n.slug,
             gated: gatedSelf || n.gated,
+            status: gatedSelf ? statusFor(n.slug) : n.status,
             children: n.children.map(gate),
         };
     };
