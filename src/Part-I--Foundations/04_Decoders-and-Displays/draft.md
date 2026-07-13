@@ -432,8 +432,6 @@ Before connecting the ROM to the decoder, test all lines (`L0`–`L9`) independe
 ![Complete 10-to-7 ROM (top-down)](./images/10-to-7-rom-complete-aerial_minecraft.png)
 *Figure: The programmed diode matrix from above: ten input columns crossing seven segment rows; every rimmed torch tap is one stored bit.*
 
-This is your finished ROM, with every line programmed to map decoder inputs to segment outputs. The `L3` line is active here (LOW), lighting up the correct segments for a `3`. Cycle through inputs `L0`–`L9` to confirm each digit’s pattern. If any segments don’t light as expected, revisit your torch placements using the lookup table. You’ve just built a physical memory that “stores” the display patterns for all 10 digits!
-
 #### Real-World Connection: BIOS and Game Cartridges
 
 The "Diode Matrix" you've just built is a simple form of **Read-Only Memory (ROM)**. The "program" is physically burned into the circuit's layout by the placement of the torches. This exact principle was fundamental to early computing. A computer's **BIOS chip**, which tells it how to boot up, is a form of ROM. Old video game cartridges were also ROMs, with the entire game's data permanently stored in the hardware's structure. You've built the same technology.
