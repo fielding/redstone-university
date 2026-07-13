@@ -386,8 +386,6 @@ Start by building the foundation for your Diode Matrix: the output lines that wi
 ![ROM Output Layer](./images/10-to-7-rom-1_minecraft.png)
 *Figure: The 7 parallel segment output lines (`a` through `g`) on the ground, with repeaters for signal strength.*
 
-This ground layer is the backbone of your ROM, carrying the signals that will light up the display segments. Double-check that each line is isolated to avoid crossed signals.
-
 ##### 2. The Grid: Adding the Input Layer
 
 Now, add the input layer to complete the Diode Matrix grid. Eventually these lines will connect to the decoder’s active-low lines.
