@@ -373,7 +373,7 @@ The tap for `B0` on the `L8` line is supposed to detect this mismatch and power 
 
 ### Practice Problem 4.5.1: Design on Paper
 
-You are programming the line for the digit **`2`**. According to the lookup table, which perpendicular segment lines need a torch tap from the horizontal `L2` line?
+You're programming the line for the digit **`2`**. According to the lookup table, which perpendicular segment lines need a torch tap from the horizontal `L2` line?
 
 **Answer:**
 
@@ -389,7 +389,7 @@ When you test your ROM by providing a LOW signal to the `L4` line, you expect to
 
 **Answer:**
 
-If a segment that should be ON is OFF, it means it is not receiving power. The most likely cause is simple: you **forgot to place the torch tap** at the intersection of the horizontal `L4` line and the perpendicular segment `g` line. Without that torch, there is nothing to power the line when `L4` goes low.
+If a segment that should be ON is OFF, it means it's not receiving power. The most likely cause is simple: you **forgot to place the torch tap** at the intersection of the horizontal `L4` line and the perpendicular segment `g` line. Without that torch, there's nothing to power the line when `L4` goes low.
 
 
 ---
@@ -404,7 +404,7 @@ If a segment that should be ON is OFF, it means it is not receiving power. The m
 **Answer:**
 
 1.  It breaks the problem down into smaller, independent modules (modularity). This makes each part easier to design, build, and debug.
-2.  The Repeater Tap creates a "strongly powered" block, which is necessary to power the Redstone dust on the output line across the 1-block air gap. Simple dust would create a "weakly powered" block, which cannot.
+2.  The Repeater Tap creates a "strongly powered" block, which is necessary to power the Redstone dust on the output line across the 1-block air gap. Simple dust would create a "weakly powered" block, which can't.
 3.  It represents a single "bit" of stored information. Specifically, it's a command to "turn this segment ON when this number line is selected (LOW)."
 
 
@@ -449,7 +449,7 @@ Torches are for `1`s, Repeaters are for `0`s. So the identity is `0110`. This is
 
 ### Practice Problem 4.7.5: Debug Challenge
 
-In the world download for this module, you will find a section labeled "Module 4 Debug Challenge." The display system is fully connected. When you input **`0010`** (for the number 2), the display incorrectly shows a **`6`**.
+In the world download for this module, you'll find a section labeled "Module 4 Debug Challenge." The display system is fully connected. When you input **`0010`** (for the number 2), the display incorrectly shows a **`6`**.
 
 **Trace the logic**:
   - The digit `2` should be `a, b, g, e, d`.

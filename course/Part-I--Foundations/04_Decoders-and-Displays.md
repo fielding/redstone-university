@@ -25,17 +25,17 @@ In the previous modules, you learned how to speak to your computer in binary and
 
 > **Our New Rule: The Power of Abstraction**
 >
-> In **Modules 2 and 3**, we built every gate from scratch to understand how it worked. From this point forward, we will operate at a higher level of abstraction.
+> In **Modules 2 and 3**, we built every gate from scratch to understand how it worked. From this point forward, we'll operate at a higher level of abstraction.
 >
 > When a diagram or instruction says to "Build an AND gate," **how you choose to build it is now up to you.**
 >
 > -   You can build the verbose, easy-to-read version from the previous modules.
 > -   You can use a smaller, more efficient version from Interlude I.
-> -   You can design your own!
+> -   You can design your own.
 >
-> As long as your component functions according to its truth table, it is a valid build. The preceding **Interlude I: The Art of Compact Design**, gives you the foundation for making these choices.
+> As long as your component functions according to its truth table, it's a valid build. The preceding **Interlude I: The Art of Compact Design**, gives you the foundation for making these choices.
 >
-> If you are ever unsure, the verbose builds from the previous modules are guaranteed to work.
+> If you're ever unsure, the verbose builds from the previous modules are guaranteed to work.
 
 ---
 
@@ -86,8 +86,8 @@ Now that we have our display, how do we control it? Our computer thinks in 4-bit
 
 Instead, let’s think like engineers and break the problem into two much simpler, more manageable stages:
 
-1.  **Decoder**: This first stage will act as an "identifier". Its only job is to look at the 4-bit binary input and determine *which* number (`` `0` ``-`` `9` ``) it represents. It will then activate a single, unique output line corresponding to that number. Because it recognizes decimal digits stored as 4-bit binary patterns, this kind of circuit is called a **BCD (Binary-Coded Decimal) decoder**. Remember that name; it will matter in Part II.
-2.  **ROM**: This second stage will act as the "mapper". It receives the simple signal from the decoder (e.g., "the number is `` `3` ``!") and looks up the correct combination of the 7 segments in permanently stored wiring. A quick word on naming: a stage like this sometimes gets loosely called an *encoder*, but strictly speaking an encoder is the inverse of a decoder. We will name this stage for what we actually build: a **ROM**, a Read-Only Memory whose contents *are* the mapping.
+1.  **Decoder**: This first stage will act as an "identifier". Its only job is to look at the 4-bit binary input and determine *which* number (`` `0` ``-`` `9` ``) it represents. It will then activate a single, unique output line corresponding to that number. Because it recognizes decimal digits stored as 4-bit binary patterns, this kind of circuit is called a **BCD (Binary-Coded Decimal) decoder**. Remember that name. It'll matter in Part II.
+2.  **ROM**: This second stage will act as the "mapper". It receives the simple signal from the decoder (e.g., "the number is `` `3` ``!") and looks up the correct combination of the 7 segments in permanently stored wiring. A quick word on naming: a stage like this sometimes gets loosely called an *encoder*, but strictly speaking an encoder is the inverse of a decoder. We'll name this stage for what we actually build: a **ROM**, a Read-Only Memory whose contents *are* the mapping.
 
 This modular, two-stage approach is the heart of good engineering. It's easier to build, easier to test, and far easier to fix if something goes wrong.
 
@@ -100,11 +100,11 @@ This modular, two-stage approach is the heart of good engineering. It's easier t
 
 ### Lesson 4.3: The Decoder Lab: A Simple "Brute-Force" Build
 
-> **Key Takeaway**: A decoder can be built by assigning one AND gate to recognize each unique binary input. This "brute-force" method is clear but does not scale well.
+> **Key Takeaway**: A decoder can be built by assigning one AND gate to recognize each unique binary input. This "brute-force" method is clear but doesn't scale well.
 
-Before we tackle our full 4-bit to 10-line decoder, let's build a smaller, simpler version to prove the concept. We are going to build a **2-bit to 4-line decoder**. This circuit will take a 2-bit binary input (`00`, `01`, `10`, `11`) and light up one of four corresponding output lamps (`L0`, `L1`, `L2`, `L3`) representing those values in decimal (`0`, `1`, `2`, `3`).
+Before we tackle our full 4-bit to 10-line decoder, let's build a smaller, simpler version to prove the concept. We're going to build a **2-bit to 4-line decoder**. This circuit will take a 2-bit binary input (`00`, `01`, `10`, `11`) and light up one of four corresponding output lamps (`L0`, `L1`, `L2`, `L3`) representing those values in decimal (`0`, `1`, `2`, `3`).
 
-By scaling down the problem, we can focus on the core logic without getting overwhelmed. This is a common engineering practice: start small, prove the concept, then scale up. I'm calling this a "brute-force" method because we will build a separate AND gate for each output, rather than using a more elegant design, which we will learn in the next lesson.
+By scaling down the problem, we can focus on the core logic without getting overwhelmed. This is a common engineering practice: start small, prove the concept, then scale up. I'm calling this a "brute-force" method because we will build a separate AND gate for each output, rather than using a more elegant design, which we'll learn in the next lesson.
 
 <div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/04_2-to-4-decder_circuitverse.png" alt="2-to-4 Decoder in CircuitVerse" width="512px"/><br/><em>Figure: The brute-force 2-to-4 decoder in CircuitVerse, using AND gates to recognize each binary pattern.</em></div><br/>
 
@@ -133,7 +133,7 @@ By scaling down the problem, we can focus on the core logic without getting over
 **Step 2: Build and Test the First Gate (`L0`)**
 
 1.  Choose your favorite 2-input AND gate design from **Module 2** or **Interlude I** and build it.
-2.  Connect the gate's two inputs to the $\neg B1$ line and the $\neg B0$ line on your bus. Be careful with your wiring!
+2.  Connect the gate's two inputs to the $\neg B1$ line and the $\neg B0$ line on your bus. Be careful with your wiring.
 3.  Place a Redstone Lamp at the output of the AND gate. This is your `L0` output.
 4.  **Test it!** Set your input levers to `` `00` `` (`B1`=OFF, `B0`=OFF). The `L0` lamp should turn ON. Now, flip either lever. The lamp should turn OFF. This proves your first gate is wired correctly.
 
@@ -168,16 +168,16 @@ If all four checks pass, you've built a working decoder.
 
 #### Lesson Summary: The Problem of Scale
 
-Take a look at the space your 2-to-4 decoder occupies. Now, imagine our real goal: a 4-to-10 decoder. We would need **ten** 4-input AND gates, which are much larger than the simple gates we just used. The brute-force method works, but it does not scale well. It creates a massive, resource-hungry machine.
+Take a look at the space your 2-to-4 decoder occupies. Now, imagine our real goal: a 4-to-10 decoder. We would need **ten** 4-input AND gates, which are much larger than the simple gates we just used. The brute-force method works, but it doesn't scale well. It creates a massive, resource-hungry machine.
 
-In the next lesson, we will learn a far more elegant and compact solution.
+In the next lesson, we'll learn a far more elegant and compact solution.
 
 ---
 
 ### Lesson 4.4: The Decoder Lab, Part 2: An Elegant, Compact Solution
 > **Key Takeaway**: By using an "active-low" design and two clever types of "taps" (Repeater and Torch), we can build a decoder that is vastly smaller and more efficient.
 
-Welcome to the engineer's solution. Instead of an "active-high" design, we will build an **active-low** design where the correct line turns **OFF**.
+Instead of an "active-high" design, we'll build an **active-low** design where the correct line turns **OFF**.
 
 <div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/04_4-to-10-decoder_circuitverse.png" alt="4-to-10 Decoder in CircuitVerse" width="512px"/><br/><em>Figure: The compact 4-to-10 decoder in CircuitVerse, mirroring the Minecraft build with dual buses and NOR-like logic for efficiency.</em></div><br/>
 
@@ -220,10 +220,10 @@ This design relies on a two-layer structure to keep the input and output lines s
 
 ##### Programming the Lines: Placing the Taps
 
-Now we will place our taps to connect the input and output layers, “programming” each output line to detect its unique binary identity. This is where the active-low logic comes to life. Each tap checks for a mismatch, and only the perfectly matched line stays unpowered (lamp ON).
+Now we'll place our taps to connect the input and output layers, “programming” each output line to detect its unique binary identity. Each tap checks for a mismatch, and only the perfectly matched line stays unpowered (lamp ON).
 
 -   **How to Build a Torch Tap**: At the correct intersection, place a Redstone torch on the side of the block that the input bus line rests on, directly above the output wire below. This tap activates (powers the output wire) when the bus line is OFF (`0`).
--   **How to Build a Repeater Tap**: This requires specific placement to achieve strong power. At the correct intersection, one block *before* the output wire, break the input bus line. On the ground level, place a solid block and put a Repeater on top of it, facing in the direction of signal flow. This "snaking" path is essential. It is important to note that the Repeater itself does not power the output wire directly; it powers the block it runs into, which then becomes strongly powered and can power the output wire.
+-   **How to Build a Repeater Tap**: This requires specific placement to achieve strong power. At the correct intersection, one block *before* the output wire, break the input bus line. On the ground level, place a solid block and put a Repeater on top of it, facing in the direction of signal flow. This "snaking" path is essential. The Repeater itself doesn't power the output wire directly. It powers the block it runs into, which then becomes strongly powered and can power the output wire.
 
 Let’s apply this to one line to see it in action, then you’ll program the rest using the reference chart.
 
@@ -244,13 +244,13 @@ To get a closer look at how the taps are placed, check out this isolated view of
 
 <div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/04_4-to-10-decoder-L3_minecraft.png" alt="Isolated L3 Line Close-Up" width="512px"/><br/><em>Figure: Close-up of the `L3` line with two Repeater Taps (`B3`, `B2`) and two Torch Taps (`B1`, `B0`), no inputs active.</em></div><br/>
 
-This zoomed-in view shows exactly where to place each tap for `L3`. Notice the “snaking” path of the Repeater Taps, ensuring strong power, and the Torch Taps hanging off the side of the input bus blocks. Precision here is key! Double-check your placements to avoid crossed signals.
+Notice the “snaking” path of the Repeater Taps and the Torch Taps hanging off the side of the input bus blocks. Double-check your placements to avoid crossed signals.
 
 To verify the `L3` line works as intended, you can add levers to test it independently before connecting all lines. Set the inputs to `0011` (matching `L3`’s identity):
 
 <div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/04_4-to-10-decoder-L3-test_minecraft.png" alt="Testable L3 Line" width="512px"/><br/><em>Figure: Isolated `L3` line with levers set to `0011`, lighting the `L3` lamp to confirm correct tap placement.</em></div><br/>
 
-In this test, the levers mimic the input `0011`. The `L3` lamp lights up because no taps activate (no mismatches), leaving the wire unpowered. Try flipping any lever (for example, to `0010`), and the lamp should turn OFF as a tap detects a mismatch. This hands-on test builds confidence before scaling to all 10 lines.
+In this test, the levers mimic the input `0011`. The `L3` lamp lights up because no taps activate (no mismatches), leaving the wire unpowered. Try flipping any lever (for example, to `0010`), and the lamp should turn OFF as a tap detects a mismatch.
 
 ##### Complete All Lines: Using the Reference Chart
 
@@ -269,7 +269,7 @@ Apply the rule and build methods to the remaining `9` lines. Use the chart below
 
 <div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/04_4-to-10-decoder-compact-complete-aerial_minecraft.png" alt="Compact 4-to-10 Decoder (top-down)" width="512px"/><br/><em>Figure: The compact decoder from above: the four input lines crossing all ten output columns.</em></div><br/>
 
-##### Test Your Work!
+##### Test Your Work
 
 Cycle through inputs `0000` to `1001`. Verify that only one lamp is lit for each input.
 
@@ -377,11 +377,11 @@ Now, add the input layer to complete the Diode Matrix grid. Eventually these lin
 
 <div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/04_10-to-7-rom-2_minecraft.png" alt="ROM Two-Layer Structure" width="512px"/><br/><em>Figure: The two-layer Diode Matrix structure, with 7 segment output lines on the ground and 10 input lines (`L9`–`L0`) above, lamps showing input activity.</em></div><br/>
 
-This two-layer grid is your ROM’s framework. The lamps are optional but give a nice visual for what is happening. When a lamp is ON, its line is LOW (active). The clean, perpendicular layout is the key to programming the segment patterns efficiently.
+The lamps are optional, but they give a nice visual for what's happening: when a lamp is ON, its line is LOW (active).
 
 ##### 3. Programming the Matrix: Placing the Torch Taps
 
-Now, you’ll “burn” the lookup table into the hardware by placing torch taps at the correct intersections. This is where you physically encode the segment patterns for each digit.
+Now, you’ll “burn” the lookup table into the hardware by placing torch taps at the correct intersections.
 
 -   **The Rule**: For each number line `LN`, consult the lookup table. For every segment that should be **ON** for that number, place a torch tap.
 -   **How to Build the Tap**: At the correct intersection, place a **Redstone Torch on the side of the block** that the horizontal input line (`LN`) rests on. Position the torch to power the segment line on the ground below.
@@ -394,14 +394,14 @@ Here’s a close-up of the `L9` line with its taps in place:
 
 <div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/04_10-to-7-rom-L9_minecraft.png" alt="ROM L9 Taps Close-Up" width="512px"/><br/><em>Figure: Close-up of the `L9` line with six torch taps programming segments `a, b, c, d, f, g` for digit 9.</em></div><br/>
 
-This zoomed-in view shows exactly where to place the torch taps for `L9`. Each torch is attached to the side of the block supporting the `L9` line, powering the segment lines below (`a, b, c, d, f, g`). These torches are your ROM’s “data” by each representing a specific segment that lights up when `L9` goes LOW. To test it, place a lever at the start of the `L9` line and set all other lines to ON (using levers). When you turn the `L9` lever OFF (simulating the decoder’s active-low signal), the `L9` lamp should light up, and the segment lines `a, b, c, d, f, g` should activate. You can place temporary redstone lamps at the segment line ends to verify. If any segment doesn’t light, double-check your torch placements against the lookup table.
+These torches are the ROM’s data: each one stores “this segment lights when `L9` goes LOW.” To test the line, place a lever at the start of `L9` and set all other lines to ON (using levers). When you turn the `L9` lever OFF (simulating the decoder’s active-low signal), the `L9` lamp should light up, and the segment lines `a, b, c, d, f, g` should activate. Temporary redstone lamps at the segment line ends make this easy to check. If any segment doesn’t light, double-check your torch placements against the lookup table.
 
 ##### Complete the Matrix
 
-Repeat this process for all 10 lines (`L0`–`L9`), using the lookup table to place torches for each digit’s segment pattern. Work methodically to avoid mistakes. This is like programming a game cartridge, where every torch is a bit of stored data. Precision is key to ensure each line activates the correct segments.
+Repeat this process for all 10 lines (`L0`–`L9`), using the lookup table to place torches for each digit’s segment pattern. Work methodically. Every torch is a bit of stored data.
 
 > ##### Engineering Note: The Self-Isolating Design
-> You might wonder if we need repeaters to isolate the segment lines from each other like we did in our basic OR gate. In this specific design, we don’t! The Redstone Torches we use as taps are naturally **one-way devices**. They send power *out* to the segment line, but power from another torch cannot flow *backwards* through them. The torches act as the diodes in our “Diode Matrix.”
+> You might wonder if we need repeaters to isolate the segment lines from each other like we did in our basic OR gate. In this specific design, we don’t! The Redstone Torches we use as taps are naturally **one-way devices**. They send power *out* to the segment line, but power from another torch can't flow *backwards* through them. The torches act as the diodes in our “Diode Matrix.”
 
 ##### 4. Test Your Work
 
@@ -415,50 +415,26 @@ This is your finished ROM, with every line programmed to map decoder inputs to s
 
 #### Real-World Connection: BIOS and Game Cartridges
 
-The "Diode Matrix" you've just built is a simple form of **Read-Only Memory (ROM)**. The "program" is physically burned into the circuit's layout by the placement of the torches. This exact principle was fundamental to early computing. A computer's **BIOS chip**, which tells it how to boot up, is a form of ROM. Old video game cartridges were also ROMs, with the entire game's data permanently stored in the hardware's structure. You've built the same technology!
+The "Diode Matrix" you've just built is a simple form of **Read-Only Memory (ROM)**. The "program" is physically burned into the circuit's layout by the placement of the torches. This exact principle was fundamental to early computing. A computer's **BIOS chip**, which tells it how to boot up, is a form of ROM. Old video game cartridges were also ROMs, with the entire game's data permanently stored in the hardware's structure. You've built the same technology.
 
 #### Software Connection: Substitution Boxes in Cryptography
 
-In software, ROM-like functionality is often implemented with static lookup tables in the form of precomputed, unchanging arrays stored in read-only memory segments of the compiled binary. This ensures efficiency and prevents accidental modifications, much like our hardware Diode Matrix.
+Software leans on the same trick: a precomputed lookup table that never changes, baked into the program. A good example is the S-box inside AES, the encryption standard protecting most of your web traffic. It's a fixed 256-entry table that maps each input byte to an output byte, hardcoded into every AES implementation. That's the same idea as the display ROM you just built, only wider: 256 entries of 8 bits instead of 10 entries of 7.
 
-A prime real-world example is the Substitution Box (S-box) in the Advanced Encryption Standard (AES), a cornerstone algorithm for secure data transmission (e.g., HTTPS, VPNs) and storage. The S-box is a fixed 256-entry table that maps input bytes to output bytes, introducing nonlinearity crucial for cryptographic security. This table is hardcoded and immutable, mirroring data "burned" into ROM.
-
-Here's a Python snippet showing the AES S-box as a lookup table, common in libraries like PyCryptodome:
+Here's the S-box as a Python lookup table, trimmed to the first row:
 
 ```python
 def aes_sbox_substitute(byte):
-    # Fixed AES S-box lookup table (256 entries, hexadecimal values)
-    sbox = [
-        0x63, 0x7c, 0x77, 0x7b, 0xf2, 0x6b, 0x6f, 0xc5, 0x30, 0x01, 0x67, 0x2b, 0xfe, 0xd7, 0xab, 0x76,
-        0xca, 0x82, 0xc9, 0x7d, 0xfa, 0x59, 0x47, 0xf0, 0xad, 0xd4, 0xa2, 0xaf, 0x9c, 0xa4, 0x72, 0xc0,
-        0xb7, 0xfd, 0x93, 0x26, 0x36, 0x3f, 0xf7, 0xcc, 0x34, 0xa5, 0xe5, 0xf1, 0x71, 0xd8, 0x31, 0x15,
-        0x04, 0xc7, 0x23, 0xc3, 0x18, 0x96, 0x05, 0x9a, 0x07, 0x12, 0x80, 0xe2, 0xeb, 0x27, 0xb2, 0x75,
-        0x09, 0x83, 0x2c, 0x1a, 0x1b, 0x6e, 0x5a, 0xa0, 0x52, 0x3b, 0xd6, 0xb3, 0x29, 0xe3, 0x2f, 0x84,
-        0x53, 0xd1, 0x00, 0xed, 0x20, 0xfc, 0xb1, 0x5b, 0x6a, 0xcb, 0xbe, 0x39, 0x4a, 0x4c, 0x58, 0xcf,
-        0xd0, 0xef, 0xaa, 0xfb, 0x43, 0x4d, 0x33, 0x85, 0x45, 0xf9, 0x02, 0x7f, 0x50, 0x3c, 0x9f, 0xa8,
-        0x51, 0xa3, 0x40, 0x8f, 0x92, 0x9d, 0x38, 0xf5, 0xbc, 0xb6, 0xda, 0x21, 0x10, 0xff, 0xf3, 0xd2,
-        0xcd, 0x0c, 0x13, 0xec, 0x5f, 0x97, 0x44, 0x17, 0xc4, 0xa7, 0x7e, 0x3d, 0x64, 0x5d, 0x19, 0x73,
-        0x60, 0x81, 0x4f, 0xdc, 0x22, 0x2a, 0x90, 0x88, 0x46, 0xee, 0xb8, 0x14, 0xde, 0x5e, 0x0b, 0xdb,
-        0xe0, 0x32, 0x3a, 0x0a, 0x49, 0x06, 0x24, 0x5c, 0xc2, 0xd3, 0xac, 0x62, 0x91, 0x95, 0xe4, 0x79,
-        0xe7, 0xc8, 0x37, 0x6d, 0x8d, 0xd5, 0x4e, 0xa9, 0x6c, 0x56, 0xf4, 0xea, 0x65, 0x7a, 0xae, 0x08,
-        0xba, 0x78, 0x25, 0x2e, 0x1c, 0xa6, 0xb4, 0xc6, 0xe8, 0xdd, 0x74, 0x1f, 0x4b, 0xbd, 0x8b, 0x8a,
-        0x70, 0x3e, 0xb5, 0x66, 0x48, 0x03, 0xf6, 0x0e, 0x61, 0x35, 0x57, 0xb9, 0x86, 0xc1, 0x1d, 0x9e,
-        0xe1, 0xf8, 0x98, 0x11, 0x69, 0xd9, 0x8e, 0x94, 0x9b, 0x1e, 0x87, 0xe9, 0xce, 0x55, 0x28, 0xdf,
-        0x8c, 0xa1, 0x89, 0x0d, 0xbf, 0xe6, 0x42, 0x68, 0x41, 0x99, 0x2d, 0x0f, 0xb0, 0x54, 0xbb, 0x16
-    ]
     return sbox[byte]
 
-# Example usage in AES encryption round (simplified)
-input_byte = 0x53  # Example input (e.g., 'S' in ASCII)
-substituted = aes_sbox_substitute(input_byte)  # Returns 0xed (237 in decimal)
-print(hex(substituted))  # Outputs: 0xed
+print(hex(aes_sbox_substitute(0x0b)))  # 0x2b
 ```
 
-This implementation is authentic and deployed in real-world cryptographic software, prioritizing performance and reliability. The table's fixed nature echoes ROM, as modifications would invalidate the standard. In embedded or hardware-accelerated scenarios, this data may indeed reside in physical ROM for added efficiency.
+In hardware AES implementations, the S-box is sometimes a literal ROM: the same diode-matrix idea, in silicon.
 
 #### Practice Problem 4.5.1: Design on Paper
 
-You are programming the line for the digit **`2`**. According to the lookup table, which perpendicular segment lines need a torch tap from the horizontal `L2` line?
+You're programming the line for the digit **`2`**. According to the lookup table, which perpendicular segment lines need a torch tap from the horizontal `L2` line?
 
 <details>
 <summary><strong>Show Solution</strong></summary>
@@ -474,7 +450,7 @@ When you test your ROM by providing a LOW signal to the `L4` line, you expect to
 <details>
 <summary><strong>Show Solution</strong></summary>
 
-If a segment that should be ON is OFF, it means it is not receiving power. The most likely cause is simple: you **forgot to place the torch tap** at the intersection of the horizontal `L4` line and the perpendicular segment `g` line. Without that torch, there is nothing to power the line when `L4` goes low.
+If a segment that should be ON is OFF, it means it's not receiving power. The most likely cause is simple: you **forgot to place the torch tap** at the intersection of the horizontal `L4` line and the perpendicular segment `g` line. Without that torch, there's nothing to power the line when `L4` goes low.
 
 </details>
 
@@ -484,16 +460,16 @@ If a segment that should be ON is OFF, it means it is not receiving power. The m
 
 > **Key Takeaway**: Connecting individual, tested modules into a complete, working system is the final and most rewarding step of any engineering project.
 
-The moment of truth has arrived. You’ve built and tested the decoder to identify numbers, the ROM to map them to segment patterns, and the 7-segment display to show the results. Now, it’s time to connect these modules and watch your digital display come to life, transforming binary inputs into human-readable digits.
+You’ve built and tested the decoder to identify numbers, the ROM to map them to segment patterns, and the 7-segment display to show the results. All that's left is to wire the three together.
 
 ---
 
 #### Lab & Experiment: The Final Connection
 
-This final step is all about making the connections between all of the components from this module. The wiring may get a bit messy, but as long as the signals flow correctly, you are good to go!
+This final step is all about making the connections between the components from this module. The wiring may get a bit messy, but as long as the signals flow correctly, you're good to go.
 
-1. **Connect Decoder to ROM**: Carefully connect the `10` active-low output lines from your **Decoder** (`L0`–`L9`) to the `10` horizontal input lines of your **ROM**. Use Redstone Repeaters as needed to ensure the signals remain strong over long distances. Label your lines to avoid mix-ups.
-2. **Connect ROM to Display**: Connect the `7` output lines from your **ROM** (`a`–`g`) to the control inputs of the **7-segment Display** you built in Lesson 4.1. This may require creative wiring to route signals to the display’s repeaters, but ensure each segment line connects to its corresponding input (e.g., `a` to the `a` segment). Test each connection with a temporary lever to confirm the segment lights up.
+1. **Connect Decoder to ROM**: Carefully connect the `10` active-low output lines from your **Decoder** (`L0`–`L9`) to the `10` horizontal input lines of your **ROM**. Use Redstone Repeaters as needed to keep the signals strong over long distances. Label your lines to avoid mix-ups.
+2. **Connect ROM to Display**: Connect the `7` output lines from your **ROM** (`a`–`g`) to the control inputs of the **7-segment Display** you built in Lesson 4.1. This may require creative wiring to route signals to the display’s repeaters, but make sure each segment line connects to its corresponding input (e.g., `a` to the `a` segment). Test each connection with a temporary lever to confirm the segment lights up.
 
 Here’s what your fully connected system should look like, with the input set to `0011` to display a `3`:
 
@@ -515,9 +491,9 @@ From above, you can see how compactly your system fits together:
 
 <div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/04_complete-digital-display-aerial_minecraft.png" alt="Complete Digital Display Aerial" width="512px"/><br/><em>Figure: Aerial view of the compact digital display system, with input `0011` producing a “3”. The modular layout connects the decoder, ROM, and display efficiently.</em></div><br/>
 
-The decoder’s input bus, the ROM’s torch matrix, and the display’s segments are tightly packed yet clearly organized. While the torches in the ROM grid are less visible from this angle, refer to the Lesson 4.5 lookup table to confirm their placements.
+The torches in the ROM grid are less visible from this angle, so refer to the Lesson 4.5 lookup table to confirm their placements.
 
-Here is the full schematic in CircuitVerse without subcircuit abstractions, showing the detailed wiring from 4-bit input through decoder and ROM to the 7-segment display. The layout and implementation align with our Minecraft build, and the input is currently set to `0011`, making the instructions above directly applicable.
+Here's the full schematic in CircuitVerse without subcircuit abstractions, showing the detailed wiring from 4-bit input through decoder and ROM to the 7-segment display. The layout and implementation align with our Minecraft build, and the input is currently set to `0011`, making the instructions above directly applicable.
 
 <div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/04_complete-digital-display_circuitverse.png" alt="Full System in CircuitVerse" width="512px"/><br/><em>Figure: The end-to-end binary-to-display system in CircuitVerse, integrating all components from this module and displaying '3' for input `0011`.</em></div><br/>
 
@@ -539,7 +515,7 @@ Stop and take stock of what this machine actually does: you flip four levers, an
 <summary><strong>Show Solution</strong></summary>
 
 1.  It breaks the problem down into smaller, independent modules (modularity). This makes each part easier to design, build, and debug.
-2.  The Repeater Tap creates a "strongly powered" block, which is necessary to power the Redstone dust on the output line across the 1-block air gap. Simple dust would create a "weakly powered" block, which cannot.
+2.  The Repeater Tap creates a "strongly powered" block, which is necessary to power the Redstone dust on the output line across the 1-block air gap. Simple dust would create a "weakly powered" block, which can't.
 3.  It represents a single "bit" of stored information. Specifically, it's a command to "turn this segment ON when this number line is selected (LOW)."
 
 </details>
@@ -579,7 +555,7 @@ Torches are for `1`s, Repeaters are for `0`s. So the identity is `0110`. This is
 
 #### Practice Problem 4.7.5: Debug Challenge
 
-In the world download for this module, you will find a section labeled "Module 4 Debug Challenge." The display system is fully connected. When you input **`0010`** (for the number 2), the display incorrectly shows a **`6`**.
+In the world download for this module, you'll find a section labeled "Module 4 Debug Challenge." The display system is fully connected. When you input **`0010`** (for the number 2), the display incorrectly shows a **`6`**.
 
 **Trace the logic**:
   - The digit `2` should be `a, b, g, e, d`.
@@ -608,7 +584,7 @@ This points to a catastrophic failure in the "programming" of the `L2` line in y
 - **BCD (Binary-Coded Decimal)**: A method of representing the decimal digits `0`–`9` using a 4-bit binary code.
 - **Decoder**: A circuit that takes a multi-bit binary input and activates a single, corresponding output line. Our decoder acts as an **Identifier**.
 - **Diode Matrix**: A grid of input and output lines where components (like our taps) are placed at intersections to create a programmable logic device, often used as a ROM.
-- **Encoder**: In standard usage, the inverse of a decoder: it takes one active line among many and produces a compact binary code. We do not build one in this course. Mapper stages like our ROM are sometimes loosely called encoders, but the name properly belongs to the binary-code producer.
+- **Encoder**: In standard usage, the inverse of a decoder: it takes one active line among many and produces a compact binary code. We don't build one in this course. Mapper stages like our ROM are sometimes loosely called encoders, but the name properly belongs to the binary-code producer.
 - **Modularity**: The engineering practice of designing a system in independent, interchangeable components. This makes the system easier to design, test, and upgrade.
 - **ROM (Read-Only Memory)**: A type of storage where data is permanently programmed into the hardware's structure.
 - **Tap (Repeater/Torch)**: Our term for a connection that reads a signal from a bus line to control another wire.
@@ -618,10 +594,10 @@ This points to a catastrophic failure in the "programming" of the `L2` line in y
 
 ### Module 4 Conclusion
 
-You didn't just build a circuit; you engineered a complete system, and by breaking it into distinct, logical stages, you kept it manageable, testable, and understandable. You now know binary-to-decimal decoding and how a hardware ROM drives an output, two fundamental building blocks of digital electronics.
+You engineered a complete system in this module, and by breaking it into distinct, logical stages, you kept it manageable, testable, and understandable. You now know binary-to-decimal decoding and how a hardware ROM drives an output, two fundamental building blocks of digital electronics.
 
 **What’s Next?**
 
-That completes **Part I** of this course. You possess a complete input and output system, and you are fluent in the language of logic.
+That completes **Part I** of this course. You have a complete input and output system, and you're fluent in the language of logic.
 
-In **Part II: The Thinking Machine**, we will take our first steps into building the brain of our computer. We'll start in **Module 5**, where we will construct a 4-bit adder to perform our first real mathematical calculation. But as you'll soon discover, making our display show the answer will present a new bug to solve, leading us to our first major system upgrade.
+In **Part II: The Thinking Machine**, we'll take our first steps into building the brain of our computer. We'll start in **Module 5**, where we'll construct a 4-bit adder to perform our first real mathematical calculation. But as you'll soon discover, making our display show the answer will present a new bug to solve, leading us to our first major system upgrade.
