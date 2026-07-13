@@ -2,22 +2,19 @@
 
 ## Welcome to Redstone University!
 
-Have you ever used a computer or a smartphone and wondered what’s *really* happening inside? Not just the software, but the deep, physical magic of a machine that seems to "think"?
+Have you ever used a computer or a smartphone and wondered what’s *really* happening inside? Not the software, but the physical machine underneath it, the part that somehow turns electricity into arithmetic?
 
-This isn't just another Minecraft course. This is a journey into the heart of the machine.
+This course is about answering that question by building the machine yourself, in Minecraft, one circuit at a time.
 
-As a non-traditional, self-taught software engineer, I found myself wanting to explore the foundational principles of computer science. I realized that the abstract concepts of binary, logic gates, and computer architecture were difficult to grasp from books and theory alone. At the same time, I saw the incredibly complex and logical machines being built in Minecraft with Redstone. The idea was born: **what if we could learn how a computer works by building one from scratch, using tools we already love?**
+I'm a self-taught software engineer with a non-traditional path, and at some point I wanted to go back and fill in the foundations properly. Binary, logic gates, computer architecture: I tried books and theory first, and the concepts stayed abstract no matter how many diagrams I stared at. Meanwhile, people were building genuinely complex logical machines in Minecraft with Redstone. Eventually the two thoughts collided: **what if we learned how a computer works by building one from scratch, using tools we already love?**
 
-That is the mission of Redstone University. We will make the abstract tangible. We will turn theory into a physical, working machine that you can walk around inside.
+That's the mission of Redstone University: take the theory and turn it into a physical, working machine you can walk around inside.
 
-### My Personal Journey & Course Philosophy
+### Why I Built This
 
-Redstone University is the product of my own adventure in learning digital logic and computer architecture. This adventure started with curiosity and grew into a passion for building, experimenting, and teaching. Every lesson, every build, and every design choice in this course is shaped by what felt intuitive and exciting to me as a learner. I’ve structured the curriculum to follow the path that made the most sense to me: building what I wanted to see next, solving the problems that naturally arose, and always striving to make each concept click in a hands-on, visual way.
+Redstone University is the course I wished existed while I was teaching myself digital logic and computer architecture. The curriculum follows the path that actually made things click for me: build the thing I wanted to see next, run into the problem that naturally comes with it, solve it, repeat. Every lesson, build, and design choice came out of that loop.
 
-**What sets this course apart?**
--   It’s grounded in *real experience*: you’ll follow the same journey I did, learning not just the “what” but the “why” and “how” behind each step.
--   We use **Minecraft** as our laboratory, making abstract concepts tangible and fun.
--   We focus on clarity and intuition, not just efficiency or speed.
+What sets it apart? You're retracing the route I actually took, so alongside the "what" you get the "why" and the "how" behind each step. Minecraft is the laboratory, which keeps the abstract parts tangible (and, frankly, fun). And when clarity and efficiency disagree, we side with clarity.
 
 ---
 
@@ -31,17 +28,17 @@ Redstone University is the product of my own adventure in learning digital logic
 
 This course is organized as a complete curriculum, taking you from zero knowledge to a fully functional, programmable 4-bit computer. It is divided into Parts (major phases), Modules (specific projects), and Lessons (step-by-step instructions).
 
-You’ll find:
+Along the way you can expect:
 -   **Personal motivation and narrative:** Each module is introduced with a story or challenge that mirrors my own learning process.
 -   **Hands-on builds:** Every concept is brought to life with a Minecraft circuit and, where helpful, a CircuitVerse diagram.
 -   **Theory and practice:** The modules balance foundational theory with immediate, practical application.
--   **Real-world and software connections:** You’ll see how each idea relates to real computers and even to programming challenges.
+-   **Real-world and software connections:** Each idea gets tied back to real computers and, where it fits, to programming challenges.
 
 ---
 
-### The Journey Ahead
+### The Road Ahead
 
--   **Part I: The Foundations – The Human Interface.** We will begin by learning the basics of Redstone and binary. We will then master the grammar of Boolean logic and use it to construct a complete input and output system, featuring a manual input panel and a 7-segment digital display.
+-   **Part I: The Foundations – Laying the Groundwork.** We start with the basics of Redstone and binary, then work through the grammar of Boolean logic and use it to build a complete input and output system: a manual input panel and a 7-segment digital display.
     -   **Module 0 (Optional):** The Redstone Toolkit
     -   **Module 1:** The 4-Bit Input Interface
     -   **Module 2:** The Grammar of Circuits – Foundational Logic Gates
@@ -49,20 +46,20 @@ You’ll find:
     -   **Module 4:** Decoders & Digital Displays
     -   *(Includes Interludes on Compact Design and Abstraction)*
 
--   **Part II: The Thinking Machine – Building the Processor.** Here, we will construct the entire mathematical and logical brain of our computer. We'll engineer an adder and subtractor, give it the ability to make decisions with status flags, and forge everything into a complete Arithmetic Logic Unit (ALU).
+-   **Part II: The Thinking Machine – Building the Processor.** Here we construct the mathematical and logical brain of our computer. We build an adder and subtractor, give it the ability to make decisions with status flags, and assemble it all into a complete Arithmetic Logic Unit (ALU).
     -   **Module 5:** The 4-Bit Adder & The Hexadecimal Upgrade
     -   **Module 6:** Advanced Arithmetic – Overflow and Subtraction
     -   **Module 7:** Comparators and Status Flags
     -   **Module 8:** The Multiplexer – The Digital Switch
     -   **Module 9:** The ALU – The Grand Assembly
 
--   **Part III: The Automated Computer – Memory and Control.** In this final core part, we will achieve true automation. We'll build registers and addressable RAM to give our processor a memory, then add the clocking, routing, and control logic that let it fetch, decode, and execute instructions from a stored program.
+-   **Part III: The Processor Core – Memory and Control.** This is where the computer starts running itself. We build registers and addressable RAM to give our processor a memory, then add the clocking, routing, and control logic that let it fetch, decode, and execute instructions from a stored program.
     -   **Module 10:** The Processor's Scratchpad – Building a Register
     -   **Module 11:** Addressable Storage – Building RAM
     -   **Module 12a:** The Infrastructure – Clock, Counter, and Control Paths
     -   **Module 12b:** The Language of the Machine – Instructions and the First Program
 
--   **Part IV: Post-Graduate Studies (Bonus Content).** For those who want to go even further, we'll explore advanced topics, like building the complex hardware required to display multi-digit decimal numbers, just like a real-world calculator.
+-   **Part IV: Post-Graduate Studies – Advanced Engineering.** For anyone who wants to keep going: advanced topics, like building the hardware required to display multi-digit decimal numbers, the way a real-world calculator does.
     -   **Module 13:** The "Real World" Display – The Double Dabble Algorithm
 
 ---
@@ -89,9 +86,9 @@ Bedrock: **[1.21.101]** • Java: **[pending]**
 
 World downloads are provided for both Java and Bedrock. You can use this to check your work, explore the final product, or use the pre-built components as "black boxes" if you want to focus more on the high-level concepts.
 
-**The "No-Minecraft Track":** If you don't have Minecraft or prefer a more theoretical approach, you can still complete this entire course. Every lesson will include text descriptions, diagrams, and schematics. I will also provide links to free online digital logic simulators (like [CircuitVerse](https://circuitverse.org/simulator)) where you can build and test these circuits without the game. The core learning is in the logic, not just the blocks.
+**The "No-Minecraft Track":** If you don't have Minecraft or prefer a more theoretical approach, you can still complete this entire course. Every lesson will include text descriptions, diagrams, and schematics. I will also provide links to free online digital logic simulators (like [CircuitVerse](https://circuitverse.org/simulator)) where you can build and test these circuits without the game. The learning is in the logic, and the logic works the same in a simulator.
 
-I am excited for you to join me on this journey. It's time to stop just *using* computers and start *understanding* them.
+I'm glad you're here. It's time to stop just *using* computers and start *understanding* them.
 
 ---
 
