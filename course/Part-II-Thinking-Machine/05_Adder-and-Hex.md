@@ -2,7 +2,7 @@
 
 ### Module 5 Summary
 
--   **Narrative Beat:** Time for real math. We will build the first circuit that lets our machine calculate, then watch that success immediately expose a bigger system problem. Solving that problem will force us to upgrade our display and, in the process, learn the number system low-level programmers use every day.
+-   **Narrative Beat:** Time for real math. We'll build the first circuit that lets our machine calculate, then watch that success immediately expose a bigger system problem. Solving that problem will force us to upgrade our display and, in the process, learn the number system low-level programmers use every day.
 -   **Learning Goals:**
     -   Understand how binary addition produces both a **sum** bit and a **carry** bit.
     -   Build a reusable 1-bit **full adder** and chain four of them into a 4-bit ripple-carry adder.
@@ -23,11 +23,11 @@
 
 ### Module 5 Introduction
 
-Part I gave us an input system and an output system. We can now speak to the machine and the machine can answer back. But so far our computer is still passive. It can only *translate*.
+Part I gave us an input system and an output system. We can now speak to the machine and the machine can answer back. But so far our computer is still passive. Hand it a five and it hands you a five right back, just written in a different alphabet. It can only *translate*.
 
 In this module, that changes.
 
-We are going to build the mathematical heart of the processor: the **adder**. This is the first circuit in the course that feels unmistakably like computation. It takes two numbers, transforms them, and produces a new one.
+We're going to build the mathematical heart of the processor: the **adder**. This is the first circuit in the course that feels unmistakably like computation. It takes two numbers, transforms them, and produces a new one.
 
 But this module is also our first taste of what real engineering feels like. You can build two perfect subsystems, connect them together, and still discover a bug. Keep that in the back of your mind as you build.
 
@@ -50,7 +50,7 @@ Here are the four possible outcomes for adding two bits:
 | `1` | `0` | `1` | `0` |
 | `1` | `1` | `0` | `1` |
 
-That last row is the important one. When both inputs are `1`, the result cannot fit in a single bit. So we write `0` in the current column and carry `1` to the next column.
+That last row is the important one. When both inputs are `1`, the result can't fit in a single bit. So we write `0` in the current column and carry `1` to the next column.
 
 Let’s work through `5 + 3`, writing the carries above the columns the way you would on paper:
 
@@ -95,7 +95,7 @@ Its logic is, in the two notations from Module 3:
 | **Sum** | $A \text{ XOR } B \text{ XOR } CarryIn$ | $A \oplus B \oplus CarryIn$ |
 | **Carry-Out** | $(A \text{ AND } B) \text{ OR } (CarryIn \text{ AND } (A \text{ XOR } B))$ | $(A \land B) \lor (CarryIn \land (A \oplus B))$ |
 
-There is a nice intuition hiding here:
+There's a nice intuition hiding here:
 
 -   The **Sum** bit is `1` when an **odd number** of the three inputs are `1`.
 -   The **Carry-Out** bit is `1` when **at least two** of the three inputs are `1`.
@@ -104,7 +104,7 @@ Test both rules on the heaviest column you will ever meet, `1 + 1 + 1`: an odd c
 
 Builders usually give the shared piece of that logic a name. Call $P = A \oplus B$, with P for *propagate*, and the two rules compress to $Sum = P \oplus CarryIn$ and $CarryOut = (A \land B) \lor (P \land CarryIn)$. The carry side is doing two jobs: $A \land B$ *generates* a brand-new carry, and $P \land CarryIn$ *propagates* one that arrived from the column to the right. Keep those two words; they make the wiring much easier to remember.
 
-That is exactly what we need the hardware to do.
+That's exactly what we need the hardware to do.
 
 ---
 
@@ -114,7 +114,7 @@ That is exactly what we need the hardware to do.
 
 > **A note for the curious: why skip the half adder?**
 >
-> Many digital logic courses introduce the **half adder** first. That is a valid teaching path, but in this course I want to bias toward reusable parts. A half adder is only useful when there is no carry coming in. A **full adder** works everywhere. Once you understand it, you can build the whole adder out of one repeated module. For the vocabulary's sake: the first XOR and AND pair inside a full adder *is* a half adder. We just never package it as its own build.
+> Many digital logic courses introduce the **half adder** first. That's a valid teaching path, but in this course I want to bias toward reusable parts. A half adder is only useful when there's no carry coming in. A **full adder** works everywhere. Once you understand it, you can build the whole adder out of one repeated module. For the vocabulary's sake: the first XOR and AND pair inside a full adder *is* a half adder. We just never package it as its own build.
 
 #### The concept: the 1-bit full adder
 
@@ -180,13 +180,13 @@ Build that once, test it thoroughly, and then repeat it.
     -   Connect $A_1$/$B_1$, then $A_2$/$B_2$, then $A_3$/$B_3$.
     -   Connect each stage’s `CarryOut` to the next stage’s `CarryIn`.
 5.  Collect the four `Sum` outputs into a 4-bit result bus.
-6.  Keep the final `CarryOut` wire accessible. We are going to need it in the next module.
+6.  Keep the final `CarryOut` wire accessible. We're going to need it in the next module.
 
 <div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/05_4-bit-rca-aerial_minecraft.png" alt="4-Bit Ripple-Carry Adder Minecraft Build" width="512px"/><br/><em>Figure: The full 4-bit ripple-carry adder in Minecraft, seen from above and computing the same `5 + 3` as the diagram. The least-significant stage on the right keeps the full adder's yellow; its three repeats are grayed to show they are copies, not new designs. The carry ripples right to left, and only the leftmost Sum lamp is lit: `1000`.</em></div><br/>
 
 #### The experiment
 
-Run these cases before moving on. The carry columns are the debugging gold: `C1` is `FA0`'s CarryOut, `C2` is `FA1`'s, and so on, with `C4` the final CarryOut. If a result is wrong, check the carries and you will know exactly which stage to blame.
+Run these cases before moving on. The carry columns are the debugging gold: `C1` is `FA0`'s CarryOut, `C2` is `FA1`'s, and so on, with `C4` the final CarryOut. If a result is wrong, check the carries and you'll know exactly which stage to blame.
 
 | Test | Result | C1 | C2 | C3 | C4 |
 | :--- | :---: | :---: | :---: | :---: | :---: |
@@ -203,11 +203,11 @@ If a result is off by exactly `2`, `4`, or `8`, the most likely problem is a bro
 
 > **Key Takeaway:** A bug can exist at the boundary between two correct subsystems. Integration testing is where you discover whether your design assumptions were actually true.
 
-Let’s connect our new adder to the display system from Module 4.
+Let’s connect our new adder to the display system from Module 4. On paper, this is a victory lap: the adder computes, the display displays, and all that's left is four wires between two circuits we've already tested to death.
 
 #### The test
 
-A quick word before you place a single block: this step is small. You are not rebuilding anything you see in the figures. The adder exists. The display exists. The only new construction is the connection between them: four redstone lines, one bit each, from the adder’s four `Sum` outputs to the decoder’s four inputs.
+A quick word before you place a single block: this step is small. You're not rebuilding anything you see in the figures. The adder exists. The display exists. The only new construction is the connection between them: four redstone lines, one bit each, from the adder’s four `Sum` outputs to the decoder’s four inputs.
 
 <div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/05_integration-bug-aerial_minecraft.png" alt="The adder wired to the display, from above" width="512px"/><br/><em>Figure: The whole integration from above, the four adder slices along the bottom and the display system at the top. Everything here is something you already built except the four wires carrying the Sum bits up the middle into the decoder.</em></div><br/>
 
@@ -237,21 +237,21 @@ And the display goes blank.
 
 #### The diagnosis
 
-This is our first real system bug, and it is a great one.
+This is our first real system bug, and it's a great one.
 
 Nothing is wrong with the adder.
 Nothing is wrong with the display.
 
 The problem is that our display decoder from Module 4 is a **BCD decoder**. It only knows how to recognize the ten patterns for decimal digits `0` through `9`. It was never taught what `1010`, `1011`, `1100`, `1101`, `1110`, or `1111` mean.
 
-We asked a correct subsystem to interpret a value that lies outside its vocabulary.
+We asked a correct subsystem to interpret a value that lies outside its vocabulary. The adder and the decoder just ran the redstone version of Abbott and Costello's "Who's on First?" routine: neither one said a single wrong thing, and the answer still never got through.
 
 Two lessons fall out of this failure:
 
-1.  **Integration reveals truths that isolated testing cannot.** Every test we ran on the adder passed. Every test we ran on the display passed. The bug lived in the space between them, where no test was looking.
-2.  **Hardware is only as capable as the assumptions built into it.** The decoder is not broken. It was built for a world where every answer fits in one decimal digit, and our adder just left that world.
+1.  **Integration reveals truths that isolated testing can't.** Every test we ran on the adder passed. Every test we ran on the display passed. The bug lived in the space between them, where no test was looking.
+2.  **Hardware is only as capable as the assumptions built into it.** The decoder isn't broken. It was built for a world where every answer fits in one decimal digit, and our adder just left that world.
 
-There is a precise name for what broke: the **interface contract**. Each subsystem keeps its own promise, and the promises do not line up.
+There's a precise name for what broke: the **interface contract**. Each subsystem keeps its own promise, and the promises don't line up.
 
 | Subsystem | Its contract |
 | :--- | :--- |
@@ -265,13 +265,13 @@ So the fix has to start somewhere unusual: not in the circuit, but in the way we
 
 ### Lesson 5.4: The programmer's solution – Speaking hexadecimal
 
-> **Key Takeaway:** Hexadecimal is not a strange extra number system. It is the standard human-readable shorthand for 4-bit binary values: one symbol per nibble, no conversion arithmetic.
+> **Key Takeaway:** Hexadecimal is the standard human-readable shorthand for 4-bit binary values: one symbol per nibble, no conversion arithmetic.
 
 We now have a choice.
 
 We could build a more complicated decimal display system that shows numbers like `12` using two separate digits.
 
-That is possible, and it is real hardware. Humans buy calculators, not hex displays, so real machines pay this cost all the time: a whole converter circuit standing between the arithmetic and the screen. We build exactly that machine in Module 13, at the far end of the course.
+That's possible, and it's real hardware. Humans buy calculators, not hex displays, so real machines pay this cost all the time: a whole converter circuit standing between the arithmetic and the screen. We build exactly that machine in Module 13, at the far end of the course.
 
 But there is a much more elegant move available right now: meet the machine halfway.
 
@@ -301,16 +301,16 @@ Hexadecimal is base-16, so it gives us exactly one symbol for each possible 4-bi
 | `1110` | `14` | `E` |
 | `1111` | `15` | `F` |
 
-So when the adder outputs `1100`, we do not need to think “the display failed.”
+So when the adder outputs `1100`, we don't need to think “the display failed.”
 We can think “the machine just said `C`.”
 
 > **Two different limits, one fixed today**
-> Hexadecimal gives us a symbol for all sixteen patterns the adder's four `Sum` wires can carry. That is the limit we are fixing in this module.
-> Some additions overflow into a fifth bit on `CarryOut`, and no notation can make a fifth bit fit in four. That is a different limit, and it is Module 6's whole opening act.
+> Hexadecimal gives us a symbol for all sixteen patterns the adder's four `Sum` wires can carry. That's the limit we're fixing in this module.
+> Some additions overflow into a fifth bit on `CarryOut`, and no notation can make a fifth bit fit in four. That's a different limit, and it's Module 6's whole opening act.
 
 #### Why sixteen lines up and ten never will
 
-Sixteen is not an arbitrary choice. Sixteen is $2^4$, and that one fact does all the work: each hex digit covers exactly one **nibble**, a 4-bit group, no more and no less. Ten has no such relationship with binary, and that mismatch is the entire reason our decimal decoder ran out of vocabulary at `1010`.
+Sixteen isn't an arbitrary choice. Sixteen is $2^4$, and that one fact does all the work: each hex digit covers exactly one **nibble**, a 4-bit group, no more and no less. Ten has no such relationship with binary, and that mismatch is the entire reason our decimal decoder ran out of vocabulary at `1010`.
 
 The nibble alignment makes conversion mechanical. To read binary as hex, split it into nibbles and name each one from the table:
 
@@ -318,7 +318,7 @@ $$
 \underbrace{1100}_{\text{C}}\;\;\underbrace{0011}_{\text{3}} \quad\rightarrow\quad \text{C3}
 $$
 
-No long division, no arithmetic. And it scales: an 8-bit value is two hex digits, a 16-bit value is four, and a 64-bit memory address is sixteen. The reading trick you just learned on our little display works on every machine you will ever touch.
+No long division, no arithmetic. You already read numbers this way, by the way: nobody recites a phone number as ten raw digits. You say it in chunks, because chunks are what a human memory can actually hold onto, and the digits inside each chunk come along for free. Hex is that same chunking made official, with every group of four bits getting a single name. And it scales: an 8-bit value is two hex digits, a 16-bit value is four, and a 64-bit memory address is sixteen. The reading trick you just learned on our little display works on every machine you will ever touch.
 
 One convention before we move on: in most programming languages, and everywhere in this course, hexadecimal wears a `0x` prefix, so `0xC` means “`C`, the number” rather than “`C`, the letter.” You will see that prefix for the rest of the course.
 
@@ -339,7 +339,7 @@ Read these in hex, one nibble at a time:
 
 </details>
 
-That is why hexadecimal is everywhere in low-level programming, debugging, and computer architecture. It lines up perfectly with the machine’s natural word sizes.
+That's why hexadecimal is everywhere in low-level programming, debugging, and computer architecture. It lines up perfectly with the machine’s natural word sizes.
 
 ---
 
@@ -347,7 +347,7 @@ That is why hexadecimal is everywhere in low-level programming, debugging, and c
 
 > **Key Takeaway:** Because our display was built as two clean stages, we can upgrade it surgically instead of rebuilding it from scratch.
 
-We are about to benefit directly from the modular architecture we chose in Module 4.
+Module 4's insistence on keeping the decoder and the ROM separate is about to pay off.
 
 <div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/05_hex-display_minecraft.png" alt="The upgraded hexadecimal display system" width="512px"/><br/><em>Figure: Where this lab ends: the display system rebuilt for hex, showing `C`. Everything in the deeper shades is what you are about to add; everything else is your Module 4 build, untouched.</em></div><br/>
 
@@ -364,7 +364,7 @@ We are about to benefit directly from the modular architecture we chose in Modul
     -   `LF` for `1111`
 4.  Use the same tap logic from Module 4. Each new line simply recognizes one more identity pattern.
 
-Four steps is genuinely all it takes, and that is the point: you already know this technique. You spent half of Module 4 learning it. The figures below are your references, each with its own job: the schematic shows the logic, the build shows the result, and the top-down view is the one to build from, because every torch and repeater position on the new lines is readable straight off it.
+Four steps is genuinely all it takes, and that's the point: you already know this technique. You spent half of Module 4 learning it. The figures below are your references, each with its own job: the schematic shows the logic, the build shows the result, and the top-down view is the one to build from, because every torch and repeater position on the new lines is readable straight off it.
 
 <div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/05_4-to-16-decoder_circuitverse.png" alt="4-to-16 Decoder CircuitVerse Diagram" width="512px"/><br/><em>Figure: The full 4-to-16 binary decoder. Sixteen output lines, one per 4-bit pattern; here the input `1111` activates line `LF`.</em></div><br/>
 
@@ -419,9 +419,9 @@ Now the system should behave like this:
 2.  The ROM maps `LC` to the segment pattern for `C`.
 3.  The display lights up a `C`.
 
-Bug fixed. System upgraded. No rebuild required.
+The bug is fixed and the system is upgraded, with no rebuild required.
 
-One test is not a regression suite, though. Run the spread:
+One test isn't a regression suite, though. Run the spread:
 
 | Test | Display | Why it matters |
 | :--- | :---: | :--- |
@@ -498,7 +498,7 @@ This result depends on the carry rippling through multiple stages. If one carry 
 
 #### Real-world connection: Nibbles, hex dumps, and addresses
 
-Hexadecimal is used everywhere because it compresses binary into chunks humans can actually read. One hex digit represents exactly one **nibble** (4 bits). Two hex digits represent a byte. That is why memory addresses, machine instructions, color values, and debug output are so often written in hex. When a programmer sees `0xC`, they are really seeing the 4-bit pattern `1100` wearing a friendlier face.
+Hexadecimal is used everywhere because it compresses binary into chunks humans can actually read. One hex digit represents exactly one **nibble** (4 bits). Two hex digits represent a byte. That's why memory addresses, machine instructions, color values, and debug output are so often written in hex. When a programmer sees `0xC`, they're really seeing the 4-bit pattern `1100` wearing a friendlier face.
 
 #### Software connection: Adding without `+`
 
@@ -536,9 +536,8 @@ That clever software trick is the same arithmetic your hardware adder performs b
 
 ### Module 5 Conclusion
 
-You built the first true arithmetic engine in the course. More importantly, you experienced the full engineering loop: design, build, integrate, fail, diagnose, and improve. That is not a detour from real computer engineering. That *is* real computer engineering.
+You built the first true arithmetic engine in the course. More importantly, you experienced the full engineering loop: design, build, integrate, watch it fail, then diagnose and improve. That is not a detour from real computer engineering. That *is* real computer engineering.
 
 You also saw the reward of modular design. Because the decoder and ROM were cleanly separated, expanding the system was an upgrade, not a restart.
 
-Our machine can now add, and it can display every possible 4-bit result, `0x0` through `0xF`. In the next module, we are going to push that arithmetic system even harder, right up against the limits of a 4-bit machine, and discover what happens when the answer no longer fits.
-
+Our machine can now add, and it can display every possible 4-bit result, `0x0` through `0xF`. In the next module, we're going to push that arithmetic system even harder, right up against the limits of a 4-bit machine, and discover what happens when the answer no longer fits.

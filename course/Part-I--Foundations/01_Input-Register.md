@@ -19,15 +19,15 @@
 
 Welcome to your first day at Redstone University!
 
-Our goal is to build a complete, working computer from scratch, and the very first thing we need is a way to talk to our machine, a way to give it information.
+Our goal is to build a complete, working computer from scratch, and before we can build anything that thinks, we need a way to talk to it.
 
-In this module, we’re going to build a **4-bit input interface**, a simple set of switches that lets us speak the computer’s native language: **binary**. In Minecraft, levers hold their state, making them perfect for this job. By flipping them, we can set a 4-bit binary number (any value from `0` to `15`) and see it in action. This isn’t a true register (a storage device we’ll build later), but it’s a hands-on way to input binary data and understand how computers start processing information. As we move forward, you’ll see how this simple setup connects to the bigger picture.
+In this module we’re going to build a **4-bit input interface**: four switches that let us speak the computer’s native language, **binary**. A Minecraft lever holds its state until you flip it back, which is exactly the property we need. Set the four levers and you’ve entered any number from `0` to `15`. It isn’t a true register (that’s a storage device we’ll build later), but it’s how we’ll hand data to every circuit in this course.
 
 ---
 
 ### Lesson 1.1: The Theory – Why Computers Use Binary
 
-Think about how you count. You probably use ten symbols: `0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`. This is the **decimal** (base-10) system. It feels natural to us, likely because humans evolved with ten fingers. When we get past `9`, we don't invent a new symbol; we just add a new column to the left, the "tens" column, and start over. The number `12` is really just our way of saying "one ten, plus two ones."
+Think about how you count. You use ten symbols: `0` through `9`. This is the **decimal** (base-10) system, and the only reason it feels natural is, probably, that we've got ten fingers. When we get past `9`, we don't invent a new symbol. We just add a new column to the left, the "tens" column, and start over. The number `12` is really just our way of saying "one ten, plus two ones."
 
 Computers are different. They don't have fingers. Deep down, they are made of billions of microscopic electronic switches called transistors. A switch is a very simple device. It can only ever be in one of two states: **ON** or **OFF**. There is no "halfway on."
 
@@ -36,7 +36,7 @@ This simple, two-state system is the foundation of all modern computing. We call
 - `OFF` = `0`
 - `ON` = `1`
 
-That's it! Every single thing your computer does, from displaying this text, to playing a song, to running a complex game, is ultimately just a massive, coordinated manipulation of these simple `1`s and `0`s. Each individual `1` or `0` is called a **bit** (short for "binary digit").
+That's it. Every single thing your computer does, from displaying this text, to playing a song, to running a complex game, is ultimately just a massive, coordinated manipulation of these simple `1`s and `0`s. Each individual `1` or `0` is called a **bit** (short for "binary digit").
 
 So, how can we possibly represent a big number like `13` with just `1`s and `0`s? We use the same trick as our decimal system: we use columns with different values. But instead of ones, tens, and hundreds, our binary columns simply double each time.
 
@@ -60,13 +60,13 @@ For example, the binary number `1101`:
 - Is there a `1` in the `2`s place? **No.**
 - Is there a `1` in the `1`s place? **Yes.**
 
-So, the value is $8 + 4 + 1 = 13$. We've just translated from the computer's language back to ours!
+So, the value is $8 + 4 + 1 = 13$. We've just translated from the computer's language back to ours.
 
 ---
 
 ### Lesson 1.2: The Lab – Building and Using Our 4-Bit Input Interface
 
-It’s time to stop talking and start building! Our **4-bit input interface** will act as a simple “keyboard,” letting us manually input any number from `0` to `15` in binary. Using levers, we will set the bits by flipping them up for `1` and down for `0`.
+Time to stop talking and start building. Our **4-bit input interface** will act as a simple “keyboard,” letting us manually input any number from `0` to `15` in binary. Using levers, we'll set the bits by flipping them up for `1` and down for `0`.
 
 #### Materials Needed
 
@@ -79,7 +79,7 @@ It’s time to stop talking and start building! Our **4-bit input interface** wi
 
 ---
 
-This input bus will serve as the starting point for our future circuits. In later modules, we’ll process these binary inputs and display the results on a 7-segment display. This device lights up segments to show numbers, like on a digital clock.
+Everything we build later hangs off this input bus. In later modules we’ll process these binary inputs and show the results on a 7-segment display, the same kind of digit you'd see on a digital clock.
 
 #### The Build Guide
 
@@ -87,7 +87,7 @@ This input bus will serve as the starting point for our future circuits. In late
 
 1. I recommend creating a new world and under the advanced options, set the world type to "Flat". They even have a flat preset called "Redstone Ready" that is perfect for our needs.
 2. Place **four Redstone Lamps** or **four solid blocks** in a horizontal line with one space between to prevent their redstone dust from merging.
-3. On the front face of each block, place one **Lever**. A lever is the perfect physical bit. For this course, when the lever is OFF, we will treat it as `0`, and when it is ON, we will treat it as `1`.
+3. On the front face of each block, place one **Lever**. A lever is the perfect physical bit. For this course, when the lever is OFF, we'll treat it as `0`, and when it is ON, we'll treat it as `1`.
 4. Now, let's label our work so we don't get confused. Place a **Sign** on the very top of the block. From **right to left**, label them `1`, `2`, `4`, and `8`. We go right-to-left because, just like in the number `12`, the least valuable digit (the `2`) is on the right. See the schematic, screenshot, or diagram for clarity if needed.
 5. Finally, let's wire it up. Go around to the back of your four blocks to the opposite side that you placed the lever. Place a piece or two of **Redstone Dust** on the ground directly behind each one. When you flip a lever, its block becomes powered, which sends a signal to the dust. These four parallel lines of dust are now your official **4-bit input bus**. A "bus" is just the fancy engineering term for a bundle of wires that carry a complete piece of information.
 6. Double-check that your build looks similar to the one in the figure above.
@@ -95,7 +95,7 @@ This input bus will serve as the starting point for our future circuits. In late
 
 ---
 
-Before we test our new input interface, I want to introduce you to the same input interface represented in CircuitVerse, a free online digital logic circuit simulator. Moving forward, every circuit we build will be introduced in theory with the CircuitVerse version first, and then we will build it in Minecraft. This is primarily due to being able to easily represent the circuit in a clear and concise way, something that isn't always possible with Minecraft screenshots. Everything you build is included in the [CircuitVerse project for this course](https://circuitverse.org/users/323134/projects/redstone-university-cafe6ad2-2c4f-41b6-8a91-51fd8fa24698)
+Before we test it, I want to show you the same inpuit interface built in CircuitVerse, a free online digital logic simulator. From here on, every circuit we build gets introduced in CircuitVerse first, then built in Minecraft. A circuit diagram stays clear and readable in a way that Minecraft screenshots often don't. Everything you build is included in the [CircuitVerse project for this course](https://circuitverse.org/users/323134/projects/redstone-university-cafe6ad2-2c4f-41b6-8a91-51fd8fa24698)
 
 
 
@@ -103,15 +103,13 @@ Before we test our new input interface, I want to introduce you to the same inpu
 
 <div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/01_input_circuitverse.png" alt="CircuitVerse Input Interface" width="512px"/><br/><em>Figure: The same 4-bit input interface, built in CircuitVerse. It is also set to `0110` (`6` in decimal).</em></div><br/>
 
-While it has a few stylistic differences, the concept is exactly the same as our Minecraft build. It's an input interface that allows for input of a 4-bit binary number.
-
-Don't worry, we will be building more interesting circuits very soon.
+It looks a little different, but it's the same device as our Minecraft build: four switches feeding a 4-bit binary number onto a bus.
 
 ---
 
 ### Lesson 1.3: Drills & Games – Strengthening Your Binary Intuition
 
-Let's get a feel for our new device. Binary feels weird at first, but it will become second nature with just a little practice.
+Let's get a feel for our new device. Binary is awkward at first, but it'll click after a few minutes of flipping levers.
 
 #### Drill 1: Binary to Decimal
 
@@ -131,7 +129,7 @@ Let's get a feel for our new device. Binary feels weird at first, but it will be
 
 #### The Binary "Game"
 
-While not the ideal version of a game, this is a great way to build speed. Pick a random number between `0` and `15` and see how quickly you can represent it on your input interface. This will burn the powers of two (`1`, `2`, `4`, `8`) into your memory.
+Pick a random number between `0` and `15` and see how quickly you can represent it on your input interface. This will burn the powers of two (`1`, `2`, `4`, `8`) into your memory.
 
 There's a built-in way to check your answer, too: once your levers are set, add up the place values of every lever that's ON. If the sum matches the number you picked, you got it right. For example, if you were aiming for `13` and your ON levers are `8`, `4`, and `1`, then $8 + 4 + 1 = 13$. Correct! If the sum comes out wrong, you'll know exactly which column to go fix. This self-check works both directions, so it doubles as extra binary-to-decimal practice.
 
@@ -156,13 +154,13 @@ There's a built-in way to check your answer, too: once your levers are set, add 
 
 #### Real-World Connection: CPU Registers
 
-Your **4-bit input interface** is a simplified version of how real computers get information from the world. In everyday life, devices like keyboards, mice, and sensors act as input interfaces, turning your actions (like typing or clicking) into binary signals the computer understands. Our Minecraft build uses four levers to input a 4-bit number (`0` to `15`), but imagine scaling that up. Modern computers often handle **64-bit data**, meaning their circuits can process 64 bits at once, enough to represent numbers bigger than `18` quintillion!
+Your **4-bit input interface** is a simplified version of how real computers get information from the world. Keyboards, mice, and sensors are all doing the same job your levers do: turning a physical action into binary signals. Our build handles 4 bits at a time. Modern computers typically handle **64-bit data**, meaning their circuits move 64 bits at once, enough to represent numbers north of `18` quintillion.
 
-Here’s how it connects: once an input device sends binary data, the computer stores it in **registers**, tiny, super-fast storage units inside the CPU. A “64-bit processor” has registers that hold 64 bits, letting it crunch huge numbers or instructions in a single step. Your 4-bit interface is just the beginning, it’s how we “talk” to the machine. Later, we’ll build a register and see how they use that input to make the computer think!
+Here’s how it connects: once an input device sends binary data, the computer stores it in **registers**, tiny, extremely fast storage units inside the CPU. A “64-bit processor” has registers that hold 64 bits, letting it crunch huge numbers or instructions in a single step. Later, we’ll build a register of our own and see how the computer uses stored input to actually think.
 
 #### Software Connection (LeetCode): Counting Bits
 
-How does a programmer "look at" the individual bits you just set with your levers? They use bitwise operations! This is a sneak peek of what we'll learn in the next modules, but it's too cool not to share.
+How does a programmer "look at" the individual bits you just set with your levers? They use bitwise operations. This is a sneak peek of what we'll learn in the next modules, but it's too cool not to share.
 
 A classic LeetCode problem is **"Number of 1 Bits"**: count how many `1`s are in a number's binary representation. Programmers solve this by checking each bit of the number one by one.
 
@@ -181,7 +179,7 @@ def countSetBits(n):
 print(countSetBits(13)) # Output: 3
 ```
 
-**Software Analogy:** In most programming languages, you can use bitwise operators to manipulate numbers at the binary level. For example, in Python, `n & 1` checks the lowest bit, and `n >>= 1` shifts all bits to the right. This is just like flipping levers and reading wires from your input interface!
+**Software Analogy:** In most programming languages, you can use bitwise operators to manipulate numbers at the binary level. For example, in Python, `n & 1` checks the lowest bit, and `n >>= 1` shifts all bits to the right. This is just like flipping levers and reading wires from your input interface.
 
 #### Key Terms
 -   **Binary**: A base-2 number system that uses only two symbols, `0` and `1`, to represent information. It is the fundamental language of all digital computers.
@@ -197,4 +195,4 @@ print(countSetBits(13)) # Output: 3
 
 You now have a working input device: four levers that can hold any number from `0` to `15` in the same representation your real computer uses, and you've seen how that physical idea connects to both hardware registers and software algorithms.
 
-What you don't have yet is anything that can react to those signals. That's Module 2: The Grammar of Circuits, where we build our first logic gates, the circuits that will process the inputs you've set here into meaningful outputs.
+What you don't have yet is anything on the other end. Right now the machine can hear us, it just can't think about anything we say. Fixing that is Module 2: The Grammar of Circuits, where we build our first logic gates, the circuits that turn the inputs you've set here into meaningful outputs.

@@ -19,11 +19,9 @@
 
 ### Module 3 Introduction
 
-You know the foundational logic gates, the basic "verbs" of our computer's language. But an engineer doesn't just build circuits that function; they build them so they can afford to build the next hundred.
+You know the foundational logic gates, the basic "verbs" of our computer's language. Making a circuit work is the easy part, though. Minecraft will happily let you build an AND gate the size of a barn. This is fine starting out, but an engineer builds each circuit so they can afford to build the next hundred.
 
-Welcome to the art of logic.
-
-In this module, we move from simple sentences to poetry. First, you'll learn the laws of Boolean algebra that allow us to simplify complex expressions, transforming a bulky, slow circuit into a small, fast one. Then, we'll expand our toolkit with the **comparison gates**, XOR and XNOR, and the **universal gates**, NAND and NOR.
+First up: the laws of Boolean algebra that let us simplify complex expressions, turning a bulky, slow circuit into a small, fast one. Then we'll expand our toolkit with the **comparison gates**, XOR and XNOR, and the **universal gates**, NAND and NOR.
 
 ---
 
@@ -31,13 +29,13 @@ In this module, we move from simple sentences to poetry. First, you'll learn the
 
 > **Key Takeaway:** Boolean laws are like mathematical shortcuts that let us simplify complex circuits, making our designs smaller, faster, and more efficient.
 
-Just like $2 + x = x + 2$ in normal algebra, Boolean algebra has laws that let us rearrange and simplify expressions. For us, **a simpler expression means a smaller, faster, and more reliable Redstone circuit.** This is a critical engineering skill.
+Just like $2 + x = x + 2$ in normal algebra, Boolean algebra has laws that let us rearrange and simplify expressions. For us, **a simpler expression means a smaller, faster, and more reliable Redstone circuit.**
 
 #### A Note on Notation
 
 You’ll often see logic written using symbols from regular math. For example, **AND** is sometimes written as multiplication ($A \cdot B$ or $AB$), **OR** as addition ($A + B$), and **NOT** as an overbar ($\overline{A}$).
 
-For this course, we will continue using the dual notation system. We lead with a text-based version for clarity, followed by the formal symbol after a colon, like this: $A \text{ AND } B$ : $A \land B$.
+For this course, we will keep using the dual notation system. We lead with a text-based version for clarity, followed by the formal symbol after a colon, like this: $A \text{ AND } B$ : $A \land B$.
 
 #### The Laws of Boolean Algebra
 
@@ -53,18 +51,18 @@ Here are the key laws we will be using in our course. Mastering them is the firs
 
 #### Lab 1: Proving a Circuit with De Morgan's Law
 
-Let's use De Morgan’s Law to prove that our composite AND gate from Module 2 is logically correct. This is a practical application of how theory can verify our hands-on work.
+Let's use De Morgan’s Law to prove that our composite AND gate from Module 2 is logically correct.
 
 1.  Our build consisted of two initial NOT gates on inputs $A$ and $B$, giving us the signals $\neg A$ and $\neg B$.
 2.  Their signals merged in an OR gate, resulting in the expression $\neg A \lor \neg B$.
 3.  A final NOT gate inverted that result. Therefore, the full expression for our circuit is $\neg(\neg A \lor \neg B)$.
 4.  According to De Morgan’s Law, the part in the parentheses, $\neg A \lor \neg B$, is identical to $\neg(A \land B)$.
 5.  Substituting that back in, our full expression becomes $\neg(\neg(A \land B))$.
-6.  The two NOTs ($\neg\neg$) cancel each other out, leaving $A \land B$. We've just proven our physical circuit is a perfect AND gate!
+6.  The two NOTs ($\neg\neg$) cancel each other out, leaving $A \land B$. We've just proven that our physical circuit is a genuine AND gate.
 
 #### Lab 2: Simplifying a Circuit with the Distributive Law
 
-The laws of logic don't just prove a circuit is correct; they make our circuits *more efficient*. This is a crucial engineering skill called **simplification**.
+The laws of logic do more than prove a circuit is correct. They can also make our circuits *more efficient*, through a crucial engineering skill called **simplification**.
 
 Consider a circuit that needs to turn on if ($A$ is ON and $B$ is ON) OR if ($A$ is ON and $B$ is OFF). The direct Boolean expression would be:
 $$ Y = (A \land B) \lor (A \land (\neg B)) $$
@@ -144,7 +142,7 @@ Like the AND gate, XOR is a composite gate we must build from our primitives.
 $$ Y = \neg(A \lor \neg(A \lor B)) \lor \neg(B \lor \neg(A \lor B)) $$
 
 > #### A Note on Our Design
-> It's important to understand that this is just one of many ways to build an XOR gate. In Redstone engineering, as in real-world circuit design, there is often no single "correct" answer. Different designs might be bigger but easier to understand, or smaller but more complex. The design above is excellent for visualizing the underlying logic while learning.
+> This is just one of many ways to build an XOR gate. In Redstone engineering, as in real-world circuit design, there is often no single "correct" answer. Different designs might be bigger but easier to understand, or smaller but more complex. The design above is excellent for visualizing the underlying logic while learning.
 >
 > The complex Boolean expression above is a direct translation of our circuit diagram. It cleverly uses a shared NOR gate ($\text{NOT}(A \text{ OR } B)$ : $\neg(A \lor B)$) to feed the main logic paths. While this expression looks different from the textbook definition ($A \oplus B = (A \land \neg B) \lor (\neg A \land B)$), it is functionally identical.
 >
@@ -169,7 +167,7 @@ $$ Y = \neg(A \lor \neg(A \lor B)) \lor \neg(B \lor \neg(A \lor B)) $$
 
 #### Real-World & Software Connection
 
-XOR's "difference detector" property is essential. It's the core component of a binary **adder**, which we'll build soon. It's also the logic behind a two-switch light system, where flipping either switch toggles the light's state.
+XOR's "difference detector" property is essential. It's the core component of a binary **adder**, which we'll build soon. It's also the logic behind a hallway light with a switch at each end, where flipping either switch toggles the light's state.
 
 #### Practice Problem 3.2.1: The Two-Switch Light System
 
@@ -194,7 +192,7 @@ Design a Minecraft circuit for a two-switch light system where flipping either s
 
 ### Lesson 3.3: Software Superpowers – The XOR Trick for Programmers
 
-> **Key Takeaway:** XOR is a “secret weapon” in programming. Its reversible, self-canceling property allows for very efficient solutions to common algorithmic problems.
+> **Key Takeaway:** XOR's reversible, self-canceling property lets programmers solve some common algorithmic problems in a single, efficient pass.
 
 The XOR gate has two properties that programmers exploit constantly, both straight from the laws of Boolean algebra:
 1.  Any number XORed with itself is zero: $x \oplus x = 0$.
@@ -206,7 +204,7 @@ This is where our hardware knowledge directly translates into writing efficient 
 
 > *   **The Challenge:** You are given a list of numbers where every number appears exactly twice, except for one number that appears only once. Find that unique number.
 > *   **Example List:** `[4, 1, 2, 1, 2]`
-> *   **The XOR Solution:** If you XOR all the numbers in the list together, every number that appears twice will cancel itself out and become zero. The only number left at the end will be the unique one! $4 \oplus (1 \oplus 1) \oplus (2 \oplus 2)$ becomes $4 \oplus 0 \oplus 0$, which is $4$.
+> *   **The XOR Solution:** If you XOR all the numbers in the list together, every number that appears twice will cancel itself out and become zero. The only number left at the end is the unique one. $4 \oplus (1 \oplus 1) \oplus (2 \oplus 2)$ becomes $4 \oplus 0 \oplus 0$, which is $4$.
 
 ```python
 def singleNumber(nums):
@@ -269,7 +267,7 @@ def missingNumber(nums):
 
 To round out our logical toolkit, we will now build the three "negated" composite gates: **NOR** (Not-OR), **NAND** (Not-AND), and **XNOR** (Not-XOR). Each one performs a familiar operation and then immediately inverts the result.
 
-While they may seem like simple variations, two of these gates have a property that is a cornerstone of modern electronics.
+On paper that sounds like an afterthought, a NOT stapled onto a gate we already own. But two of these gates have a property that's a cornerstone of modern electronics.
 
 #### The Power of Universal Gates (Functional Completeness)
 
@@ -282,7 +280,7 @@ Engineers then use the patterns from the table below to wire those identical sim
 | **NAND** | $A \text{ NAND } A$ | $(A \text{ NAND } B) \text{ NAND } (A \text{ NAND } B)$ | $(A \text{ NAND } A) \text{ NAND } (B \text{ NAND } B)$ |
 | **NOR** | $A \text{ NOR } A$ | $(A \text{ NOR } A) \text{ NOR } (B \text{ NOR } B)$ | $(A \text{ NOR } B) \text{ NOR } (A \text{ NOR } B)$ |
 
-As we build the NAND and NOR gates, keep this table in mind. You're not just building new gates; you're building universal tools that could, by themselves, construct an entire computer.
+Each of these gates could, by itself, construct an entire computer, so keep this table in mind as we build them.
 
 ---
 
@@ -324,7 +322,7 @@ As we build the NAND and NOR gates, keep this table in mind. You're not just bui
 
 ##### Real-World Connection
 
-NOR gates are fundamental in electronics. Because they are a universal gate, entire processors could be (and sometimes are) built using only NOR logic. They are also used in circuits that require a "neither A nor B" condition, such as in safety systems where an action is only permitted if multiple warning sensors are all silent.
+NOR gates are fundamental in electronics. Because they're a universal gate, entire processors could be (and sometimes are) built using only NOR logic. They're also used in circuits that require a "neither A nor B" condition, such as in safety systems where an action is only permitted if multiple warning sensors are all silent.
 
 ---
 
@@ -352,7 +350,7 @@ NOR gates are fundamental in electronics. Because they are a universal gate, ent
 | `1` | `1` | `0` |
 -   **The Boolean Expression:** Our build implements the expression $(\text{NOT } A) \text{ OR } (\text{NOT } B)$ : $\neg A \lor \neg B$, which De Morgan's Law proves is equivalent to $A \text{ NAND } B$.
 
-> **A Note on De Morgan's Law in Action**: This is one of the most powerful tricks in digital logic. We know that NAND is $\neg(A \land B)$. We also know from De Morgan's Law that $\neg(A \land B)$ is perfectly equivalent to $\neg A \lor \neg B$. Our composite AND gate was built as $\neg(\neg A \lor \neg B)$. To create a NAND gate, we simply remove the final NOT gate (the last torch), which leaves us with the physical circuit for $\neg A \lor \neg B$. This is a perfect physical proof of a fundamental logic law!
+> **A Note on De Morgan's Law in Action**: This is one of the most powerful tricks in digital logic. We know that NAND is $\neg(A \land B)$. We also know from De Morgan's Law that $\neg(A \land B)$ is equivalent to $\neg A \lor \neg B$. Our composite AND gate was built as $\neg(\neg A \lor \neg B)$. To create a NAND gate, we simply remove the final NOT gate (the last torch), which leaves us with the physical circuit for $\neg A \lor \neg B$. The circuit sitting in front of you is a physical proof of a fundamental logic law.
 
 ##### Lab & Experiment
 
@@ -360,14 +358,14 @@ NOR gates are fundamental in electronics. Because they are a universal gate, ent
 
 1.  **Build the NAND gate:**
     1.  Start by building our composite AND gate from Lesson 2.3.
-    2.  To get the NAND output, you do not need the final inverting torch. The signal on the Redstone Dust *before* it powers that final torch is your NAND output.
+    2.  To get the NAND output, you don't need the final inverting torch. The signal on the Redstone Dust *before* it powers that final torch is your NAND output.
     3.  Connect this dust line directly to the output lamp for $Y$. The lamp will now behave exactly like a NAND gate.
 2.  **Test the circuit:** Cycle through all four combinations from the truth table.
 3.  **Verification:** The output lamp is OFF (`0`) only when both inputs are ON (`1`).
 
 ##### Real-World Connection
 
-NAND gates are arguably the most important gate in modern electronics. Because they are a universal gate, they form the basis for most integrated circuits, including the flash memory used in SSDs and USB drives (which is often called "NAND flash memory").
+NAND gates are arguably the most important gate in modern electronics. Because they're a universal gate, they form the basis for most integrated circuits, including the flash memory used in SSDs and USB drives (which is often called "NAND flash memory").
 
 ---
 
@@ -400,7 +398,7 @@ $$ Y = \neg( \neg(A \lor \neg(A \lor B)) \lor \neg(B \lor \neg(A \lor B)) ) $$
 
 <div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/03_XNOR-gate-composite_minecraft.png" alt="XNOR Gate (Composite) in Minecraft" width="512px"/><br/><em>Figure: An XNOR gate in Minecraft, constructed by adding a NOT gate to the output of a composite XOR gate. The output lamp lights up only when both input levers are set to the same state.</em></div><br/>
 
-> **A Note on the Build:** The simplest way to build an XNOR gate is to take the output of an XOR gate and invert it with a NOT gate. Since we have already designed a complex XOR gate from our primitives, we can simply add one more Redstone Torch to its output to achieve the XNOR function.
+> **A Note on the Build:** The simplest way to build an XNOR gate is to take the output of an XOR gate and invert it with a NOT gate. Since we've already designed a complex XOR gate from our primitives, we can simply add one more Redstone Torch to its output to achieve the XNOR function.
 
 1.  **Build the XNOR gate:**
     1.  First, build the complete **composite XOR gate** exactly as you did in Lesson 3.2.
@@ -539,7 +537,7 @@ Where before you could construct a circuit, now you can use the laws of Boolean 
 
 You also now have the complete set of seven fundamental logic gates, the same set used to design every digital device in existence.
 
-With this full toolkit, you are ready for our first major engineering challenge. In the next module, we will apply everything you've learned to build a complete system: a translator that takes a 4-bit binary number from our input and displays it as a human-readable digit on a 7-segment display.
+With this full toolkit, you're ready for our first major engineering challenge. In the next module, we'll apply everything you've learned to build a complete system: a translator that takes a 4-bit binary number from our input and displays it as a human-readable digit on a 7-segment display.
 
 #### Logic Gates Summary Table
 
