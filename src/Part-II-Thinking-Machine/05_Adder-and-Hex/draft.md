@@ -23,7 +23,7 @@
 
 ### Module 5 Introduction
 
-Part I gave us an input system and an output system. We can now speak to the machine and the machine can answer back. But so far our computer is still passive. It can only *translate*.
+Part I gave us an input system and an output system. We can now speak to the machine and the machine can answer back. But so far our computer is still passive. Hand it a five and it hands you a five right back, just written in a different alphabet. It can only *translate*.
 
 In this module, that changes.
 
@@ -208,7 +208,7 @@ If a result is off by exactly `2`, `4`, or `8`, the most likely problem is a bro
 
 > **Key Takeaway:** A bug can exist at the boundary between two correct subsystems. Integration testing is where you discover whether your design assumptions were actually true.
 
-Let’s connect our new adder to the display system from Module 4.
+Let’s connect our new adder to the display system from Module 4. On paper, this is a victory lap: the adder computes, the display displays, and all that's left is four wires between two circuits we've already tested to death.
 
 #### The test
 
@@ -253,7 +253,7 @@ Nothing is wrong with the display.
 
 The problem is that our display decoder from Module 4 is a **BCD decoder**. It only knows how to recognize the ten patterns for decimal digits `0` through `9`. It was never taught what `1010`, `1011`, `1100`, `1101`, `1110`, or `1111` mean.
 
-We asked a correct subsystem to interpret a value that lies outside its vocabulary.
+We asked a correct subsystem to interpret a value that lies outside its vocabulary. The adder and the decoder just ran the redstone version of Abbott and Costello's "Who's on First?" routine: neither one said a single wrong thing, and the answer still never got through.
 
 Two lessons fall out of this failure:
 
@@ -327,7 +327,7 @@ $$
 \underbrace{1100}_{\text{C}}\;\;\underbrace{0011}_{\text{3}} \quad\rightarrow\quad \text{C3}
 $$
 
-No long division, no arithmetic. And it scales: an 8-bit value is two hex digits, a 16-bit value is four, and a 64-bit memory address is sixteen. The reading trick you just learned on our little display works on every machine you will ever touch.
+No long division, no arithmetic. You already read numbers this way, by the way: nobody recites a phone number as ten raw digits. You say it in chunks, because chunks are what a human memory can actually hold onto, and the digits inside each chunk come along for free. Hex is that same chunking made official, with every group of four bits getting a single name. And it scales: an 8-bit value is two hex digits, a 16-bit value is four, and a 64-bit memory address is sixteen. The reading trick you just learned on our little display works on every machine you will ever touch.
 
 One convention before we move on: in most programming languages, and everywhere in this course, hexadecimal wears a `0x` prefix, so `0xC` means “`C`, the number” rather than “`C`, the letter.” You will see that prefix for the rest of the course.
 
@@ -356,7 +356,7 @@ That's why hexadecimal is everywhere in low-level programming, debugging, and co
 
 > **Key Takeaway:** Because our display was built as two clean stages, we can upgrade it surgically instead of rebuilding it from scratch.
 
-We are about to benefit directly from the modular architecture we chose in Module 4.
+Module 4's insistence on keeping the decoder and the ROM separate is about to pay off.
 
 ![The upgraded hexadecimal display system](./images/hex-display_minecraft.png)
 *Figure: Where this lab ends: the display system rebuilt for hex, showing `C`. Everything in the deeper shades is what you are about to add; everything else is your Module 4 build, untouched.*
@@ -561,4 +561,3 @@ You built the first true arithmetic engine in the course. More importantly, you 
 You also saw the reward of modular design. Because the decoder and ROM were cleanly separated, expanding the system was an upgrade, not a restart.
 
 Our machine can now add, and it can display every possible 4-bit result, `0x0` through `0xF`. In the next module, we're going to push that arithmetic system even harder, right up against the limits of a 4-bit machine, and discover what happens when the answer no longer fits.
-
