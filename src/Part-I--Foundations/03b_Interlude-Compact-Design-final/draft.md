@@ -6,13 +6,13 @@
 
 With all seven fundamental logic gates built, you have the complete theoretical foundation of our computer.
 
-Before we begin our next major project in Module 4, we have this special, optional section. Think of it as an engineering deep dive. The goal of **Module 2** and **Module 3** was to build for **clarity**, making our gates large so the logic was easy to trace. This Interlude introduces the art of building for **efficiency**.
+Before we begin our next major project in Module 4, a short optional detour: making circuits smaller. Everything in **Module 2** and **Module 3** was built for **clarity**, gates spread out so you could trace every signal by eye. This Interlude is about the opposite skill: building for **efficiency**.
 
-We will analyze some common, space-saving designs used by the Redstone community. Understanding them is not required for the rest of the course, but it will let you make your own builds smaller and faster.
+We're going to pull apart a few space-saving designs the Redstone community has settled on over the years. None of it is required for the rest of the course, but it will make your own builds smaller and faster.
 
 ### The Engineering Trade-Off: Size, Speed, and Readability
 
-Every engineering decision is a compromise. When you compact a circuit, you are usually trading **readability** for **efficiency**.
+Every engineering decision is a compromise. Compacting a circuit is like taking a local's shortcut instead of the turn-by-turn directions: both get you there, but the shortcut only makes sense if you already know the neighborhood. You're trading **readability** for **efficiency**.
 
 | Factor | Verbose (Educational) Builds | Compact (Practical) Builds |
 | :--- | :--- | :--- |
@@ -29,7 +29,7 @@ For learning and debugging, verbose is best. For final builds where space and re
 
 ### Case Studies in Compact Design
 
-Let's analyze a few classic compact designs. For each one, we'll compare the **Verbose Teaching Version** you already built with a **Compact Practical Version** and break down how it works.
+Let's look at a few classics. For each one, we compare the **Verbose Teaching Version** you already built with a **Compact Practical Version** and break down how it works.
 
 #### Case Study 1: The AND Gate
 
@@ -38,7 +38,7 @@ First, recall our verbose AND gate. It's a perfect physical representation of De
 ![Verbose AND Gate in Minecraft](./images/AND-gate-composite_minecraft.png)
 *Figure: Our easy-to-read, but large, educational AND gate.*
 
-Now, observe a classic compact AND gate. It performs the exact same function with a much smaller footprint.
+Now look at a classic compact AND gate. It performs the exact same function with a much smaller footprint.
 
 ![Compact AND Gate in Minecraft](./images/AND-gate_minecraft.png)
 *Figure: A classic, space-efficient compact AND gate.*
@@ -69,16 +69,16 @@ This design uses torch burnout and block power states to create the two conditio
 
 ---
 
-### Conclusion: Your Journey Into Optimization
+### Conclusion: Building for the Machine, Not the Reader
 
-You now see the difference between a circuit designed for teaching and one designed for a practical machine. Compact designs aren't magic; they are just clever physical implementations of the same Boolean logic you have already mastered.
+You've now seen both kinds of circuit: one designed for a person to read and one designed for a machine to run. A compact design is the same Boolean logic you've already mastered, just folded into a tighter physical layout.
 
-From **Module 4** onward, we will follow the **Rule of Abstraction**:
+From **Module 4** onward, we follow the **Rule of Abstraction**:
 
 > A logic gate is defined by its **truth table** (its inputs and outputs), not by its internal layout. You are now free to use the verbose educational builds, the compact practical builds, or any other design that functions correctly.
 
-This freedom is a major step in your journey from student to engineer.
+Picking an implementation based on the constraints in front of you is real engineering, and you just did it for the first time.
 
 #### Explore More: The Gate Museum
 
-In the world download provided for the course, you will find a section labeled "Gate Museum" which showcases these and many other community-tested compact designs for each logic gate. I encourage you to explore, build, and test them to expand your engineering toolkit.
+The world download for the course includes a section labeled "Gate Museum" showcasing these and many other community-tested compact designs for each logic gate. It's worth building a few of them and testing them against the truth tables yourself.
