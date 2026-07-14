@@ -632,4 +632,4 @@ You engineered a complete system in this module, and by breaking it into distinc
 
 That completes **Part I** of this course. You have a complete input and output system, and you're fluent in the language of logic.
 
-In **Part II: The Thinking Machine**, we take our first steps into building the brain of our computer, starting in **Module 5** with a 4-bit adder and our first real calculation. Keep the display handy. The moment we ask it to show an answer we didn't choose ourselves, a new bug surfaces, and chasing it down leads to our first major system upgrade.
+In **Part II: The Thinking Machine**, we take our first steps into building the brain of our computer, starting in **Module 5** with a 4-bit adder and our first real calculation. Keep the display handy. The moment we ask it to show an answer we didn't choose ourselves, we run into the first real limit of what we've built, and sorting it out drives our first major system upgrade.
