@@ -26,7 +26,7 @@ Part I gave us an input system and an output system. We can now speak to the mac
 
 In this module, that changes.
 
-We're going to build the mathematical heart of the processor: the **adder**. This is the first circuit in the course that feels unmistakably like computation. It takes two numbers, transforms them, and produces a new one.
+We're going to build the part of the processor that does arithmetic: the **adder**. This is the first circuit in the course that feels unmistakably like computation. It takes two numbers, transforms them, and produces a new one.
 
 This module also carries a lesson that only turns up once you connect things: two subsystems can each be correct on their own and still not agree at the seam where they meet.
 

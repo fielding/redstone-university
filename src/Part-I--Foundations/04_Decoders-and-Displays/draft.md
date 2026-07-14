@@ -13,7 +13,7 @@
     -   Lesson 4.3: The Decoder Lab: A Simple "Brute-Force" Build
     -   Lesson 4.4: The Decoder Lab, Part 2: An Elegant, Compact Solution
     -   Lesson 4.5: The ROM: Programming the "Diode Matrix"
-    -   Lesson 4.6: The Grand Payoff: System Integration
+    -   Lesson 4.6: System Integration: Wiring the Three Stages Together
 -   **Build**: A working two-stage translator: a 4-to-10 BCD decoder and a 7-segment pattern ROM, forming a complete digital display system.
 
 ---
@@ -91,7 +91,7 @@ Instead, let’s do what engineers do with every problem this hairy and break it
 1.  **Decoder**: This first stage will act as an "identifier". Its only job is to look at the 4-bit binary input and determine *which* number (`` `0` ``-`` `9` ``) it represents. It will then activate a single, unique output line corresponding to that number. Because it recognizes decimal digits stored as 4-bit binary patterns, this kind of circuit is called a **BCD (Binary-Coded Decimal) decoder**. Remember that name. It will matter in Part II.
 2.  **ROM**: This second stage will act as the "mapper". It receives the simple signal from the decoder (e.g., "the number is `` `3` ``!") and looks up the correct combination of the 7 segments in permanently stored wiring. A quick word on naming: a stage like this sometimes gets loosely called an *encoder*, but strictly speaking an encoder is the inverse of a decoder. We'll name this stage for what we actually build: a **ROM**, a Read-Only Memory whose contents *are* the mapping.
 
-This modular, two-stage approach is the heart of good engineering. It's easier to build, easier to test, and far easier to fix if something goes wrong.
+This modular, two-stage approach is easier to build, easier to test, and far easier to fix if something goes wrong.
 
 **Input contract:** this decoder defines an output only for the valid BCD patterns `0000` through `1001` (0 through 9). Feed it `1010` through `1111` and no line is selected, so the display just stays blank. That isn't a bug, it's the decoder's stated range, and we come back to it on purpose in Part II, once our arithmetic can produce all sixteen 4-bit patterns.
 

@@ -5,7 +5,7 @@
 -   **Learning Goals:**
     -   Understand the role of Minecraft's primitive logic gates (NOT and OR).
     -   Master the truth table, the chart that pins down exactly what a gate does for every input.
-    -   Build a composite gate (AND) by combining primitives, a core skill in digital engineering.
+    -   Build a composite gate (AND) by combining primitives.
 -   **Lesson Overview:**
     -   Lesson 2.1: The Rules of Thought
     -   Lesson 2.2: The Primitives – Building NOT and OR Gates
@@ -18,9 +18,7 @@
 
 In our last module, we built an interface to speak to our computer in its native language: binary. But sending signals is only half the story. To make our machine *think*, it has to understand what those signals mean. We need to give it a grammar.
 
-This module brings in one of the foundations the whole field stands on: **Boolean Algebra**, the math of True and False. Then we bring that theory to life by building the three most fundamental "verbs" of logic: the **NOT**, **OR**, and **AND** gates.
-
-By the end of this module you will have all three gates built and working in Minecraft, and a solid sense of how simple on/off signals combine into real decisions.
+This module brings in one of the foundations the whole field stands on: **Boolean Algebra**, the math of True and False. Then we bring that theory to life by building the three "verbs" of logic: the **NOT**, **OR**, and **AND** gates.
 
 ---
 
