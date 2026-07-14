@@ -131,6 +131,7 @@ Like the AND gate, XOR is a composite gate we must build from our primitives.
     -   **Programming Operator:** `A ^ B`
 -   **The Rule:** The output is True if $A$ is True and $B$ is False, or if $A$ is False and $B$ is True.
 -   **Truth Table: XOR Gate**
+
 | $A$ | $B$ | $A \text{ XOR } B$ |
 |:---:|:---:|:---------:|
 | `0` | `0` | `0` |
@@ -299,6 +300,7 @@ In principle, either one alone could express all the logic in a computer, so kee
     -   **Programming Operator:** *(Not commonly available as a single operator)*
 -   **The Rule:** The output is True only when both inputs are False.
 -   **Truth Table: NOR Gate**
+
 | $A$ | $B$ | $A \text{ NOR } B$ |
 |:---:|:---:|:---------:|
 | `0` | `0` | `1` |
@@ -341,6 +343,7 @@ NOR gates turn up all over electronics, and you already know why they can carry 
     -   **Programming Operator:** *(Not commonly available as a single operator)*
 -   **The Rule:** The output is True unless both inputs are True.
 -   **Truth Table: NAND Gate**
+
 | $A$ | $B$ | $A \text{ NAND } B$ |
 |:---:|:---:|:----------:|
 | `0` | `0` | `1` |
@@ -384,6 +387,7 @@ NAND is arguably the most important gate in modern electronics. It has the same 
     -   **Programming Operator:** *(Not commonly available as a single operator)*
 -   **The Rule:** The output is True when inputs are the same (both `0` or both `1`).
 -   **Truth Table: XNOR Gate**
+
 | $A$ | $B$ | $A \text{ XNOR } B$ |
 |:---:|:---:|:----------:|
 | `0` | `0` | `1` |
