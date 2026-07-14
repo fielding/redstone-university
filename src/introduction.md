@@ -77,12 +77,12 @@ This course is for the curious. It's for:
 This course is designed to be followed along in **Minecraft**. However, Minecraft is not strictly required!
 
 #### Supported Editions & Versions
-This course is authored on **Minecraft Bedrock Edition** and designed so that all of **Part I** works on **both Bedrock and Java** as written (we use only dust, torches, repeaters, lamps, and solid blocks).
+This course was originally built in **Minecraft Bedrock Edition**, then ported to **Java Edition**. Every build through **Module 5** has been tested in both editions and works as written, using only dust, torches, repeaters, lamps, and solid blocks. Later modules will be tested in both editions as they're completed.
 
 If any module introduces edition‑specific behavior (e.g., pistons, observers, sub‑tick timing), it will be flagged in a **Bedrock/Java Notes** box with a tested variant.
 
 **Versions tested:**
-Bedrock: **[1.21.101]** • Java: **[pending]**
+Bedrock Edition: **1.21.101** • Java Edition: **1.21.6** (Paper server)
 
 World downloads are provided for both Java and Bedrock. You can use this to check your work, explore the final product, or use the pre-built components as "black boxes" if you want to focus more on the high-level concepts.
 
