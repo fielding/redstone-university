@@ -1,6 +1,6 @@
 ## Part IV: Post-Graduate Studies – Advanced Engineering
 
-Congratulations, graduate of Redstone University! You have successfully completed the core curriculum. You have designed and built a fully operational, programmable 4-bit computer from scratch. You understand its number system, its logic, its processor, its memory, and the control unit that brings it all to life. This is a monumental achievement.
+You have completed the core curriculum. You designed and built a fully operational, programmable 4-bit computer from scratch, and you understand its number system, its logic, its processor, its memory, and the control unit that brings it all to life.
 
 The main course is over, but for those who are hungry for a greater challenge, the university offers a post-graduate program.
 
@@ -12,6 +12,6 @@ This special section begins with a single, challenging module that will test eve
 
 -   **In Module 13 (The "Real World" Display),** we will finally solve the problem we encountered back in **Module 5**: how to display a number like `` `13` `` using two separate decimal digits. We chose the elegant programmer's solution of Hexadecimal, but now we will build the complex engineer's solution used in real-world calculators and digital clocks: the Double Dabble algorithm.
 
-This final module is not for the faint of heart. It is a true capstone project that will result in the most "human-friendly" version of our computer. It's the perfect challenge for those who looked at their completed computer and asked, "What's next?"
+This final module is a capstone project that results in the most "human-friendly" version of our computer. It's for anyone who looked at their completed computer and asked, "What's next?"
 
 Welcome to advanced studies.
