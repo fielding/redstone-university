@@ -26,7 +26,7 @@ What sets it apart? You're retracing the route I actually took, so alongside the
 
 ### How the Course is Structured
 
-This course is organized as a complete curriculum, taking you from zero knowledge to a fully functional, programmable 4-bit computer. It is divided into Parts (major phases), Modules (specific projects), and Lessons (step-by-step instructions).
+This course is organized as a cumulative, project-based course, taking you from zero knowledge to a fully functional, programmable 4-bit computer. It is divided into Parts (major phases), Modules (specific projects), and Lessons (step-by-step instructions).
 
 Along the way you can expect:
 -   **Personal motivation and narrative:** Each module is introduced with a story or challenge that mirrors my own learning process.
