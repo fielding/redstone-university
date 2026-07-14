@@ -5,18 +5,18 @@
 -   **Learning Goals:**
     -   Understand how binary addition produces both a **sum** bit and a **carry** bit.
     -   Build a reusable 1-bit **full adder** and chain four of them into a 4-bit ripple-carry adder.
-    -   Diagnose your first system-level integration bug.
+    -   Diagnose a fault that only appears once two individually correct subsystems are connected.
     -   Learn why **hexadecimal** is a natural shorthand for 4-bit values.
     -   Upgrade the decoder and ROM from Module 4 without rebuilding the whole display from scratch.
 -   **Lesson Overview:**
     -   Lesson 5.1: The theory of binary addition
     -   Lesson 5.2: The lab – Building the 4-bit ripple-carry adder
-    -   Lesson 5.3: The integration test & the first bug
+    -   Lesson 5.3: The integration test
     -   Lesson 5.4: The programmer's solution – Speaking hexadecimal
     -   Lesson 5.5: The lab – The hexadecimal upgrade
     -   Lesson 5.6: The payoff
 -   **Build:** A working 4-bit ripple-carry adder connected to a hexadecimal display.
--   **Final Test:** The calculation `8 + 4`, which originally broke our display, will now appear correctly as `C`.
+-   **Final Test:** The calculation `8 + 4` produces `1100`, and the upgraded display shows it correctly as `C`.
 
 ---
 
@@ -28,7 +28,7 @@ In this module, that changes.
 
 We're going to build the mathematical heart of the processor: the **adder**. This is the first circuit in the course that feels unmistakably like computation. It takes two numbers, transforms them, and produces a new one.
 
-But this module is also our first taste of what real engineering feels like. You can build two perfect subsystems, connect them together, and still discover a bug. Keep that in the back of your mind as you build.
+This module also carries a lesson that only turns up once you connect things: two subsystems can each be correct on their own and still not agree at the seam where they meet.
 
 Let’s begin by learning the grammar of binary arithmetic.
 
@@ -198,9 +198,9 @@ If a result is off by exactly `2`, `4`, or `8`, the most likely problem is a bro
 
 ---
 
-### Lesson 5.3: The integration test & the first bug
+### Lesson 5.3: The Integration Test
 
-> **Key Takeaway:** A bug can exist at the boundary between two correct subsystems. Integration testing is where you discover whether your design assumptions were actually true.
+> **Key Takeaway:** Two subsystems that each pass their own tests can still fail once connected, if one produces values the other never agreed to accept. Integration testing is where that shows up.
 
 Let’s connect our new adder to the display system from Module 4. On paper, this is a victory lap: the adder computes, the display displays, and all that's left is four wires between two circuits we've already tested to death.
 
@@ -236,7 +236,7 @@ And the display goes blank.
 
 #### The diagnosis
 
-This is our first real system bug, and it's a great one.
+This one is worth slowing down on, because nothing here is actually broken.
 
 Nothing is wrong with the adder.
 Nothing is wrong with the display.
@@ -247,7 +247,7 @@ We asked a correct subsystem to interpret a value that lies outside its vocabula
 
 Two lessons fall out of this failure:
 
-1.  **Integration reveals truths that isolated testing can't.** Every test we ran on the adder passed. Every test we ran on the display passed. The bug lived in the space between them, where no test was looking.
+1.  **Integration reveals truths that isolated testing can't.** Every test we ran on the adder passed. Every test we ran on the display passed. The mismatch lived in the space between them, where no test was looking.
 2.  **Hardware is only as capable as the assumptions built into it.** The decoder isn't broken. It was built for a world where every answer fits in one decimal digit, and our adder just left that world.
 
 There's a precise name for what broke: the **interface contract**. Each subsystem keeps its own promise, and the promises don't line up.
@@ -256,7 +256,7 @@ There's a precise name for what broke: the **interface contract**. Each subsyste
 | :--- | :--- |
 | Adder `Sum` bus | may output any pattern from `0000` to `1111` |
 | BCD decoder | defines behavior only for `0000` to `1001` |
-| The gap | six legal patterns, `1010` to `1111`, that nobody owns |
+| The gap | six patterns (`1010`–`1111`) the adder can output but the BCD decoder never defined |
 
 So the fix has to start somewhere unusual: not in the circuit, but in the way we write numbers down.
 
