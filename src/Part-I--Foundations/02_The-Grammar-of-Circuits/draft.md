@@ -5,7 +5,7 @@
 -   **Narrative Beat:** We have a language (binary), but no words. In this module, we'll learn the three fundamental "verbs" of logic, **NOT**, **OR**, and **AND**, that will allow our machine to form its first logical thoughts.
 -   **Learning Goals:**
     -   Understand the role of Minecraft's primitive logic gates (NOT and OR).
-    -   Master the concept of a truth table as the ultimate "source of truth" for a gate's function.
+    -   Master the truth table, the chart that pins down exactly what a gate does for every input.
     -   Build a composite gate (AND) by combining primitives, a core skill in digital engineering.
 -   **Lesson Overview:**
     -   Lesson 2.1: The Rules of Thought
@@ -19,7 +19,7 @@
 
 In our last module, we built an interface to speak to our computer in its native language: binary. But sending signals is only half the story. To make our machine *think*, it has to understand what those signals mean. We need to give it a grammar.
 
-This module is our first real look at the theory that powers every digital device ever made: **Boolean Algebra**, the mathematics of True and False. Then we bring that theory to life by building the three most fundamental "verbs" of logic: the **NOT**, **OR**, and **AND** gates.
+This module brings in one of the foundations the whole field stands on: **Boolean Algebra**, the math of True and False. Then we bring that theory to life by building the three most fundamental "verbs" of logic: the **NOT**, **OR**, and **AND** gates.
 
 By the end of this module you will have all three gates built and working in Minecraft, and a solid sense of how simple on/off signals combine into real decisions.
 
@@ -48,7 +48,7 @@ Every complex machine is built from simple, fundamental parts. In digital logic,
 1.  **NOT:** A Redstone Torch naturally inverts a signal. This is our primitive NOT gate.
 2.  **OR:** Redstone Dust naturally merges signals. If any line powering a central wire is ON, the whole wire becomes ON. This is our primitive OR gate.
 
-From these two building blocks, **NOT** and **OR**, we will build every other logic gate in our computer. Real-world electronics usually pick NAND or NOR as their universal primitive for manufacturing efficiency, but we'll stick with NOT and OR because they're intuitive and map directly onto Redstone.
+From these two building blocks, **NOT** and **OR**, we build every other logic gate in the computer. You may have heard you can do the whole job with just NAND, or just NOR, and it's true: either one alone can express any logic there is. Real chips don't chase that kind of purity, though, they pull from whole libraries of gate types, each tuned for speed, area, and power. We're working in Redstone, where a torch inverts and dust merges, so NOT and OR are the primitives that fall out for free.
 
 Now, let's build them.
 
@@ -69,7 +69,7 @@ Each gate below follows the same format:
 -   **Formal Definition:** The high-level concept and official terminology (e.g., "Conjunction").
 -   **Symbols:** Common ways the operator is written in logical notation and programming languages.
 -   **The Rule:** A plain-English sentence describing what the gate does.
--   **Truth Table:** A complete chart defining all possible input/output combinations. This is the ultimate "source of truth."
+-   **Truth Table:** A complete chart of every input combination and its output, which is the whole story of what the gate does.
 -   **Primitive Boolean Expression:** The specific algebraic expression that represents our composite build using only **NOT** and **OR**.
 
 **Practical Application:**
@@ -118,7 +118,7 @@ Each gate below follows the same format:
 
 ##### Real-World & Software Connection
 
-NOT logic is everywhere. It's used to create the oscillating signal in a computer's clock (its "heartbeat") and is crucial for representing negative numbers. In programming, the `not` keyword (or `!`) inverts a condition, just like our torch: `if not is_ready: ...`.
+NOT turns up anywhere a signal needs flipping, from the ring oscillators that generate a computer's clock to arithmetic itself: to negate a number in two's complement, you invert every bit and add 1, which is exactly the operation we build in Module 6. In code it's the humble `!`, flipping a condition the same way the torch flips a signal: `if not is_ready: ...`.
 
 ---
 
@@ -161,7 +161,7 @@ NOT logic is everywhere. It's used to create the oscillating signal in a compute
     >
     > In our OR gate, if we merge the dust lines directly, a signal from input $A$ could travel backwards up the other wire and power input $B$'s lamp, even if $B$'s lever is off. This is called "back-powering."
     >
-    > The **Redstone Repeater** is a perfect, purpose-built diode in Minecraft. Notice the small arrow on top of it; it will only allow a signal to pass in that direction. By placing a repeater on each input line, the signal can flow *out* towards the final lamp, but can't flow *backwards* to interfere with the other input.
+    > The **Redstone Repeater** does exactly this job in Minecraft. Notice the small arrow on top of it; it will only allow a signal to pass in that direction. By placing a repeater on each input line, the signal can flow *out* towards the final lamp, but can't flow *backwards* to interfere with the other input.
 
 
 2.  **Test the circuit:** Verify all four combinations from the truth table (`00`, `01`, `10`, `11`) and confirm the output lamp behaves as expected.
@@ -246,7 +246,7 @@ To connect the abstract concept of a gate to our physical build, we use a consis
 
 #### Real-World & Software Connection
 
-AND logic is essential for safety and precision. A missile might require `TurnKey1` is true AND `PressButton` is true to launch. In programming, the `&&` operator checks that multiple conditions are met before executing a critical piece of code.
+AND is the gate for safety and precision, the logic of "both, or nothing." An industrial press might run only when `GuardClosed` is true **AND** `StartButtonPressed` is true, so it can't come down on someone's hand. In code, `&&` does the same job: every condition has to hold before the next block runs.
 
 #### Practice Problem 2.3.1: Logic Gate Design Challenge
 
@@ -289,7 +289,7 @@ Design a circuit that implements the logic $A \text{ AND } (\text{NOT } B)$ : $A
 <summary><strong>Show Solution</strong></summary>
 
 1.  The **NOT** gate (a Redstone Torch) and the **OR** gate (merging Redstone Dust lines).
-2.  A truth table's purpose is to define a gate's behavior for every possible combination of inputs. It is the ultimate source of truth for how a logic circuit functions.
+2.  A truth table's purpose is to define a gate's behavior for every possible combination of inputs. It's the complete definition of how the circuit behaves, input by input.
 3.  An **OR** gate outputs a `1` if *at least one* input is a `1`. An **AND** gate outputs a `1` only if *all* inputs are a `1`.
 
 </details>
@@ -330,7 +330,7 @@ Now bring Practice Problem 2.4.2 to life. Build the home security system in Mine
 
 -   **Boolean Algebra**: A branch of mathematics for working with true/false values ($1$/$0$), using operators like AND, OR, and NOT.
 -   **Composite Gate**: A logic gate that is constructed by combining primitive gates (e.g., an AND gate built from NOT and OR gates).
--   **Diode**: A component that allows a signal to pass in only one direction. In Minecraft, the Redstone Repeater acts as a perfect diode.
+-   **Diode**: A component that lets a signal pass in only one direction. Redstone has no true diode, but the Repeater does the same job here, passing power toward the output without letting it back-feed into the other input line.
 -   **Logic Gate**: A physical device that performs a Boolean logic operation on one or more inputs to produce a single output.
 -   **Primitive Gate**: A basic, indivisible logic gate from which more complex gates are built. In our course, these are NOT and OR.
 -   **Truth Table**: A chart showing every possible input combination for a logic circuit and its corresponding output.

@@ -29,9 +29,9 @@ In this module we’re going to build a **4-bit input interface**: four switches
 
 Think about how you count. You use ten symbols: `0` through `9`. This is the **decimal** (base-10) system, and the only reason it feels natural is, probably, that we've got ten fingers. When we get past `9`, we don't invent a new symbol. We just add a new column to the left, the "tens" column, and start over. The number `12` is really just our way of saying "one ten, plus two ones."
 
-Computers are different. They don't have fingers. Deep down, they are made of billions of microscopic electronic switches called transistors. A switch is a very simple device. It can only ever be in one of two states: **ON** or **OFF**. There is no "halfway on."
+Computers are different. They don't have fingers. Deep down, they are made of billions of microscopic electronic switches called **transistors**. A transistor’s electrical behavior is continuous, but digital circuits are designed to interpret two voltage ranges as distinct states: **LOW** and **HIGH**.
 
-This simple, two-state system is the foundation of all modern computing. We call it **binary** (base-2). To represent any piece of information, we just assign a meaning to these two states:
+We label those two states `0` and `1`. This reliable two-state abstraction is the foundation of digital computing. We call it **binary** (base-2). To represent any piece of information, we just assign a meaning to these two states:
 
 - `OFF` = `0`
 - `ON` = `1`
@@ -96,7 +96,7 @@ Everything we build later hangs off this input bus. In later modules we’ll pro
 
 ---
 
-Before we test it, I want to show you the same inpuit interface built in CircuitVerse, a free online digital logic simulator. From here on, every circuit we build gets introduced in CircuitVerse first, then built in Minecraft. A circuit diagram stays clear and readable in a way that Minecraft screenshots often don't. Everything you build is included in the [CircuitVerse project for this course](https://circuitverse.org/users/323134/projects/redstone-university-cafe6ad2-2c4f-41b6-8a91-51fd8fa24698)
+Before we test it, I want to show you the same input interface built in CircuitVerse, a free online digital logic simulator. From here on, every circuit we build gets introduced in CircuitVerse first, then built in Minecraft. A circuit diagram stays clear and readable in a way that Minecraft screenshots often don't. Everything you build is included in the [CircuitVerse project for this course](https://circuitverse.org/users/323134/projects/redstone-university-cafe6ad2-2c4f-41b6-8a91-51fd8fa24698)
 
 
 
@@ -156,7 +156,7 @@ There's a built-in way to check your answer, too: once your levers are set, add 
 
 #### Real-World Connection: CPU Registers
 
-Your **4-bit input interface** is a simplified version of how real computers get information from the world. Keyboards, mice, and sensors are all doing the same job your levers do: turning a physical action into binary signals. Our build handles 4 bits at a time. Modern computers typically handle **64-bit data**, meaning their circuits move 64 bits at once, enough to represent numbers north of `18` quintillion.
+Your **4-bit input interface** is a simplified version of how real computers get information from the world. Keyboards, mice, and sensors are all doing the same job your levers do: turning a physical action into binary signals. Our build handles 4 bits at a time. A 64-bit register can hold one of $2^{64}$ distinct bit patterns. When interpreted as an unsigned integer, those patterns represent values from 0 through 18,446,744,073,709,551,615, just over 18 quintillion.
 
 Here’s how it connects: once an input device sends binary data, the computer stores it in **registers**, tiny, extremely fast storage units inside the CPU. A “64-bit processor” has registers that hold 64 bits, letting it crunch huge numbers or instructions in a single step. Later, we’ll build a register of our own and see how the computer uses stored input to actually think.
 
@@ -166,19 +166,23 @@ How does a programmer "look at" the individual bits you just set with your lever
 
 A classic LeetCode problem is **"Number of 1 Bits"**: count how many `1`s are in a number's binary representation. Programmers solve this by checking each bit of the number one by one.
 
+> This introductory version assumes that n is a nonnegative integer. Negative integers require choosing a fixed-width representation, which we will cover later when we introduce two’s complement.
+
 ```python
-def countSetBits(n):
+def count_set_bits(n: int) -> int:
+    if n < 0:
+        raise ValueError("n must be nonnegative")
+
     count = 0
-    while n > 0:
-        # The '& 1' checks if the last bit is a 1
-        if (n & 1) == 1:
+    while n:
+        if n & 1:
             count += 1
-        # The '>>= 1' shifts all bits one place to the right
         n >>= 1
+
     return count
 
 # The binary for 13 is 1101
-print(countSetBits(13)) # Output: 3
+print(count_set_bits(13))  # 3
 ```
 
 **Software Analogy:** In most programming languages, you can use bitwise operators to manipulate numbers at the binary level. For example, in Python, `n & 1` checks the lowest bit, and `n >>= 1` shifts all bits to the right. This is just like flipping levers and reading wires from your input interface.

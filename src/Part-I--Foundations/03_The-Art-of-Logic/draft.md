@@ -117,7 +117,7 @@ $$ (A \lor B) \land (\neg A \lor \neg B) $$
 
 ### Lesson 3.2: The Special Operator – Building an XOR Gate
 
-> **Key Takeaway:** The **XOR** (Exclusive OR) gate outputs a `1` only when its inputs are **different**. It’s the heart of binary addition and a powerful tool for programming.
+> **Key Takeaway:** The **XOR** (Exclusive OR) gate outputs a `1` only when its inputs are **different**. It’s the sum half of binary addition, and a sharp tool in programming besides.
 
 ![XOR Gate in CircuitVerse](./images/XOR-gate_circuitverse.png)
 *Figure: The abstract symbol for the Exclusive OR (XOR) gate (left) and its function, producing an output $Y$ that is active only if inputs $A$ and $B$ are different.*
@@ -198,7 +198,7 @@ Design a Minecraft circuit for a two-switch light system where flipping either s
 
 > **Key Takeaway:** XOR's reversible, self-canceling property lets programmers solve some common algorithmic problems in a single, efficient pass.
 
-The XOR gate has two properties that programmers exploit constantly, both straight from the laws of Boolean algebra:
+The XOR gate has two properties programmers lean on all the time, both straight out of Boolean algebra:
 1.  Any number XORed with itself is zero: $x \oplus x = 0$.
 2.  Any number XORed with zero is itself: $x \oplus 0 = x$.
 
@@ -275,16 +275,16 @@ On paper that sounds like an afterthought, a NOT stapled onto a gate we already 
 
 #### The Power of Universal Gates (Functional Completeness)
 
-The idea that you can build *everything* from just NAND gates or just NOR gates is called **Functional Completeness**. This is why chip designers care: instead of needing separate, specialized machinery to produce AND, OR, and NOT gates, a factory can be optimized to produce just **one** type of gate (like a NAND gate) in massive quantities with extreme reliability and low cost.
+The idea that you can build *everything* from just NAND, or just NOR, is called **Functional Completeness**. It's a deep result: one gate type is logically enough to express any circuit at all, and it mattered historically, when building around a single dead-reliable gate was a real advantage. Modern chips don't take it literally, though. A fab draws on a whole library of cell types, each tuned for speed, area, and power. Functional completeness is what makes NAND and NOR special in theory, not a description of how real silicon gets laid out.
 
-Engineers then use the patterns from the table below to wire those identical simple gates together to create all the complex logic they need.
+The table below shows how it's done on paper: wire a single universal gate into a NOT, an AND, or an OR, and from those three you can reach any logic there is.
 
 | Universal Gate | To Build a NOT Gate ($\neg A$) | To Build an AND Gate ($A \land B$) | To Build an OR Gate ($A \lor B$) |
 | :--- | :--- | :--- | :--- |
 | **NAND** | $A \text{ NAND } A$ | $(A \text{ NAND } B) \text{ NAND } (A \text{ NAND } B)$ | $(A \text{ NAND } A) \text{ NAND } (B \text{ NAND } B)$ |
 | **NOR** | $A \text{ NOR } A$ | $(A \text{ NOR } A) \text{ NOR } (B \text{ NOR } B)$ | $(A \text{ NOR } B) \text{ NOR } (A \text{ NOR } B)$ |
 
-Each of these gates could, by itself, construct an entire computer, so keep this table in mind as we build them.
+In principle, either one alone could express all the logic in a computer, so keep this table in mind as we build them.
 
 ---
 
@@ -329,7 +329,7 @@ Each of these gates could, by itself, construct an entire computer, so keep this
 
 ##### Real-World Connection
 
-NOR gates are fundamental in electronics. Because they're a universal gate, entire processors could be (and sometimes are) built using only NOR logic. They're also used in circuits that require a "neither A nor B" condition, such as in safety systems where an action is only permitted if multiple warning sensors are all silent.
+NOR gates turn up all over electronics, and you already know why they can carry so much: NOR builds any logic on its own. The part that's less obvious is that people have done it at full scale. The Apollo Guidance Computer that flew astronauts to the Moon ran almost entirely on a single type of NOR gate. Modern chips mix many gate types for efficiency, so a NOR-only machine is more a proof of possibility than everyday practice, but it's a real one. They're also used in circuits that require a "neither A nor B" condition, such as in safety systems where an action is only permitted if multiple warning sensors are all silent.
 
 ---
 
@@ -375,7 +375,7 @@ NOR gates are fundamental in electronics. Because they're a universal gate, enti
 
 ##### Real-World Connection
 
-NAND gates are arguably the most important gate in modern electronics. Because they're a universal gate, they form the basis for most integrated circuits, including the flash memory used in SSDs and USB drives (which is often called "NAND flash memory").
+NAND is arguably the most important gate in modern electronics. It has the same build-anything property as NOR, but it also has a particularly efficient CMOS implementation, and that pairing is why it, not NOR, is the gate you find everywhere. Worth clearing up one thing, though. "NAND flash", the storage in SSDs and USB drives, takes its name because its memory cells are wired in series, a layout that resembles a NAND gate's transistors. It isn't made of logical NAND gates; the shared idea is the wiring pattern, not the logic.
 
 ---
 
@@ -507,12 +507,14 @@ Build an $A \text{ OR } B$ ($A \lor B$) gate using only **NAND** gates. Provide 
 
 #### Practice Problem 3.5.4: The Software Challenge
 
-You are given a list where every number appears three times, except for one number that appears only once. Write a Python function using bitwise operators that finds the unique number. (Hint: The self-canceling property of XOR won't work directly. How can you count the `1`s in each bit position across all the numbers?)
+You are given a list of **nonnegative 32-bit integers** where every number appears three times, except for one number that appears only once. Write a Python function using bitwise operators that finds the unique number. (Hint: The self-canceling property of XOR won't work directly. How can you count the `1`s in each bit position across all the numbers?)
 
 <details>
 <summary><strong>Show Solution</strong></summary>
 
 **The Logic:** If we sum the bits in each position (the 1s place, 2s place, 4s place, etc.) for all the numbers in the list, the sum for each bit of the triplicate numbers will be a multiple of 3. The unique number's bits will be the "remainders." We can use the modulo operator (`%`) to find these remainders.
+
+This version assumes nonnegative 32-bit inputs. Supporting negatives means reading the top bit as a two's-complement sign, which we don't cover until Module 6, so the function below is correct for the contract as written.
 
 **The Python Code:**
 ```python
@@ -548,7 +550,7 @@ def singleNumber_threes(nums):
 
 Where before you could construct a circuit, now you can use the laws of Boolean algebra to analyze and refine it, and sometimes, as in Lab 2, delete most of it.
 
-You also now have the complete set of seven fundamental logic gates, the same set used to design every digital device in existence.
+You've also got all seven of the fundamental logic gates now, and, more to the point, you know how to fold simpler primitives into more complex ones. That's the vocabulary the bigger circuits ahead are written in.
 
 With this full toolkit, you're ready for our first major engineering challenge. In the next module, we'll apply everything you've learned to build a complete system: a translator that takes a 4-bit binary number from our input and displays it as a human-readable digit on a 7-segment display.
 

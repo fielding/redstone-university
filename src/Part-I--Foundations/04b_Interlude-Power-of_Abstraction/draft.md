@@ -25,7 +25,7 @@ A **subcircuit** is a self-contained circuit that you can package up and treat a
 
 The payoff is bigger than a tidy diagram. Back in the compact-design interlude you saw the same logic built two ways, spread out for clarity or folded tight for space. A black box is what lets that choice stay private: seal the decoder up, and you could rebuild its insides in the compact style tomorrow without touching a single wire outside it, because nothing outside was ever looking in. The box owes the rest of the system a behavior, not a particular pile of torches.
 
-None of this is new, and none of it is mine. A classic computer science text, *Structure and Interpretation of Computer Programs* (SICP), built a whole section on the same idea decades before this course existed, in software instead of redstone: "A user should not need to know how the procedure is implemented in order to use it." Swap the word *procedure* for *subcircuit* and that's the rule we're following.
+None of this is new, and none of it is mine. A classic computer science text, *Structure and Interpretation of Computer Programs* (SICP), built a whole section on this exact idea decades before this course existed, in software instead of redstone. Its §1.1.8, "Procedures as Black-Box Abstractions," puts it plainly: "A user should not need to know how the procedure is implemented in order to use it." Swap the word *procedure* for *subcircuit* and that's the rule we're following.
 
 By turning our complex 4-to-10 Decoder into a single subcircuit block, we can hide its internal complexity and focus on how it connects to the rest of the system.
 
@@ -64,7 +64,7 @@ To get a clean diagram, we need to arrange the input and output pins logically o
 *Figure: The edited layout with input and output pins neatly organized for clean wiring.*
 
 > **CRITICAL ENGINEERING TIP:**
-> As the CircuitVerse documentation advises, you must finalize your circuit layout **before** you start connecting wires to it. If you change the pin layout after wiring, CircuitVerse may break the connections. Do your layout work first!
+> Finalize the subcircuit's pin layout **before** you connect any external wires to it. If you change the layout after wiring, CircuitVerse may break the existing connections. Layout first, then wire.
 
 Your subcircuit is now a clean, tidy component that's easy to integrate. If you repeat this process for your 10-to-7 ROM, you can recreate the exact "black box" diagram we saw at the beginning of this interlude.
 

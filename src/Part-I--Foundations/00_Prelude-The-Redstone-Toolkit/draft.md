@@ -19,7 +19,7 @@
 
 Welcome to Redstone University’s Orientation Day!
 
-Before we start building logic gates and registers, we need to make sure you can handle the tools of the trade. Think of this as the lab safety and equipment tour, and since most things in Redstone don't explodes unless you deliberately wire it to TNT (don't), we can skip straight to the equipment.
+Before we start building logic gates and registers, we need to make sure you can handle the tools of the trade. Think of this as the lab safety and equipment tour, and since most things in Redstone don't explode unless you deliberately wire them to TNT (don't), we can skip straight to the equipment.
 
 This isn't a full Minecraft tutorial. We’re covering only what the rest of the course needs: enough to follow along, experiment on your own, and troubleshoot when a build refuses to cooperate.
 
@@ -58,7 +58,7 @@ How power travels is the single most important thing to understand in Redstone, 
 A Redstone signal has a "strength" from `15` (full power) down to `0` (off).
 -   A signal source (like a Lever or Torch) outputs a signal of strength `15`.
 -   For every block of Redstone Dust the signal travels, its strength decreases by `1`.
--   After `15` blocks of dust, the signal strength is `0`, and the wire goes dead.
+-   The dust touching the source starts at `15`, so the signal fades to `1` by the `15`th block and dies (`0`) on the `16`th.
 -   A **Redstone Repeater** takes any signal strength from `1` to `15` and outputs a fresh, full-strength signal of `15`.
 
 #### Rule 2: Strong vs. Weak Powering
