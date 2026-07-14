@@ -1,6 +1,9 @@
+import argparse
 import os
 import re
 from glob import glob
+
+from released_filter import is_released, preview_path
 
 SRC_DIR = "src"
 COURSE_DIR = "course"
@@ -18,7 +21,7 @@ GITHUB_BRANCH = "main"
 RAW_BASE_URL = f"https://raw.githubusercontent.com/{GITHUB_USER}/{GITHUB_REPO}/{GITHUB_BRANCH}/"
 
 
-def get_course_files_in_order():
+def get_course_files_in_order(released_only=False):
     """
     Finds all 'draft.md' and 'introduction.md' files and returns them in the
     correct structural order for the final combined document.
@@ -33,16 +36,24 @@ def get_course_files_in_order():
 
     part_dirs = sorted(glob(os.path.join(SRC_DIR, "Part-*/")))
     for part_dir in part_dirs:
+        lesson_dirs = sorted(glob(os.path.join(part_dir, "[0-9]*_*/")))
+        drafts = [
+            os.path.join(d, "draft.md")
+            for d in lesson_dirs
+            if os.path.exists(os.path.join(d, "draft.md"))
+            and (not released_only or is_released(os.path.basename(os.path.normpath(d))))
+        ]
+        # In a released-only build, skip a whole part (its intro included) when
+        # none of its modules have shipped yet.
+        if released_only and not drafts:
+            continue
+
         part_intro = os.path.join(part_dir, "introduction.md")
         if os.path.exists(part_intro):
             ordered_files.append(part_intro)
             print(f"  - Found Part introduction: {part_intro}")
 
-        lesson_dirs = sorted(glob(os.path.join(part_dir, "[0-9]*_*/")))
-        for lesson_dir in lesson_dirs:
-            draft_file = os.path.join(lesson_dir, "draft.md")
-            if os.path.exists(draft_file):
-                ordered_files.append(draft_file)
+        ordered_files.extend(drafts)
 
     print("✅ File order determined.")
     return ordered_files
@@ -88,10 +99,10 @@ def process_markdown_content(content, file_path):
     return content
 
 
-def main():
+def main(released_only=False):
     print("🚀 Starting PDF preparation process...")
 
-    files_to_combine = get_course_files_in_order()
+    files_to_combine = get_course_files_in_order(released_only)
     print(f"📚 Found {len(files_to_combine)} content files to combine for the PDF.")
 
     full_course_content = []
@@ -104,7 +115,10 @@ def main():
 
     combined_md = '\n\n<hr class="pagebreak"/>\n\n'.join(full_course_content)
 
-    for appendix_path in [APPENDIX_A, APPENDIX_B]:
+    appendices = [APPENDIX_A, APPENDIX_B]
+    if released_only:
+        appendices = [preview_path(p) for p in appendices]
+    for appendix_path in appendices:
         if os.path.exists(appendix_path):
             print(f"➕ Appending {os.path.basename(appendix_path)}...")
             with open(appendix_path, "r", encoding="utf-8") as f:
@@ -113,11 +127,18 @@ def main():
         else:
             print(f"⚠️ Warning: Appendix file not found at {appendix_path}. Skipping.")
 
-    with open(PDF_INPUT_FILE, "w", encoding="utf-8") as f:
+    out_file = preview_path(PDF_INPUT_FILE) if released_only else PDF_INPUT_FILE
+    with open(out_file, "w", encoding="utf-8") as f:
         f.write(combined_md)
 
-    print(f"✅ Successfully created PDF input file at: {PDF_INPUT_FILE}")
+    print(f"✅ Successfully created PDF input file at: {out_file}")
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--released-only",
+        action="store_true",
+        help="Only include released modules (Part I + Module 5); writes the -preview variant.",
+    )
+    main(parser.parse_args().released_only)

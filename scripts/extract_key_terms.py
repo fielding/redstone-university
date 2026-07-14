@@ -1,7 +1,10 @@
+import argparse
 import os
 import re
 from glob import glob
 from typing import Dict, List, Tuple
+
+from released_filter import is_released, preview_path
 
 SRC_DIR = "src"
 APPENDIX_FILE = "course/z-appendices/appendix-b-glossary.md"
@@ -104,7 +107,7 @@ def collect_markdown_files(directory):
     return sorted(glob(os.path.join(directory, "**/*.md"), recursive=True))
 
 
-def main():
+def main(released_only=False):
     os.makedirs(os.path.dirname(APPENDIX_FILE), exist_ok=True)
 
     all_terms: List[Tuple[str, str, str]] = []
@@ -138,6 +141,10 @@ def main():
 
     sorted_terms = sorted(all_terms, key=lambda x: x[0].lower())
 
+    if released_only:
+        # x[2] is the module the term was introduced in.
+        sorted_terms = [t for t in sorted_terms if is_released(t[2])]
+
     appendix_content = [
         "## Appendix B: Glossary\n\n"
         "This glossary compiles key terms from the Redstone University curriculum, "
@@ -162,17 +169,26 @@ def main():
 
     appendix_content.append("\n---\n")
     for module in sorted(module_titles.keys(), key=parse_module_label):
+        if released_only and not is_released(module):
+            continue
         title = module_titles.get(module, f"Module {module}")
         appendix_content.append(f"[{module}]: Module {module}: {title}\n")
 
     appendix_markdown = "\n".join(appendix_content)
     appendix_markdown = rewrite_image_paths(appendix_markdown)
 
-    with open(APPENDIX_FILE, "w", encoding="utf-8") as f:
+    out_file = preview_path(APPENDIX_FILE) if released_only else APPENDIX_FILE
+    with open(out_file, "w", encoding="utf-8") as f:
         f.write(appendix_markdown)
 
-    print(f"✅ Extracted and alphabetized {len(unique_terms)} unique key terms into {APPENDIX_FILE}")
+    print(f"✅ Extracted and alphabetized {len(unique_terms)} unique key terms into {out_file}")
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--released-only",
+        action="store_true",
+        help="Only include released modules (Part I + Module 5); writes the -preview variant.",
+    )
+    main(parser.parse_args().released_only)

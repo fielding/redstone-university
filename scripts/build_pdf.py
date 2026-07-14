@@ -30,6 +30,10 @@ from markdown_it import MarkdownIt
 from mdit_py_plugins.anchors import anchors_plugin
 from mdit_py_plugins.dollarmath import dollarmath_plugin
 
+import argparse
+
+from released_filter import preview_path
+
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PDF_INPUT_FILE = os.path.join("course", "Redstone-University.md")
 PDF_OUTPUT_FILE = os.path.join("course", "Redstone-University.pdf")
@@ -343,11 +347,13 @@ def report_missing_images(markdown_src):
             print(f"   - {path}")
 
 
-def main():
+def main(released_only=False):
     os.chdir(REPO_ROOT)
+    input_file = preview_path(PDF_INPUT_FILE) if released_only else PDF_INPUT_FILE
+    output_file = preview_path(PDF_OUTPUT_FILE) if released_only else PDF_OUTPUT_FILE
     print("🚀 Building PDF from processed markdown...")
 
-    with open(PDF_INPUT_FILE, "r", encoding="utf-8") as f:
+    with open(input_file, "r", encoding="utf-8") as f:
         markdown_src = f.read()
 
     report_missing_images(markdown_src)
@@ -469,11 +475,17 @@ def main():
     print("📄 Laying out pages with WeasyPrint (this takes a few minutes)...")
     rendered = HTML(string=document, base_url=REPO_ROOT).render()
     check_pagination(rendered)
-    rendered.write_pdf(PDF_OUTPUT_FILE)
+    rendered.write_pdf(output_file)
 
-    size_mb = os.path.getsize(PDF_OUTPUT_FILE) / (1024 * 1024)
-    print(f"✅ Wrote {PDF_OUTPUT_FILE} ({size_mb:.1f} MB)")
+    size_mb = os.path.getsize(output_file) / (1024 * 1024)
+    print(f"✅ Wrote {output_file} ({size_mb:.1f} MB)")
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--released-only",
+        action="store_true",
+        help="Render the released-modules preview (course/Redstone-University-preview.pdf).",
+    )
+    main(parser.parse_args().released_only)

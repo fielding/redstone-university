@@ -1,7 +1,10 @@
+import argparse
 import os
 import re
 from glob import glob
 from typing import List, Tuple
+
+from released_filter import is_released, preview_path
 
 SRC_DIR = "src"
 APPENDIX_FILE = "course/z-appendices/appendix-a-solutions.md"
@@ -56,7 +59,7 @@ def extract_solutions_from_file(md_content: str, file_path: str):
     return solutions
 
 
-def main():
+def main(released_only=False):
     os.makedirs(os.path.dirname(APPENDIX_FILE), exist_ok=True)
 
     all_solutions = []
@@ -76,6 +79,10 @@ def main():
 
     all_solutions.sort(key=lambda x: problem_sort_key(x[0]))
 
+    if released_only:
+        # x[0] is the problem id ("5.3.1"); its leading number is the module.
+        all_solutions = [s for s in all_solutions if is_released(s[0])]
+
     appendix_content = [
         "## Appendix A: Solutions\n\n"
         "This appendix provides solutions to the practice problems in the Redstone University curriculum, organized by problem number for easy reference.\n"
@@ -94,11 +101,18 @@ def main():
         appendix_content.append("\n\n---\n\n")
 
     appendix_content.append('\n\n<hr class="pagebreak"/>\n\n')
-    with open(APPENDIX_FILE, "w", encoding="utf-8") as f:
+    out_file = preview_path(APPENDIX_FILE) if released_only else APPENDIX_FILE
+    with open(out_file, "w", encoding="utf-8") as f:
         f.write("\n".join(appendix_content))
 
-    print(f"✅ Generated Appendix A with {solution_count} solutions at: {APPENDIX_FILE}")
+    print(f"✅ Generated Appendix A with {solution_count} solutions at: {out_file}")
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--released-only",
+        action="store_true",
+        help="Only include released modules (Part I + Module 5); writes the -preview variant.",
+    )
+    main(parser.parse_args().released_only)
