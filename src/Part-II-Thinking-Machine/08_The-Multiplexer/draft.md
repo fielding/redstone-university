@@ -2,7 +2,7 @@
 
 ### Module 8 Summary
 
--   **Narrative Beat:** We have built several powerful circuits, but power without control is chaos. This module introduces the component that lets the processor choose which path to follow and which result to pay attention to: the **multiplexer**.
+-   **Why This Module:** We have built several powerful circuits, but power without control is chaos. This module introduces the component that lets the processor choose which path to follow and which result to pay attention to: the **multiplexer**.
 -   **Learning Goals:**
     -   Understand a multiplexer as a digitally controlled selector switch.
     -   Build a 1-bit 2-to-1 MUX from NOT, AND, and OR gates.
@@ -12,7 +12,7 @@
     -   Lesson 8.1: The theory – The power of choice
     -   Lesson 8.2: The lab – Building a 1-bit MUX
     -   Lesson 8.3: The lab – Scaling up to a 4-bit MUX
--   **Minecraft Artifact:** A 4-bit 2-to-1 multiplexer.
+-   **Build:** A 4-bit 2-to-1 multiplexer.
 
 ---
 

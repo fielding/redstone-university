@@ -2,7 +2,6 @@
 
 ### Module 2 Summary
 
--   **Narrative Beat:** We have a language (binary), but no words. In this module, we'll learn the three fundamental "verbs" of logic, **NOT**, **OR**, and **AND**, that will allow our machine to form its first logical thoughts.
 -   **Learning Goals:**
     -   Understand the role of Minecraft's primitive logic gates (NOT and OR).
     -   Master the truth table, the chart that pins down exactly what a gate does for every input.
@@ -11,7 +10,7 @@
     -   Lesson 2.1: The Rules of Thought
     -   Lesson 2.2: The Primitives – Building NOT and OR Gates
     -   Lesson 2.3: The First Composite Gate – Building an AND Gate
--   **Minecraft Artifact:** A working set of the three foundational logic gates: NOT, OR, and AND.
+-   **Build:** A working set of the three foundational logic gates: NOT, OR, and AND.
 
 ---
 

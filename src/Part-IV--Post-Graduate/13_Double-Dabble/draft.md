@@ -2,7 +2,7 @@
 
 ### Module 13 Summary
 
--   **Narrative Beat:** We solved our display problem earlier with hexadecimal, the elegant programmer’s solution. In this post-graduate module, we revisit that same problem from the hardware side and build a human-friendly decimal display path.
+-   **Why This Module:** We solved our display problem earlier with hexadecimal, the elegant programmer’s solution. In this post-graduate module, we revisit that same problem from the hardware side and build a human-friendly decimal display path.
 -   **Learning Goals:**
     -   Understand why binary results are not automatically suitable for multi-digit decimal display.
     -   Learn the idea behind **Binary Coded Decimal (BCD)** and the **Double Dabble** algorithm.
@@ -12,7 +12,7 @@
     -   Lesson 13.1: The theory – From hex to human
     -   Lesson 13.2: The lab – A ROM-based binary-to-BCD converter
     -   Lesson 13.3: The final assembly and payoff
--   **Minecraft Artifact:** A binary-to-BCD converter that turns one 4-bit input into two BCD digits for a two-digit decimal display.
+-   **Build:** A binary-to-BCD converter that turns one 4-bit input into two BCD digits for a two-digit decimal display.
 
 ---
 

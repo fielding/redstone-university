@@ -2,7 +2,7 @@
 
 ### Module 6 Summary
 
--   **Narrative Beat:** Our adder works, but now we are going to discover its limits. We will push a 4-bit machine past what 4 bits can hold, learn how to detect that event, and then use the elegant trick of Two's Complement to teach the very same hardware how to subtract.
+-   **Why This Module:** Our adder works, but now we are going to discover its limits. We will push a 4-bit machine past what 4 bits can hold, learn how to detect that event, and then use the elegant trick of Two's Complement to teach the very same hardware how to subtract.
 -   **Learning Goals:**
     -   Understand what it means for a fixed-width result to **overflow**.
     -   Use the adder’s final carry line as a visible arithmetic warning signal.
@@ -13,7 +13,7 @@
     -   Lesson 6.2: The lab – Discovering and handling overflow
     -   Lesson 6.3: The theory – The magic of Two's Complement
     -   Lesson 6.4: The lab – Building the adder/subtractor unit
--   **Minecraft Artifact:** A 4-bit adder/subtractor with a carry-out indicator lamp.
+-   **Build:** A 4-bit adder/subtractor with a carry-out indicator lamp.
 
 ---
 

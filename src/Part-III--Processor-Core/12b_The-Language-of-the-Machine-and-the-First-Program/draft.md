@@ -2,7 +2,7 @@
 
 ### Module 12b Summary
 
--   **Narrative Beat:** The infrastructure is ready. Now we teach the machine its tiny language, build the decoder that turns opcodes into action, and watch it run its first real program on its own.
+-   **Why This Module:** The infrastructure is ready. Now we teach the machine its tiny language, build the decoder that turns opcodes into action, and watch it run its first real program on its own.
 -   **Learning Goals:**
     -   Define a compact instruction set that fits our 4-bit bus and unified RAM.
     -   Understand how the control decoder turns opcodes and phases into pulses and selector settings.
@@ -13,7 +13,7 @@
     -   Lesson 12b.2: The decoder – Turning opcodes into control signals
     -   Lesson 12b.3: Single-instruction validation
     -   Lesson 12b.4: The first real program – Countdown to zero
--   **Minecraft Artifact:** A complete 4-bit stored-program computer that can execute a countdown loop.
+-   **Build:** A complete 4-bit stored-program computer that can execute a countdown loop.
 -   **The Ultimate Payoff:** Watching the computer count down to zero and then halt because a latched flag changed the Program Counter.
 
 ---
