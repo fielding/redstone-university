@@ -347,8 +347,6 @@ Read these in hex, one nibble at a time:
 
 </details>
 
-That's why hexadecimal is everywhere in low-level programming, debugging, and computer architecture. It lines up perfectly with the machine’s natural word sizes.
-
 ---
 
 ### Lesson 5.5: The lab – The hexadecimal upgrade

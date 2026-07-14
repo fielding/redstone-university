@@ -502,10 +502,6 @@ Here’s what your fully connected system should look like, with the input set t
 ![Complete Digital Display Isometric](./images/complete-digital-display_minecraft.png)
 *Figure: The complete digital display system in action, with input `0011` activating the `L3` line and lighting segments `a, b, c, d, g` to form a glowing “3”.*
 
-Your modular design has paid off: every stage was built and tested on its own, so the final assembly is just wiring.
-
-Your modular design has paid off: every stage was built and tested on its own, so the final assembly is just wiring.
-
 ##### Let’s Trace the Signal: `3` (`0011`)
 
 To solidify your understanding, let’s trace the signal through the entire system with the input set to `0011` (decimal `3`):
