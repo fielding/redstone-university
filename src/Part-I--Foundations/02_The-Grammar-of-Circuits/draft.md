@@ -30,7 +30,7 @@ In the mid-1800s, a mathematician named George Boole developed a new kind of alg
 
 This system, now called **Boolean Algebra**, spent about a century as a mathematical curiosity. Then engineers started building the first electronic computers out of on/off switches and realized Boole had already done their math for them, a hundred years early. In the abstract world of math, these values are the constants $1$ (True) and $0$ (False). In the physical world of our circuits, they're the literal signals `1` (ON) and `0` (OFF).
 
--   **The Core Idea:** We treat our Redstone signals as Boolean variables, like $A$ or $B$.
+-   We treat our Redstone signals as Boolean variables, like $A$ or $B$.
 -   A powered Redstone line has the physical value **True** (`1`).
 -   An unpowered Redstone line has the physical value **False** (`0`).
 
@@ -40,7 +40,7 @@ Boolean algebra gives us a set of rules and operators to manipulate these variab
 
 ### Lesson 2.2: The Primitives – Building NOT and OR Gates
 
-Every complex machine is built from simple, fundamental parts. In digital logic, those parts are called **primitive gates**, and from a small set of them you can build any other gate. Our set is dictated by the mechanics of Minecraft itself, which gives us two logical operations right out of the box:
+Every complex machine is built from simple parts. In digital logic, those parts are called **primitive gates**, and from a small set of them you can build any other gate. Our set is dictated by the mechanics of Minecraft itself, which gives us two logical operations right out of the box:
 
 1.  **NOT:** A Redstone Torch naturally inverts a signal. This is our primitive NOT gate.
 2.  **OR:** Redstone Dust naturally merges signals. If any line powering a central wire is ON, the whole wire becomes ON. This is our primitive OR gate.
@@ -66,7 +66,7 @@ Each gate below follows the same format:
 -   **Formal Definition:** The high-level concept and official terminology (e.g., "Conjunction").
 -   **Symbols:** Common ways the operator is written in logical notation and programming languages.
 -   **The Rule:** A plain-English sentence describing what the gate does.
--   **Truth Table:** A complete chart of every input combination and its output, which is the whole story of what the gate does.
+-   **Truth Table:** A complete chart of every input combination and its output.
 -   **Primitive Boolean Expression:** The specific algebraic expression that represents our composite build using only **NOT** and **OR**.
 
 **Practical Application:**
@@ -111,7 +111,7 @@ Each gate below follows the same format:
 2.  **Test the circuit:**
     -   Set lever $A$ to ON (`1`). Observe that the output lamp is OFF (`0`).
     -   Set lever $A$ to OFF (`0`). Observe that the output lamp is ON (`1`).
-3.  **Verification:** The physical results perfectly match the truth table. You've built a working inverter!
+3.  **Verification:** The physical results match the truth table.
 
 ##### Real-World & Software Connection
 
@@ -336,6 +336,6 @@ Now bring Practice Problem 2.4.2 to life. Build the home security system in Mine
 
 ### Module 2 Conclusion
 
-You started with the abstract idea of Boolean Algebra and ended by building physical, working circuits that obey its laws. You now have the three foundational gates, NOT, OR, and AND, and you've used the core engineering move of this whole course: building a component you don't have out of components you do.
+You started with the abstract idea of Boolean Algebra and ended by building physical, working circuits that obey its laws. You now have the three foundational gates, NOT, OR, and AND, and you've used a move you will repeat for the rest of this course: building a component you don't have out of components you do.
 
 These are the essential "verbs" of our computer's language. In the next module, **The Art of Logic**, we'll expand our vocabulary with more specialized gates and learn the simplification techniques engineers use to make correct circuits efficient.

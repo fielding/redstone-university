@@ -109,7 +109,7 @@ This modular, two-stage approach is easier to build, easier to test, and far eas
 
 Before we tackle our full 4-bit to 10-line decoder, let's build a smaller, simpler version to prove the concept. We're going to build a **2-bit to 4-line decoder**. This circuit will take a 2-bit binary input (`00`, `01`, `10`, `11`) and light up one of four corresponding output lamps (`L0`, `L1`, `L2`, `L3`) representing those values in decimal (`0`, `1`, `2`, `3`).
 
-By scaling down the problem, we can focus on the core logic without getting overwhelmed. This is a common engineering practice: start small, prove the concept, then scale up. I'm calling this a "brute-force" method because we'll build a separate AND gate for each output, rather than using a more elegant design, which we'll learn in the next lesson.
+By scaling down the problem, we can focus on the logic without getting overwhelmed. This is a common engineering practice: start small, prove the concept, then scale up. I'm calling this a "brute-force" method because we'll build a separate AND gate for each output, rather than using a more elegant design, which we'll learn in the next lesson.
 
 ![2-to-4 Decoder in CircuitVerse](./images/2-to-4-decder_circuitverse.png)
 *Figure: The brute-force 2-to-4 decoder in CircuitVerse, using AND gates to recognize each binary pattern.*
@@ -157,7 +157,7 @@ By scaling down the problem, we can focus on the core logic without getting over
     -   **Gate for `L3`**: Connect its inputs to the `B1` and `B0` bus lines.
 3.  Place a Redstone Lamp on the output of each gate.
 
-**Step 4: The Grand Test**
+**Step 4: Test All Four Inputs**
 
 Now, cycle through all four possible inputs with your levers:
 
@@ -192,7 +192,7 @@ Instead of an "active-high" design, we'll build an **active-low** design where t
 ![4-to-10 Decoder in CircuitVerse](./images/4-to-10-decoder_circuitverse.png)
 *Figure: The compact 4-to-10 decoder in CircuitVerse, mirroring the Minecraft build with dual buses and NOR-like logic for efficiency.*
 
-#### The Core Concept: The Mismatch Detector
+#### The Mismatch Detector
 
 Each output line will function as a **"mismatch detector."** Its job is to power its own wire (turning its lamp OFF) if the input does **not** match the line's identity. The only time a lamp stays ON is when the input is a perfect match. A "tap" is simply our term for a connection that reads, or "taps into," the signal from one of the main bus lines.
 
@@ -366,7 +366,7 @@ First, let's create the plan on paper. This lookup table is the blueprint for ou
 
 ##### The Logic: Inverting the Inversion
 
-This is where our active-low signal becomes very powerful.
+This is where the active-low choice pays off.
 
 -   Our input is a single LOW line from the decoder.
 -   Our goal is to turn this one LOW signal into multiple HIGH signals to power the correct display segments.
@@ -435,7 +435,7 @@ Before connecting the ROM to the decoder, test all lines (`L0`–`L9`) independe
 
 #### Real-World Connection: BIOS and Game Cartridges
 
-The "Diode Matrix" you've just built is a simple form of **Read-Only Memory (ROM)**. The "program" is physically burned into the circuit's layout by the placement of the torches. This exact principle was fundamental to early computing. A computer's **BIOS chip**, which tells it how to boot up, is a form of ROM. Old video game cartridges were also ROMs, with the entire game's data permanently stored in the hardware's structure. You've built the same underlying idea, even though the physical storage in a real chip works differently.
+The Diode Matrix is a simple form of **Read-Only Memory (ROM)**. The "program" is physically burned into the circuit's layout by the placement of the torches. A computer's **BIOS chip**, which tells it how to boot up, is a form of ROM. Old video game cartridges were also ROMs, with the entire game's data permanently stored in the hardware's structure. You've built the same underlying idea, even though the physical storage in a real chip works differently.
 
 #### Software Connection: Substitution Boxes in Cryptography
 
@@ -482,9 +482,9 @@ If a segment that should be ON is OFF, it means it's not receiving power. The mo
 
 ---
 
-### Lesson 4.6: The Grand Payoff: System Integration
+### Lesson 4.6: System Integration: Wiring the Three Stages Together
 
-> **Key Takeaway**: Connecting individual, tested modules into a complete, working system is the final and most rewarding step of any engineering project.
+> **Key Takeaway**: Connecting individual, tested modules into a complete, working system is the final step of any engineering project.
 
 You’ve built and tested the decoder to identify numbers, the ROM to map them to segment patterns, and the 7-segment display to show the results. All that's left is to wire the three together.
 
@@ -501,6 +501,8 @@ Here’s what your fully connected system should look like, with the input set t
 
 ![Complete Digital Display Isometric](./images/complete-digital-display_minecraft.png)
 *Figure: The complete digital display system in action, with input `0011` activating the `L3` line and lighting segments `a, b, c, d, g` to form a glowing “3”.*
+
+Your modular design has paid off: every stage was built and tested on its own, so the final assembly is just wiring.
 
 Your modular design has paid off: every stage was built and tested on its own, so the final assembly is just wiring.
 
@@ -626,7 +628,7 @@ So it's a misprogrammed `L2` row, three taps off, not a system failure.
 
 ### Module 4 Conclusion
 
-You engineered a complete system in this module, and by breaking it into distinct, logical stages, you kept it manageable, testable, and understandable. You now know how to decode a 4-bit BCD digit and how a hard-wired lookup table can drive a display, two fundamental building blocks of digital electronics.
+You engineered a complete system in this module. You now know how to decode a 4-bit BCD digit and how a hard-wired lookup table can drive a display, two standard building blocks of digital electronics.
 
 **What’s Next?**
 

@@ -28,7 +28,7 @@ First up: the laws of Boolean algebra that let us simplify complex expressions, 
 
 > **Key Takeaway:** Boolean laws are like mathematical shortcuts that let us simplify complex circuits, making our designs smaller, faster, and more efficient.
 
-Just like $2 + x = x + 2$ in normal algebra, Boolean algebra has laws that let us rearrange and simplify expressions. For us, **a simpler expression means a smaller, faster, and more reliable Redstone circuit.**
+Just like $2 + x = x + 2$ in normal algebra, Boolean algebra has laws that let us rearrange and simplify expressions.
 
 #### A Note on Notation
 
@@ -38,11 +38,11 @@ For this course, we will keep using the dual notation system. We lead with a tex
 
 #### The Laws of Boolean Algebra
 
-Here are the key laws we will be using in our course. Mastering them is the first step to designing elegant circuits.
+Here are the key laws we will be using in our course.
 
 -   **Identity Law:** $A \lor 0 = A$ and $A \land 1 = A$.
 -   **Annihilator Law:** $A \lor 1 = 1$ and $A \land 0 = 0$.
--   **De Morgan's Law:** This is the superstar. It gives us a powerful way to convert between AND and OR logic.
+-   **De Morgan's Law:** This is the superstar. It lets us convert between AND and OR logic.
     -   $\text{NOT}(A \text{ AND } B)$ : $\neg(A \land B)$ is the same as $(\text{NOT } A) \text{ OR } (\text{NOT } B)$ : $\neg A \lor \neg B$.
     -   $\text{NOT}(A \text{ OR } B)$ : $\neg(A \lor B)$ is the same as $(\text{NOT } A) \text{ AND } (\text{NOT } B)$ : $\neg A \land \neg B$.
 
@@ -61,7 +61,7 @@ Let's use De Morgan’s Law to prove that our composite AND gate from Module 2 i
 
 #### Lab 2: Simplifying a Circuit with the Distributive Law
 
-The laws of logic do more than prove a circuit is correct. They can also make our circuits *more efficient*, through a crucial engineering skill called **simplification**.
+The laws of logic do more than prove a circuit is correct. They can also make our circuits *more efficient*, through an engineering skill called **simplification**.
 
 Consider a circuit that needs to turn on if ($A$ is ON and $B$ is ON) OR if ($A$ is ON and $B$ is OFF). The direct Boolean expression would be:
 $$ Y = (A \land B) \lor (A \land (\neg B)) $$
@@ -74,7 +74,7 @@ This looks like it would require two AND gates and one OR gate. Let's simplify i
 4.  **Apply the Identity Law:** We know that any input AND'd with $1$ is just itself.
     *   The final expression is: $Y = A$
 
-**Lab Takeaway:** We have just proven that this entire three-gate circuit can be replaced by a single wire connected to input $A$. That is simplification in action: three gates' worth of torches, dust, and delay, gone.
+**Lab Takeaway:** This entire three-gate circuit can be replaced by a single wire connected to input $A$. That is simplification in action: three gates' worth of torches, dust, and delay, gone.
 
 ![Circuit Before and After Simplification](./images/simplification_circuitverse.png)
 *Figure: The circuit for $Y = (A \land B) \lor (A \land \neg B)$ before simplification (left) is logically equivalent (≡) to the circuit for $Y = A$ (right).*
@@ -93,7 +93,7 @@ This looks like it would require two AND gates and one OR gate. Let's simplify i
 | De Morgan's Laws | $\neg(A \land B) = \neg A \lor \neg B$<br>$\neg(A \lor B) = \neg A \land \neg B$ | Converts between AND/OR with inversion |
 
 > **A Special Note on the Distributive Law:**
-> Notice that Boolean algebra has two distributive laws. The first one, $A \land (B \lor C)$, looks very similar to the distributive law in regular algebra. However, the second one, $A \lor (B \land C)$, is unique to Boolean logic. In the algebra you're used to, $a + (b \cdot c)$ does NOT equal $(a + b) \cdot (a + c)$. This unique property of duality is one of the things that makes Boolean algebra so powerful for simplifying digital circuits.
+> Notice that Boolean algebra has two distributive laws. The first one, $A \land (B \lor C)$, looks very similar to the distributive law in regular algebra. However, the second one, $A \lor (B \land C)$, is unique to Boolean logic. In the algebra you're used to, $a + (b \cdot c)$ does NOT equal $(a + b) \cdot (a + c)$. This unique property of duality is one of the things that makes Boolean algebra so useful for simplifying digital circuits.
 
 #### Practice Problem 3.1.1: Circuit Simplification Challenge
 
@@ -171,7 +171,7 @@ $$ Y = \neg(A \lor \neg(A \lor B)) \lor \neg(B \lor \neg(A \lor B)) $$
 
 #### Real-World & Software Connection
 
-XOR's "difference detector" property is essential. It's the core component of a binary **adder**, which we'll build soon. It's also the logic behind a hallway light with a switch at each end, where flipping either switch toggles the light's state.
+XOR's "difference detector" property is what computes the sum in a binary **adder**, which we'll build soon. It's also the logic behind a hallway light with a switch at each end, where flipping either switch toggles the light's state.
 
 #### Practice Problem 3.2.1: The Two-Switch Light System
 
@@ -220,7 +220,7 @@ def singleNumber(nums):
 
 #### Practice Problem 3.3.1: The Missing Number Challenge
 
-Now that you've seen how the XOR trick works, try applying the same core principle to solve a different, but related, problem.
+Now that you've seen how the XOR trick works, try applying the same principle to solve a different, but related, problem.
 
 > **The Challenge:**
 >
@@ -269,7 +269,7 @@ def missingNumber(nums):
 
 > **Key Takeaway:** Negated gates combine a basic operation with a NOT. Two of them, **NAND** and **NOR**, are "functionally complete," meaning you can build any other logic gate using only one type.
 
-To round out our logical toolkit, we will now build the three "negated" composite gates: **NOR** (Not-OR), **NAND** (Not-AND), and **XNOR** (Not-XOR). Each one performs a familiar operation and then immediately inverts the result.
+To round out our logical toolkit, we will now build the three "negated" composite gates: **NOR** (Not-OR), **NAND** (Not-AND), and **XNOR** (Not-XOR).
 
 On paper that sounds like an afterthought, a NOT stapled onto a gate we already own. But two of these gates have a property that's a cornerstone of modern electronics.
 
@@ -361,7 +361,7 @@ NOR gates turn up all over electronics, and you already know why they can carry 
 | `1` | `1` | `0` |
 -   **The Boolean Expression:** Our build implements the expression $(\text{NOT } A) \text{ OR } (\text{NOT } B)$ : $\neg A \lor \neg B$, which De Morgan's Law proves is equivalent to $A \text{ NAND } B$.
 
-> **A Note on De Morgan's Law in Action**: This is one of the most powerful tricks in digital logic. We know that NAND is $\neg(A \land B)$. We also know from De Morgan's Law that $\neg(A \land B)$ is equivalent to $\neg A \lor \neg B$. Our composite AND gate was built as $\neg(\neg A \lor \neg B)$. To create a NAND gate, we simply remove the final NOT gate (the last torch), which leaves us with the physical circuit for $\neg A \lor \neg B$. The circuit sitting in front of you is a physical proof of a fundamental logic law.
+> **A Note on De Morgan's Law in Action**: We know that NAND is $\neg(A \land B)$. We also know from De Morgan's Law that $\neg(A \land B)$ is equivalent to $\neg A \lor \neg B$. Our composite AND gate was built as $\neg(\neg A \lor \neg B)$. To create a NAND gate, we simply remove the final NOT gate (the last torch), which leaves us with the physical circuit for $\neg A \lor \neg B$. The circuit sitting in front of you is a physical proof of De Morgan's Law.
 
 ##### Lab & Experiment
 
@@ -426,7 +426,7 @@ $$ Y = \neg( \neg(A \lor \neg(A \lor B)) \lor \neg(B \lor \neg(A \lor B)) ) $$
 
 ##### Real-World Connection
 
-The XNOR gate's ability to act as an "equality detector" makes it fundamental to computer hardware. It's used in circuits called **comparators**, which check if two binary numbers are identical. This is a crucial operation for everything from searching for data to executing conditional instructions in a program.
+The XNOR gate's ability to act as an "equality detector" is what drives circuits called **comparators**, which check if two binary numbers are identical. That check happens constantly, in everything from searching for data to executing conditional instructions in a program.
 
 #### Practice Problem 3.4.1: Universal Gate Challenge
 
@@ -457,7 +457,7 @@ Build an $A \text{ AND } B$ ($A \land B$) gate using only NOR gates. Verify it w
 #### Practice Problem 3.5.1: Knowledge Check
 
 1.  What is the key difference in the output of an OR gate versus an XOR gate when both inputs are `1`?
-2.  Which two gates are considered "universal," and what is the name of this powerful property?
+2.  Which two gates are considered "universal," and what is the name of this property?
 3.  Using De Morgan's Law, what is the equivalent expression for $\neg(A \land B)$?
 
 <details>
@@ -553,7 +553,7 @@ def singleNumber_threes(nums):
 
 Where before you could construct a circuit, now you can use the laws of Boolean algebra to analyze and refine it, and sometimes, as in Lab 2, delete most of it.
 
-You've also got all seven of the fundamental logic gates now, and, more to the point, you know how to fold simpler primitives into more complex ones. That's the vocabulary the bigger circuits ahead are written in.
+You've also got all seven logic gates now, and, more to the point, you know how to fold simpler primitives into more complex ones. That's the vocabulary the bigger circuits ahead are written in.
 
 With this full toolkit, you're ready for our first major engineering challenge. In the next module, we'll apply everything you've learned to build a complete system: a translator that takes a 4-bit binary number from our input and displays it as a human-readable digit on a 7-segment display.
 
