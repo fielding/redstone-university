@@ -29,9 +29,9 @@
 
 > **Welcome to the Redstone University early preview!**
 >
-> The foundational section of the course, **Part I: The Foundations – The Human Interface**, is now complete and ready for you to explore. My goal is to make this the best possible resource it can be, and your feedback is a critical part of that process.
+> **Part I: The Foundations – Laying the Groundwork** is complete and ready to explore. I want this to be the best resource it can be, and that takes more eyes than mine.
 >
-> Please feel free to dive in, try the builds, and read through the lessons. If you find a typo, have a suggestion, or think a concept is unclear, please **[open an issue on GitHub](https://github.com/fielding/redstone-university/issues)**. All feedback is extremely valuable.
+> Try the builds, read the lessons, and if you find a typo, have a suggestion, or think a concept is unclear, **[open an issue on GitHub](https://github.com/fielding/redstone-university/issues)**.
 >
 > *The rest of the course (Parts II, III, and IV) is currently in active development.*
 
@@ -39,54 +39,48 @@
 
 ## About The Project
 
-Have you ever used a computer and wondered what’s *really* happening inside? Not just the software, but the deep, physical magic behind it all?
+This project is a complete, university-level introductory curriculum in digital logic and computer architecture, starting from first principles. The campus is Minecraft. Instead of hardware description languages and simulators, every concept in the course becomes a physical, working machine you can walk around inside of.
 
-**Redstone University** is a journey into the heart of the machine. This project provides a complete, university-level curriculum for learning computer architecture from first principles. But instead of abstract Hardware Description Languages and simulators, our campus is the world of Minecraft. We will make the abstract tangible, turning theory into a physical, working machine that you can walk around inside of.
-
-As a self-taught computer engineer, I found myself wanting to explore the foundational principles of computer science. The initial spark for this project, however, came from wanting to build something that could share these incredible ideas with my daughter, Ada. Ada introduced me to Minecraft when she was not even 2 years old, and we've been building together ever since. I realized that the abstract concepts of binary, bitwise operations, logic gates, and computer architecture are sometimes introduced in ways that make them feel very intangible. At the same time, I saw the incredibly complex and logical machines being built in Minecraft with Redstone. The idea was born: **what if we could learn these concepts in a tangible way, by building a computer from scratch, using tools we already love?**
-
-That is the mission of Redstone University.
+I'm a self-taught computer engineer, and I'd been wanting to revisit the foundations properly for a while. The real push came from my daughter, Ada. She introduced me to Minecraft before she was even 2, and we've been building together ever since. Binary, bitwise operations, logic gates, computer architecture: these concepts are often introduced in ways that make them feel intangible, while over in Minecraft people are casually building machines out of Redstone that put my old homework to shame. So the question asked itself: what if we learned this stuff by building a computer from scratch, with tools we already love?
 
 ### Who Is This For?
 
 This course is for the curious. It's for:
--   **My daughter, Ada**, for whom this project was first imagined.
+-   **My daughter, Ada**, who this project was first imagined for.
 -   **Students and kids** who want a fun, hands-on introduction to STEM and computer science.
--   **University CS students** who want a physical way to visualize the concepts from their "Computer Architecture" class.
--   **Self-taught programmers and professionals** who want to solidify their understanding of what's happening at the hardware level.
+-   **University CS students** who could use a physical way to picture what their "Computer Architecture" class keeps describing.
+-   **Self-taught programmers and professionals** filling in what's actually happening at the hardware level.
 
 ---
 
 ## Course Structure & Curriculum
 
-This course is structured as a complete curriculum, taking you from zero knowledge to a fully functional, programmable 4-bit computer. We will follow a clear, logical path, broken into four distinct parts:
+This course is structured as a cumulative sequence, taking you from zero knowledge to a fully functional, programmable 4-bit computer. It's broken into four parts:
 
--   **Part I: The Foundations – The Human Interface.** We will begin by building the essential input/output system. We'll learn the language of binary, master the grammar of Boolean logic, and construct a manual input panel and a 7-segment digital display.
+-   **Part I: The Foundations – Laying the Groundwork.** We start with the essential input/output system: the language of binary, the grammar of Boolean logic, a manual input panel, and a 7-segment digital display.
 
--   **Part II: The Thinking Machine – Building the Processor.** Here, we will construct the entire mathematical and logical brain of our computer. We'll engineer an adder and subtractor, give it the ability to make decisions with comparators and status flags, and forge everything into a complete Arithmetic Logic Unit (ALU).
+-   **Part II: The Thinking Machine – Building the Processor.** The mathematical and logical brain of the computer. We engineer an adder and subtractor, give it the ability to make decisions with comparators and status flags, and combine everything into a complete Arithmetic Logic Unit (ALU).
 
--   **Part III: The Automated Computer – Memory and Control.** In this final core part, we will achieve true automation across Modules 10–12b. We'll build registers and addressable RAM to give our processor a memory, then add the clocking, routing, and control logic that let it fetch, decode, and execute instructions from a stored program.
+-   **Part III: The Processor Core – Memory and Control.** True automation, across Modules 10–12b. Registers and addressable RAM give our processor a memory, then clocking, routing, and control logic let it fetch, decode, and execute instructions from a stored program.
 
--   **Part IV: Post-Graduate Studies (Bonus Content).** For those who want to go even further, Module 13 explores advanced topics, including the hardware required to display multi-digit decimal numbers just like a real-world calculator.
+-   **Part IV: Post-Graduate Studies – Advanced Engineering.** For anyone who wants to keep going, Module 13 covers advanced topics, including the hardware it takes to display multi-digit decimal numbers just like a real-world calculator.
 
-The current outline includes 13 numbered modules, with Module 12 intentionally split into **12a** (clock, counter, and control paths) and **12b** (instructions and the first program). Please see `curriculum.md` for the full module-by-module outline and `structure.md` for details on how the course is organized.
+The current outline includes 13 numbered modules, with Module 12 intentionally split into **12a** (clock, counter, and control paths) and **12b** (instructions and the first program). See `curriculum.md` for the full module-by-module outline and `structure.md` for how the course is organized.
 
 ---
 
 
 ## Contributing
 
-Contributions are what make the open-source community such an amazing place to learn and create. Any contributions you make are **greatly appreciated**.
+If you have a suggestion to improve a lesson, a typo to fix, or a circuit diagram to correct, fork the repo and open a pull request, or just open an issue with the "enhancement" tag. Either way, it's appreciated.
 
-If you have a suggestion to improve a lesson, fix a typo, or correct a circuit diagram, please feel free to fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-
-Please see [contributing.md](.github/CONTRIBUTING.md) for more details.
+See [contributing.md](.github/CONTRIBUTING.md) for details.
 
 ---
 
 ## License
 
-This project is dual-licensed to ensure it remains a free educational resource while protecting the creator's rights.
+This project is dual-licensed so the course stays a free educational resource while the creator's rights stay protected.
 
 #### Course Content
 The educational content of this course, including all Markdown files (`.md`), images, diagrams, and assets, is licensed under the [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License (CC BY-NC-SA 4.0)](http://creativecommons.org/licenses/by-nc-sa/4.0/).
