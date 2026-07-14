@@ -46,17 +46,17 @@ jobs:
       - name: Prepare markdown for PDF
         run: python scripts/prepare_pdf.py
 
+      # WeasyPrint lays out the PDF (page numbers, TOC page references,
+      # bookmark outline); KaTeX pre-renders the math server-side via node,
+      # which is preinstalled on ubuntu-latest runners.
+      - name: Install PDF tooling
+        run: |
+          sudo apt-get install -y libpango-1.0-0 libpangoft2-1.0-0 fonts-dejavu-core
+          pip install weasyprint markdown-it-py mdit-py-plugins linkify-it-py pygments
+          npm install --no-save katex
+
       - name: Generate PDF from processed markdown
-        uses: baileyjm02/markdown-to-pdf@v1
-        with:
-          input_path: course/Redstone-University.md
-          images_dir: assets/images
-          output_dir: course/
-          build_html: false
-          image_import: assets/images
-          theme: assets/css/pdf-style.css
-          extend_default_theme: true
-          highlight_theme: assets/css/darcula.css
+        run: python scripts/build_pdf.py
 
       - name: Clean up intermediate files
         run: rm -f course/Redstone-University.md

@@ -1,0 +1,444 @@
+/*
+ * Print stylesheet for the course PDF, consumed by WeasyPrint via
+ * scripts/build_pdf.py. Uses CSS Paged Media features (page counters,
+ * leaders, target-counter, bookmark-level) that only apply in print
+ * rendering.
+ */
+
+/* ---------- Embedded fonts (match the course website) ----------
+ *
+ * Font URLs are relative to this stylesheet (assets/css/), which
+ * WeasyPrint resolves against the document base_url (the repo root)
+ * because build_pdf.py links this file as assets/css/pdf-print.css.
+ * Static instances only: WeasyPrint's variable-font support is spotty.
+ */
+
+@font-face {
+    font-family: "Young Serif";
+    src: url("../fonts/young-serif/YoungSerif-Regular.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Literata";
+    src: url("../fonts/literata/Literata-Regular.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Literata";
+    src: url("../fonts/literata/Literata-Italic.ttf");
+    font-weight: normal;
+    font-style: italic;
+}
+@font-face {
+    font-family: "Literata";
+    src: url("../fonts/literata/Literata-Bold.ttf");
+    font-weight: bold;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Literata";
+    src: url("../fonts/literata/Literata-BoldItalic.ttf");
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Hanken Grotesk";
+    src: url("../fonts/hanken-grotesk/HankenGrotesk-Regular.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+/* WeasyPrint matches faces by the font file's own weight class, so
+ * bold sans must be requested as weight 600 to hit this file instead
+ * of a synthetically emboldened regular. */
+@font-face {
+    font-family: "Hanken Grotesk";
+    src: url("../fonts/hanken-grotesk/HankenGrotesk-SemiBold.ttf");
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Fira Code";
+    src: url("../fonts/fira-code/FiraCode-Regular.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Fira Code";
+    src: url("../fonts/fira-code/FiraCode-Medium.ttf");
+    font-weight: 500;
+    font-style: normal;
+}
+
+@page {
+    size: letter;
+    margin: 2.2cm 2cm 2.4cm 2cm;
+
+    @bottom-center {
+        content: counter(page);
+        font-family: "Hanken Grotesk", "DejaVu Sans", sans-serif;
+        font-size: 9pt;
+        color: #666;
+    }
+}
+
+@page cover {
+    margin: 0;
+
+    @bottom-center {
+        content: none;
+    }
+}
+
+/* ---------- Base typography ---------- */
+
+body {
+    font-family: "Literata", "KaTeX_Main", "DejaVu Serif", serif;
+    font-size: 10.5pt;
+    line-height: 1.55;
+    color: #222;
+    orphans: 3;
+    widows: 3;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    /* Young Serif ships a single (regular) weight; pin the weight so
+     * nothing tries to synthesize a bold or falls back to DejaVu. */
+    font-family: "Young Serif", "DejaVu Serif", serif;
+    font-weight: normal;
+    color: #2c3e50;
+    line-height: 1.25;
+    break-after: avoid;
+    break-inside: avoid;
+}
+
+/* The document body starts at h2 (chapters); map the PDF outline
+ * accordingly and keep deeper headings out of it. */
+h1 {
+    bookmark-level: none;
+}
+h2 {
+    font-size: 1.9em;
+    border-bottom: 2px solid #bdc3c7;
+    padding-bottom: 0.25em;
+    margin-top: 0;
+    bookmark-level: 1;
+}
+/* Every chapter (module/part/interlude/appendix) starts its own page.
+ * The forced break deduplicates with a natural page end, unlike the
+ * old <hr class="pagebreak"> boxes, which minted blank folio pages
+ * when a chapter happened to end exactly at a page boundary. */
+main h2 {
+    break-before: page;
+}
+
+h3 {
+    font-size: 1.4em;
+    margin-top: 1.4em;
+    bookmark-level: 2;
+}
+h4 {
+    font-size: 1.15em;
+    margin-top: 1.2em;
+    bookmark-level: 3;
+}
+h5,
+h6 {
+    font-size: 1em;
+    bookmark-level: none;
+}
+
+p {
+    margin: 0 0 0.9em;
+}
+
+a {
+    color: #2980b9;
+    text-decoration: none;
+}
+
+strong {
+    color: #111;
+}
+
+blockquote {
+    margin: 1em 0;
+    padding: 0.2em 1em;
+    border-left: 3px solid #bdc3c7;
+    background-color: #f7f9fa;
+    color: #444;
+    break-inside: avoid;
+}
+
+blockquote h4,
+blockquote h5 {
+    margin-top: 0.4em;
+}
+
+/* WeasyPrint's default nested-list markers (◦ U+25E6, ▪ U+25AA) do not
+ * exist in the embedded fonts and would drag in system fallbacks; use
+ * glyphs Literata carries. */
+ul ul,
+ol ul {
+    list-style-type: "\2013\a0\a0";
+}
+
+ul ul ul,
+ul ol ul,
+ol ul ul,
+ol ol ul {
+    list-style-type: "\b7\a0\a0";
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 2em 0;
+}
+
+hr.pagebreak {
+    border: none;
+    margin: 0;
+    break-after: page;
+}
+
+/* ---------- Code ---------- */
+
+code,
+pre,
+kbd {
+    font-family: "Fira Code", "DejaVu Sans Mono", monospace;
+}
+
+code {
+    font-size: 0.86em;
+    background-color: #f2f3f5;
+    padding: 0.1em 0.3em;
+    border-radius: 3px;
+}
+
+pre {
+    background-color: #f6f8fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 4px;
+    padding: 0.8em 1em;
+    font-size: 8.5pt;
+    line-height: 1.45;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    /* WeasyPrint still splits blocks taller than one page, so this is
+     * safe for long listings. */
+    break-inside: avoid;
+}
+
+pre code {
+    background: none;
+    padding: 0;
+    font-size: inherit;
+}
+
+/* ---------- Tables ---------- */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.2em 0;
+    font-size: 9pt;
+    break-inside: avoid;
+}
+
+th,
+td {
+    border: 1px solid #ccc;
+    padding: 0.45em 0.6em;
+    text-align: left;
+    vertical-align: middle;
+}
+
+th {
+    background-color: #eef1f3;
+    font-family: "Hanken Grotesk", "DejaVu Sans", sans-serif;
+    font-weight: 600;
+    font-size: 8.5pt;
+}
+
+tr {
+    break-inside: avoid;
+}
+
+td img {
+    max-height: 3em;
+    width: auto;
+    margin: 0 auto;
+    display: block;
+}
+
+/* ---------- Images and math ---------- */
+
+img {
+    max-width: 100%;
+    /* The page content box is 23.3cm tall (letter minus margins); cap
+     * images below that, leaving room for a caption, so a too-tall
+     * schematic scales down instead of clipping at the page edge. */
+    max-height: 20.4cm;
+    height: auto;
+    display: block;
+    margin: 1.2em auto;
+}
+
+/* build_pdf.py wraps each image and its "Figure: ..." caption in a
+ * <figure> so they can never be split across pages. */
+figure {
+    margin: 1.2em 0;
+    break-inside: avoid;
+}
+
+figure img {
+    margin: 0 auto 0.6em;
+}
+
+/* Stacked images sharing one caption must all fit a single page
+ * together with it. */
+figure.multi img {
+    max-height: 10.2cm;
+}
+
+figcaption {
+    /* KaTeX_Main (embedded anyway for math) covers the odd math symbol
+     * (e.g. ≡) that appears in caption prose. */
+    font-family: "Hanken Grotesk", "KaTeX_Main", "DejaVu Sans", sans-serif;
+    font-size: 10pt;
+    color: #444;
+    text-align: center;
+    break-before: avoid;
+}
+
+/* Captions that wrap past ~2 lines (classed at build time) read better
+ * left-aligned than as a centered ragged block. */
+figcaption.long {
+    text-align: left;
+}
+
+figcaption em {
+    font-style: normal;
+}
+
+/* Module conclusions are short designed closers (build_pdf.py wraps
+ * them); never strand their last lines on the next page. */
+.keep-together {
+    break-inside: avoid;
+}
+
+/* Glossary source key: a compact two-column block so its last entry
+ * cannot strand alone on a fresh page. */
+.source-key {
+    column-count: 2;
+    column-gap: 1.5em;
+    font-size: 9pt;
+    break-inside: avoid;
+}
+
+.source-key p {
+    margin: 0 0 0.35em;
+}
+
+.math-display {
+    text-align: center;
+    margin: 1em 0;
+    break-inside: avoid;
+}
+
+.katex {
+    font-size: 1.05em;
+}
+
+/* ---------- Cover page ---------- */
+
+#cover {
+    page: cover;
+    height: 100%;
+    text-align: center;
+    padding-top: 7cm;
+    break-after: page;
+}
+
+#cover-logo {
+    width: 9cm;
+    margin: 0 auto 1.5cm;
+}
+
+#cover-title {
+    font-size: 34pt;
+    margin: 0 0 0.6em;
+    border: none;
+}
+
+#cover-subtitle {
+    font-size: 13pt;
+    font-style: italic;
+    color: #555;
+    margin: 0 auto 2cm;
+    max-width: 13cm;
+}
+
+#cover-author {
+    font-family: "Hanken Grotesk", "DejaVu Sans", sans-serif;
+    font-size: 12pt;
+    color: #333;
+}
+
+/* ---------- Table of contents ---------- */
+
+#toc {
+    break-after: page;
+}
+
+.toc-title {
+    bookmark-level: 1;
+}
+
+#toc ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+#toc ul.toc-l2 {
+    padding-left: 1.2em;
+}
+
+#toc li {
+    margin: 0.15em 0;
+}
+
+#toc a {
+    color: #222;
+    text-decoration: none;
+}
+
+#toc a::after {
+    content: leader(". ") " " target-counter(attr(href), page);
+    color: #666;
+}
+
+.toc-chapter {
+    margin-top: 0.7em !important;
+}
+
+.toc-chapter > a {
+    font-family: "Hanken Grotesk", "DejaVu Sans", sans-serif;
+    font-weight: 600;
+}
+
+.toc-l2 {
+    font-size: 9.5pt;
+}
