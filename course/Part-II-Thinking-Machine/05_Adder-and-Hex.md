@@ -318,9 +318,9 @@ $$
 \underbrace{1100}_{\text{C}}\;\;\underbrace{0011}_{\text{3}} \quad\rightarrow\quad \text{C3}
 $$
 
-No long division, no arithmetic. You already read numbers this way, by the way: nobody recites a phone number as ten raw digits. You say it in chunks, because chunks are what a human memory can actually hold onto, and the digits inside each chunk come along for free. Hex is that same chunking made official, with every group of four bits getting a single name. And it scales: an 8-bit value is two hex digits, a 16-bit value is four, and a 64-bit memory address is sixteen. The reading trick you just learned on our little display works on every machine you will ever touch.
+No long division, no arithmetic. You already read numbers this way, by the way: nobody recites a phone number as ten raw digits. You say it in chunks, because chunks are what a human memory can actually hold onto, and the digits inside each chunk come along for free. Hex is that same chunking made official, with every group of four bits getting a single name. And it scales cleanly: an 8-bit value is two hex digits, a 16-bit value four, a full 64-bit value sixteen. That same grouping shows up all through low-level programming, debugging, and computer architecture.
 
-One convention before we move on: in most programming languages, and everywhere in this course, hexadecimal wears a `0x` prefix, so `0xC` means “`C`, the number” rather than “`C`, the letter.” You will see that prefix for the rest of the course.
+One convention before we move on: in many programming languages, and everywhere in this course, hexadecimal wears a `0x` prefix, so `0xC` means “`C`, the number” rather than “`C`, the letter.” You will see that prefix for the rest of the course.
 
 #### Try it
 

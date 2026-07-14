@@ -60,7 +60,7 @@ By lighting up specific combinations of these seven segments, we can display any
 Let’s start by building the physical canvas for our numbers.
 
 1.  **Construct the Segments**: In Minecraft, place Redstone Lamps in the "8" shape shown above. For good visibility, making each segment 3 lamps long is a great choice.
-2.  **Isolate the Segments**: Carefully surround the lamp segments with a non-conductive block like Wool or Concrete. I use black concrete to make the segments stand out.
+2.  **Isolate the Segments**: Carefully surround the lamp segments with your block of choice. I use black concrete to make the segments stand out.
 3.  **Create Manual Controls**: To power each segment, run a Redstone Repeater into the middle lamp. For now, place a solid block behind each repeater and attach a Lever to it. This gives you manual control for testing.
 
 <div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/04_7-segment-display_minecraft.png" alt="7 Segment Display in Minecraft" width="512px"/><br/><em>Figure: The display's construction stages. From left to right: the basic lamp layout, the layout isolated with concrete, powering the middle lamps of each segment, and a close-up of the repeater and lever used to control a single segment.</em></div><br/>
@@ -91,8 +91,10 @@ Instead, let’s do what engineers do with every problem this hairy and break it
 
 This modular, two-stage approach is the heart of good engineering. It's easier to build, easier to test, and far easier to fix if something goes wrong.
 
+**Input contract:** this decoder defines an output only for the valid BCD patterns `0000` through `1001` (0 through 9). Feed it `1010` through `1111` and no line is selected, so the display just stays blank. That isn't a bug, it's the decoder's stated range, and we come back to it on purpose in Part II, once our arithmetic can produce all sixteen 4-bit patterns.
+
 **Our Signal Flow**:
-`[4-bit Input] → [**Decoder**] → [1 of 10 Lines] → [**ROM**] → [7 Segment Signals] → [Display]`
+`[4-bit BCD Input: 0000–1001] → [**Decoder**] → [1 of 10 Lines] → [**ROM**] → [7 Segment Signals] → [Display]`
 
 <div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/04_digital-display-subcircuit-abstractions_circuitverse.png" alt="Digital Display Subcircuit Abstractions" width="512px"/><br/><em>Figure: The overall system in CircuitVerse, using subcircuit abstractions for the decoder, ROM, and display to show the high-level signal flow.</em></div><br/>
 
@@ -319,7 +321,7 @@ The tap for `B0` on the `L8` line is supposed to detect this mismatch and power 
 
 > **Key Takeaway**: Our mapper stage is a physical Read-Only Memory (ROM), built as a "diode matrix" where the layout of the wiring permanently stores the data for how to draw each number.
 
-We now have a working decoder that gives us a single **unpowered** (active-low) line for any given number. The next step is to build our "mapper": the ROM that takes this single signal and draws the correct digit on our display. This job is so common that the classic real-world chip for it, the 7447, is sold as a "BCD-to-seven-segment decoder/driver". Same machine, different names. We build ours as memory.
+We now have a working decoder that pulls exactly one line low for each valid BCD digit, `0` through `9`. (Inputs `1010` through `1111` match no line, exactly as the Lesson 4.2 contract says.) The next step is to build our "mapper": the ROM that takes this single signal and draws the correct digit on our display. This job is so common that the classic real-world chip for it, the 7447, is sold as a "BCD-to-seven-segment decoder/driver". It does the same external job ours does, turning a BCD digit into seven segment signals, though its innards are ordinary logic rather than a diode matrix. We build ours as memory.
 
 <div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/04_10-to-7-rom_circuitverse.png" alt="10-to-7 ROM in CircuitVerse" width="512px"/><br/><em>Figure: The 10-to-7 ROM in CircuitVerse, using a diode matrix structure to map the active input line to the correct segment pattern.</em></div><br/>
 
@@ -411,11 +413,11 @@ Before connecting the ROM to the decoder, test all lines (`L0`–`L9`) independe
 
 #### Real-World Connection: BIOS and Game Cartridges
 
-The "Diode Matrix" you've just built is a simple form of **Read-Only Memory (ROM)**. The "program" is physically burned into the circuit's layout by the placement of the torches. This exact principle was fundamental to early computing. A computer's **BIOS chip**, which tells it how to boot up, is a form of ROM. Old video game cartridges were also ROMs, with the entire game's data permanently stored in the hardware's structure. You've built the same technology.
+The "Diode Matrix" you've just built is a simple form of **Read-Only Memory (ROM)**. The "program" is physically burned into the circuit's layout by the placement of the torches. This exact principle was fundamental to early computing. A computer's **BIOS chip**, which tells it how to boot up, is a form of ROM. Old video game cartridges were also ROMs, with the entire game's data permanently stored in the hardware's structure. You've built the same underlying idea, even though the physical storage in a real chip works differently.
 
 #### Software Connection: Substitution Boxes in Cryptography
 
-Software leans on the same trick: a precomputed lookup table that never changes, baked into the program. A good example is the S-box inside AES, the encryption standard protecting most of your web traffic. It's a fixed 256-entry table that maps each input byte to an output byte, hardcoded into every AES implementation. That's the same idea as the display ROM you just built, only wider: 256 entries of 8 bits instead of 10 entries of 7.
+Software leans on the same trick: a precomputed lookup table that never changes, baked into the program. A good example is the S-box inside AES, the encryption standard protecting most of your web traffic. It's a fixed 256-entry table that maps each input byte to an output byte, though some implementations store that table literally while others compute it on the fly or use dedicated CPU instructions. That's the same idea as the display ROM you just built, only wider: 256 entries of 8 bits instead of 10 entries of 7.
 
 Here's the S-box as a Python lookup table, trimmed to the first row:
 
@@ -432,7 +434,7 @@ def aes_sbox_substitute(byte):
 print(hex(aes_sbox_substitute(0x0b)))  # 0x2b
 ```
 
-In hardware AES implementations, the S-box is sometimes a literal ROM: the same diode-matrix idea, in silicon.
+In hardware, an AES S-box might be a ROM, might be plain combinational logic, or might be something else tuned to the chip's speed and area. The diode matrix is just the cleanest way to picture it.
 
 #### Practice Problem 4.5.1: Design on Paper
 
@@ -499,7 +501,7 @@ Here's the full schematic in CircuitVerse without subcircuit abstractions, showi
 
 <div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/04_complete-digital-display_circuitverse.png" alt="Full System in CircuitVerse" width="512px"/><br/><em>Figure: The end-to-end binary-to-display system in CircuitVerse, integrating all components from this module and displaying '3' for input `0011`.</em></div><br/>
 
-Cycle through inputs `0000` to `1001` and watch the display light up each digit.
+Cycle through inputs `0000` to `1001` and watch the display light up each digit. Then try `1010` through `1111`: the display should go blank, since those six patterns fall outside the BCD decoder's documented range.
 
 Stop and take stock of what this machine actually does: you flip four levers, and a shape you can read appears on a wall of lamps. Every step of that translation, decoder, ROM, display, is something you built and tested on its own before connecting it. That decomposition is the reason a build this size worked on the first full test, or was fixable when it didn't.
 
@@ -524,12 +526,12 @@ Stop and take stock of what this machine actually does: you flip four levers, an
 
 #### Practice Problem 4.7.2: Decoder Design
 
-You want to add a special output line, `LE`, that lights up only for even numbers (`0`, `2`, `4`, `6`, `8`). You realize that for all even numbers, the `B0` bit is always `0`. What is the single tap you would need to build a simple detector for this?
+Within the valid BCD range (`0000` through `1001`), you want to add a special output line, `LE`, that lights for the even digits (`0`, `2`, `4`, `6`, `8`). Every even BCD digit has `B0` = `0`. What single tap would build a detector for this?
 
 <details>
 <summary><strong>Show Solution</strong></summary>
 
-You want the lamp to be ON only when `B0` is `0`. Our active-low system turns the lamp on when the line is unpowered. You would need a single **Repeater Tap** from the `B0` line. When `B0` is `1` (odd), the repeater powers the `LE` line and turns the lamp off. When `B0` is `0` (even), the repeater is off, the line is unpowered, and the lamp turns on.
+You want the lamp to be ON only when `B0` is `0`. Our active-low system turns the lamp on when the line is unpowered. You would need a single **Repeater Tap** from the `B0` line. When `B0` is `1` (odd), the repeater powers the `LE` line and turns the lamp off. When `B0` is `0` (even), the repeater is off, the line is unpowered, and the lamp turns on. That works only because of the BCD input contract: without it, the same detector would also light for the even 4-bit values 10, 12, and 14.
 
 </details>
 
@@ -563,7 +565,7 @@ In the world download for this module, you'll find a section labeled "Module 4 D
   - The digit `2` should be `a, b, g, e, d`.
   - The digit `6` is `a, c, d, e, f, g`.
 
-What is the single most likely point of failure in the system that would cause this specific error? (Hint: The problem is in the ROM).
+Which row of the ROM should you inspect, and which tap differences would turn the correct pattern for `2` into the `6` you're seeing? (Hint: the problem is in the ROM).
 
 <details>
 <summary><strong>Show Solution</strong></summary>
@@ -574,9 +576,11 @@ When the input is `2`, the `L2` line from the decoder correctly goes LOW. This i
 The display shows a `6`, meaning segments `c` and `f` are ON when they should be OFF, and segment `b` is OFF when it should be ON.
 
 **The Conclusion**:
-This points to a catastrophic failure in the "programming" of the `L2` line in your Diode Matrix. You have wired it incorrectly.
--   You have likely **accidentally placed** torch taps from the `L2` line to the segment lines for `c` and `f`.
--   You have likely **forgotten to place** the torch tap from the `L2` line to the segment line for `b`.
+The decoder did its job and selected the `L2` line correctly. The fault is in that line's ROM programming, and it's three taps, not one:
+-   Segment `b` should be ON but is OFF, so the `L2` → `b` torch tap is **missing**.
+-   Segments `c` and `f` should be OFF but are ON, so the `L2` → `c` and `L2` → `f` taps were **added by mistake**.
+
+So it's a misprogrammed `L2` row, three taps off, not a system failure.
 
 </details>
 
@@ -596,7 +600,7 @@ This points to a catastrophic failure in the "programming" of the `L2` line in y
 
 ### Module 4 Conclusion
 
-You engineered a complete system in this module, and by breaking it into distinct, logical stages, you kept it manageable, testable, and understandable. You now know binary-to-decimal decoding and how a hardware ROM drives an output, two fundamental building blocks of digital electronics.
+You engineered a complete system in this module, and by breaking it into distinct, logical stages, you kept it manageable, testable, and understandable. You now know how to decode a 4-bit BCD digit and how a hard-wired lookup table can drive a display, two fundamental building blocks of digital electronics.
 
 **What’s Next?**
 

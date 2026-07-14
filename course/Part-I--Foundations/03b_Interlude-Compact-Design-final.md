@@ -45,7 +45,7 @@ Now look at a classic compact AND gate. It performs the exact same function with
 
 This compact build implements exactly the same logic.
 -   The two torches on the sides of the input blocks are your first **NOT** gates, creating the signals for $\neg A$ and $\neg B$.
--   The central Redstone dust is the **OR** gate. It gets powered if *either* of the side torches turns off.
+-   The central Redstone dust is the **OR** gate: it's powered whenever *either* side torch is on, that is, whenever *either* input is off, which gives us the intermediate signal $\neg A \lor \neg B$.
 -   The torch on the front of the central block is the final **NOT** gate, inverting the signal from the dust.
 The logic is identical: $\neg(\neg A \lor \neg B)$. It's just cleverly folded into a smaller space by using how torches and dust interact.
 
@@ -61,7 +61,7 @@ The community has created many compact XOR designs. Here is one of the most comm
 
 #### Logical Deconstruction
 
-This design uses torch burnout and block power states to create the two conditions for an XOR, $A \text{ AND } (\text{NOT } B)$ or $(\text{NOT } A) \text{ AND } B$ : $ (A \land \neg B) \lor (\neg A \land B) $, and merges their outputs. While tracing the exact path is advanced, the key takeaway is that it perfectly matches the XOR truth table in a minimal amount of space, which is critical when you need to build dozens of them for an arithmetic unit.
+This design leans on block power states and torch inversion to produce the two cases an XOR cares about, $A \text{ AND } (\text{NOT } B)$ or $(\text{NOT } A) \text{ AND } B$ : $ (A \land \neg B) \lor (\neg A \land B) $, then merges them. Tracing the exact path is advanced, so the honest way to check the design is to test all four inputs, `00`, `01`, `10`, and `11`, against the truth table. That matters once you're stamping dozens of them into an arithmetic unit.
 
 ---
 

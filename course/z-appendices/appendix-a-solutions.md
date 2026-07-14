@@ -92,7 +92,7 @@ Design a circuit that implements the logic $A \text{ AND } (\text{NOT } B)$ : $A
 **Answer:**
 
 1.  The **NOT** gate (a Redstone Torch) and the **OR** gate (merging Redstone Dust lines).
-2.  A truth table's purpose is to define a gate's behavior for every possible combination of inputs. It is the ultimate source of truth for how a logic circuit functions.
+2.  A truth table's purpose is to define a gate's behavior for every possible combination of inputs. It's the complete definition of how the circuit behaves, input by input.
 3.  An **OR** gate outputs a `1` if *at least one* input is a `1`. An **AND** gate outputs a `1` only if *all* inputs are a `1`.
 
 
@@ -301,11 +301,13 @@ Build an $A \text{ OR } B$ ($A \lor B$) gate using only **NAND** gates. Provide 
 
 ### Practice Problem 3.5.4: The Software Challenge
 
-You are given a list where every number appears three times, except for one number that appears only once. Write a Python function using bitwise operators that finds the unique number. (Hint: The self-canceling property of XOR won't work directly. How can you count the `1`s in each bit position across all the numbers?)
+You are given a list of **nonnegative 32-bit integers** where every number appears three times, except for one number that appears only once. Write a Python function using bitwise operators that finds the unique number. (Hint: The self-canceling property of XOR won't work directly. How can you count the `1`s in each bit position across all the numbers?)
 
 **Answer:**
 
 **The Logic:** If we sum the bits in each position (the 1s place, 2s place, 4s place, etc.) for all the numbers in the list, the sum for each bit of the triplicate numbers will be a multiple of 3. The unique number's bits will be the "remainders." We can use the modulo operator (`%`) to find these remainders.
+
+This version assumes nonnegative 32-bit inputs. Supporting negatives means reading the top bit as a two's-complement sign, which we don't cover until Module 6, so the function below is correct for the contract as written.
 
 **The Python Code:**
 ```python
@@ -413,11 +415,11 @@ If a segment that should be ON is OFF, it means it's not receiving power. The mo
 
 ### Practice Problem 4.7.2: Decoder Design
 
-You want to add a special output line, `LE`, that lights up only for even numbers (`0`, `2`, `4`, `6`, `8`). You realize that for all even numbers, the `B0` bit is always `0`. What is the single tap you would need to build a simple detector for this?
+Within the valid BCD range (`0000` through `1001`), you want to add a special output line, `LE`, that lights for the even digits (`0`, `2`, `4`, `6`, `8`). Every even BCD digit has `B0` = `0`. What single tap would build a detector for this?
 
 **Answer:**
 
-You want the lamp to be ON only when `B0` is `0`. Our active-low system turns the lamp on when the line is unpowered. You would need a single **Repeater Tap** from the `B0` line. When `B0` is `1` (odd), the repeater powers the `LE` line and turns the lamp off. When `B0` is `0` (even), the repeater is off, the line is unpowered, and the lamp turns on.
+You want the lamp to be ON only when `B0` is `0`. Our active-low system turns the lamp on when the line is unpowered. You would need a single **Repeater Tap** from the `B0` line. When `B0` is `1` (odd), the repeater powers the `LE` line and turns the lamp off. When `B0` is `0` (even), the repeater is off, the line is unpowered, and the lamp turns on. That works only because of the BCD input contract: without it, the same detector would also light for the even 4-bit values 10, 12, and 14.
 
 
 ---
@@ -455,7 +457,7 @@ In the world download for this module, you'll find a section labeled "Module 4 D
   - The digit `2` should be `a, b, g, e, d`.
   - The digit `6` is `a, c, d, e, f, g`.
 
-What is the single most likely point of failure in the system that would cause this specific error? (Hint: The problem is in the ROM).
+Which row of the ROM should you inspect, and which tap differences would turn the correct pattern for `2` into the `6` you're seeing? (Hint: the problem is in the ROM).
 
 **Answer:**
 
@@ -465,9 +467,11 @@ When the input is `2`, the `L2` line from the decoder correctly goes LOW. This i
 The display shows a `6`, meaning segments `c` and `f` are ON when they should be OFF, and segment `b` is OFF when it should be ON.
 
 **The Conclusion**:
-This points to a catastrophic failure in the "programming" of the `L2` line in your Diode Matrix. You have wired it incorrectly.
--   You have likely **accidentally placed** torch taps from the `L2` line to the segment lines for `c` and `f`.
--   You have likely **forgotten to place** the torch tap from the `L2` line to the segment line for `b`.
+The decoder did its job and selected the `L2` line correctly. The fault is in that line's ROM programming, and it's three taps, not one:
+-   Segment `b` should be ON but is OFF, so the `L2` → `b` torch tap is **missing**.
+-   Segments `c` and `f` should be OFF but are ON, so the `L2` → `c` and `L2` → `f` taps were **added by mistake**.
+
+So it's a misprogrammed `L2` row, three taps off, not a system failure.
 
 
 ---
