@@ -338,4 +338,4 @@ Now bring Practice Problem 2.4.2 to life. Build the home security system in Mine
 
 You started with the abstract idea of Boolean Algebra and ended by building physical, working circuits that obey its laws. You now have the three foundational gates, NOT, OR, and AND, and you've used a move you will repeat for the rest of this course: building a component you don't have out of components you do.
 
-These are the essential "verbs" of our computer's language. In the next module, **The Art of Logic**, we'll expand our vocabulary with more specialized gates and learn the simplification techniques engineers use to make correct circuits efficient.
+In the next module, **The Art of Logic**, we'll expand our vocabulary with more specialized gates and learn the simplification techniques engineers use to make correct circuits efficient.
