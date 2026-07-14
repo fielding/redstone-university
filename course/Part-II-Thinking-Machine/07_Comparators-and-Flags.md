@@ -2,7 +2,7 @@
 
 ### Module 7 Summary
 
--   **Narrative Beat:** Our machine can already calculate, but calculation alone is not enough for programming. In this module, we will teach it how to *notice* something about its own results. That awareness is the foundation of branching, loops, and every `if` statement you have ever written.
+-   **Why This Module:** Our machine can already calculate, but calculation alone is not enough for programming. In this module, we will teach it how to *notice* something about its own results. That awareness is the foundation of branching, loops, and every `if` statement you have ever written.
 -   **Learning Goals:**
     -   Understand why decision-making requires hardware that can evaluate conditions.
     -   Build a 4-bit equality comparator using XNOR and AND gates.
@@ -13,7 +13,7 @@
     -   Lesson 7.2: The equality comparator
     -   Lesson 7.3: The art of awareness – An introduction to status flags
     -   Lesson 7.4: Building the flag logic
--   **Minecraft Artifact:** A 4-bit equality comparator and a 2-bit status flag circuit.
+-   **Build:** A 4-bit equality comparator and a 2-bit status flag circuit.
 
 ---
 

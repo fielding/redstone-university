@@ -2,7 +2,7 @@
 
 ### Module 10 Summary
 
--   **Narrative Beat:** Our ALU can think, but it still cannot remember. In this module, we solve that by building the machine's first true memory element: a register that can hold a 4-bit value after the inputs change.
+-   **Why This Module:** Our ALU can think, but it still cannot remember. In this module, we solve that by building the machine's first true memory element: a register that can hold a 4-bit value after the inputs change.
 -   **Learning Goals:**
     -   Understand the difference between **combinational** and **sequential** logic.
     -   Learn the theory of a **gated D-latch** and why feedback creates memory.
@@ -14,7 +14,7 @@
     -   Lesson 10.2: The first memory cell – The gated D-latch on paper
     -   Lesson 10.3: The Minecraft implementation – Repeater locking and pulse limiting
     -   Lesson 10.4: The lab – Building the scratchpad register and flag latch
--   **Minecraft Artifact:** A working 4-bit scratchpad register with a STORE button, plus a 2-bit flag latch for `Z` and `N`.
+-   **Build:** A working 4-bit scratchpad register with a STORE button, plus a 2-bit flag latch for `Z` and `N`.
 
 ---
 

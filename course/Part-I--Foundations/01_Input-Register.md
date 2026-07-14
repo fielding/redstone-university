@@ -2,7 +2,6 @@
 
 ### Module 1 Summary
 
-- **Narrative Beat:** Before we can build a computer, we need a way to talk to it. Our language will be binary, and our input interface will be a set of simple levers.
 - **Learning Goals:**
   - Understand binary as a system of on/off switches.
   - Build a physical interface to input binary numbers.
@@ -11,7 +10,7 @@
     - Lesson 1.1: The Theory – Why Computers Use Binary
     - Lesson 1.2: The Lab – Building Our 4-Bit Input Interface
     - Lesson 1.3: Drills & Games – Strengthening Your Binary Intuition
-- **Minecraft Artifact:** A working 4-bit input interface for binary numbers.
+- **Build:** A working 4-bit input interface for binary numbers.
 
 ---
 

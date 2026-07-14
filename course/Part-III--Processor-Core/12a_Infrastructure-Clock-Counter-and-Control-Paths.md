@@ -2,7 +2,7 @@
 
 ### Module 12a Summary
 
--   **Narrative Beat:** Before the computer can understand a program, it needs timing, routing, and discipline. In this module, we build the machine's heartbeat, its program counter, its phase sequencer, the last of its registers, and the routing network that lets all the major subsystems cooperate.
+-   **Why This Module:** Before the computer can understand a program, it needs timing, routing, and discipline. In this module, we build the machine's heartbeat, its program counter, its phase sequencer, the last of its registers, and the routing network that lets all the major subsystems cooperate.
 -   **Learning Goals:**
     -   Build a controllable system clock with **RUN**, **HALT**, **STEP**, and **RESET** behavior.
     -   Understand the four jobs of the **Program Counter**: hold, increment, load, and reset.
@@ -18,7 +18,7 @@
     -   Lesson 12a.4: The fetch registers – IR, AR, and Register B
     -   Lesson 12a.5: The selectors – The five routing decisions inside the machine
     -   Lesson 12a.6: The front panel and fetch cycle
--   **Minecraft Artifact:** A controllable clock, a loadable 4-bit Program Counter, a three-phase sequencer, the machine's three remaining registers (IR, AR, and Register B), and the routing network that prepares the computer to run programs.
+-   **Build:** A controllable clock, a loadable 4-bit Program Counter, a three-phase sequencer, the machine's three remaining registers (IR, AR, and Register B), and the routing network that prepares the computer to run programs.
 
 ---
 

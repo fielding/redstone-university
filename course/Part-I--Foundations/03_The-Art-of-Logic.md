@@ -2,7 +2,6 @@
 
 ### Module 3 Summary
 
--   **Narrative Beat:** We know the basic words. Now, we learn to write poetry. How can we say the same thing with fewer words (Simplification)? And what are the special "adjectives" and "conjunctions" (XOR, NAND) that allow for more elegant and powerful expressions?
 -   **Learning Goals:**
     -   Apply the laws of Boolean algebra to simplify circuits on paper, making them more efficient.
     -   Build and understand the unique properties of the XOR, NAND, and NOR gates.
@@ -13,7 +12,7 @@
     -   Lesson 3.2: The Special Operator – Building an XOR Gate
     -   Lesson 3.3: Software Superpowers – The XOR Trick for Programmers
     -   Lesson 3.4: The Negated Gates – NAND, NOR, and XNOR
--   **Minecraft Artifact:** A working set of the advanced logic gates (XOR, NAND, NOR, XNOR) and a completed, simplified circuit from a practice problem.
+-   **Build:** A working set of the advanced logic gates (XOR, NAND, NOR, XNOR) and a completed, simplified circuit from a practice problem.
 
 ---
 

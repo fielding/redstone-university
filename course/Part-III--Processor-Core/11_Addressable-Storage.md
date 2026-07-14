@@ -2,7 +2,7 @@
 
 ### Module 11 Summary
 
--   **Narrative Beat:** One scratchpad is not enough for a real computer. In this module, we will duplicate our register into an organized memory array, assign each location an address, and build the circuitry that lets us read and write exactly one location at a time.
+-   **Why This Module:** One scratchpad is not enough for a real computer. In this module, we will duplicate our register into an organized memory array, assign each location an address, and build the circuitry that lets us read and write exactly one location at a time.
 -   **Learning Goals:**
     -   Understand memory **addressing** and the role of an address bus.
     -   Reuse our existing decoder by converting its **active-low** outputs into **active-high** row selects.
@@ -14,7 +14,7 @@
     -   Lesson 11.2: The select problem – Active-low and active-high signals
     -   Lesson 11.3: The lab – Building a tiny RAM prototype
     -   Lesson 11.4: Scaling up to 16x4 RAM
--   **Minecraft Artifact:** A functional 16x4-bit RAM module with addressable read and write behavior.
+-   **Build:** A functional 16x4-bit RAM module with addressable read and write behavior.
 
 ---
 

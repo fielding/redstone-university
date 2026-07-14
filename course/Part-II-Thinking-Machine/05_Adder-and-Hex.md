@@ -2,7 +2,6 @@
 
 ### Module 5 Summary
 
--   **Narrative Beat:** Time for real math. We'll build the first circuit that lets our machine calculate, then watch that success immediately expose a bigger system problem. Solving that problem will force us to upgrade our display and, in the process, learn the number system low-level programmers use every day.
 -   **Learning Goals:**
     -   Understand how binary addition produces both a **sum** bit and a **carry** bit.
     -   Build a reusable 1-bit **full adder** and chain four of them into a 4-bit ripple-carry adder.
@@ -16,8 +15,8 @@
     -   Lesson 5.4: The programmer's solution – Speaking hexadecimal
     -   Lesson 5.5: The lab – The hexadecimal upgrade
     -   Lesson 5.6: The payoff
--   **Minecraft Artifact:** A working 4-bit ripple-carry adder connected to a hexadecimal display.
--   **The Payoff:** The calculation `8 + 4`, which originally broke our display, will now appear correctly as `C`.
+-   **Build:** A working 4-bit ripple-carry adder connected to a hexadecimal display.
+-   **Final Test:** The calculation `8 + 4`, which originally broke our display, will now appear correctly as `C`.
 
 ---
 

@@ -2,7 +2,6 @@
 
 ### Module 4 Summary
 
--   **Narrative Beat**: We've learned the computer's language. Now, let's build a translator so it can talk back to us. This is our first major engineering project, where we'll turn abstract binary signals into a number we can actually read.
 -   **Learning Goals**:
     -   Understand the distinct roles of a decoder and a ROM.
     -   Grasp the engineering trade-offs between a "brute-force" design and an elegant, compact design.
@@ -15,7 +14,7 @@
     -   Lesson 4.4: The Decoder Lab, Part 2: An Elegant, Compact Solution
     -   Lesson 4.5: The ROM: Programming the "Diode Matrix"
     -   Lesson 4.6: The Grand Payoff: System Integration
--   **Minecraft Artifact**: A working two-stage translator: a 4-to-10 BCD decoder and a 7-segment pattern ROM, forming a complete digital display system.
+-   **Build**: A working two-stage translator: a 4-to-10 BCD decoder and a 7-segment pattern ROM, forming a complete digital display system.
 
 ---
 

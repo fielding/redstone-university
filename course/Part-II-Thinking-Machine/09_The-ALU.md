@@ -2,7 +2,7 @@
 
 ### Module 9 Summary
 
--   **Narrative Beat:** This is the capstone of Part II. We will gather every major arithmetic and logic circuit we have built so far, run them in parallel, and forge them into the processor’s working core: the **Arithmetic Logic Unit**.
+-   **Why This Module:** This is the capstone of Part II. We will gather every major arithmetic and logic circuit we have built so far, run them in parallel, and forge them into the processor’s working core: the **Arithmetic Logic Unit**.
 -   **Learning Goals:**
     -   Understand the architecture of a simple bus-based 4-bit ALU.
     -   Organize multiple operations into parallel calculation lanes.
@@ -13,7 +13,7 @@
     -   Lesson 9.2: The lab – Assembling the calculation lanes
     -   Lesson 9.3: The lab – Building the output selector
     -   Lesson 9.4: The final integration and testing
--   **Minecraft Artifact:** A complete 4-bit ALU that can perform AND, OR, XOR, ADD, and SUB, while also producing Zero and Negative flags.
+-   **Build:** A complete 4-bit ALU that can perform AND, OR, XOR, ADD, and SUB, while also producing Zero and Negative flags.
 
 ---
 

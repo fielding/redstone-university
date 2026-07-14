@@ -2,7 +2,6 @@
 
 ### Module 0 Summary
 
--   Narrative Beat: Before we can speak to our computer, we need to learn how to hold the pen. This module equips you with the minimum viable skills in Minecraft’s Redstone so you can confidently follow along with the rest of the course.
 -   Learning Goals:
     -   Identify the core components used throughout the course and understand their primary functions.
     -   Grasp the fundamental concepts of Redstone power, including signal strength and Strong vs. Weak powering.
@@ -11,7 +10,7 @@
     -   Lesson 0.1: The Engineer's Toolkit
     -   Lesson 0.2: How Redstone Thinks: The Rules of Power
     -   Lesson 0.3: Lab: The Fundamental Circuit
--   Minecraft Artifact: A working on/off lamp circuit using a lever, wire, and output lamp.
+-   Build: A working on/off lamp circuit using a lever, wire, and output lamp.
 
 ---
 
