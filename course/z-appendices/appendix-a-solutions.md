@@ -175,7 +175,7 @@ Design a Minecraft circuit for a two-switch light system where flipping either s
 
 ### Practice Problem 3.3.1: The Missing Number Challenge
 
-Now that you've seen how the XOR trick works, try applying the same core principle to solve a different, but related, problem.
+Now that you've seen how the XOR trick works, try applying the same principle to solve a different, but related, problem.
 
 > **The Challenge:**
 >
@@ -245,7 +245,7 @@ Build an $A \text{ AND } B$ ($A \land B$) gate using only NOR gates. Verify it w
 ### Practice Problem 3.5.1: Knowledge Check
 
 1.  What is the key difference in the output of an OR gate versus an XOR gate when both inputs are `1`?
-2.  Which two gates are considered "universal," and what is the name of this powerful property?
+2.  Which two gates are considered "universal," and what is the name of this property?
 3.  Using De Morgan's Law, what is the equivalent expression for $\neg(A \land B)$?
 
 **Answer:**

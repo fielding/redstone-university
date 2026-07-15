@@ -4,7 +4,7 @@
 
 -   Learning Goals:
     -   Identify the core components used throughout the course and understand their primary functions.
-    -   Grasp the fundamental concepts of Redstone power, including signal strength and Strong vs. Weak powering.
+    -   Grasp the rules of Redstone power, including signal strength and Strong vs. Weak powering.
     -   Build a simple "test rig" that combines the core components into a working circuit.
 -   Lesson Overview:
     -   Lesson 0.1: The Engineer's Toolkit
@@ -50,7 +50,7 @@ These pieces show up in every build from here on. They're the alphabet we use to
 
 ### Lesson 0.2: How Redstone Thinks: The Rules of Power
 
-How power travels is the single most important thing to understand in Redstone, and it isn't always intuitive. Two rules cover everything we need.
+How power travels isn't always intuitive, but two rules cover everything we need.
 
 #### Rule 1: Signal Strength & Range
 
@@ -85,11 +85,11 @@ Time to put the pieces together and build the simplest possible circuit: input t
 3.  **Wire them up:** Connect the block under the lever to the lamp using a line of **Redstone Dust**.
 4.  **Test:** Flip the lever. The lamp should turn on and off.
 5.  **Experiment:** Now, modify your circuit to test your understanding.
-    -   **Find the edge:** Don't just take Rule 1 on faith; measure it. Stretch your dust line to exactly `15` blocks and put the lamp at the end. It lights, barely: that last piece of dust is carrying a signal strength of just `1`. Now add one more block of dust, making it `16`. The lamp goes dark. You've just found the exact cliff where a Redstone signal dies.
+    -   **Find the edge:** Don't just take Rule 1 on faith; measure it. Stretch your dust line to exactly `15` blocks and put the lamp at the end. It lights, barely: that last piece of dust is carrying a signal strength of just `1`. Now add one more block of dust, making it `16`. The lamp goes dark. That's the exact cliff where a Redstone signal dies.
     -   **Invert the signal:** Insert a **Redstone Torch** somewhere in the path. How does the lamp's behavior change? (Hint: The torch acts as a NOT gate).
     -   **Extend the signal:** Make your Redstone Dust wire `20` blocks long. The signal won't reach. Now, place a **Repeater** after block `14`. Observe how it refreshes the signal.
 
-You’ve just built your first working circuit and verified the core rules for yourself. Every build in this course, from a single gate to the full CPU, is a more complicated version of this exact pattern.
+Every build in this course, from a single gate to the full CPU, is a more complicated version of this exact pattern: input, process, output.
 
 ---
 

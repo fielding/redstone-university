@@ -78,7 +78,7 @@ Time to stop talking and start building. Our **4-bit input interface** will act 
 
 ---
 
-Everything we build later hangs off this input bus. In later modules we’ll process these binary inputs and show the results on a 7-segment display, the same kind of digit you'd see on a digital clock.
+In later modules we’ll process these binary inputs and show the results on a 7-segment display, the same kind of digit you'd see on a digital clock.
 
 #### The Build Guide
 

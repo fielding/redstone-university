@@ -1,6 +1,6 @@
 ## Part III: The Processor Core – Memory and Control
 
-Incredible work completing Part II. Take a moment to step back and appreciate what you have built. You have forged the complete brain of our computer: a powerful and versatile Arithmetic Logic Unit that can perform arithmetic, execute logic, and report on the status of its own calculations. You have built a genuine, manually operated processor core.
+At the end of Part II, you have a manually operated processor core: an Arithmetic Logic Unit that performs arithmetic, executes logic, and reports the status of its own calculations.
 
 But a computer is more than a processor. It does not wait for a human to flip levers for every single step. A true computer can follow a list of instructions, a program, all on its own.
 

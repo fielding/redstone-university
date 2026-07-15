@@ -26,7 +26,7 @@ Part I gave us an input system and an output system. We can now speak to the mac
 
 In this module, that changes.
 
-We're going to build the mathematical heart of the processor: the **adder**. This is the first circuit in the course that feels unmistakably like computation. It takes two numbers, transforms them, and produces a new one.
+We're going to build the part of the processor that does arithmetic: the **adder**. This is the first circuit in the course that feels unmistakably like computation. It takes two numbers, transforms them, and produces a new one.
 
 This module also carries a lesson that only turns up once you connect things: two subsystems can each be correct on their own and still not agree at the seam where they meet.
 
@@ -337,8 +337,6 @@ Read these in hex, one nibble at a time:
 3.  `1010` is `A` and `0101` is `5`, so `0xA5`.
 
 </details>
-
-That's why hexadecimal is everywhere in low-level programming, debugging, and computer architecture. It lines up perfectly with the machine’s natural word sizes.
 
 ---
 

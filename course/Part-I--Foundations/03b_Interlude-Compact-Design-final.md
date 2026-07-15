@@ -4,7 +4,7 @@
 
 ### A Note from the Instructor
 
-With all seven fundamental logic gates built, you have the complete theoretical foundation of our computer.
+With all seven logic gates built, you have the complete theoretical foundation of our computer.
 
 Before we begin our next major project in Module 4, a short optional detour: making circuits smaller. Everything in **Module 2** and **Module 3** was built for **clarity**, gates spread out so you could trace every signal by eye. This Interlude is about the opposite skill: building for **efficiency**.
 
@@ -73,7 +73,7 @@ From **Module 4** onward, we follow the **Rule of Abstraction**:
 
 > A logic gate is defined by its **truth table** (its inputs and outputs), not by its internal layout. You are now free to use the verbose educational builds, the compact practical builds, or any other design that functions correctly.
 
-Picking an implementation based on the constraints in front of you is real engineering, and you just did it for the first time.
+Picking an implementation based on the constraints in front of you is real engineering.
 
 #### Explore More: The Gate Museum
 

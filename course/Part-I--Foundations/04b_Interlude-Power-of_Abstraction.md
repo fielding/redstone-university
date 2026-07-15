@@ -10,7 +10,7 @@ In the introduction to that module, we talked about the **Power of Abstraction**
 
 <div align="center"><img src="https://media.githubusercontent.com/media/fielding/redstone-university/main/assets/images/04b_digital-display-subcircuit-abstractions_circuitverse.png" alt="Digital Display Subcircuit Abstractions" width="512px"/><br/><em>Figure: The digital display system represented with subcircuits in CircuitVerse.</em></div><br/>
 
-You probably noticed that the decoder and ROM were shown as simple gray boxes, or **"black boxes,"** instead of the web of gates we actually built. That does make the diagram easier to read, but readability is the side benefit. Hiding a finished component's guts is a fundamental technique in digital logic design.
+You probably noticed that the decoder and ROM were shown as simple gray boxes, or **"black boxes,"** instead of the web of gates we actually built. That does make the diagram easier to read, but readability is the side benefit. Hiding a finished component's guts is a standard technique in digital logic design.
 
 This short, optional interlude walks through how to do it in CircuitVerse. It will make your designs cleaner and easier to manage, and it sets you up for the bigger circuits coming in Part II.
 
@@ -26,9 +26,7 @@ The payoff is bigger than a tidy diagram. Back in the compact-design interlude y
 
 None of this is new, and none of it is mine. A classic computer science text, *Structure and Interpretation of Computer Programs* (SICP), built a whole section on this exact idea decades before this course existed, in software instead of redstone. Its §1.1.8, "Procedures as Black-Box Abstractions," puts it plainly: "A user should not need to know how the procedure is implemented in order to use it." Swap the word *procedure* for *subcircuit* and that's the rule we're following.
 
-By turning our complex 4-to-10 Decoder into a single subcircuit block, we can hide its internal complexity and focus on how it connects to the rest of the system.
-
-This buys you a few things. High-level diagrams stay readable. A component you've built and tested once, like a 1-bit full adder, can be dropped in dozens of times without rebuilding it from scratch. And you can work on one part of your system without being visually overwhelmed by the rest of it.
+Turning our 4-to-10 Decoder into a single subcircuit block buys you a few things. High-level diagrams stay readable. A component you've built and tested once, like a 1-bit full adder, can be dropped in dozens of times without rebuilding it from scratch. And you can work on one part of your system without being visually overwhelmed by the rest of it.
 
 ---
 
