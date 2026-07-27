@@ -7,6 +7,7 @@ import 'katex/dist/katex.min.css';
 import Layout from '../../layouts/Layout.astro';
 import Sidebar from '../../components/Sidebar.astro';
 import { buildCourseHierarchy, flattenCourse } from '../../utils/navigation';
+import { COURSE_TITLES } from '../../utils/titles';
 import { liveEntries } from '../../utils/gating';
 
 export async function getStaticPaths() {
@@ -19,12 +20,16 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content, headings } = await entry.render();
-const pageTitle = entry.data.title || 'Redstone University';
+const pageTitle = COURSE_TITLES[entry.slug]?.title || entry.data.title || 'Redstone University';
 
-// Surface h2/h3 as in-page navigation — these are Lessons and subsections
-const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
+// Surface h2/h3 as in-page navigation: these are Lessons and subsections.
+// The page's own title is authored as the leading `## ` and becomes the h1
+// (see plugins/rehype-page-title), so it never belongs in the list.
+const toc = headings
+  .filter((h) => h.depth === 2 || h.depth === 3)
+  .filter((h, i) => !(i === 0 && h.text.trim() === pageTitle.trim()));
 
-// Prev/next pager — linear reading order matches the sidebar, live pages only
+// Prev/next pager: linear reading order matches the sidebar, live pages only
 // (so the last published module never points "Next" at an unbuilt route)
 const orderedPages = flattenCourse(buildCourseHierarchy(liveEntries(await getCollection('course'))));
 const currentIndex = orderedPages.findIndex((p) => p.slug === entry.slug);
@@ -35,7 +40,7 @@ const nextPage =
     : null;
 ---
 
-<Layout title={pageTitle}>
+<Layout title={pageTitle} ogType="article">
   <div class="reading-progress" aria-hidden="true"></div>
 
   <!-- Mobile top bar: hamburger toggle for the course drawer -->
@@ -50,7 +55,7 @@ const nextPage =
       <span class="nav-toggle-bars" aria-hidden="true"></span>
       <span class="nav-toggle-label">Menu</span>
     </button>
-    <a href="/" class="mobile-wordmark" aria-label="Redstone University — home">
+    <a href="/" class="mobile-wordmark" aria-label="Redstone University, home">
       Redstone University
     </a>
   </header>
@@ -60,7 +65,7 @@ const nextPage =
   <div class="course-layout">
     <aside class="sidebar" id="course-sidebar">
       <div class="sidebar-header">
-        <a href="/" class="logo-link" aria-label="Redstone University — home">
+        <a href="/" class="logo-link" aria-label="Redstone University, home">
           <img
             src="/assets/project_assets/logo.png"
             alt=""
@@ -208,6 +213,7 @@ const nextPage =
     overflow-y: auto;
   }
 
+  /* Eyebrow label; shares the sans role with .section-label and .nav-section */
   .toc-label {
     font-family: var(--font-reading);
     font-size: 0.7rem;
@@ -273,13 +279,13 @@ const nextPage =
     font-family: var(--font-reading);
     font-weight: 400;
     color: var(--color-text);
-    font-size: 1.0625rem; /* 17px base — sans reads smaller than serif */
+    font-size: 1.0625rem; /* 17px base: sans reads smaller than serif */
     line-height: 1.7;
     letter-spacing: 0.005em;
   }
 
   /* ══════════════════════════════════════════════
-     PROSE — every markdown element, unmistakable
+     PROSE: every markdown element, unmistakable
      ══════════════════════════════════════════════ */
 
   /* ── Headings (stay serif for contrast with sans body) ── */
@@ -322,7 +328,7 @@ const nextPage =
     margin-bottom: var(--space-md);
   }
 
-  /* h4 as small-caps section label — common in book design */
+  /* h4 as small-caps section label, common in book design */
   .prose :global(h4) {
     font-family: var(--font-reading);
     font-size: 0.78rem;
@@ -389,6 +395,12 @@ const nextPage =
     color: var(--color-text-faint);
   }
 
+  /* Loose list items written as "**Label**\ndescription" collapse into one
+     run-on line in markdown. Break the label onto its own line instead. */
+  .prose :global(li > p > strong:first-child) {
+    display: block;
+  }
+
   /* ── Blockquotes ── */
   .prose :global(blockquote) {
     position: relative;
@@ -400,7 +412,7 @@ const nextPage =
     border-left: none;
   }
 
-  /* Warm accent line on left — thin, intentional, not a fat stripe */
+  /* Warm accent line on left: thin, intentional, not a fat stripe */
   .prose :global(blockquote::before) {
     content: '';
     position: absolute;
@@ -445,8 +457,16 @@ const nextPage =
     display: block;
   }
 
+  /* The course introduction opens with the book's cover crest. At full column
+     width it fills the first screen with logo and no course text, so cap it
+     here rather than editing the markdown the PDF also reads. */
+  .prose :global(> p:first-child > img:only-child) {
+    max-width: 200px;
+    margin-top: 0;
+  }
+
   /* Two images in one paragraph (consecutive lines in the source) sit side by
-     side — e.g. an isometric + aerial pair — and stack on narrow screens. */
+     side, e.g. an isometric + aerial pair, and stack on narrow screens. */
   .prose :global(p:has(img + img)) {
     display: flex;
     gap: var(--space-lg);
@@ -594,7 +614,7 @@ const nextPage =
     color: var(--color-text);
   }
 
-  /* Inline math — slightly warmer than body text */
+  /* Inline math, slightly warmer than body text */
   .prose :global(.katex-inline .katex),
   .prose :global(span.katex) {
     font-size: 1.05em;
@@ -696,7 +716,7 @@ const nextPage =
   }
 
   /* ── Image lightbox ── */
-  /* Figures are detail-dense (hi-res aerials squeezed into a 66ch column) —
+  /* Figures are detail-dense (hi-res aerials squeezed into a 66ch column):
      click opens them full-screen in place; a second click toggles 1:1 pixels
      with scroll-to-pan. No navigation, Esc/backdrop closes. */
   .prose :global(img) {
@@ -955,7 +975,7 @@ const nextPage =
       });
     }
 
-    // Reading progress bar — throttled with rAF
+    // Reading progress bar, throttled with rAF
     const bar = document.querySelector('.reading-progress');
     if (bar) {
       let ticking = false;
@@ -975,7 +995,7 @@ const nextPage =
       update();
     }
 
-    // Code copy buttons — wrap each block so the chip stays pinned while
+    // Code copy buttons: wrap each block so the chip stays pinned while
     // the code scrolls beneath it
     document.querySelectorAll('.prose pre').forEach((pre) => {
       const wrap = document.createElement('div');
@@ -1029,7 +1049,7 @@ const nextPage =
       heading.prepend(anchor);
     });
 
-    // Image lightbox — in-page modal, no navigation. Click: fit-to-screen;
+    // Image lightbox: in-page modal, no navigation. Click: fit-to-screen;
     // click the image again: 1:1 pixels with scroll-to-pan; Esc/backdrop/×
     // closes and returns exactly where you were.
     const proseImgs = document.querySelectorAll('.prose img');

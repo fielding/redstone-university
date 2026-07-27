@@ -1,0 +1,127 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// The sidebar lists every unreleased module by name, so readers who spot the
+// URL pattern go looking for the next one. Without this they land on GitHub
+// Pages' default page, which tells them the site is misconfigured.
+---
+
+<Layout
+	title="Nothing here yet"
+	description="That page is not on the site yet. The drafts are readable in the repo."
+>
+	<main class="notfound">
+		<a href="/" class="crest-link" aria-label="Redstone University, home">
+			<img
+				src="/assets/project_assets/logo.png"
+				alt=""
+				class="crest"
+				width="140"
+				height="140"
+			/>
+		</a>
+
+		<p class="code">404</p>
+		<h1 class="headline">Nothing here yet.</h1>
+
+		<p class="body">
+			This is most likely a module that is written but not released. The
+			in-world build has to exist before the lesson goes up.
+		</p>
+
+		<nav class="actions" aria-label="Where to go instead">
+			<a href="/course/introduction" class="cta-primary">
+				Back to the course <span class="cta-arrow" aria-hidden="true">→</span>
+			</a>
+			<a href="https://github.com/fielding/redstone-university" class="cta-ghost">
+				Read the drafts on GitHub
+			</a>
+		</nav>
+	</main>
+</Layout>
+
+<style>
+	.notfound {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+		gap: var(--space-md);
+		padding: var(--space-4xl) var(--space-lg);
+		max-width: 640px;
+		margin: 0 auto;
+	}
+
+	.crest {
+		width: 140px;
+		height: auto;
+		filter: drop-shadow(0 0 40px oklch(84% 0.10 76 / 0.35));
+	}
+
+	.code {
+		font-family: var(--font-mono);
+		font-size: 0.78rem;
+		letter-spacing: 0.14em;
+		color: var(--color-primary-light);
+		margin-top: var(--space-lg);
+	}
+
+	.headline {
+		font-size: clamp(2rem, 3vw + 1rem, 3rem);
+		line-height: 1.1;
+		color: var(--color-text);
+	}
+
+	.body {
+		font-size: 1rem;
+		line-height: 1.7;
+		color: var(--color-text-secondary);
+		max-width: 46ch;
+	}
+
+	.actions {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: var(--space-md);
+		margin-top: var(--space-lg);
+	}
+
+	.cta-primary {
+		font-size: 1rem;
+		font-weight: 600;
+		letter-spacing: 0.03em;
+		color: var(--color-primary-light);
+		padding: var(--space-sm) var(--space-xs);
+		border-bottom: 1px solid var(--color-primary-dim);
+		transition:
+			color var(--duration-fast) var(--ease-out),
+			border-color var(--duration-fast) var(--ease-out);
+	}
+
+	.cta-primary:hover {
+		color: var(--color-accent);
+		border-color: var(--color-accent);
+	}
+
+	.cta-arrow {
+		display: inline-block;
+		transition: transform 300ms var(--ease-out-quart);
+	}
+
+	.cta-primary:hover .cta-arrow {
+		transform: translateX(4px);
+	}
+
+	.cta-ghost {
+		font-size: 0.85rem;
+		color: var(--color-text-faint);
+		transition: color var(--duration-fast) var(--ease-out);
+	}
+
+	.cta-ghost:hover {
+		color: var(--color-text-secondary);
+	}
+</style>

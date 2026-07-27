@@ -1,10 +1,13 @@
 import type { CollectionEntry } from 'astro:content';
+import { COURSE_TITLES } from './titles';
 
 export type CourseNode = {
     title: string;
     slug?: string;
     children: CourseNode[];
     order: number;
+    /** Directory segment this node was built from; the identity key while merging. */
+    key?: string;
     /** True when the node belongs to an unpublished part (see utils/gating). */
     gated?: boolean;
     /** Roadmap badge text ("Coming soon", etc.) for gated nodes; see utils/gating. */
@@ -14,11 +17,12 @@ export type CourseNode = {
 export function buildCourseHierarchy(entries: CollectionEntry<'course'>[]): CourseNode[] {
     const root: CourseNode = { title: 'Root', children: [], order: 0 };
 
-    // Helper to find or create a node
-    const findOrCreateNode = (parent: CourseNode, title: string, order: number = 999) => {
-        let node = parent.children.find(n => n.title === title);
+    // Helper to find or create a node. Matched on the directory segment, not
+    // the label, so a folder keeps its identity once a child page renames it.
+    const findOrCreateNode = (parent: CourseNode, key: string, order: number = 999) => {
+        let node = parent.children.find(n => n.key === key);
         if (!node) {
-            node = { title, children: [], order };
+            node = { title: formatTitle(key), key, children: [], order };
             parent.children.push(node);
         }
         // Update order if we found a more specific one
@@ -32,9 +36,10 @@ export function buildCourseHierarchy(entries: CollectionEntry<'course'>[]): Cour
 
         // Handle root-level files (like introduction.md)
         if (parts.length === 1) {
-            const title = entry.data.title || formatTitle(parts[0]);
+            const title = navLabelFor(entry, parts[0]);
             currentNode.children.push({
                 title,
+                key: parts[0],
                 slug: entry.slug,
                 children: [],
                 order: getOrder(parts[0])
@@ -52,12 +57,14 @@ export function buildCourseHierarchy(entries: CollectionEntry<'course'>[]): Cour
                 // If it's "introduction" or "draft", it belongs to the parent folder
                 if (part === 'introduction' || part === 'draft') {
                     currentNode.slug = entry.slug;
-                    // If the parent didn't have a title from a folder name, use the entry title
-                    if (entry.data.title) currentNode.title = entry.data.title;
+                    // The folder inherits the page's own label; a directory name
+                    // like "01_input-register" is not what the page is called.
+                    currentNode.title = navLabelFor(entry, currentNode.key ?? part);
                 } else {
                     // It's a regular lesson file
                     currentNode.children.push({
-                        title: entry.data.title || formatTitle(part),
+                        title: navLabelFor(entry, part),
+                        key: part,
                         slug: entry.slug,
                         children: [],
                         order: getOrder(part)
@@ -65,7 +72,7 @@ export function buildCourseHierarchy(entries: CollectionEntry<'course'>[]): Cour
                 }
             } else {
                 // It's a folder (Part or Module)
-                currentNode = findOrCreateNode(currentNode, formatTitle(part), getOrder(part));
+                currentNode = findOrCreateNode(currentNode, part, getOrder(part));
             }
         }
     }
@@ -97,6 +104,14 @@ export function flattenCourse(nodes: CourseNode[]): CourseLink[] {
     };
     walk(nodes);
     return out;
+}
+
+/**
+ * The label a page shows in the sidebar and the pager: the curated short form
+ * first, then any frontmatter title, then the directory name as a last resort.
+ */
+function navLabelFor(entry: CollectionEntry<'course'>, segment: string): string {
+    return COURSE_TITLES[entry.slug]?.navLabel || entry.data.title || formatTitle(segment);
 }
 
 function getOrder(segment: string): number {

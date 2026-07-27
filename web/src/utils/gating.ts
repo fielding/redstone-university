@@ -4,7 +4,7 @@ import type { CourseNode } from './navigation';
 /**
  * Parts whose bodies are published on the site. Everything else stays visible
  * as titles in the sidebar and on the landing page (with a status badge), but gets no
- * routes generated — the drafts remain readable in the GitHub repo.
+ * routes generated; the drafts remain readable in the GitHub repo.
  *
  * To publish a whole part, add its slug directory here.
  */
@@ -14,7 +14,7 @@ export const LIVE_PARTS = new Set(['part-i--foundations']);
  * Individual modules released ahead of their part, as
  * "<part-dir>/<module-dir>" slug prefixes. The part's introduction goes
  * live automatically with its first live module (the landing card links
- * to it). To release one module, add its directory here — that's the
+ * to it). To release one module, add its directory here, and that's the
  * whole release.
  */
 export const LIVE_MODULES = new Set([
@@ -33,7 +33,7 @@ export const PART_STATUS: Record<string, string> = {
 };
 
 // Local preview of unreleased parts: PREVIEW_ALL_PARTS=true npm run dev
-// (never set in CI/production — the gate stays closed for real builds)
+// (never set in CI/production, where the gate stays closed for real builds)
 const PREVIEW_ALL =
     typeof process !== 'undefined' &&
     process.env?.PREVIEW_ALL_PARTS === 'true';

@@ -50,7 +50,7 @@ const isCurrent = node.slug === currentSlug;
     display: block;
     padding: 6px 0;
     padding-left: calc(var(--depth, 0) * var(--space-md));
-    color: var(--color-text-faint);
+    color: var(--color-text-secondary);
     font-size: 0.88rem;
     line-height: 1.5;
     text-decoration: none;
@@ -66,10 +66,11 @@ const isCurrent = node.slug === currentSlug;
     font-weight: 500;
   }
 
-  /* Unpublished module titles: visible roadmap, clearly not clickable */
+  /* Unpublished module titles: visible roadmap, clearly not clickable.
+     Set apart by colour rather than opacity, which used to compound with the
+     colour and left these at 1.87:1. */
   .nav-link.is-gated {
     color: var(--color-text-faint);
-    opacity: 0.55;
     cursor: default;
   }
 
@@ -92,12 +93,13 @@ const isCurrent = node.slug === currentSlug;
     white-space: nowrap;
   }
 
+  /* Eyebrow label; shares the sans role with .section-label and .toc-label */
   .nav-section {
     display: block;
     padding-top: var(--space-lg);
     padding-bottom: var(--space-xs);
     padding-left: calc(var(--depth, 0) * var(--space-md));
-    font-family: var(--font-body);
+    font-family: var(--font-reading);
     font-size: 0.7rem;
     font-weight: 600;
     text-transform: uppercase;

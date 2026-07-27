@@ -2,10 +2,28 @@
 import '../styles/global.css';
 
 interface Props {
-	title: string;
+	/** The page's own title. Omitted on the homepage, which is just the site. */
+	title?: string;
+	description?: string;
+	/** Open Graph type; course pages are articles, everything else a website. */
+	ogType?: 'website' | 'article';
 }
 
-const { title } = Astro.props;
+const SITE_NAME = 'Redstone University';
+const DEFAULT_DESCRIPTION =
+	'Redstone University: Learn Computer Architecture in Minecraft';
+
+const {
+	title,
+	description = DEFAULT_DESCRIPTION,
+	ogType = 'website',
+} = Astro.props;
+
+const documentTitle = title ? `${title} | ${SITE_NAME}` : SITE_NAME;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+// Square crest, so the summary card rather than the cropped wide one.
+const ogImage = new URL('/assets/project_assets/logo.png', Astro.site);
+
 const fontUrl = 'https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Hanken+Grotesk:ital,wght@0,300..700;1,300..700&family=Literata:ital,opsz,wght@0,7..72,300..700;1,7..72,300..700&family=Young+Serif&display=swap';
 ---
 
@@ -13,11 +31,30 @@ const fontUrl = 'https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="description" content="Redstone University — Learn Computer Architecture in Minecraft" />
+		<meta name="description" content={description} />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-		<title>{title} | Redstone University</title>
+		<title>{documentTitle}</title>
+		<link rel="canonical" href={canonical} />
+
+		<!-- Open Graph / Twitter: the course spreads by link-drop into chat -->
+		<meta property="og:type" content={ogType} />
+		<meta property="og:site_name" content={SITE_NAME} />
+		<meta property="og:title" content={title ?? SITE_NAME} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={canonical} />
+		<meta property="og:image" content={ogImage} />
+		<meta property="og:image:width" content="2048" />
+		<meta property="og:image:height" content="2048" />
+		<meta property="og:image:alt" content="The Redstone University crest" />
+		<meta property="og:locale" content="en_US" />
+
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content={title ?? SITE_NAME} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={ogImage} />
+		<meta name="twitter:image:alt" content="The Redstone University crest" />
 
 		<!-- Fonts: preconnect + preload CSS then load -->
 		<link rel="preconnect" href="https://fonts.googleapis.com" />

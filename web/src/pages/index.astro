@@ -7,7 +7,7 @@ const parts = [
 		numeral: 'I',
 		dir: 'part-i--foundations',
 		title: 'The Foundations',
-		desc: 'Master Redstone basics, Boolean logic, and build a complete input/output system — a 4-bit interface with a working 7-segment display.',
+		desc: 'Master Redstone basics, Boolean logic, and build a complete input/output system, a 4-bit interface with a working 7-segment display.',
 		meta: '5 modules + 2 interludes',
 		advanced: false,
 	},
@@ -15,7 +15,7 @@ const parts = [
 		numeral: 'II',
 		dir: 'part-ii-thinking-machine',
 		title: 'The Thinking Machine',
-		desc: 'Build the brain. Design an adder, add subtraction, status flags, and a multiplexer — then assemble them into a full Arithmetic Logic Unit.',
+		desc: 'The mathematical and logical brain of the computer. You engineer an adder and subtractor, give it the ability to make decisions with comparators and status flags, and combine everything into a complete Arithmetic Logic Unit.',
 		meta: '5 modules',
 		advanced: false,
 	},
@@ -31,14 +31,24 @@ const parts = [
 		numeral: 'IV',
 		dir: 'part-iv--post-graduate',
 		title: 'Post-Graduate Studies',
-		desc: 'For those who want more. Implement the Double Dabble algorithm to display true decimal output — the hardest challenge in the course.',
+		desc: 'For those who want more. Implement the Double Dabble algorithm to display true decimal output, the hardest challenge in the course.',
 		meta: 'Advanced track',
 		advanced: true,
 	},
 ].map((p) => ({ ...p, live: hasLiveContent(p.dir), status: PART_STATUS[p.dir] }));
 ---
 
-<Layout title="Redstone University">
+<Layout>
+	<noscript>
+		<!-- Companion to the @media (scripting: none) rule below, for browsers
+		     that do not support that query. -->
+		<style is:inline>
+			.scroll-reveal {
+				opacity: 1 !important;
+				transform: none !important;
+			}
+		</style>
+	</noscript>
 	<main>
 		<section class="hero">
 			<div class="hero-inner">
@@ -53,16 +63,14 @@ const parts = [
 				<h1 class="hero-title">Build a Computer<br />From Scratch</h1>
 				<p class="hero-tagline">
 					<span>4 parts</span>
-					<span class="tagline-sep" aria-hidden="true">·</span>
 					<span>13 modules</span>
-					<span class="tagline-sep" aria-hidden="true">·</span>
 					<span>0 prerequisites</span>
-					<span class="tagline-sep" aria-hidden="true">·</span>
 					<span>1 working CPU</span>
 				</p>
 				<p class="hero-subtitle">
-					An interactive course on computer architecture,<br />
-					built entirely inside Minecraft.
+					Computer science and digital architecture, built from the ground up in
+					Minecraft. Every concept becomes a physical, working machine you can
+					walk around inside of.
 				</p>
 				<nav class="hero-actions">
 					<a href="/course/introduction" class="cta-primary">
@@ -117,7 +125,13 @@ const parts = [
 		</section>
 
 		<footer class="closing scroll-reveal">
-			<p class="closing-text">No prerequisites. No cost. <em>Just curiosity.</em></p>
+			<p class="closing-text">
+				Free, and it stays free. The real push came from my daughter Ada, who
+				introduced me to Minecraft before she was even 2. These ideas usually feel
+				intangible, but people are out there building machines from Redstone that
+				put my old homework to shame. So: what if we learned this by building a
+				computer from scratch, with tools we already love?
+			</p>
 			<a href="/course/introduction" class="cta-primary">
 				Begin the course <span class="cta-arrow" aria-hidden="true">→</span>
 			</a>
@@ -128,7 +142,7 @@ const parts = [
 <style>
 	/* ── Hero ── */
 	.hero {
-		min-height: 100vh;
+		min-height: min(100vh, 940px);
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -137,7 +151,7 @@ const parts = [
 		overflow: hidden;
 	}
 
-	/* Layered atmospheric glow — breathes like a living torch */
+	/* Layered atmospheric glow that breathes like a living torch */
 	.hero::before {
 		content: '';
 		position: absolute;
@@ -149,7 +163,7 @@ const parts = [
 		animation: breathe 10s ease-in-out infinite;
 	}
 
-	/* Secondary glow layer — shifts out of phase for organic feel */
+	/* Secondary glow layer, shifted out of phase for an organic feel */
 	.hero::after {
 		content: '';
 		position: absolute;
@@ -160,14 +174,16 @@ const parts = [
 	}
 
 	.hero-inner {
-		max-width: 760px;
+		max-width: 880px;
 		text-align: center;
 		position: relative;
 		z-index: 1;
 	}
 
 	.hero-logo {
-		width: clamp(280px, 20vw + 180px, 520px);
+		/* Capped: sized off viewport width, a wide-but-short display used to get
+		   a bigger crest and push the CTA below the fold. */
+		width: clamp(240px, 16vw + 110px, 320px);
 		height: auto;
 		margin-bottom: var(--space-xl);
 		filter: drop-shadow(0 0 65px oklch(84% 0.10 76 / 0.40))
@@ -176,7 +192,7 @@ const parts = [
 		transition: filter 800ms var(--ease-out-quart);
 	}
 
-	/* Torch brightens when you approach — the flame responds */
+	/* Torch brightens when you approach; the flame responds */
 	.hero-logo:hover {
 		filter: drop-shadow(0 0 70px oklch(86% 0.09 78 / 0.45))
 		        drop-shadow(0 0 170px oklch(86% 0.07 75 / 0.30));
@@ -209,8 +225,12 @@ const parts = [
 		white-space: nowrap;
 	}
 
-	.tagline-sep {
+	/* Separator belongs to the item that follows it, so a wrap never strands a
+	   lone middot at the end of a line. */
+	.hero-tagline span + span::before {
+		content: '·';
 		color: var(--color-primary-dim);
+		margin-right: var(--space-md);
 	}
 
 	.hero-subtitle {
@@ -218,7 +238,11 @@ const parts = [
 		font-style: italic;
 		color: var(--color-text-secondary);
 		line-height: 1.7;
-		margin-bottom: var(--space-2xl);
+		/* Wide enough to hold both sentences in two lines at 1440px, which is
+		   what keeps the primary CTA above the fold. */
+		max-width: 68ch;
+		margin: 0 auto var(--space-2xl);
+		text-wrap: balance;
 		animation: reveal-up 800ms var(--ease-out) 450ms both;
 	}
 
@@ -248,7 +272,7 @@ const parts = [
 		border-color: var(--color-accent);
 	}
 
-	/* Arrow slides right on hover — invites you forward */
+	/* Arrow slides right on hover, inviting you forward */
 	.cta-arrow {
 		display: inline-block;
 		transition: transform 300ms var(--ease-out-quart);
@@ -275,8 +299,9 @@ const parts = [
 		padding: var(--space-4xl) var(--space-lg) var(--space-3xl);
 	}
 
+	/* Eyebrow label; shares the sans role with .toc-label and .nav-section */
 	.section-label {
-		font-family: var(--font-body);
+		font-family: var(--font-reading);
 		font-size: 0.75rem;
 		font-weight: 500;
 		text-transform: uppercase;
@@ -369,21 +394,33 @@ const parts = [
 		letter-spacing: 0.02em;
 	}
 
+	/* Quieter than the main sequence. Dimmed with colour rather than opacity:
+	   opacity multiplies against text colours already picked for contrast. */
+	.part--advanced .part-title,
+	.part--gated .part-title {
+		color: var(--color-text-secondary);
+	}
+
+	.part--advanced .part-desc,
+	.part--gated .part-desc {
+		color: var(--color-text-faint);
+	}
+
 	.part--advanced {
-		opacity: 0.6;
-		transition:
-			opacity var(--duration-normal) var(--ease-out-quart),
-			background var(--duration-normal) var(--ease-out-quart);
+		transition: background var(--duration-normal) var(--ease-out-quart);
 	}
 
-	.part--advanced:hover {
-		opacity: 1;
+	.part--advanced:hover .part-title {
+		color: var(--color-text);
 	}
 
-	/* ── Gated parts (in build) — visible roadmap, clearly not clickable ── */
+	.part--advanced:hover .part-desc {
+		color: var(--color-text-secondary);
+	}
+
+	/* ── Gated parts (in build): visible roadmap, clearly not clickable ── */
 	.part--gated {
 		cursor: default;
-		opacity: 0.55;
 	}
 
 	.part--gated:hover {
@@ -444,16 +481,12 @@ const parts = [
 	}
 
 	.closing-text {
-		font-family: var(--font-display);
-		font-size: clamp(1.4rem, 2vw + 0.5rem, 2rem);
+		font-size: clamp(1.05rem, 0.4vw + 0.95rem, 1.2rem);
+		line-height: 1.75;
 		color: var(--color-text-secondary);
-		margin-bottom: var(--space-xl);
-	}
-
-	/* "Just curiosity" — the emotional peak, warmed up */
-	.closing-text em {
-		font-style: normal;
-		color: var(--color-accent);
+		max-width: 58ch;
+		margin: 0 auto var(--space-xl);
+		text-align: left;
 	}
 
 	/* ── Scroll Reveal ── */
@@ -466,7 +499,7 @@ const parts = [
 		animation: scroll-enter 800ms var(--ease-out) both;
 	}
 
-	/* Staggered reveals — delay set via --reveal-delay custom property */
+	/* Staggered reveals; delay set via the --reveal-delay custom property */
 	.scroll-reveal.in-view {
 		animation-delay: var(--reveal-delay, 0ms);
 	}
@@ -505,6 +538,16 @@ const parts = [
 		}
 	}
 
+	/* ── No JavaScript ── */
+	/* .in-view is only ever added by an IntersectionObserver, so without a
+	   script every revealed element would stay at opacity 0. */
+	@media (scripting: none) {
+		.scroll-reveal {
+			opacity: 1;
+			transform: none;
+		}
+	}
+
 	/* ── Reduced motion ── */
 	@media (prefers-reduced-motion: reduce) {
 		.hero::before,
@@ -523,14 +566,26 @@ const parts = [
 	}
 
 	/* ── Responsive ── */
+	/* Narrow screens cannot hold the four stats on one line. A 2x2 grid drops
+	   the separators and the orphaned fourth item along with them. */
+	@media (max-width: 560px) {
+		.hero-tagline {
+			display: grid;
+			grid-template-columns: repeat(2, auto);
+			justify-content: center;
+			justify-items: center;
+			gap: var(--space-xs) var(--space-lg);
+		}
+
+		.hero-tagline span + span::before {
+			content: none;
+		}
+	}
+
 	@media (max-width: 768px) {
 		.hero {
 			min-height: auto;
 			padding: var(--space-3xl) var(--space-md) var(--space-2xl);
-		}
-
-		.hero-subtitle br {
-			display: none;
 		}
 
 		.part {
