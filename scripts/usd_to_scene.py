@@ -423,6 +423,77 @@ def strip_ground(meshes, mode, base_y):
     return out
 
 
+FULL_COMPONENTS = ("redstone_lamp", "redstone_block", "target", "observer", "piston",
+                   "dispenser", "dropper", "note_block")
+
+
+def _full_face_cell(m, face, n):
+    """If this face is one side of a full 16x16x16 block on the grid, return
+    (cell, axis, sign): the cell the face belongs to (inward of its normal)."""
+    pts = [m["points"][v] for v in face]
+    if len(pts) != 4:
+        return None
+    axis = max(range(3), key=lambda a: abs(n[a]))
+    if abs(n[axis]) < 0.99:
+        return None
+    lo = [min(p[a] for p in pts) for a in range(3)]
+    hi = [max(p[a] for p in pts) for a in range(3)]
+    for a in range(3):
+        if a != axis and abs(hi[a] - lo[a] - BLOCK) > 0.02:
+            return None
+    plane = pts[0][axis]
+    # grid: x/z block boundaries at 16b+8, y boundaries at 16k
+    phase = 0.0 if axis == 1 else 8.0
+    if abs((plane + phase) / BLOCK - round((plane + phase) / BLOCK)) > 0.002:
+        return None
+    sign = 1 if n[axis] > 0 else -1
+    c = [(lo[a] + hi[a]) / 2 for a in range(3)]
+    c[axis] -= sign * BLOCK / 2               # step inward to the block's center
+    cell = (math.floor((c[0] + 8) / BLOCK), math.floor(c[1] / BLOCK), math.floor((c[2] + 8) / BLOCK))
+    return cell, axis, sign
+
+
+def add_missing_bottoms(meshes):
+    """Close the underside of the build. MiEx culls every face that touched a
+    solid block, so a block that rested on ground (removed for the figure) has
+    no bottom face, and the build is open when seen from below. Add a bottom
+    to every full block that has none and has no full block beneath it."""
+    full = {}       # cell -> mesh index (first owner)
+    has_bottom = set()
+    for mi, m in enumerate(meshes):
+        nm = m["name"].lower()
+        if is_circuit(nm) and not any(k in nm for k in FULL_COMPONENTS):
+            continue
+        for fi, face in enumerate(m["faces"]):
+            r = _full_face_cell(m, face, face_normal(m, fi, face))
+            if not r:
+                continue
+            cell, axis, sign = r
+            full.setdefault(cell, mi)
+            if axis == 1 and sign < 0:
+                has_bottom.add(cell)
+    added = 0
+    for cell, mi in sorted(full.items()):
+        below = (cell[0], cell[1] - 1, cell[2])
+        if cell in has_bottom or below in full:
+            continue
+        m = meshes[mi]
+        x, y, z = cell[0] * BLOCK, cell[1] * BLOCK, cell[2] * BLOCK
+        base = len(m["points"])
+        m["points"] = m["points"] + [(x - 8, y, z - 8), (x + 8, y, z - 8), (x + 8, y, z + 8), (x - 8, y, z + 8)]
+        m["faces"] = m["faces"] + [[base, base + 1, base + 2, base + 3]]
+        if m["normals"] is not None:
+            m["normals"] = m["normals"] + [(0.0, -1.0, 0.0)] * 4
+        if m["st"] is not None:
+            m["st"] = m["st"] + [(0.0, 0.0), (1.0, 0.0), (1.0, 1.0), (0.0, 1.0)]
+        if m["cd"] is not None:
+            m["cd"] = m["cd"] + [m["cd"][-1]] * 4
+        added += 1
+    if added:
+        print(f"  closed {added} open block bottom(s)")
+    return meshes
+
+
 def _subset_faces(m, keep_idx):
     """Copy of mesh m with only the faces at keep_idx (per-loop primvars follow)."""
     loop_start, k = [], 0
@@ -673,6 +744,7 @@ def convert(name, shot, usd_path, out_dir):
         solid = solid + [wire_mesh]
     solid = strip_ground(solid, shot.get("ground", "keep"), b_pre["min"][1])
     solid = [m for m in solid if m["name"] != "RU_Wires"]
+    solid = add_missing_bottoms(solid)
     fit_boxes += [box(m["points"]) for m in solid if m["name"].startswith("RU_GroundPads")]
     b = bounds_of([_used_points_only(m) for m in solid], wires)
     # height-band origin: Blender measures bands off object bboxes that are not

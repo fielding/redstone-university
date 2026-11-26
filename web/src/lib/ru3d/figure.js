@@ -17,6 +17,9 @@ import {
 import { drawLegendOverlay, stampLegend, LEGEND_FONT } from './legend.js';
 
 const ISO_ELEVATION = 35.264;
+// polar angle from straight up; the converter closes block undersides
+// (add_missing_bottoms), so the camera may go all the way around
+const MAX_POLAR = Math.PI - 1e-3;
 
 function longestKey(map, name) {
   let best = null;
@@ -380,6 +383,7 @@ export class RuFigure {
     c.target.copy(this.center);
     c.enableDamping = false;
     c.enablePan = false;
+    c.maxPolarAngle = MAX_POLAR;
     c.zoomToCursor = false;
     c.minDistance = this.size * 0.15;
     c.maxDistance = this.size * 8;
@@ -438,7 +442,7 @@ export class RuFigure {
     const offset = this.camera.position.clone().sub(c.target);
     const s = new THREE.Spherical().setFromVector3(offset);
     s.theta += THREE.MathUtils.degToRad(dAzDeg);
-    s.phi = THREE.MathUtils.clamp(s.phi - THREE.MathUtils.degToRad(dElDeg), 1e-3, Math.PI - 1e-3);
+    s.phi = THREE.MathUtils.clamp(s.phi - THREE.MathUtils.degToRad(dElDeg), 1e-3, MAX_POLAR);
     offset.setFromSpherical(s);
     this.camera.position.copy(c.target).add(offset);
     this.camera.lookAt(c.target);

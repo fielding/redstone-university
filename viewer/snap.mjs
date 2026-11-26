@@ -116,14 +116,15 @@ function shotViews(shot) {
 let ok = true;
 try {
   if (flag('--placed')) {
-    // every placed figure with a build (viewer/builds/places.json), held or
-    // not, so scripts/live3d_qa.py can judge all of them
-    const places = JSON.parse(readFileSync(join(REPO, 'viewer', 'builds', 'places.json'), 'utf8'));
-    const seen = new Set();
-    for (const { shot, view } of Object.values(places)) {
-      if (seen.has(`${shot}_${view}`)) continue;
-      seen.add(`${shot}_${view}`);
-      ok = (await snap(shot, view, join(outDir, `${shot}_${view}.png`))) && ok;
+    // every placed figure (shots.json "place"), held or not, so
+    // scripts/live3d_qa.py can judge all of them. Not keyed by image name:
+    // several modules reuse a name for different builds.
+    const shots = JSON.parse(readFileSync(join(REPO, 'renders', 'shots.json'), 'utf8'));
+    for (const [shot, cfg] of Object.entries(shots)) {
+      if (shot.startsWith('_') || !existsSync(join(REPO, 'viewer', 'builds', `${shot}.rub`))) continue;
+      for (const view of Object.keys(cfg.place || {})) {
+        ok = (await snap(shot, view, join(outDir, `${shot}_${view}.png`))) && ok;
+      }
     }
   } else if (flag('--all')) {
     const index = JSON.parse(readFileSync(join(REPO, 'viewer', 'builds', 'index.json'), 'utf8'));
