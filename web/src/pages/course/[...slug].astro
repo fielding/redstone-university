@@ -111,6 +111,12 @@ const nextPage =
       </aside>
     )}
   </div>
+
+  {/* Live 3D figures: upgrades placed Minecraft renders in place (the <img>
+      stays as the fallback). See src/scripts/live-figures.js. */}
+  <script>
+    import '../../scripts/live-figures.js';
+  </script>
 </Layout>
 
 <style>
@@ -458,6 +464,117 @@ const nextPage =
     flex: 1 1 280px;
     min-width: 240px;
     margin: var(--space-lg) 0 0;
+  }
+
+
+  /* ── Live 3D figures (src/scripts/live-figures.js) ──
+     The figure wraps the original <img> and takes over its spacing; the stage
+     sits exactly on the image box, so going live never shifts the layout. */
+  .prose :global(.ru3d) {
+    position: relative;
+    width: fit-content;
+    max-width: 100%;
+    margin: var(--space-2xl) auto;
+  }
+  .prose :global(.ru3d > img) { margin: 0; }
+  .prose :global(.ru3d-stage) {
+    position: absolute;
+    inset: 0;
+    border-radius: 4px;
+    outline: none;
+    cursor: grab;
+  }
+  .prose :global(.ru3d-stage:active) { cursor: grabbing; }
+  .prose :global(.ru3d-stage:focus-visible) {
+    box-shadow: 0 0 0 2px var(--color-surface), 0 0 0 4px var(--color-primary-light);
+  }
+  .prose :global(.ru3d-stage canvas) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  .prose :global(.ru3d-legend) { pointer-events: none; }
+  /* the PNG shows until the first live frame, then hides but keeps its box */
+  .prose :global(.ru3d[data-state='live'] > img) { visibility: hidden; }
+
+  .prose :global(.ru3d-ui) {
+    position: absolute;
+    top: var(--space-sm, 0.5rem);
+    right: var(--space-sm, 0.5rem);
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+  }
+  .prose :global(.ru3d[data-state='live']:hover .ru3d-ui),
+  .prose :global(.ru3d[data-state='live']:focus-within .ru3d-ui),
+  .prose :global(.ru3d[data-state='live'].is-active .ru3d-ui) { opacity: 1; }
+  .prose :global(.ru3d[data-state='poster'] .ru3d-ui),
+  .prose :global(.ru3d[data-state='failed'] .ru3d-ui),
+  .prose :global(.ru3d[data-state='failed'] .ru3d-stage) { display: none; }
+  .prose :global(.ru3d-ui button),
+  .prose :global(.ru3d-badge) {
+    font: 500 0.72rem/1 var(--font-mono);
+    padding: 5px 8px;
+    border-radius: 4px;
+    border: 1px solid var(--color-border);
+    background: var(--color-surface-raised);
+    color: var(--color-text-secondary);
+  }
+  .prose :global(.ru3d-badge) { border-color: transparent; background: transparent; }
+  .prose :global(.ru3d-ui button) { cursor: pointer; }
+  .prose :global(.ru3d-ui button:hover) { color: var(--color-text); border-color: var(--color-text-faint); }
+  .prose :global(.ru3d-ui button[aria-pressed='true']) {
+    background: var(--color-text);
+    border-color: var(--color-text);
+    color: var(--color-surface);
+  }
+  .prose :global(.ru3d-ui button:focus-visible) { outline: 2px solid var(--color-primary-light); outline-offset: 1px; }
+  .prose :global(.ru3d-done) { display: none; }
+  .prose :global(.ru3d.is-active .ru3d-done) { display: inline-block; }
+  .prose :global(.ru3d-tap) {
+    position: absolute;
+    left: 50%;
+    bottom: var(--space-sm, 0.5rem);
+    transform: translateX(-50%);
+    font: 500 0.75rem/1 var(--font-mono);
+    padding: 7px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--color-border);
+    background: var(--color-surface-raised);
+    color: var(--color-text-secondary);
+    display: none;
+  }
+  .prose :global(.ru3d.is-touch[data-state='live']:not(.is-active) .ru3d-tap) { display: block; }
+  /* touch: controls stay visible (there is no hover) */
+  .prose :global(.ru3d.is-touch[data-state='live'] .ru3d-ui) { opacity: 1; }
+  @media (prefers-reduced-motion: reduce) {
+    .prose :global(.ru3d-ui) { transition: none; }
+  }
+  /* side-by-side pairs keep their layout once wrapped */
+  .prose :global(p:has(> .ru3d + .ru3d)),
+  .prose :global(p:has(> .ru3d + img)),
+  .prose :global(p:has(> img + .ru3d)) {
+    display: flex;
+    gap: var(--space-lg);
+    align-items: flex-start;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .prose :global(p > .ru3d) {
+    flex: 1 1 280px;
+    min-width: 240px;
+    margin: var(--space-lg) 0 0;
+  }
+  .prose :global(p > .ru3d > img) { width: 100%; }
+  @media print {
+    .prose :global(.ru3d-stage),
+    .prose :global(.ru3d-ui),
+    .prose :global(.ru3d-tap) { display: none !important; }
+    .prose :global(.ru3d > img) { visibility: visible !important; }
   }
 
   /* ── Inline code ── */

@@ -1,0 +1,154 @@
+{
+ "part-i--foundations/00_prelude-the-redstone-toolkit": {
+  "basic-circuit_minecraft": {
+   "shot": "00_basic-circuit",
+   "view": "iso"
+  },
+  "strongly-powered-block_minecraft": {
+   "shot": "00_strongly-powered-block",
+   "view": "iso"
+  },
+  "weakly-powered-block_minecraft": {
+   "shot": "00_weakly-powered-block",
+   "view": "iso"
+  }
+ },
+ "part-i--foundations/01_input-register": {
+  "input_minecraft": {
+   "shot": "01_input",
+   "view": "iso"
+  }
+ },
+ "part-i--foundations/02_the-grammar-of-circuits": {
+  "AND-gate-composite_minecraft": {
+   "shot": "02_AND-gate-composite",
+   "view": "iso"
+  },
+  "OR_gate_minecraft": {
+   "shot": "02_OR_gate",
+   "view": "iso"
+  }
+ },
+ "part-i--foundations/03_the-art-of-logic": {
+  "NAND-gate-composite_minecraft": {
+   "shot": "03_NAND-gate-composite",
+   "view": "iso"
+  },
+  "NOR-gate_minecraft": {
+   "shot": "03_NOR-gate",
+   "view": "iso"
+  }
+ },
+ "part-i--foundations/03b_interlude-compact-design-final": {
+  "AND-gate-composite_minecraft": {
+   "shot": "03b_AND-gate-composite",
+   "view": "iso"
+  }
+ },
+ "part-i--foundations/04_decoders-and-displays": {
+  "10-to-7-rom-1_minecraft": {
+   "shot": "04_10-to-7-rom-1",
+   "view": "iso"
+  },
+  "10-to-7-rom-2_minecraft": {
+   "shot": "04_10-to-7-rom-2",
+   "view": "iso"
+  },
+  "10-to-7-rom-L9_minecraft": {
+   "shot": "04_10-to-7-rom-L9",
+   "view": "iso"
+  },
+  "10-to-7-rom-complete-aerial_minecraft": {
+   "shot": "04_10-to-7-rom-complete",
+   "view": "top"
+  },
+  "10-to-7-rom-complete_minecraft": {
+   "shot": "04_10-to-7-rom-complete",
+   "view": "iso"
+  },
+  "4-to-10-decoder-L3-test_minecraft": {
+   "shot": "04_4-to-10-decoder-L3-test",
+   "view": "iso"
+  },
+  "4-to-10-decoder-compact-1_minecraft": {
+   "shot": "04_4-to-10-decoder-compact-1",
+   "view": "iso"
+  },
+  "complete-digital-display-aerial_minecraft": {
+   "shot": "04_complete-digital-display",
+   "view": "top"
+  },
+  "complete-digital-display_minecraft": {
+   "shot": "04_complete-digital-display",
+   "view": "iso"
+  }
+ },
+ "part-ii-thinking-machine/05_adder-and-hex": {
+  "4-bit-rca-aerial_minecraft": {
+   "shot": "05_4-bit-rca",
+   "view": "top"
+  },
+  "4-to-16-decoder-aerial_minecraft": {
+   "shot": "05_4-to-16-decoder",
+   "view": "top"
+  },
+  "4-to-16-decoder_minecraft": {
+   "shot": "05_4-to-16-decoder",
+   "view": "iso"
+  },
+  "full-adder-aerial_minecraft": {
+   "shot": "05_full-adder",
+   "view": "top"
+  },
+  "full-adder-halves_minecraft": {
+   "shot": "05_full-adder-halves",
+   "view": "iso"
+  },
+  "full-adder_minecraft": {
+   "shot": "05_full-adder",
+   "view": "iso"
+  },
+  "hex-display-aerial_minecraft": {
+   "shot": "05_hex-display",
+   "view": "top"
+  },
+  "hex-display_minecraft": {
+   "shot": "05_hex-display",
+   "view": "iso"
+  },
+  "hex-rom-aerial_minecraft": {
+   "shot": "05_hex-rom",
+   "view": "top"
+  },
+  "hex-rom_minecraft": {
+   "shot": "05_hex-rom",
+   "view": "iso"
+  },
+  "integration-bug-aerial_minecraft": {
+   "shot": "05_integration-bug",
+   "view": "top"
+  },
+  "integration-bug_minecraft": {
+   "shot": "05_integration-bug",
+   "view": "iso"
+  },
+  "rca-hex-display_minecraft": {
+   "shot": "05_rca-hex-display",
+   "view": "iso"
+  }
+ },
+ "part-ii-thinking-machine/05b_interlude-the-compact-adder": {
+  "compact-full-adder-aerial_minecraft": {
+   "shot": "05b_compact-full-adder",
+   "view": "top"
+  },
+  "compact-full-adder-halves_minecraft": {
+   "shot": "05b_compact-full-adder-halves",
+   "view": "iso"
+  },
+  "compact-full-adder_minecraft": {
+   "shot": "05b_compact-full-adder",
+   "view": "iso"
+  }
+ }
+}
