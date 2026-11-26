@@ -15,3 +15,11 @@ node_modules/
 
 # issue tracker is local-only (not published with the repo)
 .tix/
+
+# live 3D figures: dev-viewer builds and QA renders are regenerated from the
+# USD cache (scripts/usd_to_scene.py, viewer/snap.mjs); the site's copy under
+# web/public/figures/3d/ is committed
+viewer/builds/
+renders/out-three/
+renders/out-restored/
+renders/live3d-qa.json
