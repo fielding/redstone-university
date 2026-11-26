@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>RU build viewer</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  :root {
+    --paper: #f5f1ea; --ink: #30231e; --faint: #d2cdc5; --panel: #fffdf9;
+  }
+  :root[data-theme="dark"] {
+    --paper: #181512; --ink: #e0d6c5; --faint: #4a423a; --panel: #211d19;
+  }
+  html, body { margin: 0; background: var(--paper); color: var(--ink);
+    font: 14px/1.4 "Hanken Grotesk", system-ui, sans-serif; }
+  header { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center;
+    padding: 10px 16px; border-bottom: 1px solid var(--faint); background: var(--panel); }
+  header h1 { font: 600 16px "Young Serif", Georgia, serif; margin: 0 12px 0 0; }
+  header label { display: inline-flex; gap: 6px; align-items: center; white-space: nowrap; }
+  select, button, input[type=range] { font: inherit; }
+  main { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; padding: 16px; }
+  @media (max-width: 1100px) { main { grid-template-columns: minmax(0, 1fr); } }
+  .pane { min-width: 0; }
+  .pane h2 { font: 500 13px/1 "Fira Code", monospace; letter-spacing: .02em; margin: 0 0 8px; opacity: .75; }
+  .stage { position: relative; width: 100%; aspect-ratio: 4 / 3; border: 1px solid var(--faint);
+    background: var(--paper); overflow: hidden; }
+  .stage canvas, .stage img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  #overlay { pointer-events: none; opacity: 0; object-fit: contain; }
+  #ref { object-fit: contain; }
+  #status { font: 12px "Fira Code", monospace; opacity: .8; padding: 0 16px 16px; white-space: pre-wrap; }
+  .hint { opacity: .6; font-size: 12px; }
+  #legend-cv { pointer-events: none; }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Fira+Code:wght@400;500&display=swap" />
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+    "three/examples/jsm/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+  }
+}
+</script>
+</head>
+<body>
+<header>
+  <h1>RU build viewer</h1>
+  <label>shot <select id="shot"></select></label>
+  <label>view <select id="view"><option value="iso">iso</option><option value="top">top</option></select></label>
+  <label>theme <select id="theme"><option value="schematic">schematic</option><option value="schematic_dark">schematic_dark</option></select></label>
+  <label><input type="checkbox" id="outline" checked /> ink outline</label>
+  <label><input type="checkbox" id="seams" checked /> block seams</label>
+  <label><input type="checkbox" id="bands" checked /> height bands</label>
+  <label><input type="checkbox" id="orbit" /> free orbit</label>
+  <label><input type="checkbox" id="legend" checked /> legend</label>
+  <label>line px <input type="range" id="linepx" min="0.5" max="3" step="0.25" value="1" /></label>
+  <label>overlay ref <input type="range" id="overlayop" min="0" max="1" step="0.05" value="0" /></label>
+  <button id="reset">reset camera</button>
+  <button id="export">export PNG</button>
+  <span class="hint">drag to orbit only when "free orbit" is on</span>
+</header>
+<main>
+  <section class="pane">
+    <h2>three.js (live)</h2>
+    <div class="stage" id="stage"><canvas id="gl"></canvas><canvas id="legend-cv"></canvas><img id="overlay" alt="" /></div>
+  </section>
+  <section class="pane" id="refpane">
+    <h2>Blender reference (renders/out)</h2>
+    <div class="stage"><img id="ref" alt="Blender render" /></div>
+  </section>
+</main>
+<pre id="status"></pre>
+<script type="module" src="./viewer.js"></script>
+</body>
+</html>

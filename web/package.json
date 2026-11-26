@@ -14,6 +14,7 @@
     "astro": "^5.15.9",
     "rehype-katex": "^7.0.1",
     "remark-math": "^6.0.0",
+    "three": "^0.170.0",
     "typescript": "^5.9.3"
   },
   "devDependencies": {
