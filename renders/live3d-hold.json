@@ -1,0 +1,20 @@
+{
+ "02_NOT-gate/iso": "redstone state differs in 95% of shared wire cells",
+ "03_XNOR-gate-composite/iso": "redstone state differs in 68% of shared wire cells",
+ "03_XOR-gate-composite/iso": "redstone state differs in 44% of shared wire cells",
+ "03b_AND-gate/iso": "redstone state differs in 34% of shared wire cells",
+ "03b_XOR-gate-composite/iso": "build shifts 15% of the frame when the figure goes live; layout overlap 0.90",
+ "03b_XOR-gate/iso": "redstone state differs in 62% of shared wire cells",
+ "04_2-to-4-decoder-1/iso": "redstone state differs in 77% of shared wire cells",
+ "04_2-to-4-decoder-2/iso": "redstone state differs in 52% of shared wire cells",
+ "04_2-to-4-decoder-2/top": "redstone state differs in 49% of shared wire cells",
+ "04_2-to-4-decoder-3/iso": "redstone state differs in 53% of shared wire cells",
+ "04_2-to-4-decoder-3/top": "redstone state differs in 59% of shared wire cells",
+ "04_4-to-10-decoder-L3/iso": "redstone state differs in 23% of shared wire cells",
+ "04_4-to-10-decoder-compact-2/iso": "redstone state differs in 27% of shared wire cells",
+ "04_4-to-10-decoder-compact-3/iso": "redstone state differs in 28% of shared wire cells",
+ "04_4-to-10-decoder-compact-complete/iso": "redstone state differs in 40% of shared wire cells",
+ "04_4-to-10-decoder-compact-complete/top": "redstone state differs in 28% of shared wire cells",
+ "05b_compact-rca/iso": "redstone state differs in 37% of shared wire cells",
+ "05b_compact-rca/top": "redstone state differs in 35% of shared wire cells"
+}
