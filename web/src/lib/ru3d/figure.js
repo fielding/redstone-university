@@ -76,6 +76,7 @@ export class RuFigure {
 
     this.scene = new THREE.Scene();
     this._textures = new Map();
+    this._texUsers = {};
     this._texLoads = [];
     this._buildScene();
     this.ready = Promise.allSettled(this._texLoads).then(() => this.requestRender());
@@ -84,7 +85,11 @@ export class RuFigure {
   }
 
   // -------------------------------------------------------------- scene
-  _loadTexture(name) {
+  // A texture that fails to load must not leave its component invisible (an
+  // empty map with alphaTest discards every fragment): fall back to the
+  // component's flat color and say so.
+  _loadTexture(name, mat, fallback) {
+    (this._texUsers[name] ??= []).push([mat, fallback]);
     if (this._textures.has(name)) return this._textures.get(name);
     const tex = new THREE.Texture();
     tex.magFilter = THREE.NearestFilter;
@@ -96,7 +101,16 @@ export class RuFigure {
       const img = new Image();
       img.decoding = 'async';
       img.onload = () => { tex.image = img; tex.needsUpdate = true; resolve(); };
-      img.onerror = reject;
+      img.onerror = () => {
+        console.warn(`[live 3D] texture ${name} failed to load; drawing flat colors`);
+        for (const [m, color] of this._texUsers[name]) {
+          m.map = null;
+          m.color.copy(color);
+          m.needsUpdate = true;
+        }
+        this.requestRender();
+        reject(new Error(`texture ${name}`));
+      };
       img.src = this.textureBase + name;
     }));
     return tex;
@@ -162,9 +176,14 @@ export class RuFigure {
       let mesh;
       if (m.role === 'component') {
         const mat = new THREE.MeshBasicMaterial({ side: THREE.DoubleSide, alphaTest: 0.5 });
-        if (m.texture && this.textureBase) mat.map = this._loadTexture(m.texture);
-        else if (m.displayColor) mat.color = new THREE.Color(...m.displayColor);
-        mat.color.multiplyScalar(lname.includes('lamp_on') ? 1.6 : 1.15);
+        const emit = lname.includes('lamp_on') ? 1.6 : 1.15;
+        const flat = new THREE.Color(...(m.displayColor || [0.6, 0.6, 0.62])).multiplyScalar(emit);
+        if (m.texture && this.textureBase) {
+          mat.map = this._loadTexture(m.texture, mat, flat);
+          mat.color.setScalar(emit);
+        } else {
+          mat.color.copy(flat);
+        }
         mesh = new THREE.Mesh(g, mat);
         mesh.userData.lamp = lname.includes('lamp');
         mesh.userData.torch = lname.includes('redstone_torch');

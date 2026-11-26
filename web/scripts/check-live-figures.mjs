@@ -58,7 +58,9 @@ async function browser(extraFlags = []) {
     const m = JSON.parse(e.data);
     if (m.id && pending.has(m.id)) { pending.get(m.id)(m); pending.delete(m.id); return; }
     if (m.method === 'Runtime.exceptionThrown') errors.push(m.params.exceptionDetails.exception?.description || m.params.exceptionDetails.text);
-    if (m.method === 'Runtime.consoleAPICalled' && m.params.type === 'error') errors.push(m.params.args.map((a) => a.value ?? a.description).join(' '));
+    // errors, plus the renderer's own degradation warnings ([live 3D] ...)
+    if (m.method === 'Runtime.consoleAPICalled' && (m.params.type === 'error'
+      || (m.params.type === 'warning' && /\[live 3D\]/.test(m.params.args?.[0]?.value || '')))) errors.push(m.params.args.map((a) => a.value ?? a.description).join(' '));
     if (m.method === 'Log.entryAdded' && m.params.entry.level === 'error' && !/favicon/.test(m.params.entry.url || '')) errors.push(`${m.params.entry.text} ${m.params.entry.url || ''}`);
   };
   const send = (method, params = {}) => new Promise((r) => { const i = ++id; pending.set(i, r); ws.send(JSON.stringify({ id: i, method, params })); });

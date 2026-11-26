@@ -50,8 +50,20 @@ Before a release that touches the figures or the renderer:
 
 ```bash
 cd web && npx astro build && npx astro preview --port 4321 &
-node scripts/check-live-figures.mjs --base http://127.0.0.1:4321
+node scripts/check-live-figures.mjs --base http://127.0.0.1:4321      # full matrix, headless Chrome
+npm i --no-save playwright && npx playwright install webkit firefox chromium
+node scripts/check-live-figures-xbrowser.mjs http://127.0.0.1:4321    # WebKit, Firefox, iPhone, GPU Chromium
 ```
+
+Verified 2026-11-26: all checks pass in headless Chrome (54), WebKit desktop,
+Firefox, WebKit with iPhone 15 touch emulation, and Chromium on the Metal GPU
+(44). Real Safari and a physical phone were not driven by automation.
+
+Git LFS note: `*.png` lives in LFS and this clone skips smudging, so a
+checkout can leave 128-byte pointer files in place of textures. `git lfs
+checkout` restores them. CI checks out with `lfs: true`. A texture that fails
+to load now draws its component in flat color and logs a `[live 3D]` warning,
+which both check scripts treat as a failure.
 
 The dev viewer, from the repo root:
 
