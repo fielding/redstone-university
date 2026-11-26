@@ -23,7 +23,11 @@ A figure is "in the book" only after **all** of:
 1. its config entry exists (`diagrams.json` / `shots.json`),
 2. the script has been run and the output eyeballed,
 3. the PNG is copied into `src/Part-*/<module>/images/<name>_(circuitverse|minecraft).png`,
-4. `draft.md` references it.
+4. `draft.md` references it,
+5. (Minecraft only) the live 3D copy is refreshed: `usd_to_scene.py --all`,
+   `snap.mjs --placed`, `live3d_qa.py --write-hold`, `usd_to_scene.py --all
+   --publish` (see `viewer/README.md`). Without this the site keeps serving
+   the previous build in 3D over the new PNG, or none at all.
 
 `src/` is the source of truth; the site build syncs `src/` → Astro content.
 **Never hand-edit a generated PNG** — change config/script and re-run.
