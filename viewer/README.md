@@ -40,6 +40,7 @@ web/src/lib/ru3d/                 renderer (shared with this dev viewer)
 After placing or re-rendering a Minecraft figure (`/render-figures`):
 
 ```bash
+python3 scripts/verify_exports.py                                        # exports match the world
 python3 scripts/usd_to_scene.py --all                                    # convert
 node viewer/snap.mjs --placed --out-dir renders/out-three/placed         # render every placed figure live
 python3 scripts/live3d_qa.py --write-hold                                # compare with the book PNGs
@@ -92,7 +93,9 @@ open "http://localhost:8765/viewer/?shot=05_full-adder&view=iso"
 
 ## Fidelity
 
-Camera framing matches current `render_usd.py` output to within a few pixels.
+Block undersides that MiEx culled against the (removed) ground are closed by
+the converter (`add_missing_bottoms`), so a build can be orbited all the way
+around. Camera framing matches current `render_usd.py` output to within a few pixels.
 That took reproducing three Blender behaviors that look accidental but define
 the book's look: height bands and framing both measure object bounding boxes
 that the ground delete leaves stale (so the deleted platform still counts),
@@ -101,14 +104,23 @@ and the fit uses each object's box corners, not the union box. Not reproduced:
 Cycles ambient occlusion. Interior linework fades by on-screen block size in
 the live view; exports keep full ink.
 
+## Export correctness
+
+`scripts/verify_exports.py` reads every redstone component in a shot's bounds
+straight from the world save (stdlib NBT reader) and compares its state with
+the cached export: dust power, lamps, torches, repeaters, comparators. Run it
+after any re-export. On 2026-11-26 the 32 caches still exported from the old
+Bedrock world (which carried no redstone power) disagreed with the world on
+318 of 1,338 components; re-exported from the server world they disagree on
+none, and all 58 shots now check clean (10,446 components).
+
 ## The hold list
 
 `live3d_qa.py` compares each placed book PNG with its live render on redstone
 state (cell by cell, aligned per build), redstone presence, silhouette
-overlap, and how far the build moves at the swap. As of 2026-11-25, 34 of 52
-placed figures match and 18 are held. Every hold traced back to data, not
-rendering: those book PNGs were rendered from an older world state (other
-lever positions, other powered wires, a different base course) than the
-build in today's USD cache. To release one, either re-render the book PNG
-from the current world (a content change: check the caption) or put the world
-back in the pictured state and re-export, then rerun the workflow above.
+overlap, and how far the build moves at the swap. As of 2026-11-26, 49 of 52
+placed figures match and 3 are held: `05b_compact-rca` (iso and top) and
+`03b_XOR-gate-composite`. Their exports match the world exactly, so the book
+PNGs are the stale side: they were rendered before the builds changed. To
+release them, re-render those PNGs from the current world (a content change:
+check the captions), then rerun the workflow above.

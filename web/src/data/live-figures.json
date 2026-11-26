@@ -24,6 +24,10 @@
    "shot": "02_AND-gate-composite",
    "view": "iso"
   },
+  "NOT-gate_minecraft": {
+   "shot": "02_NOT-gate",
+   "view": "iso"
+  },
   "OR_gate_minecraft": {
    "shot": "02_OR_gate",
    "view": "iso"
@@ -37,11 +41,27 @@
   "NOR-gate_minecraft": {
    "shot": "03_NOR-gate",
    "view": "iso"
+  },
+  "XNOR-gate-composite_minecraft": {
+   "shot": "03_XNOR-gate-composite",
+   "view": "iso"
+  },
+  "XOR-gate-composite_minecraft": {
+   "shot": "03_XOR-gate-composite",
+   "view": "iso"
   }
  },
  "part-i--foundations/03b_interlude-compact-design-final": {
   "AND-gate-composite_minecraft": {
    "shot": "03b_AND-gate-composite",
+   "view": "iso"
+  },
+  "AND-gate_minecraft": {
+   "shot": "03b_AND-gate",
+   "view": "iso"
+  },
+  "XOR-gate_minecraft": {
+   "shot": "03b_XOR-gate",
    "view": "iso"
   }
  },
@@ -66,12 +86,52 @@
    "shot": "04_10-to-7-rom-complete",
    "view": "iso"
   },
+  "2-to-4-decoder-1_minecraft": {
+   "shot": "04_2-to-4-decoder-1",
+   "view": "iso"
+  },
+  "2-to-4-decoder-2-aerial_minecraft": {
+   "shot": "04_2-to-4-decoder-2",
+   "view": "top"
+  },
+  "2-to-4-decoder-2_minecraft": {
+   "shot": "04_2-to-4-decoder-2",
+   "view": "iso"
+  },
+  "2-to-4-decoder-3-aerial_minecraft": {
+   "shot": "04_2-to-4-decoder-3",
+   "view": "top"
+  },
+  "2-to-4-decoder-3_minecraft": {
+   "shot": "04_2-to-4-decoder-3",
+   "view": "iso"
+  },
   "4-to-10-decoder-L3-test_minecraft": {
    "shot": "04_4-to-10-decoder-L3-test",
    "view": "iso"
   },
+  "4-to-10-decoder-L3_minecraft": {
+   "shot": "04_4-to-10-decoder-L3",
+   "view": "iso"
+  },
   "4-to-10-decoder-compact-1_minecraft": {
    "shot": "04_4-to-10-decoder-compact-1",
+   "view": "iso"
+  },
+  "4-to-10-decoder-compact-2_minecraft": {
+   "shot": "04_4-to-10-decoder-compact-2",
+   "view": "iso"
+  },
+  "4-to-10-decoder-compact-3_minecraft": {
+   "shot": "04_4-to-10-decoder-compact-3",
+   "view": "iso"
+  },
+  "4-to-10-decoder-compact-complete-aerial_minecraft": {
+   "shot": "04_4-to-10-decoder-compact-complete",
+   "view": "top"
+  },
+  "4-to-10-decoder-compact-complete_minecraft": {
+   "shot": "04_4-to-10-decoder-compact-complete",
    "view": "iso"
   },
   "complete-digital-display-aerial_minecraft": {
